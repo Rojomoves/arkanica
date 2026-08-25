@@ -1,8 +1,5 @@
 // Archivo: netlify/functions/interpretar.js
 
-// Archivo: netlify/functions/interpretar.js
-import { GoogleGenerativeAI } from "@google/generative-ai";
-
 export const handler = async (event) => {
   if (event.httpMethod !== "POST") {
     return { statusCode: 405, body: JSON.stringify({ error: "Método no permitido" }) };
@@ -13,10 +10,6 @@ export const handler = async (event) => {
     if (!apiKey) {
       throw new Error("GEMINI_API_KEY no configurada");
     }
-
-    const genAI = new GoogleGenerativeAI(apiKey);
-    // Usamos el modelo estándar actual de Gemini
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
     const body = JSON.parse(event.body);
     const { spreadTitle, cards } = body;
@@ -45,9 +38,24 @@ export const handler = async (event) => {
       La longitud debe ser de aproximadamente 200-250 palabras. La respuesta debe estar formateada en HTML simple (etiquetas <p> para párrafos) ya que se inyectará directamente en el DOM de la web.
     `;
 
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text();
+    // Llamada directa ultrarrápida a la API oficial de Gemini
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        contents: [{
+          parts: [{ text: prompt }]
+        }]
+      })
+    });
+
+    const data = await response.json();
+
+    if (!data.candidates || !data.candidates[0].content.parts[0].text) {
+      throw new Error("Respuesta inválida de la API");
+    }
+
+    const text = data.candidates[0].content.parts[0].text;
 
     return {
       statusCode: 200,
@@ -56,7 +64,7 @@ export const handler = async (event) => {
     };
 
   } catch (error) {
-    console.error("Error detallado en la función:", error);
+    console.error("Error en la función:", error);
     return {
       statusCode: 500,
       headers: { "Content-Type": "application/json" },
