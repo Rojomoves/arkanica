@@ -28,7 +28,6 @@
   body {
     margin: 0;
     background-color: var(--bg);
-    /* Fondo atmosférico profundo sin patrones repetitivos en cuadrícula */
     background-image: 
       radial-gradient(circle at 50% 0%, rgba(45, 30, 70, 0.25) 0%, transparent 60%),
       radial-gradient(circle at 50% 100%, rgba(223, 177, 91, 0.05) 0%, transparent 50%);
@@ -45,7 +44,7 @@
 
   header {
     width: 100%;
-    max-width: 1000px;
+    max-width: 1100px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -192,7 +191,7 @@
     gap: 10px;
     margin-bottom: 16px;
     justify-content: center;
-    max-width: 1000px;
+    max-width: 1100px;
     width: 100%;
     flex-wrap: wrap;
   }
@@ -228,7 +227,7 @@
     gap: 8px;
     margin-bottom: 24px;
     justify-content: flex-start;
-    max-width: 1000px;
+    max-width: 1100px;
     width: 100%;
     overflow-x: auto;
     padding-bottom: 8px;
@@ -270,7 +269,7 @@
 
   .spread-info-card {
     width: 100%;
-    max-width: 1000px;
+    max-width: 1100px;
     background: var(--surface);
     border: 1px solid var(--line);
     border-left: 3px solid var(--gold);
@@ -327,7 +326,7 @@
 
   .table-container {
     width: 100%;
-    max-width: 1000px;
+    max-width: 1100px;
     background: var(--surface);
     border: 1px solid var(--line);
     border-radius: 10px;
@@ -400,47 +399,48 @@
     z-index: 100;
   }
 
+  /* NUEVA REJILLA ESTRICTA SIN SCROLL HORIZONTAL */
   .arkanica-table {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     gap: 20px;
-    align-items: flex-start;
+    align-items: start;
     perspective: 1800px;
     margin-bottom: 24px;
-    flex-wrap: nowrap;
-    overflow-x: auto;
     width: 100%;
-    padding: 15px 10px;
-    justify-content: center;
-    scrollbar-width: thin;
-    scrollbar-color: var(--gold-dim) var(--surface);
+    padding: 10px;
+    justify-items: center;
   }
 
-  .arkanica-table::-webkit-scrollbar {
-    height: 8px;
-  }
-  .arkanica-table::-webkit-scrollbar-thumb {
-    background: var(--gold-dim);
-    border-radius: 4px;
+  /* Para tiradas de 10 cartas: exactamente 5 columnas limpias */
+  .arkanica-table.grid-10 {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
   }
 
   .arkanica-slot {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
-    flex-shrink: 0;
+    gap: 8px;
+    width: 100%;
   }
 
-  /* CARTAS GRANDES Y VISIBLES (Optimizadas para CRO y UX) */
+  /* CARTAS OPTIMIZADAS PARA LA REJILLA */
   .arkanica-card {
-    width: 140px;
-    height: 226px;
+    width: 120px;
+    height: 195px;
     position: relative;
     cursor: pointer;
     transform-style: preserve-3d;
     transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     box-shadow: 0 10px 25px rgba(0,0,0,0.6);
     border-radius: 8px;
+  }
+
+  .arkanica-table.grid-10 .arkanica-card {
+    width: 95px;
+    height: 155px;
   }
 
   .arkanica-card.flipped {
@@ -506,13 +506,14 @@
   }
 
   .arkanica-slot-label {
-    font-size: 10px;
-    letter-spacing: 0.1em;
+    font-size: 9.5px;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--text-muted);
     font-weight: 500;
     text-align: center;
-    max-width: 140px;
+    max-width: 120px;
+    line-height: 1.2;
   }
 
   .arkanica-hint {
@@ -600,7 +601,7 @@
 
   .section-card {
     width: 100%;
-    max-width: 1000px;
+    max-width: 1100px;
     background: var(--surface);
     border: 1px solid var(--line);
     border-radius: 10px;
@@ -701,7 +702,8 @@
     .nav-links { gap: 12px; font-size: 9.5px; }
     .arkanica-title { font-size: 28px; }
     .arkanica-sub { font-size: 12.5px; }
-    .arkanica-card { width: 105px; height: 170px; }
+    .arkanica-card { width: 85px; height: 135px; }
+    .arkanica-table.grid-10 .arkanica-card { width: 62px; height: 100px; }
     .fan-card { width: 50px; height: 90px; }
     .spread-positions-grid { grid-template-columns: 1fr; gap: 10px; }
     .spread-positions-grid.grid-10 { grid-template-columns: repeat(2, 1fr); }
@@ -968,6 +970,11 @@
     { symbol: '3 🔥', name: 'Tres de Bastos', archetype: 'Horizonte expandido esperando barcos lejanos', img: 'assets/arcanos-menores/bastos/3-bastos.jpg' },
     { symbol: '8 🔥', name: 'Ocho de Bastos', archetype: 'Aceleración súbita; los acontecimientos se precipitan', img: 'assets/arcanos-menores/bastos/8-bastos.jpg' }
   ];
+
+  fullTarotDeck.forEach(card => {
+    const imgPreload = new Image();
+    imgPreload.src = card.img;
+  });
 
   const categoriesData = {
     romanticas: {
@@ -1264,8 +1271,16 @@
   }
 
   function renderTableSlots() {
-    table.innerHTML = '';
     const config = getCurrentSpreadConfig();
+    
+    // Asignar clase grid-10 si es la tirada de 10 cartas para ordenar perfectamente en 5 columnas (2 filas)
+    if (config.slots.length > 5) {
+      table.className = 'arkanica-table grid-10';
+    } else {
+      table.className = 'arkanica-table';
+    }
+
+    table.innerHTML = '';
 
     config.slots.forEach((slotData, i) => {
       const slot = document.createElement('div');
@@ -1287,8 +1302,7 @@
 
         const front = document.createElement('div');
         front.className = 'arkanica-card-face arkanica-card-front';
-        // Añadido loading="lazy" y decoding="async" para acelerar la carga de imágenes
-        front.innerHTML = `<img src="${cardData.img}" alt="${cardData.name}" title="${cardData.name}: ${cardData.archetype}" loading="lazy" decoding="async">`;
+        front.innerHTML = `<img src="${cardData.img}" alt="${cardData.name}" title="${cardData.name}: ${cardData.archetype}" decoding="async">`;
 
         card.appendChild(back);
         card.appendChild(front);
@@ -1348,7 +1362,7 @@
 
     } catch (error) {
       console.error("Error de conexión con la IA:", error);
-      masterTextContent.innerHTML = `Tras más de treinta años interpretando los arcanos, esta tirada de ${config.title} nos muestra un camino de evolución muy claro. La energía de ${selectedCards[0].name} marca tu punto de partida, guiándote hacia una nueva perspectiva. Confía en tu intuición y da el paso con absoluta confianza.`;
+      masterTextContent.innerHTML = `Tras más de treinta años interpretando los arcanos, esta tirada de ${config.title} nos muestra un camino de evolución muy claro. La energía de ${selectedCards[0].name} marca tu punto de partida, guiándote hacia una nueva perspectiva. Confía en tu intuición y da el paso con absoluta confianza. ¿Qué te dice el corazón respecto a este camino?`;
     }
   }
 
