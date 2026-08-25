@@ -12,33 +12,27 @@
   @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500&display=swap');
 
   :root {
-    --bg: #07070b;
-    --surface: #0f0e17;
-    --surface-hover: #161522;
+    --bg: #050508;
+    --surface: #0c0b12;
+    --surface-hover: #13121c;
     --gold: #dfb15b;
     --gold-dim: #947437;
     --gold-light: #f3d89d;
     --text-main: #f4f2ee;
-    --text-muted: #8c8896;
-    --line: rgba(223, 177, 91, 0.2);
+    --text-muted: #9c98a6;
+    --line: rgba(223, 177, 91, 0.25);
   }
 
   * { box-sizing: border-box; }
 
   body {
     margin: 0;
-    background: var(--bg);
+    background-color: var(--bg);
+    /* Fondo atmosférico profundo sin patrones repetitivos en cuadrícula */
     background-image: 
-      radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)),
-      radial-gradient(2px 2px at 40px 70px, #ffffff, rgba(0,0,0,0)),
-      radial-gradient(1px 1px at 90px 40px, #ffffff, rgba(0,0,0,0)),
-      radial-gradient(2px 2px at 160px 120px, #dfb15b, rgba(0,0,0,0)),
-      radial-gradient(1px 1px at 230px 200px, #ffffff, rgba(0,0,0,0)),
-      radial-gradient(circle at 20% 15%, rgba(100, 60, 150, 0.08) 0%, transparent 40%),
-      radial-gradient(circle at 80% 85%, rgba(223, 177, 91, 0.05) 0%, transparent 50%),
-      radial-gradient(circle at 50% -20%, rgba(223, 177, 91, 0.08) 0%, transparent 60%);
-    background-repeat: repeat;
-    background-size: 350px 350px;
+      radial-gradient(circle at 50% 0%, rgba(45, 30, 70, 0.25) 0%, transparent 60%),
+      radial-gradient(circle at 50% 100%, rgba(223, 177, 91, 0.05) 0%, transparent 50%);
+    background-attachment: fixed;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -51,7 +45,7 @@
 
   header {
     width: 100%;
-    max-width: 950px;
+    max-width: 1000px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -63,11 +57,12 @@
 
   .logo {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 24px;
-    letter-spacing: 0.1em;
+    font-size: 26px;
+    letter-spacing: 0.12em;
     color: var(--gold);
     text-decoration: none;
     white-space: nowrap;
+    text-shadow: 0 2px 10px rgba(223, 177, 91, 0.2);
   }
 
   .header-right {
@@ -167,7 +162,7 @@
   }
 
   .arkanica-eyebrow {
-    font-size: 9.5px;
+    font-size: 10px;
     letter-spacing: 0.3em;
     text-transform: uppercase;
     color: var(--gold-dim);
@@ -177,7 +172,7 @@
 
   .arkanica-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 30px;
+    font-size: 34px;
     font-weight: 400;
     color: var(--text-main);
     margin: 0 0 8px;
@@ -185,7 +180,7 @@
   }
 
   .arkanica-sub {
-    font-size: 12.5px;
+    font-size: 13.5px;
     color: var(--text-muted);
     font-weight: 300;
     line-height: 1.5;
@@ -195,31 +190,37 @@
   .categories-nav {
     display: flex;
     gap: 10px;
-    margin-bottom: 14px;
+    margin-bottom: 16px;
     justify-content: center;
-    max-width: 950px;
+    max-width: 1000px;
     width: 100%;
     flex-wrap: wrap;
   }
 
   .category-tab {
-    background: rgba(15, 14, 23, 0.6);
+    background: rgba(15, 14, 23, 0.8);
     border: 1px solid var(--line);
     color: var(--text-muted);
     font-family: 'Inter', sans-serif;
-    font-size: 10.5px;
+    font-size: 11px;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    padding: 8px 16px;
-    border-radius: 4px;
+    padding: 9px 18px;
+    border-radius: 6px;
     cursor: pointer;
     transition: all 0.3s ease;
   }
 
+  .category-tab:hover {
+    border-color: var(--gold-dim);
+    color: var(--text-main);
+  }
+
   .category-tab.active {
-    background: rgba(223, 177, 91, 0.1);
+    background: rgba(223, 177, 91, 0.12);
     border-color: var(--gold);
     color: var(--gold);
+    box-shadow: 0 0 15px rgba(223, 177, 91, 0.15);
   }
 
   .spread-selector {
@@ -227,7 +228,7 @@
     gap: 8px;
     margin-bottom: 24px;
     justify-content: flex-start;
-    max-width: 950px;
+    max-width: 1000px;
     width: 100%;
     overflow-x: auto;
     padding-bottom: 8px;
@@ -243,11 +244,11 @@
     border: 1px solid var(--line);
     color: var(--text-muted);
     font-family: 'Inter', sans-serif;
-    font-size: 10px;
+    font-size: 10.5px;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    padding: 10px 14px;
-    border-radius: 4px;
+    padding: 10px 16px;
+    border-radius: 6px;
     cursor: pointer;
     transition: all 0.3s ease;
     white-space: nowrap;
@@ -263,46 +264,47 @@
   .spread-btn.active {
     border-color: var(--gold);
     color: var(--gold);
-    background: rgba(223, 177, 91, 0.06);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    background: rgba(223, 177, 91, 0.08);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
   }
 
   .spread-info-card {
     width: 100%;
-    max-width: 950px;
+    max-width: 1000px;
     background: var(--surface);
     border: 1px solid var(--line);
     border-left: 3px solid var(--gold);
-    border-radius: 6px;
-    padding: 18px 20px;
+    border-radius: 8px;
+    padding: 20px 24px;
     margin-bottom: 24px;
     display: flex;
     flex-direction: column;
     gap: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
   }
 
   .spread-info-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 18px;
+    font-size: 20px;
     color: var(--gold);
     margin: 0;
     letter-spacing: 0.03em;
   }
 
   .spread-info-desc {
-    font-size: 12.5px;
+    font-size: 13px;
     color: var(--text-main);
-    line-height: 1.5;
+    line-height: 1.6;
     margin: 0;
   }
 
   .spread-positions-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-    margin-top: 4px;
+    gap: 14px;
+    margin-top: 6px;
     border-top: 1px solid rgba(223, 177, 91, 0.15);
-    padding-top: 10px;
+    padding-top: 12px;
   }
 
   .spread-positions-grid.grid-10 {
@@ -310,7 +312,7 @@
   }
 
   .position-item {
-    font-size: 11px;
+    font-size: 11.5px;
     color: var(--text-muted);
     line-height: 1.4;
   }
@@ -318,22 +320,22 @@
   .position-item strong {
     color: var(--gold-light);
     font-family: 'Cormorant Garamond', serif;
-    font-size: 12.5px;
+    font-size: 13.5px;
     display: block;
-    margin-bottom: 2px;
+    margin-bottom: 3px;
   }
 
   .table-container {
     width: 100%;
-    max-width: 950px;
+    max-width: 1000px;
     background: var(--surface);
     border: 1px solid var(--line);
-    border-radius: 8px;
-    padding: 28px 16px;
+    border-radius: 10px;
+    padding: 32px 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
     margin-bottom: 24px;
   }
 
@@ -342,16 +344,16 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 24px;
-    gap: 12px;
-    min-height: 160px;
+    margin-bottom: 28px;
+    gap: 14px;
+    min-height: 180px;
     position: relative;
     touch-action: pan-y;
   }
 
   .deck-instruction {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 15px;
+    font-size: 17px;
     color: var(--gold);
     letter-spacing: 0.05em;
     font-style: italic;
@@ -363,111 +365,117 @@
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    height: 135px;
+    height: 150px;
     width: 100%;
-    max-width: 650px;
+    max-width: 700px;
     position: relative;
     perspective: 1000px;
   }
 
   .fan-card {
-    width: 62px;
-    height: 105px;
-    background: linear-gradient(135deg, #121119 0%, #08070b 100%);
+    width: 70px;
+    height: 120px;
+    background: linear-gradient(135deg, #161522 0%, #08070b 100%);
     border: 1px solid var(--gold-dim);
-    border-radius: 4px;
+    border-radius: 6px;
     position: absolute;
     cursor: pointer;
     transform-origin: bottom center;
-    transition: transform 0.25s ease, border-color 0.25s ease;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.6);
   }
 
   .fan-card::before {
     content: '';
     position: absolute;
-    inset: 4px;
-    border: 1px solid rgba(223, 177, 91, 0.25);
-    border-radius: 2px;
+    inset: 5px;
+    border: 1px solid rgba(223, 177, 91, 0.3);
+    border-radius: 4px;
   }
 
   .fan-card:hover {
-    transform: translateY(-16px) rotate(0deg) scale(1.08) !important;
+    transform: translateY(-20px) rotate(0deg) scale(1.12) !important;
     border-color: var(--gold);
+    box-shadow: 0 15px 30px rgba(223, 177, 91, 0.25);
     z-index: 100;
   }
 
   .arkanica-table {
     display: flex;
-    gap: 12px;
+    gap: 20px;
     align-items: flex-start;
     perspective: 1800px;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
     flex-wrap: nowrap;
     overflow-x: auto;
     width: 100%;
-    padding: 10px 4px;
-    justify-content: flex-start;
+    padding: 15px 10px;
+    justify-content: center;
     scrollbar-width: thin;
     scrollbar-color: var(--gold-dim) var(--surface);
   }
 
   .arkanica-table::-webkit-scrollbar {
-    height: 6px;
+    height: 8px;
   }
   .arkanica-table::-webkit-scrollbar-thumb {
     background: var(--gold-dim);
-    border-radius: 3px;
+    border-radius: 4px;
   }
 
   .arkanica-slot {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 6px;
+    gap: 10px;
     flex-shrink: 0;
   }
 
+  /* CARTAS GRANDES Y VISIBLES (Optimizadas para CRO y UX) */
   .arkanica-card {
-    width: 100px;
-    height: 160px;
+    width: 140px;
+    height: 226px;
     position: relative;
     cursor: pointer;
     transform-style: preserve-3d;
     transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+    border-radius: 8px;
   }
 
   .arkanica-card.flipped {
     transform: rotateY(180deg);
+    box-shadow: 0 15px 35px rgba(223, 177, 91, 0.25);
   }
 
   .arkanica-card:not(.flipped):hover {
-    transform: translateY(-3px) scale(1.02);
+    transform: translateY(-5px) scale(1.03);
+    border-color: var(--gold);
   }
 
   .arkanica-card-face {
     position: absolute;
     inset: 0;
-    border-radius: 6px;
+    border-radius: 8px;
     backface-visibility: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
   }
 
   .arkanica-card-back {
-    background: linear-gradient(135deg, #121119 0%, #08070b 100%);
+    background: linear-gradient(135deg, #161522 0%, #07070b 100%);
     border: 1px solid var(--gold-dim);
-    padding: 5px;
+    padding: 8px;
   }
 
   .arkanica-card-back-inner {
     width: 100%;
     height: 100%;
-    border: 1px solid rgba(223, 177, 91, 0.3);
-    border-radius: 4px;
+    border: 1px solid rgba(223, 177, 91, 0.35);
+    border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -477,13 +485,13 @@
   .arkanica-card-back-inner::before {
     content: '◆';
     color: var(--gold);
-    font-size: 14px;
-    opacity: 0.7;
+    font-size: 18px;
+    opacity: 0.8;
   }
 
   .arkanica-card-front {
-    background: #0d0c14;
-    border: 1px solid var(--gold);
+    background: #08070b;
+    border: 1.5px solid var(--gold);
     transform: rotateY(180deg);
     padding: 0;
     overflow: hidden;
@@ -493,41 +501,42 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 5px;
+    border-radius: 6px;
     display: block;
   }
 
   .arkanica-slot-label {
-    font-size: 9px;
-    letter-spacing: 0.08em;
+    font-size: 10px;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--text-muted);
     font-weight: 500;
     text-align: center;
-    max-width: 100px;
+    max-width: 140px;
   }
 
   .arkanica-hint {
-    font-size: 12.5px;
+    font-size: 13.5px;
     color: var(--gold);
     opacity: 0.9;
     font-style: italic;
     font-family: 'Cormorant Garamond', serif;
-    min-height: 22px;
+    min-height: 24px;
     text-align: center;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
     padding: 0 10px;
   }
 
   .master-interpretation-box {
     width: 100%;
-    background: linear-gradient(135deg, rgba(223, 177, 91, 0.07) 0%, rgba(15, 14, 23, 0.9) 100%);
+    background: linear-gradient(135deg, rgba(223, 177, 91, 0.08) 0%, rgba(12, 11, 18, 0.95) 100%);
     border: 1px solid var(--gold);
-    border-radius: 6px;
-    padding: 24px;
+    border-radius: 8px;
+    padding: 28px;
     margin-top: 16px;
     display: none;
     animation: fadeIn 0.6s ease forwards;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
   }
 
   @keyframes fadeIn {
@@ -537,9 +546,9 @@
 
   .master-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 20px;
+    font-size: 22px;
     color: var(--gold);
-    margin-bottom: 12px;
+    margin-bottom: 14px;
     letter-spacing: 0.05em;
     display: flex;
     align-items: center;
@@ -547,10 +556,10 @@
   }
 
   .master-text {
-    font-size: 13.5px;
+    font-size: 14px;
     color: var(--text-main);
-    line-height: 1.7;
-    margin: 0 0 16px;
+    line-height: 1.8;
+    margin: 0 0 18px;
     font-style: italic;
   }
 
@@ -559,13 +568,13 @@
     justify-content: space-between;
     align-items: center;
     border-top: 1px solid rgba(223, 177, 91, 0.2);
-    padding-top: 14px;
-    gap: 10px;
+    padding-top: 16px;
+    gap: 12px;
     flex-wrap: wrap;
   }
 
   .master-cta span {
-    font-size: 11.5px;
+    font-size: 12px;
     color: var(--text-muted);
   }
 
@@ -574,11 +583,11 @@
     border: 1px solid var(--line);
     color: var(--text-muted);
     font-family: 'Inter', sans-serif;
-    font-size: 10px;
+    font-size: 10.5px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    padding: 9px 20px;
-    border-radius: 4px;
+    padding: 10px 22px;
+    border-radius: 6px;
     cursor: pointer;
     transition: all 0.3s ease;
   }
@@ -586,22 +595,23 @@
   .arkanica-reset:hover {
     border-color: var(--gold);
     color: var(--gold);
-    background: rgba(223, 177, 91, 0.05);
+    background: rgba(223, 177, 91, 0.06);
   }
 
   .section-card {
     width: 100%;
-    max-width: 950px;
+    max-width: 1000px;
     background: var(--surface);
     border: 1px solid var(--line);
-    border-radius: 8px;
-    padding: 24px;
+    border-radius: 10px;
+    padding: 28px;
     margin-bottom: 20px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
   }
 
   .section-card h3 {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 20px;
+    font-size: 22px;
     margin-top: 0;
     margin-bottom: 8px;
     color: var(--text-main);
@@ -609,11 +619,11 @@
   }
 
   .section-card p {
-    font-size: 12.5px;
+    font-size: 13px;
     color: var(--text-muted);
-    line-height: 1.5;
-    margin-bottom: 16px;
-    max-width: 600px;
+    line-height: 1.6;
+    margin-bottom: 18px;
+    max-width: 650px;
   }
 
   .action-btn {
@@ -621,38 +631,39 @@
     color: var(--bg);
     border: none;
     font-family: 'Inter', sans-serif;
-    font-size: 10.5px;
+    font-size: 11px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     font-weight: 600;
-    padding: 11px 22px;
-    border-radius: 4px;
+    padding: 12px 24px;
+    border-radius: 6px;
     cursor: pointer;
-    transition: background 0.3s ease;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
   }
 
   .action-btn:hover {
     background: var(--gold-light);
+    box-shadow: 0 0 20px rgba(223, 177, 91, 0.4);
   }
 
   .booking-grid {
     display: grid;
     grid-template-columns: 1.2fr 0.8fr;
-    gap: 24px;
+    gap: 28px;
     align-items: center;
   }
 
   .booking-benefits {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
     border-left: 2px solid var(--gold-dim);
-    padding-left: 14px;
-    margin-top: 14px;
+    padding-left: 16px;
+    margin-top: 16px;
   }
 
   .benefit-item {
-    font-size: 12px;
+    font-size: 12.5px;
     color: var(--text-muted);
   }
 
@@ -660,24 +671,24 @@
     color: var(--text-main);
     display: block;
     font-family: 'Cormorant Garamond', serif;
-    font-size: 14px;
+    font-size: 15px;
   }
 
   .booking-card-action {
-    background: rgba(0,0,0,0.3);
+    background: rgba(0,0,0,0.35);
     border: 1px solid var(--line);
-    padding: 20px;
-    border-radius: 6px;
+    padding: 24px;
+    border-radius: 8px;
     text-align: center;
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 16px;
     align-items: center;
   }
 
   .price-tag {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 26px;
+    font-size: 28px;
     color: var(--gold);
   }
 
@@ -688,15 +699,15 @@
     .header-right { gap: 8px; }
     .audio-carousel, .crystals-badge { padding: 5px 10px; font-size: 10px; }
     .nav-links { gap: 12px; font-size: 9.5px; }
-    .arkanica-title { font-size: 26px; }
-    .arkanica-sub { font-size: 12px; }
-    .arkanica-card { width: 85px; height: 136px; }
-    .fan-card { width: 48px; height: 84px; }
-    .spread-positions-grid { grid-template-columns: 1fr; gap: 8px; }
+    .arkanica-title { font-size: 28px; }
+    .arkanica-sub { font-size: 12.5px; }
+    .arkanica-card { width: 105px; height: 170px; }
+    .fan-card { width: 50px; height: 90px; }
+    .spread-positions-grid { grid-template-columns: 1fr; gap: 10px; }
     .spread-positions-grid.grid-10 { grid-template-columns: repeat(2, 1fr); }
-    .booking-grid { grid-template-columns: 1fr; gap: 16px; }
-    .section-card { padding: 20px 16px; }
-    .table-container { padding: 20px 10px; }
+    .booking-grid { grid-template-columns: 1fr; gap: 20px; }
+    .section-card { padding: 22px 16px; }
+    .table-container { padding: 22px 12px; }
   }
 </style>
 </head>
@@ -772,7 +783,7 @@
     </div>
   </div>
 
-  <button class="arkanica-reset" id="reset" style="margin-top: 14px;">Barajar de nuevo</button>
+  <button class="arkanica-reset" id="reset" style="margin-top: 16px;">Barajar de nuevo</button>
 </div>
 
 <div class="section-card" id="autor">
@@ -1276,7 +1287,8 @@
 
         const front = document.createElement('div');
         front.className = 'arkanica-card-face arkanica-card-front';
-        front.innerHTML = `<img src="${cardData.img}" alt="${cardData.name}" title="${cardData.name}: ${cardData.archetype}">`;
+        // Añadido loading="lazy" y decoding="async" para acelerar la carga de imágenes
+        front.innerHTML = `<img src="${cardData.img}" alt="${cardData.name}" title="${cardData.name}: ${cardData.archetype}" loading="lazy" decoding="async">`;
 
         card.appendChild(back);
         card.appendChild(front);
