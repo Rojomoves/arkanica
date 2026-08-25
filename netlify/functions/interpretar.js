@@ -18,8 +18,7 @@ exports.handler = async function(event, context) {
     
     const prompt = `Actúa como maestro de tarot. Analiza esta tirada de "${spreadTitle}":\n${cardsText}\nEscribe una síntesis profunda en un solo bloque de texto con etiquetas <p>.`;
 
-    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
-    const apiResponse = await fetch(endpoint, {
+   const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${apiKey}`;
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
