@@ -1353,16 +1353,14 @@
     }
   }
 
-  /* GENERADOR DE INTERPRETACIÓN CON IA SEGURA (GEMINI VIA NETLIFY FUNCTION) */
+  /* GENERADOR DE INTERPRETACIÓN CON IA OPTIMIZADA */
   async function generateGenerativeInterpretation() {
     const config = getCurrentSpreadConfig();
     
-    // Mensaje de carga mientras la IA sintoniza las cartas
     masterTextContent.innerHTML = "<em>El oráculo está sintonizando las energías de tus cartas...</em>";
     masterBox.style.display = 'block';
 
     try {
-      // Llamada segura a tu Netlify Function en el backend
       const response = await fetch('/.netlify/functions/interpretar', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -1374,16 +1372,14 @@
 
       const data = await response.json();
 
-      if (data.interpretacion) {
+      if (response.ok && data.interpretacion) {
         masterTextContent.innerHTML = data.interpretacion;
       } else {
-        throw new Error('Respuesta vacía del oráculo');
+        throw new Error(data.error || 'Respuesta vacía del oráculo');
       }
 
     } catch (error) {
       console.error("Error de conexión con la IA:", error);
-      
-      // Sistema de respaldo por si falla la red (Fallback local)
       masterTextContent.innerHTML = `Tras más de treinta años interpretando los arcanos, esta tirada de ${config.title} nos muestra un camino de evolución muy claro. La energía de ${selectedCards[0].name} marca tu punto de partida, guiándote hacia una nueva perspectiva. Confía en tu intuición y da el paso con absoluta confianza.`;
     }
   }
