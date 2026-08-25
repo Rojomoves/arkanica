@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arkanica — Sesión Privada con el Oráculo</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500&display=swap');
+
+  :root {
+    --bg: #07070b;
+    --surface: #0f0e17;
+    --surface-hover: #161522;
+    --gold: #dfb15b;
+    --gold-dim: #947437;
+    --gold-light: #f3d89d;
+    --text-main: #f4f2ee;
+    --text-muted: #8c8896;
+    --line: rgba(223, 177, 91, 0.2);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    /* NEBULOSAS Y CAMPO DE ESTRELLAS EFICIENTE POR CSS (CERO CARGA DE JS) */
+    background-image: 
+      radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+      radial-gradient(2px 2px at 40px 70px, #ffffff, rgba(0,0,0,0)),
+      radial-gradient(1px 1px at 90px 40px, #ffffff, rgba(0,0,0,0)),
+      radial-gradient(2px 2px at 160px 120px, #dfb15b, rgba(0,0,0,0)),
+      radial-gradient(1px 1px at 230px 200px, #ffffff, rgba(0,0,0,0)),
+      radial-gradient(circle at 20% 15%, rgba(100, 60, 150, 0.08) 0%, transparent 40%),
+      radial-gradient(circle at 80% 85%, rgba(223, 177, 91, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 50% -20%, rgba(223, 177, 91, 0.08) 0%, transparent 60%);
+    background-repeat: repeat;
+    background-size: 350px 350px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Inter', sans-serif;
+    color: var(--text-main);
+    padding: 30px 16px;
+    overflow-x: hidden;
+  }
+
+  header {
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 16px;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    letter-spacing: 0.08em;
+    color: var(--gold);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  /* CARRUSEL DE AUDIO TÁCTIL (SINTONIZA) */
+  .audio-carousel {
+    background: rgba(223, 177, 91, 0.06);
+    border: 1px solid var(--gold-dim);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    color: var(--gold);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    touch-action: pan-y;
+    user-select: none;
+  }
+
+  .audio-carousel:hover {
+    background: rgba(223, 177, 91, 0.12);
+    border-color: var(--gold);
+  }
+
+  .audio-arrow-btn {
+    background: none;
+    border: none;
+    color: var(--gold);
+    cursor: pointer;
+    font-size: 14px;
+    padding: 0 4px;
+    transition: transform 0.2s;
+  }
+
+  .audio-arrow-btn:hover {
+    transform: scale(1.2);
+    color: var(--gold-light);
+  }
+
+  .audio-label-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+  }
+
+  .user-badge {
+    font-size: 11px;
+    color: var(--text-muted);
+    border-right: 1px solid var(--line);
+    padding-right: 12px;
+    white-space: nowrap;
+  }
+
+  .crystals-badge {
+    background: rgba(223, 177, 91, 0.08);
+    border: 1px solid var(--gold-dim);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+  }
+
+  .back-link {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.3s;
+    white-space: nowrap;
+  }
+
+  .back-link:hover {
+    color: var(--gold);
+  }
+
+  .chat-container {
+    width: 100%;
+    max-width: 900px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 32px 24px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .chat-header h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    margin: 0 0 6px;
+    color: var(--text-main);
+    font-weight: 400;
+  }
+
+  .chat-header p {
+    font-size: 12.5px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .chat-messages {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-height: 380px;
+    overflow-y: auto;
+    padding-right: 8px;
+  }
+
+  .message {
+    padding: 14px 16px;
+    border-radius: 6px;
+    font-size: 12.5px;
+    line-height: 1.6;
+    max-width: 92%;
+  }
+
+  .message.ai {
+    background: rgba(223, 177, 91, 0.04);
+    border: 1px solid var(--line);
+    color: var(--text-main);
+    align-self: flex-start;
+  }
+
+  .message.user {
+    background: var(--surface-hover);
+    border: 1px solid rgba(255,255,255,0.05);
+    color: var(--text-main);
+    align-self: flex-end;
+  }
+
+  .revealed-card-inline {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: rgba(0,0,0,0.4);
+    border: 1px solid var(--gold-dim);
+    padding: 12px;
+    border-radius: 6px;
+    margin-top: 10px;
+  }
+
+  .mini-card-preview {
+    width: 55px;
+    height: 90px;
+    background: linear-gradient(170deg, #171622 0%, #0d0c14 100%);
+    border: 1px solid var(--gold);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4px;
+    flex-shrink: 0;
+  }
+
+  .mini-card-symbol {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    color: var(--gold);
+  }
+
+  .mini-card-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 8.5px;
+    color: var(--text-main);
+  }
+
+  .card-interpretation {
+    font-size: 11.5px;
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  .chat-input-area {
+    display: flex;
+    gap: 10px;
+    margin-top: 6px;
+  }
+
+  .chat-input {
+    flex: 1;
+    background: rgba(0,0,0,0.4);
+    border: 1px solid var(--line);
+    color: var(--text-main);
+    padding: 12px 14px;
+    border-radius: 4px;
+    font-size: 12.5px;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .chat-input:focus {
+    outline: none;
+    border-color: var(--gold);
+  }
+
+  .send-btn {
+    background: var(--gold);
+    color: var(--bg);
+    border: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 10.5px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 0 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+    white-space: nowrap;
+  }
+
+  .send-btn:hover {
+    background: var(--gold-light);
+  }
+
+  .store-section {
+    margin-top: 20px;
+    border-top: 1px solid var(--line);
+    padding-top: 20px;
+  }
+
+  .store-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    color: var(--gold);
+    margin-bottom: 14px;
+    letter-spacing: 0.03em;
+  }
+
+  .packs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+
+  .pack-card {
+    background: linear-gradient(145deg, #13121b 0%, #0a0910 100%);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 18px 14px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    position: relative;
+  }
+
+  .pack-card.featured {
+    border-color: var(--gold);
+    background: linear-gradient(145deg, #1c1926 0%, #0e0d16 100%);
+    box-shadow: 0 10px 30px rgba(223, 177, 91, 0.15);
+  }
+
+  .popular-badge {
+    position: absolute;
+    top: -10px;
+    background: var(--gold);
+    color: var(--bg);
+    font-size: 8.5px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 10px;
+  }
+
+  .pack-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-3px);
+  }
+
+  .pack-info {
+    margin-bottom: 14px;
+  }
+
+  .pack-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-main);
+    margin-bottom: 3px;
+  }
+
+  .pack-amount {
+    font-size: 11.5px;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+  }
+
+  .pack-btn {
+    background: transparent;
+    border: 1px solid var(--gold-dim);
+    color: var(--gold);
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    padding: 8px 16px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+  }
+
+  .pack-card.featured .pack-btn {
+    background: var(--gold);
+    color: var(--bg);
+    border-color: var(--gold);
+    font-weight: 600;
+  }
+
+  .pack-btn:hover {
+    background: var(--gold);
+    color: var(--bg);
+    border-color: var(--gold);
+  }
+
+  @media (max-width: 768px) {
+    body { padding: 16px 10px; }
+    .packs-grid { grid-template-columns: 1fr; gap: 12px; }
+    header { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .header-right { width: 100%; justify-content: space-between; }
+    .chat-container { padding: 20px 14px; }
+    .revealed-card-inline { flex-direction: column; align-items: flex-start; gap: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Elemento de audio HTML5 -->
+<audio id="ambientAudio" loop>
+  <source src="" type="audio/mpeg">
+</audio>
+
+<header>
+  <a href="../index.html" class="logo">Arkanica</a>
+  <div class="header-right">
+    <!-- CARRUSEL DE AUDIO CON SOPORTE TÁCTIL (SWIPE) Y FLECHAS -->
+    <div class="audio-carousel" id="audioCarousel" title="Desliza o usa las flechas para sintonizar">
+      <button class="audio-arrow-btn" onclick="changeAudioTrack(-1); event.stopPropagation();" title="Pista anterior">‹</button>
+      <div class="audio-label-container" onclick="changeAudioTrack(1)">
+        <span>🎵 Sintoniza:</span> <strong id="soundLabel" style="color: var(--text-main);">Silencio</strong>
+      </div>
+      <button class="audio-arrow-btn" onclick="changeAudioTrack(1); event.stopPropagation();" title="Pista siguiente">›</button>
+    </div>
+
+    <div class="user-badge" id="userBadge">Usuario: </div>
+    <div class="crystals-badge" id="crystalsDisplay">
+      💎 <span id="crystalCount">0</span> Cristales
+    </div>
+    <a href="../index.html" class="back-link">← Volver</a>
+  </div>
+</header>
+
+<div class="chat-container">
+  <div class="chat-header">
+    <h1>Espacio de Revelación y Profundización</h1>
+    <p>Cada consulta al oráculo consume <strong>3 cristales</strong>. Tu energía se renueva automáticamente con 7 cristales de cortesía cada 24 horas, o puedes recargar tu cuenta al instante para mantener la claridad sin pausas.</p>
+  </div>
+
+  <div class="chat-messages" id="chatMessages">
+    <div class="message ai">
+      Saludos, alma en búsqueda. He sintonizado con tu energía. Escribe tu dilema o reflexión más íntima y descifra la respuesta que el oráculo tiene reservada para ti.
+    </div>
+  </div>
+
+  <div class="chat-input-area" id="inputArea">
+    <input type="text" id="userInput" class="chat-input" placeholder="Escribe tu consulta o dilema aquí..." onkeypress="handleKeyPress(event)">
+    <button class="send-btn" id="sendBtn" onclick="sendUserMessage()">Consultar (3 💎)</button>
+  </div>
+
+  <div class="store-section">
+    <div class="store-title">✦ Recarga tus Cristales de Claridad</div>
+    <div class="packs-grid">
+      
+      <!-- Pack 1 -->
+      <div class="pack-card">
+        <div class="pack-info">
+          <div class="pack-name">Chispa Astral</div>
+          <div class="pack-amount">15 Cristales</div>
+        </div>
+        <button class="pack-btn" onclick="buyPack(15, 'Chispa Astral', '3.99 €')">3.99 €</button>
+      </div>
+      
+      <!-- Pack 2 (Destacado / Más Popular) -->
+      <div class="pack-card featured">
+        <div class="popular-badge">Más Elegido</div>
+        <div class="pack-info">
+          <div class="pack-name">Esencia Eterna</div>
+          <div class="pack-amount">40 Cristales</div>
+        </div>
+        <button class="pack-btn" onclick="buyPack(40, 'Esencia Eterna', '7.99 €')">7.99 €</button>
+      </div>
+
+      <!-- Pack 3 -->
+      <div class="pack-card">
+        <div class="pack-info">
+          <div class="pack-name">Océano Místico</div>
+          <div class="pack-amount">100 Cristales</div>
+        </div>
+        <button class="pack-btn" onclick="buyPack(100, 'Océano Místico', '14.99 €')">14.99 €</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  /* =========================================================
+     CARRUSEL DE AUDIO AMBIENTAL CON SOPORTE SWIPE (MÓVIL)
+     ========================================================= */
+  const audioEl = document.getElementById('ambientAudio');
+  audioEl.volume = 0.35;
+
+  const audioStates = [
+    { label: "Silencio", src: null },
+    { label: "Cuencos", src: "../assets/cuencos-tibetanos.mp3" },
+    { label: "Lluvia", src: "../assets/lluvia.mp3" },
+    { label: "Meditación", src: "../assets/meditacion.mp3" }
+  ];
+
+  let currentAudioIndex = 0;
+
+  function changeAudioTrack(direction) {
+    currentAudioIndex = (currentAudioIndex + direction + audioStates.length) % audioStates.length;
+    const currentState = audioStates[currentAudioIndex];
+    
+    document.getElementById('soundLabel').textContent = currentState.label;
+
+    if (currentState.src === null) {
+      audioEl.pause();
+      audioEl.currentTime = 0;
+    } else {
+      audioEl.src = currentState.src;
+      audioEl.play().catch(err => {
+        console.log("Reproducción bloqueada por el navegador:", err);
+      });
+    }
+  }
+
+  // Detección de gestos de deslizamiento (Swipe) en el carrusel para móviles
+  const audioCarousel = document.getElementById('audioCarousel');
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  audioCarousel.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+  }, {passive: true});
+
+  audioCarousel.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipeGesture();
+  }, {passive: true});
+
+  function handleSwipeGesture() {
+    const swipeThreshold = 30;
+    if (touchEndX < touchStartX - swipeThreshold) {
+      changeAudioTrack(1);
+    } else if (touchEndX > touchStartX + swipeThreshold) {
+      changeAudioTrack(-1);
+    }
+  }
+
+  let username = localStorage.getItem('arkanica_user');
+  if (!username) {
+    username = prompt("Introduce tu nombre o correo para guardar tus cristales acumulados:") || "Viajero_" + Math.floor(Math.random()*1000);
+    localStorage.setItem('arkanica_user', username);
+  }
+  document.getElementById('userBadge').textContent = `Alma: ${username}`;
+
+  const storageKeyCrystals = `arkanica_crystals_${username}`;
+  const storageKeyLastTime = `arkanica_last_regen_${username}`;
+
+  const REGEN_AMOUNT = 7;
+  const REGEN_INTERVAL_MS = 24 * 60 * 60 * 1000;
+  const MAX_CAPACITY = 30;
+
+  let crystals = parseInt(localStorage.getItem(storageKeyCrystals));
+  let lastRegenTime = parseInt(localStorage.getItem(storageKeyLastTime));
+  const now = Date.now();
+
+  if (isNaN(crystals) || isNaN(lastRegenTime)) {
+    crystals = 10;
+    lastRegenTime = now;
+    localStorage.setItem(storageKeyCrystals, crystals);
+    localStorage.setItem(storageKeyLastTime, lastRegenTime);
+  } else {
+    const elapsed = now - lastRegenTime;
+    if (elapsed > 0) {
+      const periodsPassed = Math.floor(elapsed / REGEN_INTERVAL_MS);
+      if (periodsPassed > 0) {
+        let addedCrystals = periodsPassed * REGEN_AMOUNT;
+        crystals = Math.min(MAX_CAPACITY, crystals + addedCrystals);
+        lastRegenTime = lastRegenTime + (periodsPassed * REGEN_INTERVAL_MS);
+        localStorage.setItem(storageKeyCrystals, crystals);
+        localStorage.setItem(storageKeyLastTime, lastRegenTime);
+      }
+    }
+  }
+
+  updateCrystalDisplay();
+
+  const fullTarotDeck = [
+    { symbol: '0', name: 'El Loco', archetype: 'Es momento de dar el salto al vacío sin miedo al qué dirán.' },
+    { symbol: 'I', name: 'El Mago', archetype: 'Tienes todos los recursos sobre la mesa para materializarlo.' },
+    { symbol: 'II', name: 'La Sacerdotisa', archetype: 'Tu intuición ya conoce la respuesta; guárdate el secreto un momento.' },
+    { symbol: 'VI', name: 'Los Enamorados', archetype: 'Te encuentras ante una encrucijada donde el corazón debe decidir.' },
+    { symbol: 'X', name: 'La Rueda', archetype: 'Los ciclos cambian; lo que hoy duele, mañana se transforma.' },
+    { symbol: 'XIII', name: 'La Muerte', archetype: 'Es indispensable cortar de raíz lo que ya no vibra contigo.' },
+    { symbol: 'XVII', name: 'La Estrella', archetype: 'La claridad tras la tormenta empieza a iluminar tu camino.' },
+    { symbol: 'XIX', name: 'El Sol', archetype: 'Vuelve la alegría, la autenticidad y la resolución luminosa.' }
+  ];
+
+  const chatMessages = document.getElementById('chatMessages');
+  const userInput = document.getElementById('userInput');
+  const crystalCountSpan = document.getElementById('crystalCount');
+
+  function updateCrystalDisplay() {
+    crystalCountSpan.textContent = crystals;
+    localStorage.setItem(storageKeyCrystals, crystals);
+  }
+
+  function buyPack(amount, packName, price) {
+    crystals += amount;
+    updateCrystalDisplay();
+    alert(`¡Recarga exitosa del pack "${packName}" (${price}) en Arkanica!\nSe han añadido ${amount} cristales a tu cuenta.`);
+  }
+
+  function handleKeyPress(e) {
+    if (e.key === 'Enter') sendUserMessage();
+  }
+
+  function sendUserMessage() {
+    const text = userInput.value.trim();
+    if (!text) return;
+
+    const COST = 3;
+    if (crystals < COST) {
+      alert(`Has agotado tus cristales disponibles. Espera a la regeneración diaria de cortesía o adquiere un pack en la tienda para continuar tu lectura.`);
+      return;
+    }
+
+    crystals -= COST;
+    updateCrystalDisplay();
+
+    appendMessage(text, 'user');
+    userInput.value = '';
+
+    setTimeout(() => {
+      generateAIResponse(text);
+    }, 800);
+  }
+
+  function appendMessage(text, sender, extraHTML = '') {
+    const div = document.createElement('div');
+    div.className = `message ${sender}`;
+    div.innerHTML = text + extraHTML;
+    chatMessages.appendChild(div);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  function generateAIResponse(userText) {
+    const randomCard = fullTarotDeck[Math.floor(Math.random() * fullTarotDeck.length)];
+
+    const aiText = `Analizando tu consulta sobre *"(${userText})"*. El oráculo ha desvelado la siguiente clave para tu camino:`;
+
+    const cardHTML = `
+      <div class="revealed-card-inline">
+        <div class="mini-card-preview">
+          <div class="mini-card-symbol">${randomCard.symbol}</div>
+          <div class="mini-card-name">${randomCard.name}</div>
+        </div>
+        <div>
+          <strong style="color: var(--gold); font-family: 'Cormorant Garamond', serif; font-size: 15px;">${randomCard.name}</strong>
+          <p class="card-interpretation">${randomCard.archetype}</p>
+        </div>
+      </div>
+    `;
+
+    appendMessage(aiText, 'ai', cardHTML);
+  }
+</script>
+
+</body>
+</html>

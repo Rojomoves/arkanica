@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arkanica — Tarot Interactivo y Claridad Profunda</title>
+<!-- Script oficial de Calendly para el popup -->
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+<script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500&display=swap');
+
+  :root {
+    --bg: #07070b;
+    --surface: #0f0e17;
+    --surface-hover: #161522;
+    --gold: #dfb15b;
+    --gold-dim: #947437;
+    --gold-light: #f3d89d;
+    --text-main: #f4f2ee;
+    --text-muted: #8c8896;
+    --line: rgba(223, 177, 91, 0.2);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    background-image: 
+      radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+      radial-gradient(2px 2px at 40px 70px, #ffffff, rgba(0,0,0,0)),
+      radial-gradient(1px 1px at 90px 40px, #ffffff, rgba(0,0,0,0)),
+      radial-gradient(2px 2px at 160px 120px, #dfb15b, rgba(0,0,0,0)),
+      radial-gradient(1px 1px at 230px 200px, #ffffff, rgba(0,0,0,0)),
+      radial-gradient(circle at 20% 15%, rgba(100, 60, 150, 0.08) 0%, transparent 40%),
+      radial-gradient(circle at 80% 85%, rgba(223, 177, 91, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 50% -20%, rgba(223, 177, 91, 0.08) 0%, transparent 60%);
+    background-repeat: repeat;
+    background-size: 350px 350px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Inter', sans-serif;
+    color: var(--text-main);
+    padding: 30px 16px;
+    overflow-x: hidden;
+  }
+
+  header {
+    width: 100%;
+    max-width: 950px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 16px;
+    gap: 12px;
+  }
+
+  .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .audio-carousel {
+    background: rgba(223, 177, 91, 0.06);
+    border: 1px solid var(--gold-dim);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    color: var(--gold);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    touch-action: pan-y;
+    user-select: none;
+  }
+
+  .audio-carousel:hover {
+    background: rgba(223, 177, 91, 0.12);
+    border-color: var(--gold);
+  }
+
+  .audio-arrow-btn {
+    background: none;
+    border: none;
+    color: var(--gold);
+    cursor: pointer;
+    font-size: 14px;
+    padding: 0 4px;
+    transition: transform 0.2s;
+  }
+
+  .audio-arrow-btn:hover {
+    transform: scale(1.2);
+    color: var(--gold-light);
+  }
+
+  .audio-label-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+  }
+
+  .crystals-badge {
+    background: rgba(223, 177, 91, 0.08);
+    border: 1px solid var(--gold-dim);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    transition: background 0.3s;
+    white-space: nowrap;
+  }
+
+  .crystals-badge:hover {
+    background: rgba(223, 177, 91, 0.15);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 16px;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+  }
+
+  .nav-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .nav-links a:hover {
+    color: var(--gold);
+  }
+
+  .hero-container {
+    text-align: center;
+    max-width: 650px;
+    margin-bottom: 24px;
+    padding: 0 8px;
+  }
+
+  .arkanica-eyebrow {
+    font-size: 9.5px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+
+  .arkanica-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px;
+    font-weight: 400;
+    color: var(--text-main);
+    margin: 0 0 8px;
+    line-height: 1.2;
+  }
+
+  .arkanica-sub {
+    font-size: 12.5px;
+    color: var(--text-muted);
+    font-weight: 300;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .categories-nav {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 14px;
+    justify-content: center;
+    max-width: 950px;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .category-tab {
+    background: rgba(15, 14, 23, 0.6);
+    border: 1px solid var(--line);
+    color: var(--text-muted);
+    font-family: 'Inter', sans-serif;
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .category-tab.active {
+    background: rgba(223, 177, 91, 0.1);
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  .spread-selector {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    justify-content: flex-start;
+    max-width: 950px;
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    scrollbar-width: none;
+  }
+
+  .spread-selector::-webkit-scrollbar {
+    display: none;
+  }
+
+  .spread-btn {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    color: var(--text-muted);
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 10px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .spread-btn:hover {
+    border-color: var(--gold-dim);
+    color: var(--text-main);
+    background: var(--surface-hover);
+  }
+
+  .spread-btn.active {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: rgba(223, 177, 91, 0.06);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  }
+
+  .spread-info-card {
+    width: 100%;
+    max-width: 950px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--gold);
+    border-radius: 6px;
+    padding: 18px 20px;
+    margin-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .spread-info-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    color: var(--gold);
+    margin: 0;
+    letter-spacing: 0.03em;
+  }
+
+  .spread-info-desc {
+    font-size: 12.5px;
+    color: var(--text-main);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .spread-positions-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 4px;
+    border-top: 1px solid rgba(223, 177, 91, 0.15);
+    padding-top: 10px;
+  }
+
+  .spread-positions-grid.grid-10 {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  .position-item {
+    font-size: 11px;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+
+  .position-item strong {
+    color: var(--gold-light);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12.5px;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .table-container {
+    width: 100%;
+    max-width: 950px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 28px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    margin-bottom: 24px;
+  }
+
+  .deck-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 24px;
+    gap: 12px;
+    min-height: 160px;
+    position: relative;
+    touch-action: pan-y;
+  }
+
+  .deck-instruction {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+    font-style: italic;
+    text-align: center;
+    padding: 0 10px;
+  }
+
+  .fan-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    height: 135px;
+    width: 100%;
+    max-width: 650px;
+    position: relative;
+    perspective: 1000px;
+  }
+
+  .fan-card {
+    width: 62px;
+    height: 105px;
+    background: linear-gradient(135deg, #121119 0%, #08070b 100%);
+    border: 1px solid var(--gold-dim);
+    border-radius: 4px;
+    position: absolute;
+    cursor: pointer;
+    transform-origin: bottom center;
+    transition: transform 0.25s ease, border-color 0.25s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+  }
+
+  .fan-card::before {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border: 1px solid rgba(223, 177, 91, 0.25);
+    border-radius: 2px;
+  }
+
+  .fan-card:hover {
+    transform: translateY(-16px) rotate(0deg) scale(1.08) !important;
+    border-color: var(--gold);
+    z-index: 100;
+  }
+
+  .arkanica-table {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    perspective: 1800px;
+    margin-bottom: 20px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    width: 100%;
+    padding: 10px 4px;
+    justify-content: flex-start;
+    scrollbar-width: thin;
+    scrollbar-color: var(--gold-dim) var(--surface);
+  }
+
+  .arkanica-table::-webkit-scrollbar {
+    height: 6px;
+  }
+  .arkanica-table::-webkit-scrollbar-thumb {
+    background: var(--gold-dim);
+    border-radius: 3px;
+  }
+
+  .arkanica-slot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .arkanica-card {
+    width: 85px;
+    height: 140px;
+    position: relative;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .arkanica-card.flipped {
+    transform: rotateY(180deg);
+  }
+
+  .arkanica-card:not(.flipped):hover {
+    transform: translateY(-3px) scale(1.02);
+  }
+
+  .arkanica-card-face {
+    position: absolute;
+    inset: 0;
+    border-radius: 5px;
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+  }
+
+  .arkanica-card-back {
+    background: linear-gradient(135deg, #121119 0%, #08070b 100%);
+    border: 1px solid var(--gold-dim);
+    padding: 5px;
+  }
+
+  .arkanica-card-back-inner {
+    width: 100%;
+    height: 100%;
+    border: 1px solid rgba(223, 177, 91, 0.3);
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .arkanica-card-back-inner::before {
+    content: '◆';
+    color: var(--gold);
+    font-size: 12px;
+    opacity: 0.7;
+  }
+
+  .arkanica-card-front {
+    background: linear-gradient(175deg, #171622 0%, #0d0c14 100%);
+    border: 1px solid var(--gold);
+    transform: rotateY(180deg);
+    padding: 6px 4px;
+    text-align: center;
+  }
+
+  .card-frame {
+    width: 100%;
+    height: 100%;
+    border: 1px solid rgba(223, 177, 91, 0.25);
+    border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 3px 2px;
+  }
+
+  .card-number-top {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 8px;
+    color: var(--gold-dim);
+    letter-spacing: 0.08em;
+  }
+
+  .card-center-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+  }
+
+  .arkanica-card-symbol {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .arkanica-card-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 9.5px;
+    color: var(--text-main);
+    font-weight: 500;
+  }
+
+  .arkanica-card-archetype {
+    font-size: 5.5px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    font-weight: 500;
+    line-height: 1.1;
+    border-top: 1px solid rgba(223, 177, 91, 0.15);
+    padding-top: 2px;
+    width: 100%;
+  }
+
+  .arkanica-slot-label {
+    font-size: 8px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 500;
+    text-align: center;
+    max-width: 85px;
+  }
+
+  .arkanica-hint {
+    font-size: 12.5px;
+    color: var(--gold);
+    opacity: 0.9;
+    font-style: italic;
+    font-family: 'Cormorant Garamond', serif;
+    min-height: 22px;
+    text-align: center;
+    margin-bottom: 12px;
+    padding: 0 10px;
+  }
+
+  .master-interpretation-box {
+    width: 100%;
+    background: linear-gradient(135deg, rgba(223, 177, 91, 0.07) 0%, rgba(15, 14, 23, 0.9) 100%);
+    border: 1px solid var(--gold);
+    border-radius: 6px;
+    padding: 24px;
+    margin-top: 16px;
+    display: none;
+    animation: fadeIn 0.6s ease forwards;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .master-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    color: var(--gold);
+    margin-bottom: 12px;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .master-text {
+    font-size: 13.5px;
+    color: var(--text-main);
+    line-height: 1.7;
+    margin: 0 0 16px;
+    font-style: italic;
+  }
+
+  .master-cta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(223, 177, 91, 0.2);
+    padding-top: 14px;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .master-cta span {
+    font-size: 11.5px;
+    color: var(--text-muted);
+  }
+
+  .arkanica-reset {
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--text-muted);
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 9px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .arkanica-reset:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: rgba(223, 177, 91, 0.05);
+  }
+
+  .section-card {
+    width: 100%;
+    max-width: 950px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+
+  .section-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    margin-top: 0;
+    margin-bottom: 8px;
+    color: var(--text-main);
+    font-weight: 400;
+  }
+
+  .section-card p {
+    font-size: 12.5px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 16px;
+    max-width: 600px;
+  }
+
+  .action-btn {
+    background: var(--gold);
+    color: var(--bg);
+    border: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 11px 22px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  .action-btn:hover {
+    background: var(--gold-light);
+  }
+
+  .booking-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 24px;
+    align-items: center;
+  }
+
+  .booking-benefits {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-left: 2px solid var(--gold-dim);
+    padding-left: 14px;
+    margin-top: 14px;
+  }
+
+  .benefit-item {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  .benefit-item strong {
+    color: var(--text-main);
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+  }
+
+  .booking-card-action {
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--line);
+    padding: 20px;
+    border-radius: 6px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    align-items: center;
+  }
+
+  .price-tag {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    color: var(--gold);
+  }
+
+  @media (max-width: 768px) {
+    body { padding: 16px 10px; }
+    header { margin-bottom: 24px; padding-bottom: 12px; }
+    .logo { font-size: 22px; }
+    .header-right { gap: 8px; }
+    .audio-carousel, .crystals-badge { padding: 5px 10px; font-size: 10px; }
+    .nav-links { gap: 12px; font-size: 9.5px; }
+    .arkanica-title { font-size: 26px; }
+    .arkanica-sub { font-size: 12px; }
+    .arkanica-card { width: 72px; height: 118px; }
+    .fan-card { width: 48px; height: 84px; }
+    .spread-positions-grid { grid-template-columns: 1fr; gap: 8px; }
+    .spread-positions-grid.grid-10 { grid-template-columns: repeat(2, 1fr); }
+    .booking-grid { grid-template-columns: 1fr; gap: 16px; }
+    .section-card { padding: 20px 16px; }
+    .table-container { padding: 20px 10px; }
+  }
+</style>
+</head>
+<body>
+
+<audio id="ambientAudio" loop>
+  <source src="" type="audio/mpeg">
+</audio>
+
+<header>
+  <a href="#" class="logo">Arkanica</a>
+  <div class="header-right">
+    <div class="audio-carousel" id="audioCarousel" title="Desliza o usa las flechas para sintonizar">
+      <button class="audio-arrow-btn" onclick="changeAudioTrack(-1); event.stopPropagation();" title="Pista anterior">‹</button>
+      <div class="audio-label-container" onclick="changeAudioTrack(1)">
+        <span>🎵 Sintoniza:</span> <strong id="soundLabel" style="color: var(--text-main);">Silencio</strong>
+      </div>
+      <button class="audio-arrow-btn" onclick="changeAudioTrack(1); event.stopPropagation();" title="Pista siguiente">›</button>
+    </div>
+
+    <a href="personalizada/personalizada.html" class="crystals-badge" title="Tus cristales de claridad">
+      💎 <span id="headerCrystalCount">0</span> Cristales
+    </a>
+    
+    <div class="nav-links">
+      <a href="#mesa">Lecturas</a>
+      <a href="#autor">Guía</a>
+      <a href="#reservas">Directo</a>
+    </div>
+  </div>
+</header>
+
+<div class="hero-container">
+  <div class="arkanica-eyebrow">Tu espacio de calma y claridad</div>
+  <h1 class="arkanica-title">Elige qué te gustaría consultar hoy</h1>
+  <p class="arkanica-sub">Selecciona una categoría y una tirada especializada para disipar tus dudas y guiar tus decisiones.</p>
+</div>
+
+<!-- Selector de Categorías -->
+<div class="categories-nav" id="categoriesNav">
+  <button class="category-tab active" onclick="switchCategory('romanticas', event)">💖 Románticas</button>
+  <button class="category-tab" onclick="switchCategory('espirituales', event)">✨ Espirituales</button>
+  <button class="category-tab" onclick="switchCategory('sombras', event)">🌑 Trabajo de Sombras</button>
+  <button class="category-tab" onclick="switchCategory('proyectos', event)">🎬 Escenario Principal</button>
+</div>
+
+<!-- Selector de Tiradas Dinámico -->
+<div class="spread-selector" id="spreadSelector"></div>
+
+<!-- Tarjeta Informativa -->
+<div class="spread-info-card" id="spreadInfoCard">
+  <h3 class="spread-info-title" id="infoTitle">Cargando...</h3>
+  <p class="spread-info-desc" id="infoDesc">Cargando...</p>
+  <div class="spread-positions-grid" id="infoPositions"></div>
+</div>
+
+<div class="table-container" id="mesa">
+  <div class="deck-section" id="deckSection">
+    <div class="deck-instruction" id="deckInstruction">Elige una carta del abanico para revelar la primera posición</div>
+    <div class="fan-container" id="fanContainer"></div>
+  </div>
+
+  <div class="arkanica-table" id="table"></div>
+  <p class="arkanica-hint" id="hint">Selecciona una carta del abanico superior</p>
+
+  <!-- Caja de Interpretación Magistral Segura con Gemini -->
+  <div class="master-interpretation-box" id="masterBox">
+    <div class="master-title">✦ Síntesis Magistral del Oráculo</div>
+    <p class="master-text" id="masterTextContent"></p>
+    <div class="master-cta">
+      <span>¿Necesitas desentrañar un caso más personal?</span>
+      <button class="action-btn" onclick="window.location.href='personalizada/personalizada.html'">Profundizar en Sesión Privada</button>
+    </div>
+  </div>
+
+  <button class="arkanica-reset" id="reset" style="margin-top: 14px;">Barajar de nuevo</button>
+</div>
+
+<div class="section-card" id="autor">
+  <h3>¿Tienes una duda muy concreta o personal?</h3>
+  <p>Si las tiradas generales te han dado pistas pero necesitas profundizar con una sesión interactiva guiada por el oráculo, accede a nuestra sala privada en arkanica.app.</p>
+  <button class="action-btn" onclick="window.location.href='personalizada/personalizada.html'">Iniciar Sesión Profunda</button>
+</div>
+
+<div class="section-card" id="reservas">
+  <div class="booking-grid">
+    <div>
+      <h3>Reserva tu Sesión 1 a 1 en Directo</h3>
+      <p>Una conversación cercana cara a cara mediante videollamada para destrabar tu energía y trazar un plan estratégico claro.</p>
+      
+      <div class="booking-benefits">
+        <div class="benefit-item">
+          <strong>Videollamada Privada (30 min)</strong>
+          Atención completamente enfocada en tu caso particular.
+        </div>
+        <div class="benefit-item">
+          <strong>Selección Instantánea</strong>
+          El horario que mejor se adapte a tu agenda.
+        </div>
+      </div>
+    </div>
+
+    <div class="booking-card-action">
+      <div class="price-tag">Sesión Privada</div>
+      <p style="font-size: 12px; color: var(--text-muted); margin: 0;">Selecciona día y hora directamente en nuestro calendario oficial.</p>
+      <button class="action-btn" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/getbruma/30min'});return false;" style="width: 100%;">Abrir Calendario & Reservar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  let sfxAudioCtx = null;
+
+  function initSfxContext() {
+    if (!sfxAudioCtx) {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      sfxAudioCtx = new AudioCtx();
+    }
+    if (sfxAudioCtx.state === 'suspended') {
+      sfxAudioCtx.resume();
+    }
+  }
+
+  function playWoodSelectSound() {
+    try {
+      initSfxContext();
+      const now = sfxAudioCtx.currentTime;
+      const bufferSize = sfxAudioCtx.sampleRate * 0.08;
+      const buffer = sfxAudioCtx.createBuffer(1, bufferSize, sfxAudioCtx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
+      const noise = sfxAudioCtx.createBufferSource();
+      noise.buffer = buffer;
+      const filter = sfxAudioCtx.createBiquadFilter();
+      filter.type = 'bandpass';
+      filter.frequency.setValueAtTime(800, now);
+      filter.Q.setValueAtTime(3.0, now);
+      const gain = sfxAudioCtx.createGain();
+      gain.gain.setValueAtTime(0.12, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.07);
+      noise.connect(filter);
+      filter.connect(gain);
+      gain.connect(sfxAudioCtx.destination);
+      noise.start(now);
+      noise.stop(now + 0.08);
+    } catch(e) {}
+  }
+
+  function playCardFlipSound() {
+    try {
+      initSfxContext();
+      const now = sfxAudioCtx.currentTime;
+      const osc = sfxAudioCtx.createOscillator();
+      const gain = sfxAudioCtx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(120, now);
+      osc.frequency.exponentialRampToValueAtTime(40, now + 0.12);
+      gain.gain.setValueAtTime(0.18, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+      osc.connect(gain);
+      gain.connect(sfxAudioCtx.destination);
+      osc.start(now);
+      osc.stop(now + 0.13);
+      setTimeout(() => { playWoodSelectSound(); }, 60);
+    } catch(e) {}
+  }
+
+  const audioEl = document.getElementById('ambientAudio');
+  audioEl.volume = 0.35;
+
+  const audioStates = [
+    { label: "Silencio", src: null },
+    { label: "Cuencos", src: "assets/cuencos-tibetanos.mp3" },
+    { label: "Lluvia", src: "assets/lluvia.mp3" },
+    { label: "Meditación", src: "assets/meditacion.mp3" }
+  ];
+
+  let currentAudioIndex = 0;
+
+  function changeAudioTrack(direction) {
+    currentAudioIndex = (currentAudioIndex + direction + audioStates.length) % audioStates.length;
+    const currentState = audioStates[currentAudioIndex];
+    document.getElementById('soundLabel').textContent = currentState.label;
+    if (currentState.src === null) {
+      audioEl.pause();
+      audioEl.currentTime = 0;
+    } else {
+      audioEl.src = currentState.src;
+      audioEl.play().catch(err => { console.log("Audio bloqueado:", err); });
+    }
+  }
+
+  const audioCarousel = document.getElementById('audioCarousel');
+  let touchStartX = 0;
+  let touchEndX = 0;
+  audioCarousel.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; }, {passive: true});
+  audioCarousel.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    if (touchEndX < touchStartX - 30) changeAudioTrack(1);
+    else if (touchEndX > touchStartX + 30) changeAudioTrack(-1);
+  }, {passive: true});
+
+  let username = localStorage.getItem('arkanica_user');
+  if (username) {
+    let savedCrystals = localStorage.getItem(`arkanica_crystals_${username}`);
+    if (savedCrystals !== null) {
+      document.getElementById('headerCrystalCount').textContent = savedCrystals;
+    }
+  }
+
+  const fullTarotDeck = [
+    { symbol: '0', name: 'El Loco', archetype: 'Empieza algo nuevo sin miedo al qué dirán' },
+    { symbol: 'I', name: 'El Mago', archetype: 'Tienes todos los recursos sobre la mesa para triunfar' },
+    { symbol: 'II', name: 'La Sacerdotisa', archetype: 'Confía en tu intuición y guarda el secreto con calma' },
+    { symbol: 'III', name: 'La Emperatriz', archetype: 'Momento de bienestar, fertilidad y crecimiento' },
+    { symbol: 'IV', name: 'El Emperador', archetype: 'Pon orden estricto y toma el control de tu destino' },
+    { symbol: 'V', name: 'El Hierofante', archetype: 'Busca buenos consejos en la tradición y aprende' },
+    { symbol: 'VI', name: 'Los Enamorados', archetype: 'Te toca tomar una decisión vital desde el corazón' },
+    { symbol: 'VII', name: 'El Carro', archetype: 'Sigue adelante con decisión y firmeza indomable' },
+    { symbol: 'VIII', name: 'La Fuerza', archetype: 'Domina tus impulsos con paciencia y extrema dulzura' },
+    { symbol: 'IX', name: 'El Ermitaño', archetype: 'Tómate un respiro en solitario para hallar la luz interior' },
+    { symbol: 'X', name: 'La Rueda', archetype: 'Los ciclos cambian; la fortuna gira a tu favor' },
+    { symbol: 'XI', name: 'La Justicia', archetype: 'Todo se coloca rigurosamente en su lugar justo' },
+    { symbol: 'XII', name: 'El Colgado', archetype: 'Detente un instante y contempla la vida desde otro ángulo' },
+    { symbol: 'XIII', name: 'La Muerte', archetype: 'Cierra una etapa por completo para abrir otra superior' },
+    { symbol: 'XIV', name: 'La Templanza', archetype: 'Busca la alquimia de la calma y el equilibrio perfecto' },
+    { symbol: 'XV', name: 'El Diablo', archetype: 'Atención a las ataduras, dependencias u ocultamientos' },
+    { symbol: 'XVI', name: 'La Torre', archetype: 'El colapso de una falsa estructura que te libera por fin' },
+    { symbol: 'XVII', name: 'La Estrella', archetype: 'La esperanza y la fe vuelven a iluminar tu horizonte' },
+    { symbol: 'XVIII', name: 'La Luna', archetype: 'Navega la niebla de las ilusiones y los miedos nocturnos' },
+    { symbol: 'XIX', name: 'El Sol', archetype: 'Plenitud radiante, alegría y claridad absoluta' },
+    { symbol: 'XX', name: 'El Juicio', archetype: 'Un despertar kármico y una gran llamada a trascender' },
+    { symbol: 'XXI', name: 'El Mundo', archetype: 'Realización total; has completado una gran maestría' },
+    { symbol: 'As 🪙', name: 'As de Oros', archetype: 'Semilla firme de prosperidad material o laboral' },
+    { symbol: '2 🪙', name: 'Dos de Oros', archetype: 'Haciendo malabares para equilibrar tus prioridades' },
+    { symbol: '3 🪙', name: 'Tres de Oros', archetype: 'La maestría compartida y el esfuerzo engranado' },
+    { symbol: '4 🪙', name: 'Cuatro de Oros', archetype: 'Exceso de control; aprende a abrir las manos y soltar' },
+    { symbol: '10 🪙', name: 'Diez de Oros', archetype: 'Legado, estabilidad y raíz familiar profunda' },
+    { symbol: 'As 🍷', name: 'As de Copas', archetype: 'Manantial puro de amor y apertura emocional' },
+    { symbol: '2 🍷', name: 'Dos de Copas', archetype: 'Pacto de almas, sintonía y espejo mutuo' },
+    { symbol: '3 🍷', name: 'Tres de Copas', archetype: 'Comunión, alegría y celebración con los afines' },
+    { symbol: '5 🍷', name: 'Cinco de Copas', archetype: 'Lamentando lo que se derrumbó sin ver lo que queda' },
+    { symbol: '10 🍷', name: 'Diez de Copas', archetype: 'Felicidad hogareña y paz emocional absoluta' },
+    { symbol: 'As ⚔️', name: 'As de Espadas', archetype: 'Verdad incisiva que corta la confusión de raíz' },
+    { symbol: '2 ⚔️', name: 'Dos de Espadas', archetype: 'Vendaje en los ojos ante una elección inevitable' },
+    { symbol: '3 ⚔️', name: 'Tres de Espadas', archetype: 'Dolor punzante que purifica y abre los ojos' },
+    { symbol: '8 ⚔️', name: 'Ocho de Espadas', archetype: 'Prisión mental construida por tus propios temores' },
+    { symbol: 'As 🔥', name: 'As de Bastos', archetype: 'Pulsión creativa, deseo y fuego puro de arranque' },
+    { symbol: '3 🔥', name: 'Tres de Bastos', archetype: 'Horizonte expandido esperando barcos lejanos' },
+    { symbol: '8 🔥', name: 'Ocho de Bastos', archetype: 'Aceleración súbita; los acontecimientos se precipitan' }
+  ];
+
+  const categoriesData = {
+    romanticas: {
+      name: "Románticas",
+      spreads: [
+        {
+          key: "thriller",
+          title: "Thriller Romántico",
+          description: 'Diseñada con precisión quirúrgica para desentrañar la incertidumbre de los "casi algo" (situationships). Si los mensajes contradictorios te generan suspense y dudas, esta lectura investiga el trasfondo psicológico de la conexión.',
+          slots: [
+            { label: '1. La Pista Falsa', desc: 'La justificación o autoengaño que sostienes para calmar la inquietud.' },
+            { label: '2. El Móvil Oculto', desc: 'Las verdaderas intenciones que la otra persona disimula.' },
+            { label: '3. La Resolución', desc: 'El movimiento estratégico clave para recuperar tu soberanía emocional.' }
+          ]
+        },
+        {
+          key: "masks",
+          title: "Baile de Máscaras",
+          description: 'Una inmersión profunda en los roles y personajes que adoptamos en pareja. Ideal para destapar dinámicas donde la actuación ha reemplazado a la absoluta autenticidad.',
+          slots: [
+            { label: '1. El Vestuario', desc: 'El personaje o careta que proyectas para encajar.' },
+            { label: '2. La Coreografía', desc: 'El mecanismo de defensa o bucle relacional en el que incurren.' },
+            { label: '3. El Rostro Real', desc: 'La verdad inquebrantable si se despojaran de todo artificio.' }
+          ]
+        },
+        {
+          key: "shadow_romance",
+          title: "Pacto en la Sombra",
+          description: 'Explora aquellas pasiones magnéticas que escapan al control racional. Ideal para vínculos intensos donde la química se entrelaza con el vértigo y el riesgo.',
+          slots: [
+            { label: '1. El Veneno', desc: 'El factor tóxico o sombra particular que corroe la armonía.' },
+            { label: '2. El Hechizo', desc: 'El imán irracional que los mantiene fuertemente atados.' },
+            { label: '3. El Antídoto', desc: 'El límite o acto de lucidez necesario para romper el hechizo.' }
+          ]
+        }
+      ]
+    },
+    espirituales: {
+      name: "Espirituales",
+      spreads: [
+        {
+          key: "time_alt",
+          title: "Salto en el Tiempo",
+          description: 'Un mapa oracular de 10 elecciones estratégicas que proyectan tus posibles futuros según el camino que decidas transitar. Si tras este recorrido panorámico deseas una lectura hiperpersonalizada, recuerda acudir a nuestra sección privada.',
+          slots: [
+            { label: '1. Elección Origen', desc: 'El impulso inicial en este cruce.' },
+            { label: '2. Desvío Prudente', desc: 'La alternativa de conservar cautela.' },
+            { label: '3. Apuesta Audaz', desc: 'El riesgo calculado y su consecuencia.' },
+            { label: '4. Corte Pasado', desc: 'El impacto de soltar viejos lastres.' },
+            { label: '5. Inversión', desc: 'El enfoque en tus propios recursos.' },
+            { label: '6. Claridad', desc: 'La fría luz de la razón ordenando.' },
+            { label: '7. Alianza', desc: 'El peso de sumar fuerzas.' },
+            { label: '8. Gran Pausa', desc: 'El beneficio de detener la marcha.' },
+            { label: '9. Salto Vacío', desc: 'La fe ciega transformada en avance.' },
+            { label: '10. Destino', desc: 'El gran horizonte al que conduces.' }
+          ]
+        },
+        {
+          key: "past_lives",
+          title: "Vidas Pasadas",
+          description: 'Desvela los hilos invisibles de memorias ancestrales que continúan operando en tu subconsciente, condicionando tus bloqueos actuales o dotándote de dones latentes.',
+          slots: [
+            { label: '1. La Raíz Kármica', desc: 'El eco del pasado que sigue resonando en tu presente.' },
+            { label: '2. La Prueba Pendiente', desc: 'El examen evolutivo que esta encarnación te pide superar.' },
+            { label: '3. La Llave de Liberación', desc: 'El entendimiento espiritual que disuelve la cadena.' }
+          ]
+        }
+      ]
+    },
+    sombras: {
+      name: "Trabajo de Sombras",
+      spreads: [
+        {
+          key: "mirror",
+          title: "El Espejo Fragmentado",
+          description: 'Una herramienta de autoconocimiento radical para iluminar puntos ciegos de tu personalidad y rescatar talentos valiosos que has mantenido reprimidos.',
+          slots: [
+            { label: '1. El Punto Ciego', desc: 'Lo que proyectas afuera y te niegas a admitir.' },
+            { label: '2. Sombra Reprimida', desc: 'El temor o instinto acorralado que drena energía.' },
+            { label: '3. El Don Oculto', desc: 'El potencial luminoso listo para ser integrado.' }
+          ]
+        },
+        {
+          key: "inner_voice",
+          title: "La Voz Interior",
+          description: 'Diseñada para apagar el bullicio de opiniones ajenas y la sobreanalización mental, permitiéndote escuchar la respuesta inequívoca de tu intuición.',
+          slots: [
+            { label: '1. Ruido Externo', desc: 'Expectativas y mandatos que confunden tu criterio.' },
+            { label: '2. Duda Analítica', desc: 'El laberinto lógico donde tu mente te sabotea.' },
+            { label: '3. Certeza Instintiva', desc: 'El dictamen puro y sereno de tu voz interior.' }
+          ]
+        },
+        {
+          key: "ghost",
+          title: "Enfrentando al Fantasma",
+          description: 'Una confrontación valiente y directa con el origen de esa inseguridad o miedo paralizante que frena tu evolución personal.',
+          slots: [
+            { label: '1. Semilla Miedo', desc: 'El origen exacto donde se instaló la inseguridad.' },
+            { label: '2. Forma Actual', desc: 'El modo en que condiciona tus decisiones de hoy.' },
+            { label: '3. Acto de Valor', desc: 'La resolución consciente que disipa el fantasma.' }
+          ]
+        }
+      ]
+    },
+    proyectos: {
+      name: "Escenario Principal",
+      spreads: [
+        {
+          key: "foco",
+          title: "El Foco Principal",
+          description: 'Indispensable cuando te sientes desbordado por exigencias externas, recupera el timón de tu dirección y alinea tu energía con lo verdaderamente esencial.',
+          slots: [
+            { label: '1. Base Invisible', desc: 'Lo que requiere intimidad y blindaje en este momento.' },
+            { label: '2. Talento Expuesto', desc: 'El recurso brillante que debes proyectar al exterior.' },
+            { label: '3. Triunfo Coherente', desc: 'La cosecha tangible al asumir el mando.' }
+          ]
+        },
+        {
+          key: "backstage",
+          title: "Entre Bambalinas",
+          description: 'Auditoría estratégica para examinar con rigor los cimientos, recursos y preparativos invisibles antes de exponer un proyecto u obra ante el público.',
+          slots: [
+            { label: '1. Solidez Estructural', desc: 'El estado real de los cimientos y recursos.' },
+            { label: '2. Factor Olvidado', desc: 'Ese detalle sutil que marcará la diferencia.' },
+            { label: '3. Veredicto Salida', desc: 'La señal definitiva de que es hora de actuar.' }
+          ]
+        },
+        {
+          key: "chord",
+          title: "El Acorde Perfecto",
+          description: 'Ideada para destrabar bloqueos creativos y restaurar la armonía y el ritmo natural en proyectos profesionales o artísticos que han quedado en pausa.',
+          slots: [
+            { label: '1. Nota Disonante', desc: 'El bloqueo exacto que rompió el flujo creador.' },
+            { label: '2. La Reafinación', desc: 'El ajuste conceptual o de actitud requerido.' },
+            { label: '3. El Gran Acorde', desc: 'El estado de gracia donde todo fluye sin resistencia.' }
+          ]
+        }
+      ]
+    }
+  };
+
+  let currentCategoryKey = 'romanticas';
+  let currentSpreadKey = 'thriller';
+  let currentDeck = [];
+  let selectedCards = [];
+  let currentSlotIndex = 0;
+
+  const table = document.getElementById('table');
+  const hint = document.getElementById('hint');
+  const deckSection = document.getElementById('deckSection');
+  const deckInstruction = document.getElementById('deckInstruction');
+  const fanContainer = document.getElementById('fanContainer');
+  
+  const infoTitle = document.getElementById('infoTitle');
+  const infoDesc = document.getElementById('infoDesc');
+  const infoPositions = document.getElementById('infoPositions');
+  const spreadSelector = document.getElementById('spreadSelector');
+  const masterBox = document.getElementById('masterBox');
+  const masterTextContent = document.getElementById('masterTextContent');
+
+  function renderSpreadSelector() {
+    spreadSelector.innerHTML = '';
+    const category = categoriesData[currentCategoryKey];
+    
+    category.spreads.forEach((spread) => {
+      const btn = document.createElement('button');
+      btn.className = `spread-btn ${spread.key === currentSpreadKey ? 'active' : ''}`;
+      btn.textContent = spread.title;
+      btn.onclick = (e) => switchSpread(spread.key, e);
+      spreadSelector.appendChild(btn);
+    });
+  }
+
+  function getCurrentSpreadConfig() {
+    for (let catKey in categoriesData) {
+      let found = categoriesData[catKey].spreads.find(s => s.key === currentSpreadKey);
+      if (found) return found;
+    }
+    return categoriesData.romanticas.spreads[0];
+  }
+
+  function updateSpreadInfo() {
+    const config = getCurrentSpreadConfig();
+    infoTitle.textContent = config.title;
+    infoDesc.textContent = config.description;
+    
+    if (config.slots.length > 5) {
+      infoPositions.className = 'spread-positions-grid grid-10';
+    } else {
+      infoPositions.className = 'spread-positions-grid';
+    }
+
+    infoPositions.innerHTML = '';
+    config.slots.forEach(slot => {
+      const div = document.createElement('div');
+      div.className = 'position-item';
+      div.innerHTML = `<strong>${slot.label}</strong> ${slot.desc}`;
+      infoPositions.appendChild(div);
+    });
+  }
+
+  function shuffleDeck(deck) {
+    const arr = [...deck];
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  function initReading() {
+    currentDeck = shuffleDeck(fullTarotDeck);
+    selectedCards = [];
+    currentSlotIndex = 0;
+    deckSection.style.display = 'flex';
+    masterBox.style.display = 'none';
+    updateSpreadInfo();
+    updateFanUI();
+    renderTableSlots();
+  }
+
+  function switchCategory(catKey, event) {
+    currentCategoryKey = catKey;
+    document.querySelectorAll('.category-tab').forEach(tab => tab.classList.remove('active'));
+    event.target.classList.add('active');
+    
+    currentSpreadKey = categoriesData[catKey].spreads[0].key;
+    renderSpreadSelector();
+    initReading();
+  }
+
+  function switchSpread(key, event) {
+    currentSpreadKey = key;
+    document.querySelectorAll('.spread-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+    initReading();
+  }
+
+  function updateFanUI() {
+    const config = getCurrentSpreadConfig();
+    if (currentSlotIndex >= config.slots.length) {
+      deckSection.style.display = 'none';
+      hint.textContent = '¡Tirada completa! Lee la síntesis del oráculo a continuación o repite tu consulta.';
+      generateGenerativeInterpretation();
+      return;
+    }
+    deckInstruction.textContent = `Elige una carta del abanico para: "${config.slots[currentSlotIndex].label}"`;
+    
+    fanContainer.innerHTML = '';
+    const totalFanCards = 13;
+    const angleRange = 60;
+
+    for (let i = 0; i < totalFanCards; i++) {
+      const cardEl = document.createElement('div');
+      cardEl.className = 'fan-card';
+      const angle = -angleRange / 2 + (angleRange / (totalFanCards - 1)) * i;
+      const xOffset = (i - (totalFanCards - 1) / 2) * 11;
+
+      cardEl.style.transform = `translateX(${xOffset}px) rotate(${angle}deg)`;
+      
+      cardEl.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        playWoodSelectSound();
+        pickCardFromFan();
+      });
+
+      fanContainer.appendChild(cardEl);
+    }
+  }
+
+  let fanTouchStartX = 0;
+  fanContainer.addEventListener('touchstart', (e) => {
+    fanTouchStartX = e.changedTouches[0].screenX;
+  }, {passive: true});
+
+  fanContainer.addEventListener('touchend', (e) => {
+    let fanTouchEndX = e.changedTouches[0].screenX;
+    if (Math.abs(fanTouchEndX - fanTouchStartX) > 20) {
+      playWoodSelectSound();
+      pickCardFromFan();
+    }
+  }, {passive: true});
+
+  function pickCardFromFan() {
+    const config = getCurrentSpreadConfig();
+    if (currentSlotIndex >= config.slots.length) return;
+
+    const chosenCard = currentDeck.pop();
+    selectedCards.push(chosenCard);
+    currentSlotIndex++;
+
+    renderTableSlots();
+    updateFanUI();
+  }
+
+  function renderTableSlots() {
+    table.innerHTML = '';
+    const config = getCurrentSpreadConfig();
+
+    config.slots.forEach((slotData, i) => {
+      const slot = document.createElement('div');
+      slot.className = 'arkanica-slot';
+
+      const card = document.createElement('div');
+      card.className = 'arkanica-card';
+
+      const label = document.createElement('div');
+      label.className = 'arkanica-slot-label';
+      label.textContent = slotData.label;
+
+      if (i < selectedCards.length) {
+        const cardData = selectedCards[i];
+        
+        const back = document.createElement('div');
+        back.className = 'arkanica-card-face arkanica-card-back';
+        back.innerHTML = `<div class="arkanica-card-back-inner"></div>`;
+
+        const front = document.createElement('div');
+        front.className = 'arkanica-card-face arkanica-card-front';
+        front.innerHTML = `
+          <div class="card-frame">
+            <div class="card-number-top">ARCANA</div>
+            <div class="card-center-content">
+              <div class="arkanica-card-symbol">${cardData.symbol}</div>
+              <div class="arkanica-card-name">${cardData.name}</div>
+            </div>
+            <div class="arkanica-card-archetype">${cardData.archetype}</div>
+          </div>
+        `;
+
+        card.appendChild(back);
+        card.appendChild(front);
+
+        card.addEventListener('click', () => {
+          card.classList.toggle('flipped');
+          playCardFlipSound();
+        });
+
+        setTimeout(() => {
+          card.classList.add('flipped');
+          playCardFlipSound();
+        }, 200 + (i * 40));
+
+      } else {
+        const dataBack = document.createElement('div');
+        dataBack.className = 'arkanica-card-face arkanica-card-back';
+        dataBack.style.opacity = '0.3';
+        dataBack.innerHTML = `<div class="arkanica-card-back-inner"></div>`;
+        card.appendChild(dataBack);
+      }
+
+      slot.appendChild(card);
+      slot.appendChild(label);
+      table.appendChild(slot);
+    });
+
+    if (currentSlotIndex === 0) {
+      hint.textContent = 'Selecciona una carta del abanico superior.';
+    }
+  }
+
+  /* GENERADOR DE INTERPRETACIÓN CON IA SEGURA (GEMINI VIA NETLIFY FUNCTION) */
+  async function generateGenerativeInterpretation() {
+    const config = getCurrentSpreadConfig();
+    
+    // Mensaje de carga mientras la IA sintoniza las cartas
+    masterTextContent.innerHTML = "<em>El oráculo está sintonizando las energías de tus cartas...</em>";
+    masterBox.style.display = 'block';
+
+    try {
+      // Llamada segura a tu Netlify Function en el backend
+      const response = await fetch('/.netlify/functions/interpretar', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          spreadTitle: config.title,
+          cards: selectedCards
+        })
+      });
+
+      const data = await response.json();
+
+      if (data.interpretacion) {
+        masterTextContent.innerHTML = data.interpretacion;
+      } else {
+        throw new Error('Respuesta vacía del oráculo');
+      }
+
+    } catch (error) {
+      console.error("Error de conexión con la IA:", error);
+      
+      // Sistema de respaldo por si falla la red (Fallback local)
+      masterTextContent.innerHTML = `Tras más de treinta años interpretando los arcanos, esta tirada de ${config.title} nos muestra un camino de evolución muy claro. La energía de ${selectedCards[0].name} marca tu punto de partida, guiándote hacia una nueva perspectiva. Confía en tu intuición y da el paso con absoluta confianza.`;
+    }
+  }
+
+  document.getElementById('reset').addEventListener('click', () => {
+    playWoodSelectSound();
+    initReading();
+  });
+
+  renderSpreadSelector();
+  initReading();
+</script>
+
+</body>
+</html>
