@@ -1,21 +1,34 @@
 // Archivo: netlify/functions/interpretar.js
 
 exports.handler = async function(event, context) {
+  // Permitir solo peticiones POST
   if (event.httpMethod !== "POST") {
-    return { statusCode: 405, body: JSON.stringify({ error: "Método no permitido" }) };
+    return {
+      statusCode: 405,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ error: "Método no permitido" })
+    };
   }
 
   try {
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
-      throw new Error("Falta la GEMINI_API_KEY en las variables de entorno de Netlify.");
+      return {
+        statusCode: 500,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ error: "API Key no configurada en el servidor" })
+      };
     }
 
-    const body = JSON.parse(event.body);
-    const { spreadTitle, cards } = body;
+    const dataPayload = JSON.parse(event.body);
+    const { spreadTitle, cards } = dataPayload;
 
-    if (!cards || cards.length === 0) {
-      throw new Error("No se han seleccionado cartas para interpretar.");
+    if (!cards || !Array.isArray(cards) || cards.length === 0) {
+      return {
+        statusCode: 400,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ error: "No se han proporcionado cartas válidas" })
+      };
     }
 
     const cardsText = cards.map((card, index) => 
@@ -38,12 +51,14 @@ exports.handler = async function(event, context) {
       La longitud debe ser de aproximadamente 200-250 palabras. La respuesta debe estar formateada en HTML simple (etiquetas <p> para párrafos) ya que se inyectará directamente en el DOM de la web.
     `;
 
-    // Petición HTTP nativa a Gemini 1.5 Flash (Ultrarrápida y segura)
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+    // Petición POST directa con la API REST de Google Gemini
+    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
     
-    const apiResponse = await fetch(url, {
+    const response = await fetch(endpoint, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({
         contents: [{
           parts: [{ text: prompt }]
@@ -51,26 +66,30 @@ exports.handler = async function(event, context) {
       })
     });
 
-    const data = await apiResponse.json();
+    const resultJson = await response.json();
 
-    if (!data.candidates || data.candidates.length === 0) {
-      throw new Error("La IA no devolvió candidatos válidos: " + JSON.stringify(data));
+    if (!response.ok) {
+      throw new Error(resultJson.error?.message || "Error en la respuesta de Google AI");
     }
 
-    const text = data.candidates[0].content.parts[0].text;
+    if (!resultJson.candidates || resultJson.candidates.length === 0) {
+      throw new Error("No se obtuvieron candidatos de respuesta por parte de la IA.");
+    }
+
+    const generatedText = resultJson.candidates[0].content.parts[0].text;
 
     return {
       statusCode: 200,
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ interpretacion: text }),
+      body: JSON.stringify({ interpretacion: generatedText })
     };
 
-  } catch (error) {
-    console.error("Error crítico en la función interpretar:", error.message);
+  } catch (err) {
+    console.error("Error crítico interno:", err.message);
     return {
       statusCode: 500,
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ error: error.message }),
+      body: JSON.stringify({ error: err.message })
     };
   }
 };
