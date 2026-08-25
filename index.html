@@ -399,7 +399,7 @@
 
   .arkanica-table {
     display: flex;
-    gap: 10px;
+    gap: 12px;
     align-items: flex-start;
     perspective: 1800px;
     margin-bottom: 20px;
@@ -429,8 +429,8 @@
   }
 
   .arkanica-card {
-    width: 85px;
-    height: 140px;
+    width: 100px;
+    height: 160px;
     position: relative;
     cursor: pointer;
     transform-style: preserve-3d;
@@ -448,12 +448,12 @@
   .arkanica-card-face {
     position: absolute;
     inset: 0;
-    border-radius: 5px;
+    border-radius: 6px;
     backface-visibility: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     box-shadow: 0 8px 20px rgba(0,0,0,0.6);
   }
 
@@ -467,7 +467,7 @@
     width: 100%;
     height: 100%;
     border: 1px solid rgba(223, 177, 91, 0.3);
-    border-radius: 3px;
+    border-radius: 4px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -477,78 +477,34 @@
   .arkanica-card-back-inner::before {
     content: '◆';
     color: var(--gold);
-    font-size: 12px;
+    font-size: 14px;
     opacity: 0.7;
   }
 
   .arkanica-card-front {
-    background: linear-gradient(175deg, #171622 0%, #0d0c14 100%);
+    background: #0d0c14;
     border: 1px solid var(--gold);
     transform: rotateY(180deg);
-    padding: 6px 4px;
-    text-align: center;
+    padding: 0;
+    overflow: hidden;
   }
 
-  .card-frame {
+  .arkanica-card-front img {
     width: 100%;
     height: 100%;
-    border: 1px solid rgba(223, 177, 91, 0.25);
-    border-radius: 2px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    padding: 3px 2px;
-  }
-
-  .card-number-top {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 8px;
-    color: var(--gold-dim);
-    letter-spacing: 0.08em;
-  }
-
-  .card-center-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1px;
-  }
-
-  .arkanica-card-symbol {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 18px;
-    color: var(--gold);
-    line-height: 1;
-  }
-
-  .arkanica-card-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 9.5px;
-    color: var(--text-main);
-    font-weight: 500;
-  }
-
-  .arkanica-card-archetype {
-    font-size: 5.5px;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--gold-dim);
-    font-weight: 500;
-    line-height: 1.1;
-    border-top: 1px solid rgba(223, 177, 91, 0.15);
-    padding-top: 2px;
-    width: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+    display: block;
   }
 
   .arkanica-slot-label {
-    font-size: 8px;
+    font-size: 9px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--text-muted);
     font-weight: 500;
     text-align: center;
-    max-width: 85px;
+    max-width: 100px;
   }
 
   .arkanica-hint {
@@ -734,7 +690,7 @@
     .nav-links { gap: 12px; font-size: 9.5px; }
     .arkanica-title { font-size: 26px; }
     .arkanica-sub { font-size: 12px; }
-    .arkanica-card { width: 72px; height: 118px; }
+    .arkanica-card { width: 85px; height: 136px; }
     .fan-card { width: 48px; height: 84px; }
     .spread-positions-grid { grid-template-columns: 1fr; gap: 8px; }
     .spread-positions-grid.grid-10 { grid-template-columns: repeat(2, 1fr); }
@@ -952,45 +908,54 @@
   }
 
   const fullTarotDeck = [
-    { symbol: '0', name: 'El Loco', archetype: 'Empieza algo nuevo sin miedo al qué dirán' },
-    { symbol: 'I', name: 'El Mago', archetype: 'Tienes todos los recursos sobre la mesa para triunfar' },
-    { symbol: 'II', name: 'La Sacerdotisa', archetype: 'Confía en tu intuición y guarda el secreto con calma' },
-    { symbol: 'III', name: 'La Emperatriz', archetype: 'Momento de bienestar, fertilidad y crecimiento' },
-    { symbol: 'IV', name: 'El Emperador', archetype: 'Pon orden estricto y toma el control de tu destino' },
-    { symbol: 'V', name: 'El Hierofante', archetype: 'Busca buenos consejos en la tradición y aprende' },
-    { symbol: 'VI', name: 'Los Enamorados', archetype: 'Te toca tomar una decisión vital desde el corazón' },
-    { symbol: 'VII', name: 'El Carro', archetype: 'Sigue adelante con decisión y firmeza indomable' },
-    { symbol: 'VIII', name: 'La Fuerza', archetype: 'Domina tus impulsos con paciencia y extrema dulzura' },
-    { symbol: 'IX', name: 'El Ermitaño', archetype: 'Tómate un respiro en solitario para hallar la luz interior' },
-    { symbol: 'X', name: 'La Rueda', archetype: 'Los ciclos cambian; la fortuna gira a tu favor' },
-    { symbol: 'XI', name: 'La Justicia', archetype: 'Todo se coloca rigurosamente en su lugar justo' },
-    { symbol: 'XII', name: 'El Colgado', archetype: 'Detente un instante y contempla la vida desde otro ángulo' },
-    { symbol: 'XIII', name: 'La Muerte', archetype: 'Cierra una etapa por completo para abrir otra superior' },
-    { symbol: 'XIV', name: 'La Templanza', archetype: 'Busca la alquimia de la calma y el equilibrio perfecto' },
-    { symbol: 'XV', name: 'El Diablo', archetype: 'Atención a las ataduras, dependencias u ocultamientos' },
-    { symbol: 'XVI', name: 'La Torre', archetype: 'El colapso de una falsa estructura que te libera por fin' },
-    { symbol: 'XVII', name: 'La Estrella', archetype: 'La esperanza y la fe vuelven a iluminar tu horizonte' },
-    { symbol: 'XVIII', name: 'La Luna', archetype: 'Navega la niebla de las ilusiones y los miedos nocturnos' },
-    { symbol: 'XIX', name: 'El Sol', archetype: 'Plenitud radiante, alegría y claridad absoluta' },
-    { symbol: 'XX', name: 'El Juicio', archetype: 'Un despertar kármico y una gran llamada a trascender' },
-    { symbol: 'XXI', name: 'El Mundo', archetype: 'Realización total; has completado una gran maestría' },
-    { symbol: 'As 🪙', name: 'As de Oros', archetype: 'Semilla firme de prosperidad material o laboral' },
-    { symbol: '2 🪙', name: 'Dos de Oros', archetype: 'Haciendo malabares para equilibrar tus prioridades' },
-    { symbol: '3 🪙', name: 'Tres de Oros', archetype: 'La maestría compartida y el esfuerzo engranado' },
-    { symbol: '4 🪙', name: 'Cuatro de Oros', archetype: 'Exceso de control; aprende a abrir las manos y soltar' },
-    { symbol: '10 🪙', name: 'Diez de Oros', archetype: 'Legado, estabilidad y raíz familiar profunda' },
-    { symbol: 'As 🍷', name: 'As de Copas', archetype: 'Manantial puro de amor y apertura emocional' },
-    { symbol: '2 🍷', name: 'Dos de Copas', archetype: 'Pacto de almas, sintonía y espejo mutuo' },
-    { symbol: '3 🍷', name: 'Tres de Copas', archetype: 'Comunión, alegría y celebración con los afines' },
-    { symbol: '5 🍷', name: 'Cinco de Copas', archetype: 'Lamentando lo que se derrumbó sin ver lo que queda' },
-    { symbol: '10 🍷', name: 'Diez de Copas', archetype: 'Felicidad hogareña y paz emocional absoluta' },
-    { symbol: 'As ⚔️', name: 'As de Espadas', archetype: 'Verdad incisiva que corta la confusión de raíz' },
-    { symbol: '2 ⚔️', name: 'Dos de Espadas', archetype: 'Vendaje en los ojos ante una elección inevitable' },
-    { symbol: '3 ⚔️', name: 'Tres de Espadas', archetype: 'Dolor punzante que purifica y abre los ojos' },
-    { symbol: '8 ⚔️', name: 'Ocho de Espadas', archetype: 'Prisión mental construida por tus propios temores' },
-    { symbol: 'As 🔥', name: 'As de Bastos', archetype: 'Pulsión creativa, deseo y fuego puro de arranque' },
-    { symbol: '3 🔥', name: 'Tres de Bastos', archetype: 'Horizonte expandido esperando barcos lejanos' },
-    { symbol: '8 🔥', name: 'Ocho de Bastos', archetype: 'Aceleración súbita; los acontecimientos se precipitan' }
+    // Arcanos Mayores
+    { symbol: '0', name: 'El Loco', archetype: 'Empieza algo nuevo sin miedo al qué dirán', img: 'assets/arcanos-mayores/el-loco.jpeg' },
+    { symbol: 'I', name: 'El Mago', archetype: 'Tienes todos los recursos sobre la mesa para triunfar', img: 'assets/arcanos-mayores/the-magician.jpeg' },
+    { symbol: 'II', name: 'La Sacerdotisa', archetype: 'Confía en tu intuición y guarda el secreto con calma', img: 'assets/arcanos-mayores/the-high-priestesses.jpeg' },
+    { symbol: 'III', name: 'La Emperatriz', archetype: 'Momento de bienestar, fertilidad y crecimiento', img: 'assets/arcanos-mayores/the-empress.jpeg' },
+    { symbol: 'IV', name: 'El Emperador', archetype: 'Pon orden estricto y toma el control de tu destino', img: 'assets/arcanos-mayores/the-emperor.jpeg' },
+    { symbol: 'V', name: 'El Hierofante', archetype: 'Busca buenos consejos en la tradición y aprende', img: 'assets/arcanos-mayores/the-ermit.jpeg' },
+    { symbol: 'VI', name: 'Los Enamorados', archetype: 'Te toca tomar una decisión vital desde el corazón', img: 'assets/arcanos-mayores/the-lovers.jpeg' },
+    { symbol: 'VII', name: 'El Carro', archetype: 'Sigue adelante con decisión y firmeza indomable', img: 'assets/arcanos-mayores/the-chariot.jpeg' },
+    { symbol: 'VIII', name: 'La Fuerza', archetype: 'Domina tus impulsos con paciencia y extrema dulzura', img: 'assets/arcanos-mayores/the-strength.jpeg' },
+    { symbol: 'IX', name: 'El Ermitaño', archetype: 'Tómate un respiro en solitario para hallar la luz interior', img: 'assets/arcanos-mayores/the-ermit.jpeg' },
+    { symbol: 'X', name: 'La Rueda', archetype: 'Los ciclos cambian; la fortuna gira a tu favor', img: 'assets/arcanos-mayores/wheel-of-fortune.jpeg' },
+    { symbol: 'XI', name: 'La Justicia', archetype: 'Todo se coloca rigurosamente en su lugar justo', img: 'assets/arcanos-mayores/justice.jpeg' },
+    { symbol: 'XII', name: 'El Colgado', archetype: 'Detente un instante y contempla la vida desde otro ángulo', img: 'assets/arcanos-mayores/the-hanged-man.jpeg' },
+    { symbol: 'XIII', name: 'La Muerte', archetype: 'Cierra una etapa por completo para abrir otra superior', img: 'assets/arcanos-mayores/death.jpeg' },
+    { symbol: 'XIV', name: 'La Templanza', archetype: 'Busca la alquimia de la calma y el equilibrio perfecto', img: 'assets/arcanos-mayores/temperance.jpeg' },
+    { symbol: 'XV', name: 'El Diablo', archetype: 'Atención a las ataduras, dependencias u ocultamientos', img: 'assets/arcanos-mayores/the-devil.jpeg' },
+    { symbol: 'XVI', name: 'La Torre', archetype: 'El colapso de una falsa estructura que te libera por fin', img: 'assets/arcanos-mayores/the-tower.jpeg' },
+    { symbol: 'XVII', name: 'La Estrella', archetype: 'La esperanza y la fe vuelven a iluminar tu horizonte', img: 'assets/arcanos-mayores/the-star.jpeg' },
+    { symbol: 'XVIII', name: 'La Luna', archetype: 'Navega la niebla de las ilusiones y los miedos nocturnos', img: 'assets/arcanos-mayores/the-moon.jpeg' },
+    { symbol: 'XIX', name: 'El Sol', archetype: 'Plenitud radiante, alegría y claridad absoluta', img: 'assets/arcanos-mayores/the-sun.jpeg' },
+    { symbol: 'XX', name: 'El Juicio', archetype: 'Un despertar kármico y una gran llamada a trascender', img: 'assets/arcanos-mayores/judgment.jpeg' },
+    { symbol: 'XXI', name: 'El Mundo', archetype: 'Realización total; has completado una gran maestría', img: 'assets/arcanos-mayores/the-world.jpeg' },
+    
+    // Oros
+    { symbol: 'As 🪙', name: 'As de Oros', archetype: 'Semilla firme de prosperidad material o laboral', img: 'assets/arcanos-menores/oros/as-oros.jpg' },
+    { symbol: '2 🪙', name: 'Dos de Oros', archetype: 'Haciendo malabares para equilibrar tus prioridades', img: 'assets/arcanos-menores/oros/2-oros.jpg' },
+    { symbol: '3 🪙', name: 'Tres de Oros', archetype: 'La maestría compartida y el esfuerzo engranado', img: 'assets/arcanos-menores/oros/3-oros.jpg' },
+    { symbol: '4 🪙', name: 'Cuatro de Oros', archetype: 'Exceso de control; aprende a abrir las manos y soltar', img: 'assets/arcanos-menores/oros/4-oros.jpg' },
+    { symbol: '10 🪙', name: 'Diez de Oros', archetype: 'Legado, estabilidad y raíz familiar profunda', img: 'assets/arcanos-menores/oros/10-oros.jpg' },
+
+    // Copas
+    { symbol: 'As 🍷', name: 'As de Copas', archetype: 'Manantial puro de amor y apertura emocional', img: 'assets/arcanos-menores/copas/as-copas.jpg' },
+    { symbol: '2 🍷', name: 'Dos de Copas', archetype: 'Pacto de almas, sintonía y espejo mutuo', img: 'assets/arcanos-menores/copas/2-copas.jpg' },
+    { symbol: '3 🍷', name: 'Tres de Copas', archetype: 'Comunión, alegría y celebración con los afines', img: 'assets/arcanos-menores/copas/3-copas.jpg' },
+    { symbol: '5 🍷', name: 'Cinco de Copas', archetype: 'Lamentando lo que se derrumbó sin ver lo que queda', img: 'assets/arcanos-menores/copas/5-copas.jpg' },
+    { symbol: '10 🍷', name: 'Diez de Copas', archetype: 'Felicidad hogareña y paz emocional absoluta', img: 'assets/arcanos-menores/copas/10-copas.jpg' },
+
+    // Espadas
+    { symbol: 'As ⚔️', name: 'As de Espadas', archetype: 'Verdad incisiva que corta la confusión de raíz', img: 'assets/arcanos-menores/espadas/as-espadas.jpg' },
+    { symbol: '2 ⚔️', name: 'Dos de Espadas', archetype: 'Vendaje en los ojos ante una elección inevitable', img: 'assets/arcanos-menores/espadas/2-espadas.jpg' },
+    { symbol: '3 ⚔️', name: 'Tres de Espadas', archetype: 'Dolor punzante que purifica y abre los ojos', img: 'assets/arcanos-menores/espadas/3-espadas.jpg' },
+    { symbol: '8 ⚔️', name: 'Ocho de Espadas', archetype: 'Prisión mental construida por tus propios temores', img: 'assets/arcanos-menores/espadas/8-espadas.jpg' },
+
+    // Bastos
+    { symbol: 'As 🔥', name: 'As de Bastos', archetype: 'Pulsión creativa, deseo y fuego puro de arranque', img: 'assets/arcanos-menores/bastos/as-bastos.jpg' },
+    { symbol: '3 🔥', name: 'Tres de Bastos', archetype: 'Horizonte expandido esperando barcos lejanos', img: 'assets/arcanos-menores/bastos/3-bastos.jpg' },
+    { symbol: '8 🔥', name: 'Ocho de Bastos', archetype: 'Aceleración súbita; los acontecimientos se precipitan', img: 'assets/arcanos-menores/bastos/8-bastos.jpg' }
   ];
 
   const categoriesData = {
@@ -1311,16 +1276,7 @@
 
         const front = document.createElement('div');
         front.className = 'arkanica-card-face arkanica-card-front';
-        front.innerHTML = `
-          <div class="card-frame">
-            <div class="card-number-top">ARCANA</div>
-            <div class="card-center-content">
-              <div class="arkanica-card-symbol">${cardData.symbol}</div>
-              <div class="arkanica-card-name">${cardData.name}</div>
-            </div>
-            <div class="arkanica-card-archetype">${cardData.archetype}</div>
-          </div>
-        `;
+        front.innerHTML = `<img src="${cardData.img}" alt="${cardData.name}" title="${cardData.name}: ${cardData.archetype}">`;
 
         card.appendChild(back);
         card.appendChild(front);
