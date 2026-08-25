@@ -1,6 +1,6 @@
 // Archivo: netlify/functions/interpretar.js
 
-export const handler = async (event) => {
+exports.handler = async function(event, context) {
   if (event.httpMethod !== "POST") {
     return { statusCode: 405, body: JSON.stringify({ error: "Método no permitido" }) };
   }
@@ -8,14 +8,14 @@ export const handler = async (event) => {
   try {
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
-      throw new Error("GEMINI_API_KEY no configurada");
+      throw new Error("Falta la GEMINI_API_KEY en las variables de entorno de Netlify.");
     }
 
     const body = JSON.parse(event.body);
     const { spreadTitle, cards } = body;
 
     if (!cards || cards.length === 0) {
-      throw new Error("No se han seleccionado cartas.");
+      throw new Error("No se han seleccionado cartas para interpretar.");
     }
 
     const cardsText = cards.map((card, index) => 
@@ -38,8 +38,10 @@ export const handler = async (event) => {
       La longitud debe ser de aproximadamente 200-250 palabras. La respuesta debe estar formateada en HTML simple (etiquetas <p> para párrafos) ya que se inyectará directamente en el DOM de la web.
     `;
 
-    // Llamada directa ultrarrápida a la API oficial de Gemini
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+    // Petición HTTP nativa a Gemini 1.5 Flash (Ultrarrápida y segura)
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+    
+    const apiResponse = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -49,10 +51,10 @@ export const handler = async (event) => {
       })
     });
 
-    const data = await response.json();
+    const data = await apiResponse.json();
 
-    if (!data.candidates || !data.candidates[0].content.parts[0].text) {
-      throw new Error("Respuesta inválida de la API");
+    if (!data.candidates || data.candidates.length === 0) {
+      throw new Error("La IA no devolvió candidatos válidos: " + JSON.stringify(data));
     }
 
     const text = data.candidates[0].content.parts[0].text;
@@ -64,7 +66,7 @@ export const handler = async (event) => {
     };
 
   } catch (error) {
-    console.error("Error en la función:", error);
+    console.error("Error crítico en la función interpretar:", error.message);
     return {
       statusCode: 500,
       headers: { "Content-Type": "application/json" },
