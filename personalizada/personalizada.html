@@ -513,6 +513,20 @@
     localStorage.setItem(storageKeyFreeCount, freeQuestionsUsed);
   }
 
+  // Verificar si el usuario regresa de un pago exitoso de Stripe
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('pagado') === 'true') {
+    const addedCrystals = parseInt(urlParams.get('cristales')) || 0;
+    if (addedCrystals > 0) {
+      crystals += addedCrystals;
+      // Limpiar URL
+      window.history.replaceState({}, document.title, window.location.pathname);
+      setTimeout(() => {
+        appendMessage(`✦ <strong>¡Recarga mística completada con éxito!</strong> Se han añadido ${addedCrystals} Cristales de Claridad a tu cuenta. El canal está completamente abierto.`, 'ai');
+      }, 500);
+    }
+  }
+
   updateDisplayStatus();
 
   // Recuperar contexto de la tirada anterior del index
@@ -544,10 +558,33 @@
     localStorage.setItem(storageKeyFreeCount, freeQuestionsUsed);
   }
 
-  function buyPack(amount, packName, price) {
-    crystals += amount;
-    updateDisplayStatus();
-    alert(`✦ ¡Recarga mística exitosa!\nSe han añadido ${amount} cristales (${price}) a tu cuenta de Arkanica.`);
+  /* INTEGRACIÓN CON PASARELA DE PAGO STRIPE */
+  async function buyPack(amount, packName, priceString) {
+    const numericPrice = parseFloat(priceString.replace('€', '').trim());
+    const priceInCents = Math.round(numericPrice * 100);
+
+    try {
+      const response = await fetch('../.netlify/functions/crear-checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          packName: packName,
+          priceInCents: priceInCents,
+          crystalsAmount: amount,
+          username: username
+        })
+      });
+
+      const data = await response.json();
+      if (data.url) {
+        window.location.href = data.url; // Redirige a Stripe Checkout
+      } else {
+        throw new Error(data.error || 'No se pudo iniciar la pasarela de pago');
+      }
+    } catch (err) {
+      console.error("Error al procesar el pago:", err);
+      alert("Hubo un error al conectar con la pasarela de pago. Inténtalo de nuevo.");
+    }
   }
 
   function handleKeyPress(e) {
