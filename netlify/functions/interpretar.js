@@ -1,54 +1,91 @@
 // Archivo: netlify/functions/interpretar.js
 
 exports.handler = async function(event, context) {
+  const headers = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Content-Type": "application/json"
+  };
+
+  // Manejo de preflight CORS
+  if (event.httpMethod === "OPTIONS") {
+    return { statusCode: 200, headers, body: "" };
+  }
+
+  // Validación estricta de método HTTP
   if (event.httpMethod !== "POST") {
-    return { statusCode: 405, body: JSON.stringify({ error: "Método no permitido" }) };
+    return { 
+      statusCode: 405, 
+      headers, 
+      body: JSON.stringify({ error: "Método no permitido" }) 
+    };
   }
 
   try {
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
-      return { statusCode: 500, body: JSON.stringify({ error: "CRÍTICO: GEMINI_API_KEY no está definida en Netlify." }) };
+      throw new Error("GEMINI_API_KEY no está configurada en el entorno de Netlify.");
     }
 
-    const bodyData = JSON.parse(event.body);
+    // Parseo seguro del cuerpo de la petición
+    let bodyData;
+    try {
+      bodyData = JSON.parse(event.body || "{}");
+    } catch (e) {
+      throw new Error("El formato del cuerpo de la solicitud no es un JSON válido.");
+    }
+
     const { spreadTitle, cards } = bodyData;
+    if (!cards || !Array.isArray(cards) || cards.length === 0) {
+      throw new Error("No se han proporcionado cartas válidas para la lectura.");
+    }
 
-    const cardsText = cards.map((c, i) => `Pos ${i+1}: ${c.name} (${c.archetype})`).join('\n');
-    
-    const prompt = `Actúa como maestro de tarot. Analiza esta tirada de "${spreadTitle}":\n${cardsText}\nEscribe una síntesis profunda en un solo bloque de texto con etiquetas <p>.`;
+    // Mapeo limpio de las cartas seleccionadas
+    const cardsText = cards.map((c, i) => 
+      `Posición ${i + 1}: ${c.name} (Arquetipo: ${c.archetype})`
+    ).join(', ');
 
-   const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${apiKey}`;
+    const prompt = `Actúa como un maestro experto en tarot y psicología profunda. Analiza de forma mística, directa y altamente reveladora esta tirada de "${spreadTitle || 'Lectura de Claridad'}" compuesta por las siguientes cartas: ${cardsText}. Estructura tu respuesta estrictamente en formato HTML utilizando etiquetas <p> para separar los párrafos (máximo 3 párrafos cortos). No incluyas markdown ni bloques de código adicionales, solo texto con etiquetas <p>.`;
+
+    // Utilizando el modelo estable y actual compatible con la API v1beta
+    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${apiKey}`;
+
+    const apiResponse = await fetch(endpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        contents: [{ parts: [{ text: prompt }] }]
+        contents: [{
+          parts: [{ text: prompt }]
+        }]
       })
     });
 
     const resultJson = await apiResponse.json();
 
-    // Si Google nos devuelve un error, lo atrapamos y lo devolvemos con pelos y señales
     if (!apiResponse.ok) {
-      return {
-        statusCode: 500,
-        body: JSON.stringify({ error: "Google Error: " + JSON.stringify(resultJson) })
-      };
+      const errorMsg = resultJson.error?.message || "Error desconocido devuelto por la API de Google Gemini.";
+      throw new Error(errorMsg);
     }
 
-    const text = resultJson.candidates[0].content.parts[0].text;
+    if (!resultJson.candidates || resultJson.candidates.length === 0 || !resultJson.candidates[0].content) {
+      throw new Error("La IA no generó ninguna respuesta válida para esta tirada.");
+    }
+
+    const generatedText = resultJson.candidates[0].content.parts[0].text;
 
     return {
       statusCode: 200,
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ interpretacion: text })
+      headers,
+      body: JSON.stringify({ interpretacion: generatedText })
     };
 
   } catch (err) {
+    console.error("Error crítico en Netlify Function (interpretar):", err.message);
     return {
       statusCode: 500,
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ error: "Catch interno: " + err.message })
+      headers,
+      body: JSON.stringify({ error: err.message })
     };
   }
 };
