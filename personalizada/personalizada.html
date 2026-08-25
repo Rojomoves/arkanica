@@ -223,23 +223,6 @@
     align-self: flex-end;
   }
 
-  .context-card-container {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin: 10px 0;
-  }
-
-  .mini-card-tag {
-    background: rgba(223, 177, 91, 0.08);
-    border: 1px solid var(--gold-dim);
-    padding: 6px 10px;
-    border-radius: 4px;
-    font-size: 11px;
-    color: var(--gold);
-    font-family: 'Cormorant Garamond', serif;
-  }
-
   .ai-response-body {
     margin-top: 8px;
     font-style: italic;
@@ -520,13 +503,13 @@
   }
   document.getElementById('userBadge').textContent = `Alma: ${username}`;
 
-  // Gestión de Cristales y Preguntas de Cortesía Gratuitas
+  // Gestión de Cristales y Preguntas de Cortesía Gratuitas sincronizadas
   const storageKeyCrystals = `arkanica_crystals_${username}`;
   const storageKeyFreeCount = `arkanica_free_used_${username}`;
 
   let crystals = parseInt(localStorage.getItem(storageKeyCrystals));
   if (isNaN(crystals)) {
-    crystals = 10; // Cristales iniciales de cortesía
+    crystals = 10;
     localStorage.setItem(storageKeyCrystals, crystals);
   }
 
@@ -538,13 +521,13 @@
 
   updateDisplayStatus();
 
-  // Recuperar contexto de la tirada anterior del index si existe (opcional)
+  // Recuperar contexto de la tirada anterior del index
   let lastReadingContext = localStorage.getItem('arkanica_last_reading');
   if (lastReadingContext) {
     try {
       const readingData = JSON.parse(lastReadingContext);
       document.getElementById('welcomeMessage').innerHTML = `
-        Saludos, <strong>${username}</strong>. Veo que acabas de realizar la tirada <em>"${readingData.spreadTitle}"</em>. 
+        Saludos, <strong>${username}</strong>. Veo que acabas de realizar la tirada <em>"${readingData.spreadTitle}"</em> en la mesa principal. 
         Tus cartas revelaron energías muy potentes. Como vienes directo de esa lectura, <strong>tus 2 primeras preguntas de profundización son totalmente gratuitas</strong> para darte una claridad absoluta. ¿Qué aspecto exacto deseas destrabar ahora?
       `;
     } catch(e) {}
@@ -578,7 +561,7 @@
   }
 
   function sendUserMessage() {
-    const text = userInput.value.trim();
+    const text = document.getElementById('userInput').value.trim();
     if (!text) return;
 
     const remainingFree = Math.max(0, 2 - freeQuestionsUsed);
@@ -597,12 +580,13 @@
 
     updateDisplayStatus();
     appendMessage(text, 'user');
-    userInput.value = '';
+    document.getElementById('userInput').value = '';
 
     generateAIResponse(text, remainingFree > 0);
   }
 
   function appendMessage(text, sender, extraHTML = '') {
+    const chatMessages = document.getElementById('chatMessages');
     const div = document.createElement('div');
     div.className = `message ${sender}`;
     div.innerHTML = text + extraHTML;
@@ -610,8 +594,9 @@
     chatMessages.scrollTop = chatMessages.scrollHeight;
   }
 
-  /* IA ALTAMENTE PERSUASIVA CONECTADA A LA FUNCIÓN DE NETLIFY */
+  /* IA PERSUASIVA CONECTADA A LA FUNCIÓN DE NETLIFY DE LA RAÍZ */
   async function generateAIResponse(userQuery, isFreeTrial) {
+    const chatMessages = document.getElementById('chatMessages');
     const loadingId = 'loading_' + Date.now();
     const loadingDiv = document.createElement('div');
     loadingDiv.className = 'message ai';
@@ -620,10 +605,9 @@
     chatMessages.appendChild(loadingDiv);
     chatMessages.scrollTop = chatMessages.scrollHeight;
 
-    // Prompt ultrasorprendente y persuasivo para CRO
     let contextPrompt = `El usuario pregunta en sesión privada: "${userQuery}".`;
     if (lastReadingContext) {
-      contextPrompt += ` Viene de una tirada previa en la web.`;
+      contextPrompt += ` Viene de una tirada previa en la web principal.`;
     }
     
     if (isFreeTrial) {
@@ -633,7 +617,7 @@
     }
 
     try {
-      const response = await fetch('../api/interpretar', {
+      const response = await fetch('../.netlify/functions/interpretar', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -643,7 +627,7 @@
       });
 
       const data = await response.json();
-      document.getElementById(loadingId).remove();
+      if (document.getElementById(loadingId)) document.getElementById(loadingId).remove();
 
       if (response.ok && data.interpretacion) {
         let persuasionHTML = `<div class="ai-response-body">${data.interpretacion}</div>`;
