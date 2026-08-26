@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arkanica — Tienda Mística y Elementos Sagrados</title>
+<!-- Cliente oficial de Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- SDK oficial de Stripe -->
+<script src="https://js.stripe.com/v3/"></script>
+
+<!-- CÓDIGO OFICIAL DE GOOGLE ADSENSE -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2698892755295064" crossorigin="anonymous"></script>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500&display=swap');
+
+  :root {
+    --bg: #050508;
+    --surface: #0c0b12;
+    --surface-hover: #13121c;
+    --gold: #dfb15b;
+    --gold-dim: #947437;
+    --gold-light: #f3d89d;
+    --text-main: #f4f2ee;
+    --text-muted: #9c98a6;
+    --line: rgba(223, 177, 91, 0.25);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background-color: var(--bg);
+    background-image: 
+      radial-gradient(circle at 50% 0%, rgba(45, 30, 70, 0.25) 0%, transparent 60%),
+      radial-gradient(circle at 50% 100%, rgba(223, 177, 91, 0.05) 0%, transparent 50%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Inter', sans-serif;
+    color: var(--text-main);
+    padding: 16px 12px 60px 12px;
+    overflow-x: hidden;
+  }
+
+  /* BOTÓN FLOTANTE DE AUDIO (ESQUINA INFERIOR IZQUIERDA) */
+  .floating-audio-btn {
+    position: fixed;
+    bottom: 24px;
+    left: 24px;
+    background: rgba(12, 11, 18, 0.92);
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.7), 0 0 15px rgba(223, 177, 91, 0.25);
+    z-index: 2500;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .floating-audio-btn:hover {
+    transform: scale(1.12);
+    background: var(--surface-hover);
+    border-color: var(--gold-light);
+  }
+
+  .audio-tooltip {
+    position: absolute;
+    left: 58px;
+    background: var(--surface);
+    border: 1px solid var(--gold-dim);
+    color: var(--text-main);
+    font-size: 10.5px;
+    padding: 5px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  }
+
+  .floating-audio-btn:hover .audio-tooltip {
+    opacity: 1;
+  }
+
+  /* HEADER RESPONSIVE */
+  header {
+    width: 100%;
+    max-width: 1100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 12px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+  }
+
+  .logo-symbol {
+    width: 26px;
+    height: 26px;
+    fill: none;
+    stroke: var(--gold);
+    stroke-width: 1.5;
+    filter: drop-shadow(0 0 8px rgba(223, 177, 91, 0.4));
+  }
+
+  .logo-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    text-shadow: 0 2px 10px rgba(223, 177, 91, 0.2);
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .profile-badge {
+    background: linear-gradient(135deg, rgba(223, 177, 91, 0.2) 0%, rgba(12, 11, 18, 0.95) 100%);
+    border: 1px solid var(--gold);
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 11.5px;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    box-shadow: 0 0 15px rgba(223, 177, 91, 0.2);
+  }
+
+  .profile-crystals {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--gold-light);
+    font-weight: 600;
+  }
+
+  .profile-divider {
+    width: 1px;
+    height: 10px;
+    background: var(--gold);
+    opacity: 0.6;
+  }
+
+  .profile-user-info {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12.5px;
+    color: var(--gold-light);
+    font-weight: 500;
+  }
+
+  .back-link {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .back-link:hover { color: var(--gold); }
+
+  /* HERO DE LA TIENDA */
+  .hero-container {
+    text-align: center;
+    max-width: 700px;
+    margin-bottom: 24px;
+    padding: 0 8px;
+  }
+
+  .arkanica-eyebrow {
+    font-size: 9.5px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 5px;
+    font-weight: 500;
+  }
+
+  .arkanica-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--text-main);
+    margin: 0 0 6px;
+    line-height: 1.2;
+  }
+
+  .arkanica-sub {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 300;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .arkanica-sub strong {
+    color: var(--gold-light);
+  }
+
+  /* REJILLA DE PRODUCTOS */
+  .store-grid {
+    width: 100%;
+    max-width: 1100px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 30px;
+  }
+
+  .store-product-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+
+  .store-product-card:hover {
+    border-color: var(--gold-dim);
+    transform: translateY(-3px);
+  }
+
+  /* DESTELLO DORADO DISIMULADO SOLO EN TARJETA ESTRELLA / BOTÓN */
+  .gold-shimmer-card {
+    position: relative;
+    overflow: hidden;
+    border-color: var(--gold);
+  }
+  .gold-shimmer-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 150%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(223, 177, 91, 0.08),
+      rgba(243, 216, 157, 0.15),
+      rgba(223, 177, 91, 0.08),
+      transparent
+    );
+    transform: skewX(-20deg);
+    animation: shimmerEffect 6s infinite ease-in-out;
+    pointer-events: none;
+  }
+
+  @keyframes shimmerEffect {
+    0% { left: -150%; }
+    30% { left: 150%; }
+    100% { left: 150%; }
+  }
+
+  .product-badge-discount {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: var(--gold);
+    color: var(--bg);
+    font-size: 9.5px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.1em;
+  }
+
+  .product-icon-wrap {
+    width: 100%;
+    height: 120px;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(223, 177, 91, 0.1);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 38px;
+    margin-bottom: 14px;
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
+  }
+
+  .product-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    color: var(--text-main);
+    margin: 0 0 6px;
+  }
+
+  .product-desc {
+    font-size: 11.5px;
+    color: var(--text-muted);
+    line-height: 1.45;
+    margin: 0 0 12px;
+  }
+
+  .product-pricing {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .original-price {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-decoration: line-through;
+  }
+
+  .discounted-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--gold-light);
+  }
+
+  .product-bonus {
+    font-size: 11px;
+    color: var(--gold);
+    margin-bottom: 16px;
+    font-style: italic;
+    background: rgba(223, 177, 91, 0.05);
+    padding: 6px 8px;
+    border-radius: 6px;
+    border-left: 2px solid var(--gold);
+  }
+
+  .buy-stripe-btn {
+    background: var(--gold);
+    color: var(--bg);
+    border: none;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 11px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s;
+    width: 100%;
+  }
+  .buy-stripe-btn:hover { background: var(--gold-light); }
+
+  @media (max-width: 900px) {
+    .store-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .store-grid {
+      grid-template-columns: 1fr;
+    }
+    header {
+      justify-content: center;
+    }
+    .header-right {
+      width: 100%;
+      justify-content: space-between;
+      border-top: 1px solid rgba(223, 177, 91, 0.15);
+      padding-top: 10px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<audio id="ambientAudio" loop>
+  <source src="" type="audio/mpeg">
+</audio>
+
+<!-- BOTÓN FLOTANTE DE MÚSICA -->
+<button class="floating-audio-btn" id="floatingAudioBtn" onclick="toggleAudioTrack()" title="Cambiar ambiente musical">
+  <span id="audioIcon">🎵</span>
+  <span class="audio-tooltip" id="audioTooltip">Silencio</span>
+</button>
+
+<header>
+  <a href="index.html" class="logo">
+    <svg class="logo-symbol" viewBox="0 0 32 32">
+      <ellipse cx="16" cy="16" rx="14" ry="6" transform="rotate(-30 16 16)" />
+      <circle cx="16" cy="16" r="4" />
+      <path d="M16 2 L16 30" stroke-dasharray="1 3" />
+    </svg>
+    <span class="logo-text">Arkanica</span>
+  </a>
+  <div class="header-right">
+    <div class="profile-badge">
+      <div class="profile-crystals">
+        <span>💎</span> <strong id="headerCrystalCount">10</strong>
+      </div>
+      <div class="profile-divider"></div>
+      <div class="profile-user-info">
+        <span>✦</span> <span id="authBadgeLabel">Invitado</span>
+      </div>
+    </div>
+    <a href="index.html" class="back-link">← Volver al Oráculo</a>
+  </div>
+</header>
+
+<div class="hero-container">
+  <div class="arkanica-eyebrow">Objetos de poder y altares</div>
+  <h1 class="arkanica-title">Tienda Mística Arkanica</h1>
+  <p class="arkanica-sub">Selección exclusiva de minerales, herramientas de radiestesia y oráculos físicos. <strong>Aprovecha un 40% de descuento directo</strong> y llévate de regalo <strong>+25 Cristales de Claridad 💎</strong> para tus consultas digitales con el Ente Superior.</p>
+</div>
+
+<!-- REJILLA DE PRODUCTOS CON 40% OFF Y REGALO DE CRISTALES -->
+<div class="store-grid">
+
+  <!-- Producto 1: Péndulo -->
+  <div class="store-product-card">
+    <div class="product-badge-discount">-40% OFF</div>
+    <div class="product-icon-wrap">🔮</div>
+    <div>
+      <h3 class="product-name">Péndulo de Cuarzo Maestro</h3>
+      <p class="product-desc">Piedra natural pulida a mano con cadena de latón. Ideal para radiestesia, preguntas de precisión y desbloqueo energético.</p>
+    </div>
+    <div>
+      <div class="product-pricing">
+        <span class="original-price">24.99 €</span>
+        <span class="discounted-price">14.99 €</span>
+      </div>
+      <div class="product-bonus">✦ Incluye +25 Cristales de Claridad de regalo</div>
+      <button class="buy-stripe-btn" onclick="buyProductStripe('Péndulo de Cuarzo Maestro', '1499')">Comprar con 40% Dto.</button>
+    </div>
+  </div>
+
+  <!-- Producto 2: Baraja (Tarjeta Estrella con Destello Dorado) -->
+  <div class="store-product-card gold-shimmer-card">
+    <div class="product-badge-discount">-40% OFF</div>
+    <div class="product-icon-wrap">🃏</div>
+    <div>
+      <h3 class="product-name">Baraja de Tarot Minimalista Dorada</h3>
+      <p class="product-desc">Edición especial con cantos dorados y diseño arquetípico limpio para tiradas profundas y desarrollo intuitivo.</p>
+    </div>
+    <div>
+      <div class="product-pricing">
+        <span class="original-price">39.99 €</span>
+        <span class="discounted-price">23.99 €</span>
+      </div>
+      <div class="product-bonus">✦ Incluye +25 Cristales de Claridad de regalo</div>
+      <button class="buy-stripe-btn" onclick="buyProductStripe('Baraja de Tarot Dorada', '2399')">Comprar con 40% Dto.</button>
+    </div>
+  </div>
+
+  <!-- Producto 3: Runas -->
+  <div class="store-product-card">
+    <div class="product-badge-discount">-40% OFF</div>
+    <div class="product-icon-wrap">🪨</div>
+    <div>
+      <h3 class="product-name">Set de Runas Vikingas en Amatista</h3>
+      <p class="product-desc">24 runas del Futhark Antiguo talladas en auténtica piedra de amatista natural con bolsita de terciopelo incluida.</p>
+    </div>
+    <div>
+      <div class="product-pricing">
+        <span class="original-price">32.99 €</span>
+        <span class="discounted-price">19.79 €</span>
+      </div>
+      <div class="product-bonus">✦ Incluye +25 Cristales de Claridad de regalo</div>
+      <button class="buy-stripe-btn" onclick="buyProductStripe('Runas de Amatista', '1979')">Comprar con 40% Dto.</button>
+    </div>
+  </div>
+
+  <!-- Producto 4: Drusa de Cuarzo -->
+  <div class="store-product-card">
+    <div class="product-badge-discount">-40% OFF</div>
+    <div class="product-icon-wrap">✨</div>
+    <div>
+      <h3 class="product-name">Drusa de Cuarzo Blanco para Altar</h3>
+      <p class="product-desc">Cristal natural en bruto ideal para limpiar y recargar energéticamente tus joyas, barajas de tarot y péndulos.</p>
+    </div>
+    <div>
+      <div class="product-pricing">
+        <span class="original-price">29.99 €</span>
+        <span class="discounted-price">17.99 €</span>
+      </div>
+      <div class="product-bonus">✦ Incluye +25 Cristales de Claridad de regalo</div>
+      <button class="buy-stripe-btn" onclick="buyProductStripe('Drusa de Cuarzo Blanco', '1799')">Comprar con 40% Dto.</button>
+    </div>
+  </div>
+
+  <!-- Producto 5: Colgante -->
+  <div class="store-product-card">
+    <div class="product-badge-discount">-40% OFF</div>
+    <div class="product-icon-wrap">📿</div>
+    <div>
+      <h3 class="product-name">Colgante de Obsidiana Protectora</h3>
+      <p class="product-desc">Talismán tallado en obsidiana negra pura con cordón ajustable. Escudo energético frente a densidades externas.</p>
+    </div>
+    <div>
+      <div class="product-pricing">
+        <span class="original-price">21.99 €</span>
+        <span class="discounted-price">13.19 €</span>
+      </div>
+      <div class="product-bonus">✦ Incluye +25 Cristales de Claridad de regalo</div>
+      <button class="buy-stripe-btn" onclick="buyProductStripe('Colgante de Obsidiana', '1319')">Comprar con 40% Dto.</button>
+    </div>
+  </div>
+
+  <!-- Producto 6: Paño de Lectura -->
+  <div class="store-product-card">
+    <div class="product-badge-discount">-40% OFF</div>
+    <div class="product-icon-wrap">🕯️</div>
+    <div>
+      <h3 class="product-name">Paño de Terciopelo para Tiradas</h3>
+      <p class="product-desc">Tapete ritual con geometría sagrada impresa en tono dorado. Protege tus cartas y delimita tu espacio de lectura.</p>
+    </div>
+    <div>
+      <div class="product-pricing">
+        <span class="original-price">19.99 €</span>
+        <span class="discounted-price">11.99 €</span>
+      </div>
+      <div class="product-bonus">✦ Incluye +25 Cristales de Claridad de regalo</div>
+      <button class="buy-stripe-btn" onclick="buyProductStripe('Paño de Terciopelo', '1199')">Comprar con 40% Dto.</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- Bloque inferior de AdSense -->
+<div class="ad-container-arkanica" style="width: 100%; max-width: 1100px; margin: 16px auto; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px; text-align: center;">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2698892755295064" crossorigin="anonymous"></script>
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-2698892755295064"
+       data-ad-slot="REEMPLAZAR_CON_TU_AD_SLOT"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+  <script>
+       (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
+<script>
+  /* --- CONTROL DE AUDIO FLOTANTE --- */
+  const audioEl = document.getElementById('ambientAudio');
+  audioEl.volume = 0.35;
+  const audioStates = [
+    { label: "Silencio", src: null },
+    { label: "Cuencos", src: "assets/cuencos-tibetanos.mp3" },
+    { label: "Lluvia", src: "assets/lluvia.mp3" },
+    { label: "Meditación", src: "assets/meditacion.mp3" }
+  ];
+  let currentAudioIndex = 0;
+
+  function toggleAudioTrack() {
+    currentAudioIndex = (currentAudioIndex + 1) % audioStates.length;
+    const currentState = audioStates[currentAudioIndex];
+    document.getElementById('audioTooltip').textContent = currentState.label;
+    if (currentState.src === null) {
+      audioEl.pause();
+      audioEl.currentTime = 0;
+    } else {
+      audioEl.src = currentState.src;
+      audioEl.play().catch(err => { console.log("Audio bloqueado:", err); });
+    }
+  }
+
+  /* --- SUPABASE PARA MOSTRAR CRISTALES ACTUALES --- */
+  const SUPABASE_URL = 'https://jcosmhiukmfsygrinfgy.supabase.co';
+  const SUPABASE_ANON_KEY = 'sb_publishable_UVGFZQhG36gD_67hInVz7g_4oLD7tWN';
+  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  async function checkUserSession() {
+    const { data: { session } } = await supabaseClient.auth.getSession();
+    if (session) {
+      const user = session.user;
+      const username = user.email.split('@')[0];
+      document.getElementById('authBadgeLabel').textContent = username.charAt(0).toUpperCase() + username.slice(1);
+      let { data } = await supabaseClient.from('profiles').select('crystals').eq('id', user.id).single();
+      if (data) {
+        document.getElementById('headerCrystalCount').textContent = data.crystals;
+      }
+    } else {
+      let savedCrystals = localStorage.getItem('arkanica_crystals_guest') || 10;
+      document.getElementById('headerCrystalCount').textContent = savedCrystals;
+      document.getElementById('authBadgeLabel').textContent = 'Invitado';
+    }
+  }
+  checkUserSession();
+
+  /* --- FUNCIÓN DE COMPRA EN STRIPE (CON RELEVO DE DATOS) --- */
+  function buyProductStripe(productName, priceInCents) {
+    // Puedes conectar aquí tu función serverless de Netlify para crear el checkout pasando el producto y el regalo de +25 cristales
+    alert(`Has seleccionado: "${productName}". Redirigiendo a la pasarela de pago segura de Stripe con tu 40% de descuento y los +25 Cristales de Claridad de regalo...`);
+    
+    // Ejemplo de redirección a enlace de pago de Stripe o llamada fetch a backend:
+    // window.location.href = "TU_ENLACE_DE_STRIPE_O_CHECKOUT";
+  }
+</script>
+
+</body>
+</html>

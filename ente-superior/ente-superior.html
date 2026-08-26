@@ -172,6 +172,36 @@
     font-weight: 500;
   }
 
+  /* BOTONES DE NAVEGACIÓN EN EL HEADER */
+  .header-sessions-btn {
+    background: transparent;
+    border: 1px solid var(--gold-dim);
+    color: var(--gold-light);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 6px 12px;
+    border-radius: 20px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  .header-sessions-btn:hover {
+    background: rgba(223, 177, 91, 0.1);
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  .header-store-link {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--gold-light);
+    text-decoration: none;
+    transition: color 0.3s;
+    font-weight: 600;
+  }
+  .header-store-link:hover { color: var(--gold); }
+
   .back-link {
     font-size: 10px;
     text-transform: uppercase;
@@ -216,7 +246,7 @@
     line-height: 1.45;
   }
 
-  /* CONTENEDOR DEL CHAT */
+  /* CONTENEDOR DEL CHAT CON DESTELLO DORADO DISIMULADO */
   .chat-container {
     width: 100%;
     max-width: 900px;
@@ -228,6 +258,34 @@
     display: flex;
     flex-direction: column;
     gap: 14px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .chat-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 150%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(223, 177, 91, 0.06),
+      rgba(243, 216, 157, 0.12),
+      rgba(223, 177, 91, 0.06),
+      transparent
+    );
+    transform: skewX(-20deg);
+    animation: shimmerEffect 7s infinite ease-in-out;
+    pointer-events: none;
+  }
+
+  @keyframes shimmerEffect {
+    0% { left: -150%; }
+    35% { left: 150%; }
+    100% { left: 150%; }
   }
 
   .chat-messages {
@@ -295,7 +353,7 @@
     font-size: 12px;
     font-family: 'Inter', sans-serif;
     outline: none;
-    min-width: 0; /* Evita desbordamiento flexbox en movil */
+    min-width: 0;
   }
   .chat-input:focus { border-color: var(--gold); }
 
@@ -435,7 +493,6 @@
     overflow: hidden;
   }
 
-  /* MEDIA QUERIES ESPECÍFICAS PARA MÓVILES (XIAOMI 14T PRO Y SIMILARES) */
   @media (max-width: 768px) {
     body { padding: 8px 6px 40px 6px; }
     
@@ -460,7 +517,6 @@
       padding: 14px 10px;
     }
 
-    /* Diseño apilado vertical para input y botón en móviles pequeños para evitar desbordes */
     .chat-input-area {
       flex-direction: column;
       gap: 8px;
@@ -525,6 +581,8 @@
     <span class="logo-text">Arkanica</span>
   </a>
   <div class="header-right">
+    <a href="../tienda.html" class="header-store-link">Tienda Mística</a>
+    <a href="../index.html#quien-soy" class="header-sessions-btn">Sesiones 1 a 1</a>
     <div class="profile-badge">
       <div class="profile-crystals">
         <span>💎</span> <strong id="crystalCount">10</strong>
