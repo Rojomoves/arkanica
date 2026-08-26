@@ -1188,9 +1188,8 @@
   }
 
   function goToPrivateSession() {
-    const currentSpreadConfig = getCurrentSpreadConfig();
-    const readingContext = { spreadTitle: currentSpreadConfig.title, cards: selectedCards };
-    localStorage.setItem('arkanica_last_reading', JSON.stringify(readingContext));
+    // Limpiamos cualquier contexto anterior para que el Ente Superior arranque con el saludo predeterminado
+    localStorage.removeItem('arkanica_last_reading');
     window.location.href = 'personalizada/personalizada.html';
   }
 
