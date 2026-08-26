@@ -314,6 +314,125 @@
 
   .auth-switch-mode:hover { color: var(--gold); }
 
+  /* ESTILOS DEL MODAL DE COMPARTIR HISTORIA */
+  .share-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 5, 8, 0.88);
+    backdrop-filter: blur(10px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    padding: 16px;
+  }
+
+  .share-modal-card {
+    background: var(--surface);
+    border: 1px solid var(--gold);
+    border-radius: 12px;
+    width: 100%;
+    max-width: 380px;
+    padding: 24px;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.8);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    position: relative;
+    animation: fadeIn 0.4s ease forwards;
+  }
+
+  .story-preview-card {
+    width: 260px;
+    height: 420px;
+    background: linear-gradient(135deg, #13121b 0%, #07070b 100%);
+    border: 1.5px solid var(--gold);
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(223, 177, 91, 0.2);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .story-preview-card::before {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    border: 1px solid rgba(223, 177, 91, 0.3);
+    border-radius: 8px;
+    pointer-events: none;
+  }
+
+  .story-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+
+  .story-card-img {
+    width: 90px;
+    height: 145px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid var(--gold);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+  }
+
+  .story-card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    color: var(--text-main);
+    margin: 0;
+  }
+
+  .story-card-archetype {
+    font-size: 11px;
+    color: var(--text-muted);
+    line-height: 1.4;
+    margin: 0;
+    font-style: italic;
+  }
+
+  .share-action-btns {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .share-primary-btn {
+    background: linear-gradient(135deg, #E1306C 0%, #C13584 50%, #833AB4 100%);
+    color: #fff;
+    border: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 11.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 13px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: opacity 0.2s, box-shadow 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 4px 15px rgba(225, 48, 108, 0.4);
+  }
+
+  .share-primary-btn:hover {
+    opacity: 0.92;
+    box-shadow: 0 6px 20px rgba(225, 48, 108, 0.6);
+  }
+
   .hero-container {
     text-align: center;
     max-width: 650px;
@@ -940,6 +1059,32 @@
   </div>
 </div>
 
+<!-- MODAL DE COMPARTIR HISTORIA -->
+<div class="share-modal-overlay" id="shareModal">
+  <div class="share-modal-card">
+    <button class="auth-close-btn" onclick="closeShareModal()">✕</button>
+    <h2 class="auth-title" style="font-size: 22px; margin-bottom: 0;">Comparte tu Revelación</h2>
+    
+    <!-- Vista previa estética de la Story -->
+    <div class="story-preview-card" id="storyPreviewCard">
+      <div class="story-brand">✦ Arkanica ✦</div>
+      <img id="storyCardImg" class="story-card-img" src="" alt="Carta">
+      <div>
+        <h4 id="storyCardName" class="story-card-title">Nombre de la Carta</h4>
+        <p id="storyCardArchetype" class="story-card-archetype">Arquetipo o significado...</p>
+      </div>
+      <div style="font-size: 9px; color: var(--gold-dim); letter-spacing: 0.1em;">ARKA-NICA.APP</div>
+    </div>
+
+    <div class="share-action-btns">
+      <button class="share-primary-btn" onclick="shareToInstagramStory()">
+        <span>📸</span> Subir a Historias de Instagram
+      </button>
+      <button class="arkanica-reset" style="width: 100%;" onclick="downloadStoryCard()">Descargar Imagen</button>
+    </div>
+  </div>
+</div>
+
 <header>
   <a href="#" class="logo">Arkanica</a>
   <div class="header-right">
@@ -1016,7 +1161,10 @@
     <p class="master-text" id="masterTextContent"></p>
     <div class="master-cta">
       <span>¿Necesitas desentrañar un caso más personal?</span>
-      <button class="action-btn" onclick="goToPrivateSession()">Profundizar en Sesión Privada</button>
+      <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+        <button class="action-btn" onclick="openShareModal()" style="background: linear-gradient(135deg, #E1306C, #833AB4); color: white;">Compartir Story 📸</button>
+        <button class="action-btn" onclick="goToPrivateSession()">Profundizar en Sesión Privada</button>
+      </div>
     </div>
   </div>
 
@@ -1103,7 +1251,6 @@
         const lastLogin = data.last_login_date;
 
         if (lastLogin !== today) {
-          // Aplicar regeneración / bonus diario inteligente
           if (userCrystals < 10) {
             userCrystals = 10;
           } else {
@@ -1112,12 +1259,10 @@
           await supabaseClient.from('profiles').update({ crystals: userCrystals, last_login_date: today }).eq('id', currentUser.id);
         }
       } else {
-        // Crear perfil si no existe
         await supabaseClient.from('profiles').insert([{ id: currentUser.id, crystals: 10, last_login_date: today }]);
         userCrystals = 10;
       }
     } else {
-      // Modo Invitado (LocalStorage)
       let savedCrystals = parseInt(localStorage.getItem('arkanica_crystals_guest')) || 10;
       let lastLogin = localStorage.getItem('arkanica_last_login_guest');
 
@@ -1163,6 +1308,140 @@
 
   function closeAuthModal() {
     document.getElementById('authModal').style.display = 'none';
+  }
+
+  // --- FUNCIONES DEL MODAL DE COMPARTIR STORY ---
+  function openShareModal() {
+    if (!selectedCards || selectedCards.length === 0) {
+      alert("Realiza una tirada primero para poder compartir tu carta.");
+      return;
+    }
+    const mainCard = selectedCards[0];
+    document.getElementById('storyCardImg').src = mainCard.img;
+    document.getElementById('storyCardName').textContent = mainCard.name;
+    document.getElementById('storyCardArchetype').textContent = `"${mainCard.archetype}"`;
+    document.getElementById('shareModal').style.display = 'flex';
+  }
+
+  function closeShareModal() {
+    document.getElementById('shareModal').style.display = 'none';
+  }
+
+  async function shareToInstagramStory() {
+    if (!selectedCards || selectedCards.length === 0) return;
+    const mainCard = selectedCards[0];
+
+    try {
+      const canvas = document.createElement('canvas');
+      canvas.width = 1080;
+      canvas.height = 1920;
+      const ctx = canvas.getContext('2d');
+
+      const bgGradient = ctx.createLinearGradient(0, 0, 0, 1920);
+      bgGradient.addColorStop(0, '#13121b');
+      bgGradient.addColorStop(1, '#050508');
+      ctx.fillStyle = bgGradient;
+      ctx.fillRect(0, 0, 1080, 1920);
+
+      ctx.strokeStyle = '#dfb15b';
+      ctx.lineWidth = 12;
+      ctx.strokeRect(60, 60, 960, 1800);
+
+      ctx.fillStyle = '#dfb15b';
+      ctx.font = '500 36px "Cormorant Garamond", serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('✦  ARKA-NICA.APP  ✦', 540, 180);
+
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.src = mainCard.img;
+      
+      await new Promise((resolve, reject) => {
+        img.onload = resolve;
+        img.onerror = reject;
+      });
+
+      const imgWidth = 460;
+      const imgHeight = 746;
+      const imgX = (1080 - imgWidth) / 2;
+      const imgY = 260;
+      
+      ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
+      ctx.shadowBlur = 40;
+      ctx.drawImage(img, imgX, imgY, imgWidth, imgHeight);
+      ctx.shadowBlur = 0;
+
+      ctx.fillStyle = '#f4f2ee';
+      ctx.font = '600 56px "Cormorant Garamond", serif';
+      ctx.fillText(mainCard.name, 540, 1120);
+
+      ctx.fillStyle = '#9c98a6';
+      ctx.font = '300 32px "Inter", sans-serif';
+      wrapText(ctx, `"${mainCard.archetype}"`, 540, 1200, 800, 48);
+
+      ctx.fillStyle = '#dfb15b';
+      ctx.font = '500 28px "Inter", sans-serif';
+      ctx.fillText('Descubre tu claridad en arkanica.app', 540, 1720);
+
+      canvas.toBlob(async (blob) => {
+        const file = new File([blob], 'arkanica-tirada.png', { type: 'image/png' });
+
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          try {
+            await navigator.share({
+              files: [file],
+              title: 'Mi tirada en Arkanica',
+              text: 'Descubre lo que las cartas tienen que decir hoy en Arkanica ✦',
+            });
+            closeShareModal();
+          } catch (error) {
+            if (error.name !== 'AbortError') {
+              downloadBlob(blob);
+            }
+          }
+        } else {
+          downloadBlob(blob);
+        }
+      }, 'image/png');
+
+    } catch (err) {
+      console.error("Error al generar la story:", err);
+      alert("No se pudo generar la imagen automáticamente. Usa el botón de descargar.");
+    }
+  }
+
+  function wrapText(context, text, x, y, maxWidth, lineHeight) {
+    const words = text.split(' ');
+    let line = '';
+    for(let n = 0; n < words.length; n++) {
+      let testLine = line + words[n] + ' ';
+      let metrics = context.measureText(testLine);
+      let testWidth = metrics.width;
+      if (testWidth > maxWidth && n > 0) {
+        context.fillText(line, x, y);
+        line = words[n] + ' ';
+        y += lineHeight;
+      } else {
+        line = testLine;
+      }
+    }
+    context.fillText(line, x, y);
+  }
+
+  function downloadStoryCard() {
+    shareToInstagramStory();
+  }
+
+  function downloadBlob(blob) {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'arkanica-tarot.png';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    closeShareModal();
   }
 
   function toggleAuthMode() {
@@ -1602,7 +1881,6 @@
     const lastFreeDate = localStorage.getItem(freeKey);
 
     if (lastFreeDate === today) {
-      // Ya se usó la tirada gratis hoy. Cuesta 3 cristales repetir.
       if (userCrystals < 3) {
         alert("Has agotado tu tirada gratuita diaria para esta lectura y no tienes suficientes cristales (necesitas 3).");
         return;
@@ -1613,7 +1891,6 @@
         }
       }
     } else {
-      // Es gratis hoy por primera vez
       localStorage.setItem(freeKey, today);
       initReadingExecution();
     }
