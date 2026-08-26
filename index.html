@@ -282,13 +282,14 @@
   }
   .auth-switch-mode:hover { color: var(--gold); }
 
+  /* TARJETA DE PREVIEW PARA COMPARTIR (USA REVERSO Y RESUMEN IA) */
   .story-preview-card {
-    width: 250px;
-    height: 400px;
+    width: 280px;
+    height: 420px;
     background: linear-gradient(135deg, #13121b 0%, #07070b 100%);
     border: 1.5px solid var(--gold);
     border-radius: 10px;
-    padding: 18px;
+    padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -299,8 +300,8 @@
   }
 
   .story-card-img {
-    width: 85px;
-    height: 138px;
+    width: 75px;
+    height: 125px;
     object-fit: cover;
     border-radius: 6px;
     border: 1px solid var(--gold);
@@ -772,7 +773,7 @@
   </div>
 </div>
 
-<!-- MODAL DE COMPARTIR HISTORIA -->
+<!-- MODAL DE COMPARTIR REVELACIÓN (CON REVERSO Y RESUMEN DE LA IA) -->
 <div class="share-modal-overlay" id="shareModal" style="display: none;">
   <div class="share-modal-card">
     <button class="auth-close-btn" onclick="closeShareModal()">✕</button>
@@ -780,16 +781,15 @@
     
     <div class="story-preview-card" id="storyPreviewCard">
       <div class="story-brand" style="font-family: 'Cormorant Garamond', serif; font-size: 13px; color: var(--gold); letter-spacing: 0.2em;">✦ Arkanica ✦</div>
-      <img id="storyCardImg" class="story-card-img" src="" alt="Carta">
+      <img id="storyCardImg" class="story-card-img" src="assets/reverse.jpg" alt="Reverso Arkanica">
       <div>
-        <h4 id="storyCardName" class="story-card-title" style="font-family: 'Cormorant Garamond', serif; font-size: 17px; margin: 0;">Nombre de la Carta</h4>
-        <p id="storyCardArchetype" class="story-card-archetype" style="font-size: 11px; color: var(--text-muted); font-style: italic; margin: 0;">Arquetipo...</p>
+        <h4 id="storyCardSpreadTitle" class="story-card-title" style="font-family: 'Cormorant Garamond', serif; font-size: 16px; margin: 0 0 4px; color: var(--gold-light);">Tirada</h4>
+        <p id="storyCardSummaryText" class="story-card-archetype" style="font-size: 11px; color: var(--text-muted); font-style: italic; margin: 0; line-height: 1.4;">Resumen del oráculo...</p>
       </div>
       <div style="font-size: 9px; color: var(--gold-dim); letter-spacing: 0.1em;">ARKA-NICA.APP</div>
     </div>
 
     <div style="display: flex; flex-direction: column; gap: 10px; width: 100%;">
-      <!-- BOTÓN DE COMPARTIR DORADO Y LIMPIO -->
       <button class="action-btn" onclick="shareToInstagramStory()" style="width: 100%;">Compartir</button>
       <button class="arkanica-reset" style="width: 100%;" onclick="downloadStoryCard()">Descargar Imagen</button>
     </div>
@@ -857,7 +857,7 @@
   <div class="arkanica-table" id="table"></div>
   <p class="arkanica-hint" id="hint">Selecciona una carta del abanico superior</p>
 
-  <!-- CAJA DE SÍNTESIS MAGISTRAL (OCULTA POR DEFECTO CON !IMPORTANT) -->
+  <!-- CAJA DE SÍNTESIS MAGISTRAL -->
   <div class="master-interpretation-box" id="masterBox">
     <div class="master-title">✦ Síntesis Magistral del Oráculo</div>
     <p class="master-text" id="masterTextContent"></p>
@@ -1058,37 +1058,45 @@
 
   function openShareModal() {
     if (!selectedCards || selectedCards.length === 0) {
-      alert("Realiza una tirada primero para poder compartir tu carta.");
+      alert("Realiza una tirada primero para poder compartir tu lectura.");
       return;
     }
-    const mainCard = selectedCards[0];
-    document.getElementById('storyCardImg').src = mainCard.img;
-    document.getElementById('storyCardName').textContent = mainCard.name;
-    document.getElementById('storyCardArchetype').textContent = `"${mainCard.archetype}"`;
+    const config = getCurrentSpreadConfig();
+    const fullText = document.getElementById('masterTextContent').textContent;
+    // Creamos un resumen limpio de la IA (primeras 140 letras aprox)
+    const shortSummary = fullText.length > 140 ? fullText.substring(0, 137) + '...' : fullText;
+
+    document.getElementById('storyCardSpreadTitle').textContent = config.title;
+    document.getElementById('storyCardSummaryText').textContent = `"${shortSummary}"`;
     document.getElementById('shareModal').style.display = 'flex';
   }
   function closeShareModal() { document.getElementById('shareModal').style.display = 'none'; }
 
   async function shareToInstagramStory() {
     if (!selectedCards || selectedCards.length === 0) return;
-    const mainCard = selectedCards[0];
+    const config = getCurrentSpreadConfig();
+    const fullText = document.getElementById('masterTextContent').textContent;
     try {
       const canvas = document.createElement('canvas');
       canvas.width = 1080; canvas.height = 1920;
       const ctx = canvas.getContext('2d');
       ctx.fillStyle = '#050508'; ctx.fillRect(0, 0, 1080, 1920);
       ctx.strokeStyle = '#dfb15b'; ctx.lineWidth = 12; ctx.strokeRect(60, 60, 960, 1800);
+      
       ctx.fillStyle = '#dfb15b'; ctx.font = '500 36px "Cormorant Garamond", serif'; ctx.textAlign = 'center';
       ctx.fillText('✦  ARKA-NICA.APP  ✦', 540, 180);
 
-      const img = new Image(); img.crossOrigin = 'anonymous'; img.src = mainCard.img;
+      // Pintar imagen de reverso del mazo en el canvas
+      const img = new Image(); img.crossOrigin = 'anonymous'; img.src = 'assets/reverse.jpg';
       await new Promise((res, rej) => { img.onload = res; img.onerror = rej; });
-      ctx.drawImage(img, 310, 260, 460, 746);
+      ctx.drawImage(img, 360, 260, 360, 600);
 
-      ctx.fillStyle = '#f4f2ee'; ctx.font = '600 56px "Cormorant Garamond", serif';
-      ctx.fillText(mainCard.name, 540, 1120);
-      ctx.fillStyle = '#9c98a6'; ctx.font = '300 32px "Inter", sans-serif';
-      ctx.fillText(`"${mainCard.archetype}"`, 540, 1200);
+      ctx.fillStyle = '#f3d89d'; ctx.font = '600 52px "Cormorant Garamond", serif';
+      ctx.fillText(config.title, 540, 960);
+
+      // Dibujar texto de resumen IA adaptado al canvas
+      ctx.fillStyle = '#f4f2ee'; ctx.font = 'italic 34px "Inter", sans-serif';
+      wrapText(ctx, `"${fullText}"`, 540, 1060, 840, 50);
 
       canvas.toBlob(async (blob) => {
         const file = new File([blob], 'arkanica-tirada.png', { type: 'image/png' });
@@ -1097,6 +1105,24 @@
         } else { downloadBlob(blob); }
       }, 'image/png');
     } catch(e) { alert("Error al generar la story."); }
+  }
+
+  function wrapText(context, text, x, y, maxWidth, lineHeight) {
+    const words = text.split(' ');
+    let line = '';
+    for(let n = 0; n < words.length; n++) {
+      let testLine = line + words[n] + ' ';
+      let metrics = context.measureText(testLine);
+      let testWidth = metrics.width;
+      if (testWidth > maxWidth && n > 0) {
+        context.fillText(line, x, y);
+        line = words[n] + ' ';
+        y += lineHeight;
+      } else {
+        line = testLine;
+      }
+    }
+    context.fillText(line, x, y);
   }
 
   function downloadBlob(blob) {
@@ -1302,7 +1328,6 @@
     currentSlotIndex = 0;
     deckSection.style.display = 'flex';
     
-    // Ocultar estrictamente la caja magistral al iniciar o reiniciar
     masterBox.style.setProperty('display', 'none', 'important');
     masterTextContent.innerHTML = '';
     
@@ -1406,7 +1431,6 @@
   async function generateGenerativeInterpretation() {
     const config = getCurrentSpreadConfig();
     
-    // Texto base instantáneo mientras actúa la IA
     masterTextContent.innerHTML = `Tras sintonizar los arcanos en esta tirada de <strong>${config.title}</strong>, la presencia de <em>${selectedCards[0].name}</em> marca un punto de inflexión decisivo. ${selectedCards[0].archetype}. Confía plenamente en tu intuición actual y permite que la claridad guíe tus próximos pasos sin vacilar.`;
     masterBox.style.setProperty('display', 'block', 'important');
 
