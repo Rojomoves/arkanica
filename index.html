@@ -7,6 +7,8 @@
 <!-- Script oficial de Calendly para el popup -->
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+<!-- Cliente oficial de Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500&display=swap');
@@ -153,6 +155,132 @@
   .nav-links a:hover {
     color: var(--gold);
   }
+
+  /* MODAL DE LOGIN / REGISTRO */
+  .auth-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 5, 8, 0.85);
+    backdrop-filter: blur(8px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 16px;
+  }
+
+  .auth-modal-card {
+    background: var(--surface);
+    border: 1px solid var(--gold);
+    border-radius: 12px;
+    width: 100%;
+    max-width: 420px;
+    padding: 32px;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.8);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: relative;
+    animation: fadeIn 0.4s ease forwards;
+  }
+
+  .auth-close-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 18px;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+
+  .auth-close-btn:hover { color: var(--gold); }
+
+  .auth-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    color: var(--gold);
+    margin: 0;
+    text-align: center;
+  }
+
+  .auth-subtitle {
+    font-size: 12.5px;
+    color: var(--text-muted);
+    text-align: center;
+    margin: 0 0 10px;
+    line-height: 1.4;
+  }
+
+  .auth-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .auth-input-group label {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .auth-input {
+    background: rgba(0,0,0,0.4);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 12px;
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+
+  .auth-input:focus {
+    border-color: var(--gold);
+  }
+
+  .auth-msg {
+    font-size: 12px;
+    text-align: center;
+    min-height: 18px;
+  }
+
+  .auth-submit-btn {
+    background: var(--gold);
+    color: var(--bg);
+    border: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 11.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 13px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .auth-submit-btn:hover {
+    background: var(--gold-light);
+    box-shadow: 0 0 20px rgba(223, 177, 91, 0.4);
+  }
+
+  .auth-switch-mode {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 12px;
+    cursor: pointer;
+    text-decoration: underline;
+    text-align: center;
+    transition: color 0.2s;
+  }
+
+  .auth-switch-mode:hover { color: var(--gold); }
 
   .hero-container {
     text-align: center;
@@ -742,6 +870,30 @@
   <source src="" type="audio/mpeg">
 </audio>
 
+<!-- MODAL DE ACCESO / REGISTRO -->
+<div class="auth-modal-overlay" id="authModal">
+  <div class="auth-modal-card">
+    <button class="auth-close-btn" onclick="closeAuthModal()">✕</button>
+    <h2 class="auth-title" id="authModalTitle">Portal de Acceso</h2>
+    <p class="auth-subtitle" id="authModalSub">Inicia sesión para sincronizar tus cristales en la nube o crea tu cuenta en un instante.</p>
+    
+    <div class="auth-input-group">
+      <label>Correo Electrónico</label>
+      <input type="email" id="authEmail" class="auth-input" placeholder="tu@correo.com">
+    </div>
+
+    <div class="auth-input-group">
+      <label>Contraseña</label>
+      <input type="password" id="authPassword" class="auth-input" placeholder="••••••••">
+    </div>
+
+    <div class="auth-msg" id="authMsg" style="color: var(--gold);"></div>
+
+    <button class="auth-submit-btn" id="authSubmitBtn" onclick="handleAuthSubmit()">Iniciar Sesión</button>
+    <button class="auth-switch-mode" id="authSwitchBtn" onclick="toggleAuthMode()">¿No tienes cuenta? Regístrate aquí</button>
+  </div>
+</div>
+
 <header>
   <a href="#" class="logo">Arkanica</a>
   <div class="header-right">
@@ -753,8 +905,8 @@
       <button class="audio-arrow-btn" onclick="changeAudioTrack(1); event.stopPropagation();" title="Siguiente">›</button>
     </div>
 
-    <div class="crystals-badge" onclick="goToPrivateSession()" title="Tus cristales de claridad — Haz clic para ir a la Sala Privada">
-      💎 <span id="headerCrystalCount">0</span> Cristales
+    <div class="crystals-badge" id="crystalsBadge" onclick="openAuthModal()" title="Gestionar cuenta y cristales">
+      💎 <span id="headerCrystalCount">10</span> <span id="authBadgeLabel" style="font-size: 10px; opacity: 0.8;">(Acceder)</span>
     </div>
     
     <div class="nav-links">
@@ -851,6 +1003,111 @@
 </div>
 
 <script>
+  /* --- CONFIGURACIÓN DE SUPABASE --- */
+  const SUPABASE_URL = 'https://jcosmhiukmfsygrinfgy.supabase.co';
+  const SUPABASE_ANON_KEY = 'sb_publishable_UVGFZQhG36gD_67hInVz7g_4oLD7tWN';
+
+  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  let currentUser = null;
+  let userCrystals = 10;
+  let isRegisterMode = false;
+
+  function openAuthModal() {
+    if (currentUser) {
+      if (confirm(`Estás conectado como ${currentUser.email}. ¿Deseas cerrar sesión?`)) {
+        supabaseClient.auth.signOut().then(() => {
+          window.location.reload();
+        });
+      }
+      return;
+    }
+    document.getElementById('authModal').style.display = 'flex';
+  }
+
+  function closeAuthModal() {
+    document.getElementById('authModal').style.display = 'none';
+  }
+
+  function toggleAuthMode() {
+    isRegisterMode = !isRegisterMode;
+    const title = document.getElementById('authModalTitle');
+    const sub = document.getElementById('authModalSub');
+    const btn = document.getElementById('authSubmitBtn');
+    const switchBtn = document.getElementById('authSwitchBtn');
+
+    if (isRegisterMode) {
+      title.textContent = 'Crear Cuenta';
+      sub.textContent = 'Regístrate para guardar tus cristales de claridad y acceder desde cualquier lugar.';
+      btn.textContent = 'Registrarse';
+      switchBtn.textContent = '¿Ya tienes cuenta? Inicia sesión';
+    } else {
+      title.textContent = 'Portal de Acceso';
+      sub.textContent = 'Inicia sesión para sincronizar tus cristales en la nube.';
+      btn.textContent = 'Iniciar Sesión';
+      switchBtn.textContent = '¿No tienes cuenta? Regístrate aquí';
+    }
+  }
+
+  async function handleAuthSubmit() {
+    const email = document.getElementById('authEmail').value.trim();
+    const password = document.getElementById('authPassword').value;
+    const msgEl = document.getElementById('authMsg');
+
+    if (!email || !password) {
+      msgEl.textContent = 'Por favor, completa todos los campos.';
+      return;
+    }
+
+    msgEl.textContent = 'Conectando con el oráculo...';
+
+    if (isRegisterMode) {
+      const { data, error } = await supabaseClient.auth.signUp({ email, password });
+      if (error) {
+        msgEl.textContent = error.message;
+      } else {
+        msgEl.textContent = '¡Cuenta creada! Revisa tu correo o inicia sesión.';
+        isRegisterMode = false;
+        toggleAuthMode();
+      }
+    } else {
+      const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+      if (error) {
+        msgEl.textContent = error.message;
+      } else {
+        msgEl.textContent = '¡Acceso concedido!';
+        setTimeout(() => {
+          closeAuthModal();
+          checkUserSession();
+        }, 800);
+      }
+    }
+  }
+
+  async function checkUserSession() {
+    const { data: { session } } = await supabaseClient.auth.getSession();
+    if (session) {
+      currentUser = session.user;
+      document.getElementById('authBadgeLabel').textContent = `(${currentUser.email.split('@')[0]})`;
+      
+      const { data, error } = await supabaseClient
+        .from('profiles')
+        .select('crystals')
+        .eq('id', currentUser.id)
+        .single();
+
+      if (data) {
+        userCrystals = data.crystals;
+      }
+      document.getElementById('headerCrystalCount').textContent = userCrystals;
+    } else {
+      let savedCrystals = localStorage.getItem(`arkanica_crystals_guest`) || 10;
+      document.getElementById('headerCrystalCount').textContent = savedCrystals;
+      document.getElementById('authBadgeLabel').textContent = '(Acceder)';
+    }
+  }
+
+  checkUserSession();
+
   let sfxAudioCtx = null;
 
   function initSfxContext() {
@@ -941,19 +1198,6 @@
     if (touchEndX < touchStartX - 30) changeAudioTrack(1);
     else if (touchEndX > touchStartX + 30) changeAudioTrack(-1);
   }, {passive: true});
-
-  let username = localStorage.getItem('arkanica_user');
-  if (!username) {
-    username = "Viajero_" + Math.floor(Math.random()*1000);
-    localStorage.setItem('arkanica_user', username);
-  }
-
-  let savedCrystals = localStorage.getItem(`arkanica_crystals_${username}`);
-  if (savedCrystals === null) {
-    savedCrystals = 10;
-    localStorage.setItem(`arkanica_crystals_${username}`, savedCrystals);
-  }
-  document.getElementById('headerCrystalCount').textContent = savedCrystals;
 
   function goToPrivateSession() {
     const currentSpreadConfig = getCurrentSpreadConfig();
