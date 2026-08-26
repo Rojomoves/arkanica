@@ -43,10 +43,14 @@ exports.handler = async function(event, context) {
 
     // Mapeo limpio de las cartas seleccionadas
     const cardsText = cards.map((c, i) => 
-      `Posición ${i + 1}: ${c.name} (Arquetipo: ${c.archetype})`
+      `Posición ${i + 1}: ${c.name} (Significado: ${c.archetype})`
     ).join(', ');
 
-    const prompt = `Actúa como un maestro experto en tarot y psicología profunda. Analiza de forma mística, directa y altamente reveladora esta tirada de "${spreadTitle || 'Lectura de Claridad'}" compuesta por las siguientes cartas: ${cardsText}. Estructura tu respuesta estrictamente en formato HTML utilizando etiquetas <p> para separar los párrafos (máximo 3 párrafos cortos). No incluyas markdown ni bloques de código adicionales, solo texto con etiquetas <p>.`;
+    // PROMPT ACTUALIZADO (Cercano, sin tecnicismos y con llamada a la acción / pregunta final)
+    const prompt = `Actúa como un guía espiritual empático, cercano y experto en claridad emocional. Explica de forma muy sencilla, humana y directa (como si hablaras con un buen amigo que necesita consejo, sin palabras rebuscadas ni tecnicismos de tarot) esta tirada de "${spreadTitle || 'Lectura de Claridad'}" compuesta por: ${cardsText}. 
+    Estructura tu respuesta estrictamente en formato HTML utilizando etiquetas <p> para separar los párrafos (máximo 3 párrafos cortos y conversacionales). 
+    CRUCIAL: El último párrafo DEBE terminar obligatoriamente con una pregunta abierta, persuasiva y reflexiva que invite al usuario a seguir pensando en su situación o a profundizar más. 
+    No incluyas markdown ni bloques de código adicionales, solo texto con etiquetas <p>.`;
 
     // Utilizando el modelo estable y actual compatible con la API v1beta
     const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${apiKey}`;

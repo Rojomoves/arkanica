@@ -10,6 +10,9 @@
 <!-- Cliente oficial de Supabase -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<!-- CÓDIGO OFICIAL DE GOOGLE ADSENSE -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2698892755295064" crossorigin="anonymous"></script>
+
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500&display=swap');
 
@@ -69,7 +72,7 @@
   .header-right {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     flex-wrap: wrap;
     justify-content: flex-end;
   }
@@ -117,25 +120,54 @@
     cursor: pointer;
   }
 
-  .crystals-badge {
-    background: rgba(223, 177, 91, 0.08);
+  /* BOTÓN DE PERFIL / CRISTALES */
+  .profile-badge {
+    background: linear-gradient(135deg, rgba(223, 177, 91, 0.1) 0%, rgba(12, 11, 18, 0.9) 100%);
     border: 1px solid var(--gold-dim);
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 11px;
-    color: var(--gold);
-    letter-spacing: 0.05em;
+    padding: 6px 14px;
+    border-radius: 24px;
+    font-size: 11.5px;
+    color: var(--text-main);
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 10px;
     text-decoration: none;
-    transition: background 0.3s;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     white-space: nowrap;
     cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
   }
 
-  .crystals-badge:hover {
-    background: rgba(223, 177, 91, 0.15);
+  .profile-badge:hover {
+    border-color: var(--gold);
+    background: linear-gradient(135deg, rgba(223, 177, 91, 0.18) 0%, rgba(19, 18, 28, 0.95) 100%);
+    box-shadow: 0 6px 20px rgba(223, 177, 91, 0.2);
+    transform: translateY(-1px);
+  }
+
+  .profile-crystals {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--gold);
+    font-weight: 500;
+  }
+
+  .profile-divider {
+    width: 1px;
+    height: 12px;
+    background: var(--gold-dim);
+    opacity: 0.5;
+  }
+
+  .profile-user-info {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13.5px;
+    color: var(--gold-light);
+    letter-spacing: 0.03em;
   }
 
   .nav-links {
@@ -156,7 +188,7 @@
     color: var(--gold);
   }
 
-  /* MODAL DE LOGIN / REGISTRO */
+  /* MODAL DE AUTH */
   .auth-modal-overlay {
     position: fixed;
     inset: 0;
@@ -841,12 +873,26 @@
     color: var(--gold);
   }
 
+  /* Contenedor elegante para anuncios de AdSense adaptado a la estética */
+  .ad-container-arkanica {
+    width: 100%;
+    max-width: 1100px;
+    margin: 20px auto;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    overflow: hidden;
+  }
+
   @media (max-width: 768px) {
     body { padding: 16px 10px; }
     header { margin-bottom: 24px; padding-bottom: 12px; }
     .logo { font-size: 22px; }
     .header-right { gap: 8px; }
-    .audio-carousel, .crystals-badge { padding: 5px 10px; font-size: 10px; }
+    .audio-carousel, .profile-badge { padding: 5px 10px; font-size: 10px; }
     .nav-links { gap: 12px; font-size: 9.5px; }
     .arkanica-title { font-size: 28px; }
     .arkanica-sub { font-size: 12.5px; }
@@ -905,8 +951,15 @@
       <button class="audio-arrow-btn" onclick="changeAudioTrack(1); event.stopPropagation();" title="Siguiente">›</button>
     </div>
 
-    <div class="crystals-badge" id="crystalsBadge" onclick="openAuthModal()" title="Gestionar cuenta y cristales">
-      💎 <span id="headerCrystalCount">10</span> <span id="authBadgeLabel" style="font-size: 10px; opacity: 0.8;">(Acceder)</span>
+    <!-- BOTÓN DE PERFIL / CRISTALES -->
+    <div class="profile-badge" id="profileBadge" onclick="openAuthModal()" title="Gestionar cuenta y cristales">
+      <div class="profile-crystals">
+        <span>💎</span> <strong id="headerCrystalCount">10</strong>
+      </div>
+      <div class="profile-divider"></div>
+      <div class="profile-user-info">
+        <span>✦</span> <span id="authBadgeLabel">Acceder</span>
+      </div>
     </div>
     
     <div class="nav-links">
@@ -920,7 +973,7 @@
 <div class="hero-container">
   <div class="arkanica-eyebrow">Tu espacio de calma y claridad</div>
   <h1 class="arkanica-title">Elige qué te gustaría consultar hoy</h1>
-  <p class="arkanica-sub">Selecciona una categoría y una tirada especializada para disipar tus dudas y guiar tus decisiones paso a paso.</p>
+  <p class="arkanica-sub">Disfruta de cada tirada totalmente gratis una vez al día. Repetir tiradas tiene un coste de 3 cristales.</p>
 </div>
 
 <!-- Selector de Categorías -->
@@ -931,10 +984,10 @@
   <button class="category-tab" onclick="switchCategory('proyectos', event)">🎬 Escenario Principal</button>
 </div>
 
-<!-- Selector de Tiradas Dinámico para Escritorio (Botones) -->
+<!-- Selector de Tiradas Dinámico para Escritorio -->
 <div class="spread-selector" id="spreadSelector"></div>
 
-<!-- Desplegable exclusivo para Móviles (Visible sólo en pantallas pequeñas) -->
+<!-- Desplegable exclusivo para Móviles -->
 <div class="mobile-spread-dropdown" id="mobileSpreadDropdownContainer">
   <select class="mobile-spread-select" id="mobileSpreadSelect" onchange="onMobileSpreadChange(this.value)">
     <!-- Se rellena dinámicamente con JavaScript -->
@@ -970,6 +1023,20 @@
   <button class="arkanica-reset" id="reset" style="margin-top: 16px;">Barajar de nuevo</button>
 </div>
 
+<!-- Bloque opcional de AdSense en zona limpia -->
+<div class="ad-container-arkanica">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2698892755295064" crossorigin="anonymous"></script>
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-2698892755295064"
+       data-ad-slot="REEMPLAZAR_CON_TU_AD_SLOT"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+  <script>
+       (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
 <div class="section-card" id="autor">
   <h3>¿Tienes una duda muy concreta o personal?</h3>
   <p>Si las tiradas generales te han dado pistas pero necesitas profundizar con una sesión interactiva guiada por el oráculo, accede a nuestra sala privada en arkanica.app.</p>
@@ -1003,7 +1070,7 @@
 </div>
 
 <script>
-  /* --- CONFIGURACIÓN DE SUPABASE --- */
+  /* --- CONFIGURACIÓN DE SUPABASE Y ECONOMÍA DE CRISTALES --- */
   const SUPABASE_URL = 'https://jcosmhiukmfsygrinfgy.supabase.co';
   const SUPABASE_ANON_KEY = 'sb_publishable_UVGFZQhG36gD_67hInVz7g_4oLD7tWN';
 
@@ -1011,6 +1078,76 @@
   let currentUser = null;
   let userCrystals = 10;
   let isRegisterMode = false;
+
+  function getTodayDateString() {
+    return new Date().toISOString().split('T')[0];
+  }
+
+  async function checkUserSession() {
+    const today = getTodayDateString();
+    const { data: { session } } = await supabaseClient.auth.getSession();
+    
+    if (session) {
+      currentUser = session.user;
+      const username = currentUser.email.split('@')[0];
+      document.getElementById('authBadgeLabel').textContent = username.charAt(0).toUpperCase() + username.slice(1);
+      
+      let { data, error } = await supabaseClient
+        .from('profiles')
+        .select('crystals, last_login_date')
+        .eq('id', currentUser.id)
+        .single();
+
+      if (data) {
+        userCrystals = data.crystals;
+        const lastLogin = data.last_login_date;
+
+        if (lastLogin !== today) {
+          // Aplicar regeneración / bonus diario inteligente
+          if (userCrystals < 10) {
+            userCrystals = 10;
+          } else {
+            userCrystals += 3;
+          }
+          await supabaseClient.from('profiles').update({ crystals: userCrystals, last_login_date: today }).eq('id', currentUser.id);
+        }
+      } else {
+        // Crear perfil si no existe
+        await supabaseClient.from('profiles').insert([{ id: currentUser.id, crystals: 10, last_login_date: today }]);
+        userCrystals = 10;
+      }
+    } else {
+      // Modo Invitado (LocalStorage)
+      let savedCrystals = parseInt(localStorage.getItem('arkanica_crystals_guest')) || 10;
+      let lastLogin = localStorage.getItem('arkanica_last_login_guest');
+
+      if (lastLogin !== today) {
+        if (savedCrystals < 10) {
+          savedCrystals = 10;
+        } else {
+          savedCrystals += 3;
+        }
+        localStorage.setItem('arkanica_crystals_guest', savedCrystals);
+        localStorage.setItem('arkanica_last_login_guest', today);
+      }
+      userCrystals = savedCrystals;
+      document.getElementById('authBadgeLabel').textContent = 'Acceder';
+    }
+    document.getElementById('headerCrystalCount').textContent = userCrystals;
+  }
+
+  async function updateCrystalsStorage(newAmount) {
+    userCrystals = newAmount;
+    document.getElementById('headerCrystalCount').textContent = userCrystals;
+
+    if (currentUser) {
+      await supabaseClient.from('profiles').update({ crystals: userCrystals }).eq('id', currentUser.id);
+    } else {
+      localStorage.setItem('arkanica_crystals_guest', userCrystals);
+    }
+  }
+
+  checkUserSession();
 
   function openAuthModal() {
     if (currentUser) {
@@ -1082,31 +1219,6 @@
       }
     }
   }
-
-  async function checkUserSession() {
-    const { data: { session } } = await supabaseClient.auth.getSession();
-    if (session) {
-      currentUser = session.user;
-      document.getElementById('authBadgeLabel').textContent = `(${currentUser.email.split('@')[0]})`;
-      
-      const { data, error } = await supabaseClient
-        .from('profiles')
-        .select('crystals')
-        .eq('id', currentUser.id)
-        .single();
-
-      if (data) {
-        userCrystals = data.crystals;
-      }
-      document.getElementById('headerCrystalCount').textContent = userCrystals;
-    } else {
-      let savedCrystals = localStorage.getItem(`arkanica_crystals_guest`) || 10;
-      document.getElementById('headerCrystalCount').textContent = savedCrystals;
-      document.getElementById('authBadgeLabel').textContent = '(Acceder)';
-    }
-  }
-
-  checkUserSession();
 
   let sfxAudioCtx = null;
 
@@ -1212,7 +1324,7 @@
   const fullTarotDeck = [
     { symbol: '0', name: 'El Loco', archetype: 'Empieza algo nuevo sin miedo al qué dirán', img: 'assets/arcanos-mayores/el-loco.jpeg' },
     { symbol: 'I', name: 'El Mago', archetype: 'Tienes todos los recursos sobre la mesa para triunfar', img: 'assets/arcanos-mayores/the-magician.jpeg' },
-    { symbol: 'II', name: 'La Sacerdotisa', archetype: 'Confía en tu intuición y guarda el secreto con calma', img: 'assets/arcanos-mayores/the-high-priestesses.jpeg' },
+    { symbol: 'II', name: 'La Sacerdotisa', archetype: 'Confía en tu intuición y guarda el secreto con calma', img: 'assets/arcanos-mayores/the-high-priestess.jpeg' },
     { symbol: 'III', name: 'La Emperatriz', archetype: 'Momento de bienestar, fertilidad y crecimiento', img: 'assets/arcanos-mayores/the-empress.jpeg' },
     { symbol: 'IV', name: 'El Emperador', archetype: 'Pon orden estricto y toma el control de tu destino', img: 'assets/arcanos-mayores/the-emperor.jpeg' },
     { symbol: 'V', name: 'El Hierofante', archetype: 'Busca buenos consejos en la tradición y aprende', img: 'assets/arcanos-mayores/the-ermit.jpeg' },
@@ -1484,7 +1596,34 @@
     return arr;
   }
 
+  function checkAndStartReading() {
+    const today = getTodayDateString();
+    const freeKey = `arkanica_free_${currentSpreadKey}`;
+    const lastFreeDate = localStorage.getItem(freeKey);
+
+    if (lastFreeDate === today) {
+      // Ya se usó la tirada gratis hoy. Cuesta 3 cristales repetir.
+      if (userCrystals < 3) {
+        alert("Has agotado tu tirada gratuita diaria para esta lectura y no tienes suficientes cristales (necesitas 3).");
+        return;
+      } else {
+        if (confirm("Ya has realizado esta tirada gratis hoy. ¿Deseas gastar 3 cristales para volver a consultarla?")) {
+          updateCrystalsStorage(userCrystals - 3);
+          initReadingExecution();
+        }
+      }
+    } else {
+      // Es gratis hoy por primera vez
+      localStorage.setItem(freeKey, today);
+      initReadingExecution();
+    }
+  }
+
   function initReading() {
+    checkAndStartReading();
+  }
+
+  function initReadingExecution() {
     currentDeck = shuffleDeck(fullTarotDeck);
     selectedCards = [];
     currentSlotIndex = 0;

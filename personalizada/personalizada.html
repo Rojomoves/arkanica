@@ -6,6 +6,10 @@
 <title>Arkanica — Sesión Privada y Profunda con el Oráculo</title>
 <!-- Cliente oficial de Supabase -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- CÓDIGO OFICIAL DE GOOGLE ADSENSE -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2698892755295064" crossorigin="anonymous"></script>
+
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500&display=swap');
 
@@ -372,6 +376,20 @@
     border-color: var(--gold);
   }
 
+  /* Contenedor elegante para anuncios de AdSense */
+  .ad-container-arkanica {
+    width: 100%;
+    max-width: 900px;
+    margin: 20px auto 0;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    overflow: hidden;
+  }
+
   @media (max-width: 768px) {
     body { padding: 16px 10px; }
     .packs-grid { grid-template-columns: 1fr; gap: 12px; }
@@ -452,6 +470,20 @@
       </div>
     </div>
   </div>
+</div>
+
+<!-- Bloque de AdSense integrado en la zona inferior -->
+<div class="ad-container-arkanica">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2698892755295064" crossorigin="anonymous"></script>
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-2698892755295064"
+       data-ad-slot="REEMPLAZAR_CON_TU_AD_SLOT"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+  <script>
+       (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
 </div>
 
 <script>
@@ -568,7 +600,6 @@
     saveUserData();
   }
 
-  // Recuperar contexto de la tirada anterior del index
   let lastReadingContext = localStorage.getItem('arkanica_last_reading');
   if (lastReadingContext) {
     try {
@@ -620,7 +651,7 @@
     const COST = 3;
 
     if (remainingFree === 0 && crystals < COST) {
-      alert(`Has agotado tus dos preguntas gratuitas de cortesía y tus cristales disponibles.\n\nRecarga un pack abajo para continuar tu sesión privada con el oráculo.`);
+      alert(`Has agotado tus dos preguntas gratuitas de cortesía y tus cristales disponibles.\n\nAdquiere un pack de cristales abajo para continuar tu sesión privada con el oráculo.`);
       return;
     }
 
@@ -692,7 +723,7 @@
         } else if (isFreeTrial && freeQuestionsUsed === 2) {
           persuasionHTML += `
             <div style="margin-top: 12px; padding: 12px; background: rgba(223, 177, 91, 0.12); border-left: 2px solid var(--gold); border-radius: 4px; font-size: 12px; color: var(--text-main);">
-              ✦ <strong>Has agotado tus consultas gratuitas de cortesía.</strong> Has rozado la superficie de una revelación muy profunda, pero la respuesta definitiva requiere recargar tus Cristales de Claridad para mantener el canal abierto.
+              ✦ <strong>Has agotado tus consultas gratuitas de cortesía.</strong> Has rozado la superficie de una revelación muy profunda, pero la respuesta definitiva requiere recargar tus Cristales de Claridad abajo para mantener el canal abierto.
             </div>
           `;
         }
