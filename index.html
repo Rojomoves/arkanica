@@ -43,7 +43,7 @@
     align-items: center;
     font-family: 'Inter', sans-serif;
     color: var(--text-main);
-    padding: 30px 16px;
+    padding: 20px 12px;
     overflow-x: hidden;
   }
 
@@ -53,15 +53,15 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 32px;
+    margin-bottom: 20px;
     border-bottom: 1px solid var(--line);
-    padding-bottom: 16px;
+    padding-bottom: 12px;
     gap: 12px;
   }
 
   .logo {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 26px;
+    font-size: 24px;
     letter-spacing: 0.12em;
     color: var(--gold);
     text-decoration: none;
@@ -72,7 +72,7 @@
   .header-right {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     flex-wrap: wrap;
     justify-content: flex-end;
   }
@@ -80,9 +80,9 @@
   .audio-carousel {
     background: rgba(223, 177, 91, 0.06);
     border: 1px solid var(--gold-dim);
-    padding: 6px 12px;
+    padding: 5px 10px;
     border-radius: 20px;
-    font-size: 11px;
+    font-size: 10.5px;
     color: var(--gold);
     display: flex;
     align-items: center;
@@ -103,7 +103,7 @@
     border: none;
     color: var(--gold);
     cursor: pointer;
-    font-size: 14px;
+    font-size: 13px;
     padding: 0 4px;
     transition: transform 0.2s;
   }
@@ -124,13 +124,13 @@
   .profile-badge {
     background: linear-gradient(135deg, rgba(223, 177, 91, 0.1) 0%, rgba(12, 11, 18, 0.9) 100%);
     border: 1px solid var(--gold-dim);
-    padding: 6px 14px;
+    padding: 5px 12px;
     border-radius: 24px;
-    font-size: 11.5px;
+    font-size: 11px;
     color: var(--text-main);
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     text-decoration: none;
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     white-space: nowrap;
@@ -163,17 +163,17 @@
   .profile-user-info {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 4px;
     font-family: 'Cormorant Garamond', serif;
-    font-size: 13.5px;
+    font-size: 13px;
     color: var(--gold-light);
     letter-spacing: 0.03em;
   }
 
   .nav-links {
     display: flex;
-    gap: 16px;
-    font-size: 10.5px;
+    gap: 14px;
+    font-size: 10px;
     text-transform: uppercase;
     letter-spacing: 0.15em;
   }
@@ -314,7 +314,7 @@
 
   .auth-switch-mode:hover { color: var(--gold); }
 
-  /* ESTILOS DEL MODAL DE COMPARTIR HISTORIA */
+  /* MODAL DE COMPARTIR HISTORIA */
   .share-modal-overlay {
     position: fixed;
     inset: 0;
@@ -433,47 +433,55 @@
     box-shadow: 0 6px 20px rgba(225, 48, 108, 0.6);
   }
 
+  /* BANNER COMPACTO Y ELEGANTE */
   .hero-container {
     text-align: center;
     max-width: 650px;
-    margin-bottom: 24px;
+    margin-bottom: 16px;
     padding: 0 8px;
   }
 
   .arkanica-eyebrow {
-    font-size: 10px;
-    letter-spacing: 0.3em;
+    font-size: 9.5px;
+    letter-spacing: 0.25em;
     text-transform: uppercase;
     color: var(--gold-dim);
-    margin-bottom: 10px;
+    margin-bottom: 6px;
     font-weight: 500;
   }
 
   .arkanica-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 34px;
+    font-size: 26px;
     font-weight: 400;
     color: var(--text-main);
-    margin: 0 0 8px;
+    margin: 0 0 4px;
     line-height: 1.2;
   }
 
   .arkanica-sub {
-    font-size: 13.5px;
+    font-size: 12px;
     color: var(--text-muted);
     font-weight: 300;
-    line-height: 1.5;
+    line-height: 1.4;
     margin: 0;
   }
 
+  /* CATEGORÍAS EN PÍLDORA HORIZONTAL DESLIZABLE (AHORRO VERTICAL) */
   .categories-nav {
     display: flex;
-    gap: 10px;
-    margin-bottom: 16px;
-    justify-content: center;
+    gap: 8px;
+    margin-bottom: 14px;
+    justify-content: flex-start;
     max-width: 1100px;
     width: 100%;
-    flex-wrap: wrap;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    scrollbar-width: none;
+  }
+
+  .categories-nav::-webkit-scrollbar {
+    display: none;
   }
 
   .category-tab {
@@ -481,13 +489,15 @@
     border: 1px solid var(--line);
     color: var(--text-muted);
     font-family: 'Inter', sans-serif;
-    font-size: 11px;
-    letter-spacing: 0.1em;
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    padding: 9px 18px;
+    padding: 8px 14px;
     border-radius: 6px;
     cursor: pointer;
     transition: all 0.3s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
   }
 
   .category-tab:hover {
@@ -502,15 +512,16 @@
     box-shadow: 0 0 15px rgba(223, 177, 91, 0.15);
   }
 
+  /* SELECTOR DE TIRADAS (ESCRITORIO) */
   .spread-selector {
     display: flex;
     gap: 8px;
-    margin-bottom: 24px;
+    margin-bottom: 14px;
     justify-content: flex-start;
     max-width: 1100px;
     width: 100%;
     overflow-x: auto;
-    padding-bottom: 8px;
+    padding-bottom: 6px;
     scrollbar-width: none;
   }
 
@@ -523,10 +534,10 @@
     border: 1px solid var(--line);
     color: var(--text-muted);
     font-family: 'Inter', sans-serif;
-    font-size: 10.5px;
-    letter-spacing: 0.12em;
+    font-size: 10px;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    padding: 10px 16px;
+    padding: 8px 14px;
     border-radius: 6px;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -547,26 +558,48 @@
     box-shadow: 0 4px 20px rgba(0,0,0,0.4);
   }
 
-  .mobile-spread-dropdown {
-    display: none;
+  /* CADENA DE DESPLEGABLES (MOBILE & GENERAL) */
+  .spread-dropdown-container {
     width: 100%;
     max-width: 1100px;
-    margin-bottom: 20px;
+    margin-bottom: 14px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .spread-select-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .spread-select-label {
+    font-size: 9.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    font-weight: 500;
   }
 
   .mobile-spread-select {
     width: 100%;
     background: var(--surface);
-    border: 1px solid var(--gold);
-    color: var(--gold);
+    border: 1px solid var(--gold-dim);
+    color: var(--gold-light);
     font-family: 'Inter', sans-serif;
-    font-size: 12px;
+    font-size: 11.5px;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    padding: 12px 16px;
-    border-radius: 8px;
+    letter-spacing: 0.08em;
+    padding: 10px 12px;
+    border-radius: 6px;
     outline: none;
     box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    transition: border-color 0.3s;
+  }
+
+  .mobile-spread-select:focus {
+    border-color: var(--gold);
   }
 
   .spread-info-card {
@@ -576,36 +609,36 @@
     border: 1px solid var(--line);
     border-left: 3px solid var(--gold);
     border-radius: 8px;
-    padding: 20px 24px;
-    margin-bottom: 24px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.3);
   }
 
   .spread-info-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 20px;
+    font-size: 18px;
     color: var(--gold);
     margin: 0;
     letter-spacing: 0.03em;
   }
 
   .spread-info-desc {
-    font-size: 13px;
+    font-size: 12px;
     color: var(--text-main);
-    line-height: 1.6;
+    line-height: 1.5;
     margin: 0;
   }
 
   .spread-positions-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
-    margin-top: 6px;
+    gap: 12px;
+    margin-top: 4px;
     border-top: 1px solid rgba(223, 177, 91, 0.15);
-    padding-top: 12px;
+    padding-top: 10px;
   }
 
   .spread-positions-grid.grid-10 {
@@ -613,17 +646,17 @@
   }
 
   .position-item {
-    font-size: 11.5px;
+    font-size: 11px;
     color: var(--text-muted);
-    line-height: 1.4;
+    line-height: 1.35;
   }
 
   .position-item strong {
     color: var(--gold-light);
     font-family: 'Cormorant Garamond', serif;
-    font-size: 13.5px;
+    font-size: 12.5px;
     display: block;
-    margin-bottom: 3px;
+    margin-bottom: 2px;
   }
 
   .table-container {
@@ -632,12 +665,12 @@
     background: var(--surface);
     border: 1px solid var(--line);
     border-radius: 10px;
-    padding: 32px 20px;
+    padding: 24px 16px;
     display: flex;
     flex-direction: column;
     align-items: center;
     box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-    margin-bottom: 24px;
+    margin-bottom: 20px;
   }
 
   .deck-section {
@@ -645,16 +678,16 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 28px;
-    gap: 14px;
-    min-height: 180px;
+    margin-bottom: 24px;
+    gap: 12px;
+    min-height: 160px;
     position: relative;
     touch-action: pan-y;
   }
 
   .deck-instruction {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 17px;
+    font-size: 16px;
     color: var(--gold);
     letter-spacing: 0.05em;
     font-style: italic;
@@ -666,7 +699,7 @@
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    height: 150px;
+    height: 140px;
     width: 100%;
     max-width: 700px;
     position: relative;
@@ -675,8 +708,8 @@
 
   /* REVERSO OPTIMIZADO PARA EL ABANICO */
   .fan-card {
-    width: 70px;
-    height: 120px;
+    width: 65px;
+    height: 110px;
     background: url('assets/reverse.jpeg') center/cover no-repeat #08070b;
     border: 1px solid var(--gold-dim);
     border-radius: 6px;
@@ -688,7 +721,7 @@
   }
 
   .fan-card:hover {
-    transform: translateY(-20px) rotate(0deg) scale(1.12) !important;
+    transform: translateY(-18px) rotate(0deg) scale(1.12) !important;
     border-color: var(--gold);
     box-shadow: 0 15px 30px rgba(223, 177, 91, 0.25);
     z-index: 100;
@@ -697,31 +730,31 @@
   .arkanica-table {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    gap: 16px;
     align-items: start;
     perspective: 1800px;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
     width: 100%;
-    padding: 10px;
+    padding: 8px;
     justify-items: center;
   }
 
   .arkanica-table.grid-10 {
     grid-template-columns: repeat(5, 1fr);
-    gap: 12px;
+    gap: 10px;
   }
 
   .arkanica-slot {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     width: 100%;
   }
 
   .arkanica-card {
-    width: 120px;
-    height: 195px;
+    width: 110px;
+    height: 180px;
     position: relative;
     cursor: pointer;
     transform-style: preserve-3d;
@@ -731,8 +764,8 @@
   }
 
   .arkanica-table.grid-10 .arkanica-card {
-    width: 95px;
-    height: 155px;
+    width: 85px;
+    height: 140px;
   }
 
   .arkanica-card.flipped {
@@ -741,7 +774,7 @@
   }
 
   .arkanica-card:not(.flipped):hover {
-    transform: translateY(-5px) scale(1.03);
+    transform: translateY(-4px) scale(1.03);
     border-color: var(--gold);
   }
 
@@ -781,25 +814,25 @@
   }
 
   .arkanica-slot-label {
-    font-size: 9.5px;
+    font-size: 9px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--text-muted);
     font-weight: 500;
     text-align: center;
-    max-width: 120px;
+    max-width: 110px;
     line-height: 1.2;
   }
 
   .arkanica-hint {
-    font-size: 13.5px;
+    font-size: 13px;
     color: var(--gold);
     opacity: 0.9;
     font-style: italic;
     font-family: 'Cormorant Garamond', serif;
-    min-height: 24px;
+    min-height: 22px;
     text-align: center;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
     padding: 0 10px;
   }
 
@@ -808,8 +841,8 @@
     background: linear-gradient(135deg, rgba(223, 177, 91, 0.08) 0%, rgba(12, 11, 18, 0.95) 100%);
     border: 1px solid var(--gold);
     border-radius: 8px;
-    padding: 28px;
-    margin-top: 16px;
+    padding: 24px;
+    margin-top: 14px;
     display: none;
     animation: fadeIn 0.6s ease forwards;
     box-shadow: 0 15px 35px rgba(0,0,0,0.4);
@@ -822,9 +855,9 @@
 
   .master-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 22px;
+    font-size: 20px;
     color: var(--gold);
-    margin-bottom: 14px;
+    margin-bottom: 12px;
     letter-spacing: 0.05em;
     display: flex;
     align-items: center;
@@ -832,10 +865,10 @@
   }
 
   .master-text {
-    font-size: 14px;
+    font-size: 13.5px;
     color: var(--text-main);
-    line-height: 1.8;
-    margin: 0 0 18px;
+    line-height: 1.7;
+    margin: 0 0 16px;
     font-style: italic;
   }
 
@@ -844,13 +877,13 @@
     justify-content: space-between;
     align-items: center;
     border-top: 1px solid rgba(223, 177, 91, 0.2);
-    padding-top: 16px;
-    gap: 12px;
+    padding-top: 14px;
+    gap: 10px;
     flex-wrap: wrap;
   }
 
   .master-cta span {
-    font-size: 12px;
+    font-size: 11.5px;
     color: var(--text-muted);
   }
 
@@ -859,10 +892,10 @@
     border: 1px solid var(--line);
     color: var(--text-muted);
     font-family: 'Inter', sans-serif;
-    font-size: 10.5px;
+    font-size: 10px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    padding: 10px 22px;
+    padding: 9px 18px;
     border-radius: 6px;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -880,25 +913,25 @@
     background: var(--surface);
     border: 1px solid var(--line);
     border-radius: 10px;
-    padding: 28px;
-    margin-bottom: 20px;
+    padding: 24px;
+    margin-bottom: 16px;
     box-shadow: 0 15px 35px rgba(0,0,0,0.3);
   }
 
   .section-card h3 {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 22px;
+    font-size: 20px;
     margin-top: 0;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     color: var(--text-main);
     font-weight: 400;
   }
 
   .section-card p {
-    font-size: 13px;
+    font-size: 12.5px;
     color: var(--text-muted);
-    line-height: 1.6;
-    margin-bottom: 18px;
+    line-height: 1.5;
+    margin-bottom: 16px;
     max-width: 650px;
   }
 
@@ -907,11 +940,11 @@
     color: var(--bg);
     border: none;
     font-family: 'Inter', sans-serif;
-    font-size: 11px;
+    font-size: 10.5px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     font-weight: 600;
-    padding: 12px 24px;
+    padding: 11px 22px;
     border-radius: 6px;
     cursor: pointer;
     transition: background 0.3s ease, box-shadow 0.3s ease;
@@ -925,21 +958,21 @@
   .booking-grid {
     display: grid;
     grid-template-columns: 1.2fr 0.8fr;
-    gap: 28px;
+    gap: 24px;
     align-items: center;
   }
 
   .booking-benefits {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
     border-left: 2px solid var(--gold-dim);
-    padding-left: 16px;
-    margin-top: 16px;
+    padding-left: 14px;
+    margin-top: 14px;
   }
 
   .benefit-item {
-    font-size: 12.5px;
+    font-size: 12px;
     color: var(--text-muted);
   }
 
@@ -947,61 +980,58 @@
     color: var(--text-main);
     display: block;
     font-family: 'Cormorant Garamond', serif;
-    font-size: 15px;
+    font-size: 14px;
   }
 
   .booking-card-action {
     background: rgba(0,0,0,0.35);
     border: 1px solid var(--line);
-    padding: 24px;
+    padding: 20px;
     border-radius: 8px;
     text-align: center;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 14px;
     align-items: center;
   }
 
   .price-tag {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 28px;
+    font-size: 26px;
     color: var(--gold);
   }
 
-  /* Contenedor elegante para anuncios de AdSense adaptado a la estética */
   .ad-container-arkanica {
     width: 100%;
     max-width: 1100px;
-    margin: 20px auto;
+    margin: 16px auto;
     background: var(--surface);
     border: 1px solid var(--line);
     border-radius: 10px;
-    padding: 16px;
+    padding: 14px;
     text-align: center;
     box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     overflow: hidden;
   }
 
   @media (max-width: 768px) {
-    body { padding: 16px 10px; }
-    header { margin-bottom: 24px; padding-bottom: 12px; }
-    .logo { font-size: 22px; }
-    .header-right { gap: 8px; }
-    .audio-carousel, .profile-badge { padding: 5px 10px; font-size: 10px; }
-    .nav-links { gap: 12px; font-size: 9.5px; }
-    .arkanica-title { font-size: 28px; }
-    .arkanica-sub { font-size: 12.5px; }
-    .arkanica-card { width: 85px; height: 135px; }
-    .arkanica-table.grid-10 .arkanica-card { width: 62px; height: 100px; }
-    .fan-card { width: 50px; height: 90px; }
-    .spread-positions-grid { grid-template-columns: 1fr; gap: 10px; }
+    body { padding: 12px 8px; }
+    header { margin-bottom: 16px; padding-bottom: 10px; }
+    .logo { font-size: 20px; }
+    .header-right { gap: 6px; }
+    .audio-carousel, .profile-badge { padding: 4px 8px; font-size: 9.5px; }
+    .nav-links { gap: 10px; font-size: 9px; }
+    .arkanica-title { font-size: 22px; }
+    .arkanica-sub { font-size: 11.5px; }
+    .arkanica-card { width: 75px; height: 125px; }
+    .arkanica-table.grid-10 .arkanica-card { width: 55px; height: 95px; }
+    .fan-card { width: 45px; height: 80px; }
+    .spread-positions-grid { grid-template-columns: 1fr; gap: 8px; }
     .spread-positions-grid.grid-10 { grid-template-columns: repeat(2, 1fr); }
-    .booking-grid { grid-template-columns: 1fr; gap: 20px; }
-    .section-card { padding: 22px 16px; }
-    .table-container { padding: 22px 12px; }
-    
-    .spread-selector { display: none; }
-    .mobile-spread-dropdown { display: block; }
+    .booking-grid { grid-template-columns: 1fr; gap: 16px; }
+    .section-card { padding: 18px 12px; }
+    .table-container { padding: 18px 10px; }
+    .spread-dropdown-container { grid-template-columns: 1fr; gap: 8px; }
   }
 </style>
 </head>
@@ -1039,9 +1069,8 @@
 <div class="share-modal-overlay" id="shareModal">
   <div class="share-modal-card">
     <button class="auth-close-btn" onclick="closeShareModal()">✕</button>
-    <h2 class="auth-title" style="font-size: 22px; margin-bottom: 0;">Comparte tu Revelación</h2>
+    <h2 class="auth-title" style="font-size: 20px; margin-bottom: 0;">Comparte tu Revelación</h2>
     
-    <!-- Vista previa estética de la Story -->
     <div class="story-preview-card" id="storyPreviewCard">
       <div class="story-brand">✦ Arkanica ✦</div>
       <img id="storyCardImg" class="story-card-img" src="" alt="Carta">
@@ -1072,7 +1101,6 @@
       <button class="audio-arrow-btn" onclick="changeAudioTrack(1); event.stopPropagation();" title="Siguiente">›</button>
     </div>
 
-    <!-- BOTÓN DE PERFIL / CRISTALES -->
     <div class="profile-badge" id="profileBadge" onclick="openAuthModal()" title="Gestionar cuenta y cristales">
       <div class="profile-crystals">
         <span>💎</span> <strong id="headerCrystalCount">10</strong>
@@ -1094,10 +1122,10 @@
 <div class="hero-container">
   <div class="arkanica-eyebrow">Tu espacio de calma y claridad</div>
   <h1 class="arkanica-title">Elige qué te gustaría consultar hoy</h1>
-  <p class="arkanica-sub">Disfruta de cada tirada totalmente gratis una vez al día. Repetir tiradas tiene un coste de 3 cristales.</p>
+  <p class="arkanica-sub">Disfruta de cada tirada gratis una vez al día (3 cristales adicionales por repetición).</p>
 </div>
 
-<!-- Selector de Categorías -->
+<!-- Selector de Categorías en Píldora Horizontal -->
 <div class="categories-nav" id="categoriesNav">
   <button class="category-tab active" onclick="switchCategory('romanticas', event)">💖 Románticas</button>
   <button class="category-tab" onclick="switchCategory('espirituales', event)">✨ Espirituales</button>
@@ -1105,17 +1133,29 @@
   <button class="category-tab" onclick="switchCategory('proyectos', event)">🎬 Escenario Principal</button>
 </div>
 
-<!-- Selector de Tiradas Dinámico para Escritorio -->
-<div class="spread-selector" id="spreadSelector"></div>
-
-<!-- Desplegable exclusivo para Móviles -->
-<div class="mobile-spread-dropdown" id="mobileSpreadDropdownContainer">
-  <select class="mobile-spread-select" id="mobileSpreadSelect" onchange="onMobileSpreadChange(this.value)">
-    <!-- Se rellena dinámicamente con JavaScript -->
-  </select>
+<!-- CADENA DE DESPLEGABLES (CATEGORÍA + TIRADA) PARA MÁXIMA ORDEN Y ACCESO DIRECTO -->
+<div class="spread-dropdown-container">
+  <div class="spread-select-wrapper">
+    <label class="spread-select-label">Categoría</label>
+    <select class="mobile-spread-select" id="mobileCategorySelect" onchange="onMobileCategoryChange(this.value)">
+      <option value="romanticas">💖 Románticas</option>
+      <option value="espirituales">✨ Espirituales</option>
+      <option value="sombras">🌑 Trabajo de Sombras</option>
+      <option value="proyectos">🎬 Escenario Principal</option>
+    </select>
+  </div>
+  <div class="spread-select-wrapper">
+    <label class="spread-select-label">Tirada Específica</label>
+    <select class="mobile-spread-select" id="mobileSpreadSelect" onchange="onMobileSpreadChange(this.value)">
+      <!-- Se rellena dinámicamente -->
+    </select>
+  </div>
 </div>
 
-<!-- Tarjeta Informativa -->
+<!-- Selector en línea para escritorio (también sincronizado) -->
+<div class="spread-selector" id="spreadSelector"></div>
+
+<!-- Tarjeta Informativa de la Tirada -->
 <div class="spread-info-card" id="spreadInfoCard">
   <h3 class="spread-info-title" id="infoTitle">Cargando...</h3>
   <p class="spread-info-desc" id="infoDesc">Cargando...</p>
@@ -1144,10 +1184,10 @@
     </div>
   </div>
 
-  <button class="arkanica-reset" id="reset" style="margin-top: 16px;">Barajar de nuevo</button>
+  <button class="arkanica-reset" id="reset" style="margin-top: 14px;">Barajar de nuevo</button>
 </div>
 
-<!-- Bloque opcional de AdSense en zona limpia -->
+<!-- Bloque opcional de AdSense -->
 <div class="ad-container-arkanica">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2698892755295064" crossorigin="anonymous"></script>
   <ins class="adsbygoogle"
@@ -1187,14 +1227,14 @@
 
     <div class="booking-card-action">
       <div class="price-tag">Sesión Privada</div>
-      <p style="font-size: 12px; color: var(--text-muted); margin: 0;">Selecciona día y hora directamente en nuestro calendario oficial.</p>
+      <p style="font-size: 11.5px; color: var(--text-muted); margin: 0;">Selecciona día y hora directamente en nuestro calendario oficial.</p>
       <button class="action-btn" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/getbruma/30min'});return false;" style="width: 100%;">Abrir Calendario & Reservar</button>
     </div>
   </div>
 </div>
 
 <script>
-  /* --- PRE-CARGA OPTIMIZADA DEL REVERSO (RENDIMIENTO INTACTO) --- */
+  /* --- PRE-CARGA OPTIMIZADA DEL REVERSO --- */
   const preloadReverse = new Image();
   preloadReverse.src = 'assets/reverse.jpeg';
 
@@ -1290,7 +1330,6 @@
     document.getElementById('authModal').style.display = 'none';
   }
 
-  // --- FUNCIONES DEL MODAL DE COMPARTIR STORY ---
   function openShareModal() {
     if (!selectedCards || selectedCards.length === 0) {
       alert("Realiza una tirada primero para poder compartir tu carta.");
@@ -1787,6 +1826,7 @@
   const infoDesc = document.getElementById('infoDesc');
   const infoPositions = document.getElementById('infoPositions');
   const spreadSelector = document.getElementById('spreadSelector');
+  const mobileCategorySelect = document.getElementById('mobileCategorySelect');
   const mobileSpreadSelect = document.getElementById('mobileSpreadSelect');
   const masterBox = document.getElementById('masterBox');
   const masterTextContent = document.getElementById('masterTextContent');
@@ -1812,6 +1852,18 @@
       }
       mobileSpreadSelect.appendChild(option);
     });
+
+    mobileCategorySelect.value = currentCategoryKey;
+  }
+
+  function onMobileCategoryChange(catKey) {
+    currentCategoryKey = catKey;
+    document.querySelectorAll('.category-tab').forEach(tab => {
+      tab.classList.toggle('active', tab.getAttribute('onclick').includes(catKey));
+    });
+    currentSpreadKey = categoriesData[catKey].spreads[0].key;
+    renderSpreadSelector();
+    initReading();
   }
 
   function onMobileSpreadChange(key) {
@@ -1894,8 +1946,9 @@
   function switchCategory(catKey, event) {
     currentCategoryKey = catKey;
     document.querySelectorAll('.category-tab').forEach(tab => tab.classList.remove('active'));
-    event.target.classList.add('active');
-    
+    if (event && event.target) {
+      event.target.classList.add('active');
+    }
     currentSpreadKey = categoriesData[catKey].spreads[0].key;
     renderSpreadSelector();
     initReading();
@@ -2057,7 +2110,7 @@
 
     } catch (error) {
       console.error("Error de conexión con la IA:", error);
-      masterTextContent.innerHTML = `Tras más de treinta años interpretando los arcanos, esta tirada de ${config.title} nos muestra un camino de evolución muy claro. La energía de ${selectedCards[0].name} marca tu punto de partida, guiándote hacia una nueva perspectiva. Confía en tu intuición y da el paso con absoluta confianza. ¿Qué te dice el corazón respecto a este camino?`;
+      masterTextContent.innerHTML = `Tras más de treinta años interpretando los arcanos, esta tirada de ${config.title} nos muestra un camino de evolución muy claro. La energía de ${selectedCards[0].name} marca tu punto de partida, guiándote hacia una nueva perspectiva. Confía en thy intuición y da el paso con absoluta confianza. ¿Qué te dice el corazón respecto a este camino?`;
     }
   }
 
