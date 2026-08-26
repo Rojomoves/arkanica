@@ -100,8 +100,7 @@
     margin-bottom: 12px;
     border-bottom: 1px solid var(--line);
     padding-bottom: 10px;
-    flex-wrap: wrap;
-    gap: 8px;
+    position: relative;
   }
 
   .logo {
@@ -172,45 +171,73 @@
     font-weight: 500;
   }
 
-  /* BOTONES DE NAVEGACIÓN EN EL HEADER */
-  .header-sessions-btn {
-    background: transparent;
-    border: 1px solid var(--gold-dim);
-    color: var(--gold-light);
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    padding: 6px 12px;
-    border-radius: 20px;
-    text-decoration: none;
+  /* MENÚ HAMBURGUESA Y DESPLEGABLE */
+  .hamburger-btn {
+    background: rgba(12, 11, 18, 0.92);
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(223, 177, 91, 0.15);
+  }
+  .hamburger-btn:hover {
+    background: var(--surface-hover);
+    border-color: var(--gold-light);
+  }
+  .hamburger-line {
+    width: 16px;
+    height: 2px;
+    background: var(--gold);
+    border-radius: 2px;
     transition: all 0.3s ease;
   }
-  .header-sessions-btn:hover {
+
+  .nav-dropdown-menu {
+    position: absolute;
+    top: 55px;
+    right: 0;
+    background: var(--surface);
+    border: 1px solid var(--gold);
+    border-radius: 10px;
+    width: 210px;
+    padding: 10px 0;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.8), 0 0 20px rgba(223, 177, 91, 0.15);
+    display: none;
+    flex-direction: column;
+    z-index: 2900;
+  }
+  .nav-dropdown-menu.active {
+    display: flex;
+  }
+  .nav-dropdown-menu a {
+    color: var(--text-main);
+    text-decoration: none;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 9px 16px;
+    transition: background 0.2s, color 0.2s;
+    display: block;
+  }
+  .nav-dropdown-menu a:hover {
     background: rgba(223, 177, 91, 0.1);
-    border-color: var(--gold);
     color: var(--gold);
   }
-
-  .header-store-link {
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
+  .nav-dropdown-menu a.highlight {
     color: var(--gold-light);
-    text-decoration: none;
-    transition: color 0.3s;
-    font-weight: 600;
+    font-weight: 650;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    margin: 4px 0;
   }
-  .header-store-link:hover { color: var(--gold); }
-
-  .back-link {
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--text-muted);
-    text-decoration: none;
-    transition: color 0.3s;
-  }
-  .back-link:hover { color: var(--gold); }
 
   /* HERO / BANNER PRINCIPAL REDISEÑADO */
   .hero-container {
@@ -496,20 +523,6 @@
   @media (max-width: 768px) {
     body { padding: 8px 6px 40px 6px; }
     
-    header {
-      justify-content: center;
-      padding-bottom: 8px;
-      margin-bottom: 10px;
-    }
-    
-    .header-right {
-      width: 100%;
-      justify-content: space-between;
-      border-top: 1px solid rgba(223, 177, 91, 0.15);
-      padding-top: 8px;
-      margin-top: 2px;
-    }
-
     .arkanica-title { font-size: 20px; }
     .arkanica-sub { font-size: 11px; }
 
@@ -580,9 +593,9 @@
     </svg>
     <span class="logo-text">Arkanica</span>
   </a>
+
   <div class="header-right">
-    <a href="../tienda.html" class="header-store-link">Tienda Mística</a>
-    <a href="../index.html#quien-soy" class="header-sessions-btn">Sesiones 1 a 1</a>
+    <!-- Insignia de Cristales / Usuario -->
     <div class="profile-badge">
       <div class="profile-crystals">
         <span>💎</span> <strong id="crystalCount">10</strong>
@@ -592,7 +605,21 @@
         <span>✦</span> <span id="userBadge">Invitado</span>
       </div>
     </div>
-    <a href="../index.html" class="back-link">← Volver</a>
+
+    <!-- Botón de Hamburguesa y Menú Desplegable -->
+    <div style="position: relative;">
+      <button class="hamburger-btn" onclick="toggleNavMenu(event)" title="Menú de navegación">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+
+      <div class="nav-dropdown-menu" id="navDropdownMenu">
+        <a href="../tienda.html" class="highlight" onclick="closeNavMenu()">Tienda Mística</a>
+        <a href="../index.html#quien-soy" onclick="closeNavMenu()">Sesiones 1 a 1</a>
+        <a href="../index.html" onclick="closeNavMenu()">← Volver al Inicio</a>
+      </div>
+    </div>
   </div>
 </header>
 
@@ -661,6 +688,23 @@
 </div>
 
 <script>
+  /* --- CONTROL DEL MENÚ DE HAMBURGUESA --- */
+  function toggleNavMenu(e) {
+    e.stopPropagation();
+    const menu = document.getElementById('navDropdownMenu');
+    menu.classList.toggle('active');
+  }
+
+  function closeNavMenu() {
+    const menu = document.getElementById('navDropdownMenu');
+    menu.classList.remove('active');
+  }
+
+  // Cerrar el menú desplegable si se hace clic fuera de él
+  window.addEventListener('click', () => {
+    closeNavMenu();
+  });
+
   /* --- CONFIGURACIÓN DE SUPABASE Y ESTADO --- */
   const SUPABASE_URL = 'https://jcosmhiukmfsygrinfgy.supabase.co';
   const SUPABASE_ANON_KEY = 'sb_publishable_UVGFZQhG36gD_67hInVz7g_4oLD7tWN';
