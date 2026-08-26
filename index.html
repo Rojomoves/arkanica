@@ -620,6 +620,20 @@
     font-size: 20px;
     color: var(--gold);
     margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* ANIMACIÓN DE GIRO PARA EL SÍMBOLO MIENTRAS CARGA */
+  @keyframes spinSymbol {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .spinner-symbol {
+    display: inline-block;
+    animation: spinSymbol 2s linear infinite;
   }
 
   .master-text {
@@ -891,9 +905,9 @@
   <div class="arkanica-table" id="table"></div>
   <p class="arkanica-hint" id="hint">Selecciona una carta del abanico superior</p>
 
-  <!-- CAJA DE SÍNTESIS MAGISTRAL CON COPY MÍSTICO DE CARGA -->
+  <!-- CAJA DE SÍNTESIS MAGISTRAL CON SÍMBOLO GIRATORIO DE CARGA -->
   <div class="master-interpretation-box" id="masterBox">
-    <div class="master-title">✦ Síntesis Magistral del Oráculo</div>
+    <div class="master-title"><span class="spinner-symbol" id="masterSymbol">✦</span> Síntesis Magistral del Oráculo</div>
     <p class="master-text" id="masterTextContent">✦ Sintonizando los arcanos mayores y menores con el latido del universo...</p>
     <div class="master-cta">
       <button class="action-btn" onclick="goToPrivateSession()">Profundizar con el Ente Superior</button>
@@ -1262,6 +1276,7 @@
   const fanContainer = document.getElementById('fanContainer');
   const masterBox = document.getElementById('masterBox');
   const masterTextContent = document.getElementById('masterTextContent');
+  const masterSymbol = document.getElementById('masterSymbol');
 
   function renderSpreadDropdowns() {
     mobileSpreadSelect.innerHTML = '';
@@ -1450,6 +1465,8 @@
   async function generateGenerativeInterpretation() {
     const config = getCurrentSpreadConfig();
     
+    // Activamos la animación de giro mientras carga
+    masterSymbol.classList.add('spinner-symbol');
     masterTextContent.innerHTML = `✦ Sintonizando los arcanos mayores y menores con el latido del universo...`;
     masterBox.style.setProperty('display', 'block', 'important');
 
@@ -1467,6 +1484,9 @@
       }
     } catch(e) {
       masterTextContent.innerHTML = `Tras sintonizar los arcanos en esta tirada de <strong>${config.title}</strong>, la presencia de <em>${selectedCards[0].name}</em> marca un punto de inflexión decisivo. ${selectedCards[0].archetype}. Confía plenamente en tu intuición actual y permite que la claridad guíe tus próximos pasos sin vacilar.`;
+    } finally {
+      // Detenemos la animación de giro cuando termina la carga
+      masterSymbol.classList.remove('spinner-symbol');
     }
   }
 
