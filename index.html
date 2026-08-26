@@ -106,6 +106,8 @@
     border-bottom: 1px solid var(--line);
     padding-bottom: 12px;
     position: relative;
+    flex-wrap: wrap;
+    gap: 10px;
   }
 
   .logo {
@@ -135,7 +137,8 @@
   .header-right {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
+    flex-wrap: wrap;
   }
 
   .profile-badge {
@@ -361,10 +364,10 @@
   }
   .auth-switch-mode:hover { color: var(--gold); }
 
-  /* HERO COMPACTO */
+  /* HERO COMPACTO Y BOTONES ADICIONALES EN EL BANNER */
   .hero-container {
     text-align: center;
-    max-width: 650px;
+    max-width: 700px;
     margin-bottom: 14px;
     padding: 0 8px;
   }
@@ -383,7 +386,7 @@
     font-size: 25px;
     font-weight: 400;
     color: var(--text-main);
-    margin: 0 0 3px;
+    margin: 0 0 4px;
     line-height: 1.2;
   }
 
@@ -391,7 +394,37 @@
     font-size: 11.5px;
     color: var(--text-muted);
     font-weight: 300;
-    margin: 0;
+    margin: 0 0 14px;
+  }
+
+  .banner-quick-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+  }
+
+  .banner-action-pill {
+    background: rgba(223, 177, 91, 0.08);
+    border: 1px solid var(--gold-dim);
+    color: var(--gold-light);
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 7px 14px;
+    border-radius: 20px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+  .banner-action-pill:hover {
+    background: var(--gold);
+    color: var(--bg);
+    border-color: var(--gold);
   }
 
   /* DESPLEGABLES DE CATEGORÍA Y TIRADA */
@@ -759,36 +792,46 @@
   }
   .action-btn:hover { background: var(--gold-light); }
 
-  /* ESTILOS ESPECÍFICOS PARA LA NUEVA SECCIÓN "QUIÉN SOY / LA GUÍA" */
+  /* ESTILOS OPTIMIZADOS PARA LA SECCIÓN "QUIÉN SOY / LA GUÍA" (COMPACTO SIN SCROLL INNECESARIO) */
   .about-grid {
     display: grid;
-    grid-template-columns: 1fr 1.6fr;
-    gap: 24px;
+    grid-template-columns: 150px 1fr;
+    gap: 20px;
     align-items: center;
   }
 
-  .about-avatar-placeholder {
-    width: 100%;
-    height: 220px;
-    background: linear-gradient(135deg, rgba(223, 177, 91, 0.15) 0%, rgba(12, 11, 18, 0.95) 100%);
-    border: 1px solid var(--gold-dim);
-    border-radius: 8px;
+  .about-avatar-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 8px;
-    box-shadow: inset 0 0 20px rgba(223, 177, 91, 0.1);
+    gap: 6px;
+    width: 100%;
   }
 
-  .about-avatar-symbol {
-    font-size: 36px;
-    filter: drop-shadow(0 0 10px rgba(223, 177, 91, 0.5));
+  .about-avatar-circle {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    border: 2px solid var(--gold);
+    overflow: hidden;
+    background: var(--surface-hover);
+    box-shadow: 0 0 20px rgba(223, 177, 91, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .about-avatar-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
   }
 
   .about-avatar-name {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 18px;
+    font-size: 16px;
     color: var(--gold-light);
     letter-spacing: 0.05em;
   }
@@ -803,30 +846,30 @@
   .booking-benefits {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
     border-left: 2px solid var(--gold-dim);
-    padding-left: 14px;
-    margin-top: 14px;
+    padding-left: 12px;
+    margin-top: 10px;
   }
 
-  .benefit-item { font-size: 12px; color: var(--text-muted); }
-  .benefit-item strong { color: var(--text-main); display: block; font-family: 'Cormorant Garamond', serif; font-size: 14px; }
+  .benefit-item { font-size: 11.5px; color: var(--text-muted); }
+  .benefit-item strong { color: var(--text-main); display: block; font-family: 'Cormorant Garamond', serif; font-size: 13.5px; }
 
   .booking-card-action {
     background: rgba(0,0,0,0.35);
     border: 1px solid var(--line);
-    padding: 20px;
+    padding: 16px;
     border-radius: 8px;
     text-align: center;
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 12px;
     align-items: center;
   }
 
-  .price-tag { font-family: 'Cormorant Garamond', serif; font-size: 26px; color: var(--gold); }
+  .price-tag { font-family: 'Cormorant Garamond', serif; font-size: 24px; color: var(--gold); }
 
-  /* DESTELLO DORADO DISIMULADO */
+  /* DESTELLO DORADO LENTO (CADA ~6 SEGUNDOS / 12S DE DURACIÓN TOTAL) */
   .gold-shimmer-card {
     position: relative;
     overflow: hidden;
@@ -847,26 +890,26 @@
       transparent
     );
     transform: skewX(-20deg);
-    animation: shimmerEffect 6s infinite ease-in-out;
+    animation: shimmerEffect 12s infinite ease-in-out;
     pointer-events: none;
   }
 
   @keyframes shimmerEffect {
     0% { left: -150%; }
-    30% { left: 150%; }
+    25% { left: 150%; }
     100% { left: 150%; }
   }
 
   @media (max-width: 768px) {
     body { padding: 12px 8px 40px 8px; }
-    .arkanica-title { font-size: 22px; }
+    .arkanica-title { font-size: 20px; }
     .arkanica-card { width: 75px; height: 125px; }
     .arkanica-table.grid-10 .arkanica-card { width: 55px; height: 95px; }
     .fan-card { width: 45px; height: 80px; }
     .spread-positions-grid { grid-template-columns: 1fr; gap: 8px; }
     .spread-positions-grid.grid-10 { grid-template-columns: repeat(2, 1fr); }
-    .about-grid { grid-template-columns: 1fr; gap: 16px; }
-    .about-avatar-placeholder { height: 140px; }
+    .about-grid { grid-template-columns: 1fr; gap: 14px; text-align: center; justify-items: center; }
+    .about-avatar-circle { width: 95px; height: 95px; }
     .booking-grid { grid-template-columns: 1fr; gap: 16px; }
   }
 </style>
@@ -972,7 +1015,7 @@
 
       <div class="nav-dropdown-menu" id="navDropdownMenu">
         <a href="#mesa" onclick="closeNavMenu()">Lecturas</a>
-        <a href="tienda.html" class="highlight" onclick="closeNavMenu()">Tienda Mística</a>
+        <a href="tienda.html" class="highlight" onclick="closeNavMenu()">🛍️ Tienda Mística</a>
         <a href="#autor" onclick="closeNavMenu()">Guía</a>
         <a href="#reservas" onclick="closeNavMenu()">Sesiones Privadas</a>
       </div>
@@ -980,10 +1023,16 @@
   </div>
 </header>
 
+<!-- BANNER PRINCIPAL CON ACCESOS DIRECTOS ADAPTADOS A MÓVILES -->
 <div class="hero-container">
   <div class="arkanica-eyebrow">Tu espacio de calma y claridad</div>
   <h1 class="arkanica-title">Elige qué te gustaría consultar hoy</h1>
   <p class="arkanica-sub">Disfruta de cada tirada gratis una vez al día (3 cristales adicionales por repetición).</p>
+  
+  <div class="banner-quick-actions">
+    <a href="#reservas" class="banner-action-pill">📅 Sesiones 1 a 1</a>
+    <a href="tienda.html" class="banner-action-pill">🛍️ Tienda Mística</a>
+  </div>
 </div>
 
 <!-- CADENA DE DESPLEGABLES LIMPIA (CATEGORÍA + TIRADA) -->
@@ -1053,22 +1102,24 @@
   <button class="action-btn" onclick="goToPrivateSession()">Acceso al Ente Superior</button>
 </div>
 
-<!-- NUEVA SECCIÓN: QUIÉN SOY / LA GUÍA -->
+<!-- SECCIÓN QUIÉN SOY / LA GUÍA (COMPACTA Y OPTIMIZADA) -->
 <div class="section-card gold-shimmer-card" id="quien-soy">
   <div class="about-grid">
-    <div class="about-avatar-placeholder">
-      <div class="about-avatar-symbol">✦</div>
-      <div class="about-avatar-name">Sergio</div>
-      <div style="font-size: 10px; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase;">Creador de Arkanica</div>
+    <div class="about-avatar-wrapper">
+      <div class="about-avatar-circle">
+        <img src="assets/tarotista.jpg" alt="Andrea - Creadora de Arkanica" loading="lazy">
+      </div>
+      <div class="about-avatar-name">Andrea</div>
+      <div style="font-size: 9.5px; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase;">Creadora de Arkanica</div>
     </div>
     <div>
-      <div style="font-size: 9.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 4px;">Quién Soy / La Guía</div>
-      <h3 style="margin-top: 0;">¿Quién está al otro lado?</h3>
-      <p style="margin-bottom: 12px; line-height: 1.6;">
-        Hola, soy Sergio. Creo firmemente que las respuestas a nuestras mayores encrucijadas no están ocultas en el azar, sino en la capacidad de mirar hacia dentro con la perspectiva adecuada. He diseñado Arkanica para ofrecerte un espacio de calma, sin juicios y con una precisión milimétrica.
+      <div style="font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 3px;">Quién Soy / La Guía</div>
+      <h3 style="margin-top: 0; font-size: 18px; margin-bottom: 6px;">¿Quién está al otro lado?</h3>
+      <p style="margin-bottom: 8px; line-height: 1.5; font-size: 12px;">
+        Hola, soy Andrea. Creo firmemente que las respuestas a nuestras mayores encrucijadas no están ocultas en el azar, sino en la capacidad de mirar hacia dentro con la perspectiva adecuada. He diseñado Arkanica para ofrecerte un espacio de calma, sin juicios y con una precisión milimétrica.
       </p>
-      <p style="margin-bottom: 0; line-height: 1.6; color: var(--gold-light);">
-        <em>"Cuando una duda frena tu energía, no necesitas más opiniones externas; necesitas claridad absoluta."</em> Si sientes que ha llegado el momento de destrabar tu camino con acompañamiento directo y a medida, te invito a explorar las opciones exclusivas de más abajo.
+      <p style="margin-bottom: 0; line-height: 1.5; font-size: 12px; color: var(--gold-light);">
+        <em>"Cuando una duda frena tu energía, no necesitas más opiniones externas; necesitas claridad absoluta."</em>
       </p>
     </div>
   </div>
@@ -1082,7 +1133,7 @@
       <p>Una conversación cercana cara a cara mediante videollamada para destrabar tu energía y trazar un plan estratégico claro.</p>
       <div class="booking-benefits">
         <div class="benefit-item">
-          <strong>Videollamada Privada (30 min)</strong>
+          <strong>Videollamada Privada (45 min)</strong>
           Atención completamente enfocada en tu caso particular.
         </div>
       </div>
@@ -1090,7 +1141,7 @@
     <div class="booking-card-action">
       <div class="price-tag">Sesión Privada</div>
       <p style="font-size: 11.5px; color: var(--text-muted); margin: 0;">Selecciona día y hora directamente en nuestro calendario oficial.</p>
-      <button class="action-btn" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/getbruma/30min'});return false;" style="width: 100%;">Abrir Calendario & Reservar</button>
+      <button class="action-btn" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/getbruma/45min'});return false;" style="width: 100%;">Abrir Calendario & Reservar</button>
     </div>
   </div>
 

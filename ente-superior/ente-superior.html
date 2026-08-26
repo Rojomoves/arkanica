@@ -90,7 +90,7 @@
     opacity: 1;
   }
 
-  /* HEADER RESPONSIVE */
+  /* HEADER RESPONSIVE ADAPTADO */
   header {
     width: 100%;
     max-width: 900px;
@@ -101,6 +101,8 @@
     border-bottom: 1px solid var(--line);
     padding-bottom: 10px;
     position: relative;
+    flex-wrap: wrap;
+    gap: 8px;
   }
 
   .logo {
@@ -130,7 +132,8 @@
   .header-right {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
+    flex-wrap: wrap;
   }
 
   /* INSIGNIA DE CRISTALES Y USUARIO EN HEADER */
@@ -239,10 +242,10 @@
     margin: 4px 0;
   }
 
-  /* HERO / BANNER PRINCIPAL REDISEÑADO */
+  /* HERO / BANNER PRINCIPAL REDISEÑADO CON ACCESOS RÁPIDOS */
   .hero-container {
     text-align: center;
-    max-width: 650px;
+    max-width: 700px;
     margin-bottom: 14px;
     padding: 0 6px;
   }
@@ -269,11 +272,41 @@
     font-size: 11.5px;
     color: var(--text-muted);
     font-weight: 300;
-    margin: 0;
+    margin: 0 0 10px;
     line-height: 1.45;
   }
 
-  /* CONTENEDOR DEL CHAT CON DESTELLO DORADO DISIMULADO */
+  .banner-quick-actions {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+
+  .banner-action-pill {
+    background: rgba(223, 177, 91, 0.08);
+    border: 1px solid var(--gold-dim);
+    color: var(--gold-light);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 6px 12px;
+    border-radius: 20px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+  .banner-action-pill:hover {
+    background: var(--gold);
+    color: var(--bg);
+    border-color: var(--gold);
+  }
+
+  /* CONTENEDOR DEL CHAT CON DESTELLO DORADO LENTO (CADA ~6 SEGUNDOS / 12S TOTALES) */
   .chat-container {
     width: 100%;
     max-width: 900px;
@@ -305,13 +338,13 @@
       transparent
     );
     transform: skewX(-20deg);
-    animation: shimmerEffect 7s infinite ease-in-out;
+    animation: shimmerEffect 12s infinite ease-in-out;
     pointer-events: none;
   }
 
   @keyframes shimmerEffect {
     0% { left: -150%; }
-    35% { left: 150%; }
+    25% { left: 150%; }
     100% { left: 150%; }
   }
 
@@ -615,25 +648,30 @@
       </button>
 
       <div class="nav-dropdown-menu" id="navDropdownMenu">
-        <a href="../tienda.html" class="highlight" onclick="closeNavMenu()">Tienda Mística</a>
-        <a href="../index.html#quien-soy" onclick="closeNavMenu()">Sesiones 1 a 1</a>
+        <a href="../tienda.html" class="highlight" onclick="closeNavMenu()">🛍️ Tienda Mística</a>
+        <a href="../index.html#reservas" onclick="closeNavMenu()">📅 Sesiones 1 a 1</a>
         <a href="../index.html" onclick="closeNavMenu()">← Volver al Inicio</a>
       </div>
     </div>
   </div>
 </header>
 
-<!-- BANNER PRINCIPAL / HERO REDISEÑADO -->
+<!-- BANNER PRINCIPAL / HERO REDISEÑADO CON ACCESOS RÁPIDOS ADAPTADOS -->
 <div class="hero-container">
   <div class="arkanica-eyebrow">Canal directo e íntimo</div>
   <h1 class="arkanica-title">Sala de Profundización con el Ente Superior</h1>
   <p class="arkanica-sub" id="headerSubtitle">Tus dos primeras preguntas de profundización son <strong>100% gratuitas y de cortesía</strong>, diseñadas para revelarte lo que tu tirada anterior dejó entrever.</p>
+  
+  <div class="banner-quick-actions">
+    <a href="../index.html#reservas" class="banner-action-pill">📅 Sesiones 1 a 1</a>
+    <a href="../tienda.html" class="banner-action-pill">🛍️ Tienda Mística</a>
+  </div>
 </div>
 
 <div class="chat-container">
   <div class="chat-messages" id="chatMessages">
     <div class="message ai" id="welcomeMessage">
-      Saludos, alma en búsqueda. Escribe tu duda o dilema más profundo y desentrañaremos juntos la respuesta exacta que necesitas.
+       Saludos, alma en búsqueda. Escribe tu duda o dilema más profundo y desentrañaremos juntos la respuesta exacta que necesitas.
     </div>
   </div>
 
@@ -815,7 +853,7 @@
       document.getElementById('headerSubtitle').innerHTML = `Has sintonizado con la tirada <strong>"${readingData.spreadTitle}"</strong>. Tus dos primeras preguntas de profundización son <strong>100% gratuitas y de cortesía</strong>.`;
       
       document.getElementById('welcomeMessage').innerHTML = `
-        Saludos en búsqueda. He capturado la energía de tu reciente tirada <em>"${readingData.spreadTitle}"</em> en la mesa principal. 
+         Saludos en búsqueda. He capturado la energía de tu reciente tirada <em>"${readingData.spreadTitle}"</em> en la mesa principal. 
         Tus cartas revelaron energías muy potentes. Como vienes directo de esa lectura, <strong>tus 2 primeras preguntas de profundización con el Ente Superior son totalmente gratuitas</strong> para darte una claridad absoluta. ¿Qué aspecto exacto deseas destrabar ahora?
       `;
     } catch(e) {
@@ -828,7 +866,7 @@
   function setupDefaultDirectAccess() {
     document.getElementById('headerSubtitle').innerHTML = `Has abierto el canal directo con el Ente Superior. Tus dos primeras consultas son <strong>100% gratuitas y de cortesía</strong> para revelar lo que necesitas saber ahora mismo.`;
     document.getElementById('welcomeMessage').innerHTML = `
-      Saludos, alma en búsqueda. Has cruzado el umbral hacia el canal directo con el Ente Superior. No hay intermediarios ni filtros: plantea tu encrucijada más íntima, ese dilema que ronda tu mente, y obtén la respuesta milimétrica y transformadora que el universo tiene reservada para ti. <strong>Tus 2 primeras consultas son completamente gratuitas.</strong> ¿Qué verdad deseas desenterrar hoy?
+       Saludos, alma en búsqueda. Has cruzado el umbral hacia el canal directo con el Ente Superior. No hay intermediarios ni filtros: plantea tu encrucijada más íntima, ese dilema que ronda tu mente, y obtén la respuesta milimétrica y transformadora que el universo tiene reservada para ti. <strong>Tus 2 primeras consultas son completamente gratuitas.</strong> ¿Qué verdad deseas desenterrar hoy?
     `;
   }
 
