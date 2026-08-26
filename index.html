@@ -111,7 +111,7 @@
   .audio-label-container {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 4px;
     cursor: pointer;
   }
 
@@ -129,6 +129,7 @@
     text-decoration: none;
     transition: background 0.3s;
     white-space: nowrap;
+    cursor: pointer;
   }
 
   .crystals-badge:hover {
@@ -267,6 +268,28 @@
     box-shadow: 0 4px 20px rgba(0,0,0,0.4);
   }
 
+  .mobile-spread-dropdown {
+    display: none;
+    width: 100%;
+    max-width: 1100px;
+    margin-bottom: 20px;
+  }
+
+  .mobile-spread-select {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 12px 16px;
+    border-radius: 8px;
+    outline: none;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  }
+
   .spread-info-card {
     width: 100%;
     max-width: 1100px;
@@ -399,7 +422,6 @@
     z-index: 100;
   }
 
-  /* NUEVA REJILLA ESTRICTA SIN SCROLL HORIZONTAL */
   .arkanica-table {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -412,7 +434,6 @@
     justify-items: center;
   }
 
-  /* Para tiradas de 10 cartas: exactamente 5 columnas limpias */
   .arkanica-table.grid-10 {
     grid-template-columns: repeat(5, 1fr);
     gap: 12px;
@@ -426,7 +447,6 @@
     width: 100%;
   }
 
-  /* CARTAS OPTIMIZADAS PARA LA REJILLA */
   .arkanica-card {
     width: 120px;
     height: 195px;
@@ -710,6 +730,9 @@
     .booking-grid { grid-template-columns: 1fr; gap: 20px; }
     .section-card { padding: 22px 16px; }
     .table-container { padding: 22px 12px; }
+    
+    .spread-selector { display: none; }
+    .mobile-spread-dropdown { display: block; }
   }
 </style>
 </head>
@@ -722,17 +745,17 @@
 <header>
   <a href="#" class="logo">Arkanica</a>
   <div class="header-right">
-    <div class="audio-carousel" id="audioCarousel" title="Desliza o usa las flechas para sintonizar">
-      <button class="audio-arrow-btn" onclick="changeAudioTrack(-1); event.stopPropagation();" title="Pista anterior">‹</button>
+    <div class="audio-carousel" id="audioCarousel" title="Haz clic o desliza para cambiar la sintonía ambiental">
+      <button class="audio-arrow-btn" onclick="changeAudioTrack(-1); event.stopPropagation();" title="Anterior">‹</button>
       <div class="audio-label-container" onclick="changeAudioTrack(1)">
-        <span>🎵 Sintoniza:</span> <strong id="soundLabel" style="color: var(--text-main);">Silencio</strong>
+        <span>🎵</span> <strong id="soundLabel" style="color: var(--text-main);">Silencio</strong>
       </div>
-      <button class="audio-arrow-btn" onclick="changeAudioTrack(1); event.stopPropagation();" title="Pista siguiente">›</button>
+      <button class="audio-arrow-btn" onclick="changeAudioTrack(1); event.stopPropagation();" title="Siguiente">›</button>
     </div>
 
-    <a href="personalizada/personalizada.html" class="crystals-badge" title="Tus cristales de claridad">
+    <div class="crystals-badge" onclick="goToPrivateSession()" title="Tus cristales de claridad — Haz clic para ir a la Sala Privada">
       💎 <span id="headerCrystalCount">0</span> Cristales
-    </a>
+    </div>
     
     <div class="nav-links">
       <a href="#mesa">Lecturas</a>
@@ -745,7 +768,7 @@
 <div class="hero-container">
   <div class="arkanica-eyebrow">Tu espacio de calma y claridad</div>
   <h1 class="arkanica-title">Elige qué te gustaría consultar hoy</h1>
-  <p class="arkanica-sub">Selecciona una categoría y una tirada especializada para disipar tus dudas y guiar tus decisiones.</p>
+  <p class="arkanica-sub">Selecciona una categoría y una tirada especializada para disipar tus dudas y guiar tus decisiones paso a paso.</p>
 </div>
 
 <!-- Selector de Categorías -->
@@ -756,8 +779,15 @@
   <button class="category-tab" onclick="switchCategory('proyectos', event)">🎬 Escenario Principal</button>
 </div>
 
-<!-- Selector de Tiradas Dinámico -->
+<!-- Selector de Tiradas Dinámico para Escritorio (Botones) -->
 <div class="spread-selector" id="spreadSelector"></div>
+
+<!-- Desplegable exclusivo para Móviles (Visible sólo en pantallas pequeñas) -->
+<div class="mobile-spread-dropdown" id="mobileSpreadDropdownContainer">
+  <select class="mobile-spread-select" id="mobileSpreadSelect" onchange="onMobileSpreadChange(this.value)">
+    <!-- Se rellena dinámicamente con JavaScript -->
+  </select>
+</div>
 
 <!-- Tarjeta Informativa -->
 <div class="spread-info-card" id="spreadInfoCard">
@@ -781,7 +811,7 @@
     <p class="master-text" id="masterTextContent"></p>
     <div class="master-cta">
       <span>¿Necesitas desentrañar un caso más personal?</span>
-      <button class="action-btn" onclick="window.location.href='personalizada/personalizada.html'">Profundizar en Sesión Privada</button>
+      <button class="action-btn" onclick="goToPrivateSession()">Profundizar en Sesión Privada</button>
     </div>
   </div>
 
@@ -791,7 +821,7 @@
 <div class="section-card" id="autor">
   <h3>¿Tienes una duda muy concreta o personal?</h3>
   <p>Si las tiradas generales te han dado pistas pero necesitas profundizar con una sesión interactiva guiada por el oráculo, accede a nuestra sala privada en arkanica.app.</p>
-  <button class="action-btn" onclick="window.location.href='personalizada/personalizada.html'">Iniciar Sesión Profunda</button>
+  <button class="action-btn" onclick="goToPrivateSession()">Iniciar Sesión Profunda</button>
 </div>
 
 <div class="section-card" id="reservas">
@@ -913,15 +943,29 @@
   }, {passive: true});
 
   let username = localStorage.getItem('arkanica_user');
-  if (username) {
-    let savedCrystals = localStorage.getItem(`arkanica_crystals_${username}`);
-    if (savedCrystals !== null) {
-      document.getElementById('headerCrystalCount').textContent = savedCrystals;
-    }
+  if (!username) {
+    username = "Viajero_" + Math.floor(Math.random()*1000);
+    localStorage.setItem('arkanica_user', username);
+  }
+
+  let savedCrystals = localStorage.getItem(`arkanica_crystals_${username}`);
+  if (savedCrystals === null) {
+    savedCrystals = 10;
+    localStorage.setItem(`arkanica_crystals_${username}`, savedCrystals);
+  }
+  document.getElementById('headerCrystalCount').textContent = savedCrystals;
+
+  function goToPrivateSession() {
+    const currentSpreadConfig = getCurrentSpreadConfig();
+    const readingContext = {
+      spreadTitle: currentSpreadConfig.title,
+      cards: selectedCards
+    };
+    localStorage.setItem('arkanica_last_reading', JSON.stringify(readingContext));
+    window.location.href = 'personalizada/personalizada.html';
   }
 
   const fullTarotDeck = [
-    // Arcanos Mayores
     { symbol: '0', name: 'El Loco', archetype: 'Empieza algo nuevo sin miedo al qué dirán', img: 'assets/arcanos-mayores/el-loco.jpeg' },
     { symbol: 'I', name: 'El Mago', archetype: 'Tienes todos los recursos sobre la mesa para triunfar', img: 'assets/arcanos-mayores/the-magician.jpeg' },
     { symbol: 'II', name: 'La Sacerdotisa', archetype: 'Confía en tu intuición y guarda el secreto con calma', img: 'assets/arcanos-mayores/the-high-priestesses.jpeg' },
@@ -945,27 +989,23 @@
     { symbol: 'XX', name: 'El Juicio', archetype: 'Un despertar kármico y una gran llamada a trascender', img: 'assets/arcanos-mayores/judgment.jpeg' },
     { symbol: 'XXI', name: 'El Mundo', archetype: 'Realización total; has completado una gran maestría', img: 'assets/arcanos-mayores/the-world.jpeg' },
     
-    // Oros
     { symbol: 'As 🪙', name: 'As de Oros', archetype: 'Semilla firme de prosperidad material o laboral', img: 'assets/arcanos-menores/oros/as-oros.jpg' },
     { symbol: '2 🪙', name: 'Dos de Oros', archetype: 'Haciendo malabares para equilibrar tus prioridades', img: 'assets/arcanos-menores/oros/2-oros.jpg' },
     { symbol: '3 🪙', name: 'Tres de Oros', archetype: 'La maestría compartida y el esfuerzo engranado', img: 'assets/arcanos-menores/oros/3-oros.jpg' },
     { symbol: '4 🪙', name: 'Cuatro de Oros', archetype: 'Exceso de control; aprende a abrir las manos y soltar', img: 'assets/arcanos-menores/oros/4-oros.jpg' },
     { symbol: '10 🪙', name: 'Diez de Oros', archetype: 'Legado, estabilidad y raíz familiar profunda', img: 'assets/arcanos-menores/oros/10-oros.jpg' },
 
-    // Copas
     { symbol: 'As 🍷', name: 'As de Copas', archetype: 'Manantial puro de amor y apertura emocional', img: 'assets/arcanos-menores/copas/as-copas.jpg' },
     { symbol: '2 🍷', name: 'Dos de Copas', archetype: 'Pacto de almas, sintonía y espejo mutuo', img: 'assets/arcanos-menores/copas/2-copas.jpg' },
     { symbol: '3 🍷', name: 'Tres de Copas', archetype: 'Comunión, alegría y celebración con los afines', img: 'assets/arcanos-menores/copas/3-copas.jpg' },
     { symbol: '5 🍷', name: 'Cinco de Copas', archetype: 'Lamentando lo que se derrumbó sin ver lo que queda', img: 'assets/arcanos-menores/copas/5-copas.jpg' },
     { symbol: '10 🍷', name: 'Diez de Copas', archetype: 'Felicidad hogareña y paz emocional absoluta', img: 'assets/arcanos-menores/copas/10-copas.jpg' },
 
-    // Espadas
     { symbol: 'As ⚔️', name: 'As de Espadas', archetype: 'Verdad incisiva que corta la confusión de raíz', img: 'assets/arcanos-menores/espadas/as-espadas.jpg' },
     { symbol: '2 ⚔️', name: 'Dos de Espadas', archetype: 'Vendaje en los ojos ante una elección inevitable', img: 'assets/arcanos-menores/espadas/2-espadas.jpg' },
     { symbol: '3 ⚔️', name: 'Tres de Espadas', archetype: 'Dolor punzante que purifica y abre los ojos', img: 'assets/arcanos-menores/espadas/3-espadas.jpg' },
     { symbol: '8 ⚔️', name: 'Ocho de Espadas', archetype: 'Prisión mental construida por tus propios temores', img: 'assets/arcanos-menores/espadas/8-espadas.jpg' },
 
-    // Bastos
     { symbol: 'As 🔥', name: 'As de Bastos', archetype: 'Pulsión creativa, deseo y fuego puro de arranque', img: 'assets/arcanos-menores/bastos/as-bastos.jpg' },
     { symbol: '3 🔥', name: 'Tres de Bastos', archetype: 'Horizonte expandido esperando barcos lejanos', img: 'assets/arcanos-menores/bastos/3-bastos.jpg' },
     { symbol: '8 🔥', name: 'Ocho de Bastos', archetype: 'Aceleración súbita; los acontecimientos se precipitan', img: 'assets/arcanos-menores/bastos/8-bastos.jpg' }
@@ -983,31 +1023,31 @@
         {
           key: "thriller",
           title: "Thriller Romántico",
-          description: 'Diseñada con precisión quirúrgica para desentrañar la incertidumbre de los "casi algo" (situationships). Si los mensajes contradictorios te generan suspense y dudas, esta lectura investiga el trasfondo psicológico de la conexión.',
+          description: '¿Atrapado/a en un "casi algo" o con mensajes ambiguos? Esta tirada de 3 cartas investiga los mensajes ocultos entre líneas para ayudarte a descifrar qué siente realmente la otra persona y qué debes hacer tú.',
           slots: [
-            { label: '1. La Pista Falsa', desc: 'La justificación o autoengaño que sostienes para calmar la inquietud.' },
-            { label: '2. El Móvil Oculto', desc: 'Las verdaderas intenciones que la otra persona disimula.' },
-            { label: '3. La Resolución', desc: 'El movimiento estratégico clave para recuperar tu soberanía emocional.' }
+            { label: '1. La Pista Falsa', desc: 'El espejismo o autoengaño en el que te estás refugiando.' },
+            { label: '2. El Móvil Oculto', desc: 'Las verdaderas intenciones que la otra persona no muestra abiertamente.' },
+            { label: '3. La Resolución', desc: 'El paso exacto que debes dar para recuperar tu paz emocional.' }
           ]
         },
         {
           key: "masks",
           title: "Baile de Máscaras",
-          description: 'Una inmersión profunda en los roles y personajes que adoptamos en pareja. Ideal para destapar dinámicas donde la actuación ha reemplazado a la absoluta autenticidad.',
+          description: 'Examina con claridad los roles y expectativas que cada uno proyecta en la pareja. Ideal para identificar dinámicas repetitivas y conectar por fin con la autenticidad mutua.',
           slots: [
-            { label: '1. El Vestuario', desc: 'El personaje o careta que proyectas para encajar.' },
-            { label: '2. La Coreografía', desc: 'El mecanismo de defensa o bucle relacional en el que incurren.' },
-            { label: '3. El Rostro Real', desc: 'La verdad inquebrantable si se despojaran de todo artificio.' }
+            { label: '1. Tu Personaje', desc: 'La careta o actitud defensiva que adoptas sin darte cuenta.' },
+            { label: '2. Su Dinámica', desc: 'El rol o bloqueo que la otra persona aporta a la relación.' },
+            { label: '3. El Vínculo Real', desc: 'La verdad esencial que surge al despojarse de toda actuación.' }
           ]
         },
         {
           key: "shadow_romance",
           title: "Pacto en la Sombra",
-          description: 'Explora aquellas pasiones magnéticas que escapan al control racional. Ideal para vínculos intensos donde la química se entrelaza con el vértigo y el riesgo.',
+          description: 'Una mirada sincera a las pasiones intensas o atracciones magnéticas complejas donde la química y el vértigo se mezclan. Descubre qué equilibra o desestabiliza este lazo.',
           slots: [
-            { label: '1. El Veneno', desc: 'El factor tóxico o sombra particular que corroe la armonía.' },
-            { label: '2. El Hechizo', desc: 'El imán irracional que los mantiene fuertemente atados.' },
-            { label: '3. El Antídoto', desc: 'El límite o acto de lucidez necesario para romper el hechizo.' }
+            { label: '1. El Fricción', desc: 'El elemento tóxico o tensión latente que desgasta el vínculo.' },
+            { label: '2. La Atracción', desc: 'El imán inconsciente que los mantiene fuertemente unidos.' },
+            { label: '3. El Límite Sanador', desc: 'La pauta o decisión necesaria para equilibrar la conexión.' }
           ]
         }
       ]
@@ -1018,28 +1058,28 @@
         {
           key: "time_alt",
           title: "Salto en el Tiempo",
-          description: 'Un mapa oracular de 10 elecciones estratégicas que proyectan tus posibles futuros según el camino que decidas transitar. Si tras este recorrido panorámico deseas una lectura hiperpersonalizada, recuerda acudir a nuestra sección privada.',
+          description: 'Un mapa completo de 10 cartas que evalúa un gran cruce de caminos en tu vida. Analiza múltiples escenarios, bloqueos a dejar atrás y el horizonte final hacia el que te diriges.',
           slots: [
-            { label: '1. Elección Origen', desc: 'El impulso inicial en este cruce.' },
-            { label: '2. Desvío Prudente', desc: 'La alternativa de conservar cautela.' },
-            { label: '3. Apuesta Audaz', desc: 'El riesgo calculado y su consecuencia.' },
-            { label: '4. Corte Pasado', desc: 'El impacto de soltar viejos lastres.' },
-            { label: '5. Inversión', desc: 'El enfoque en tus propios recursos.' },
-            { label: '6. Claridad', desc: 'La fría luz de la razón ordenando.' },
-            { label: '7. Alianza', desc: 'El peso de sumar fuerzas.' },
-            { label: '8. Gran Pausa', desc: 'El beneficio de detener la marcha.' },
-            { label: '9. Salto Vacío', desc: 'La fe ciega transformada en avance.' },
-            { label: '10. Destino', desc: 'El gran horizonte al que conduces.' }
+            { label: '1. Origen', desc: 'El impulso inicial en este cruce.' },
+            { label: '2. Prudencia', desc: 'La opción de mantener la cautela.' },
+            { label: '3. Audacia', desc: 'El riesgo calculado y su impacto.' },
+            { label: '4. Pasado', desc: 'Lastres kármicos que debes cortar.' },
+            { label: '5. Recursos', desc: 'Tu fortaleza interior disponible.' },
+            { label: '6. Razón', desc: 'La claridad mental necesaria.' },
+            { label: '7. Alianzas', desc: 'Factores o apoyos externos.' },
+            { label: '8. Pausa', desc: 'El beneficio de detener la marcha.' },
+            { label: '9. Fe', desc: 'El salto al vacío transformador.' },
+            { label: '10. Destino', desc: 'El gran aprendizaje y resultado.' }
           ]
         },
         {
           key: "past_lives",
           title: "Vidas Pasadas",
-          description: 'Desvela los hilos invisibles de memorias ancestrales que continúan operando en tu subconsciente, condicionando tus bloqueos actuales o dotándote de dones latentes.',
+          description: 'Examina memorias de tu subconsciente que siguen influyendo en tus retos de hoy, ayudándote a comprender el origen de ciertos bloqueos y cómo trascenderlos.',
           slots: [
-            { label: '1. La Raíz Kármica', desc: 'El eco del pasado que sigue resonando en tu presente.' },
-            { label: '2. La Prueba Pendiente', desc: 'El examen evolutivo que esta encarnación te pide superar.' },
-            { label: '3. La Llave de Liberación', desc: 'El entendimiento espiritual que disuelve la cadena.' }
+            { label: '1. La Raíz', desc: 'El eco del pasado que resuena hoy en ti.' },
+            { label: '2. La Prueba', desc: 'El aprendizaje pendiente que repites.' },
+            { label: '3. La Llave', desc: 'La comprensión que disuelve el bloqueo.' }
           ]
         }
       ]
@@ -1050,31 +1090,31 @@
         {
           key: "mirror",
           title: "El Espejo Fragmentado",
-          description: 'Una herramienta de autoconocimiento radical para iluminar puntos ciegos de tu personalidad y rescatar talentos valiosos que has mantenido reprimidos.',
+          description: 'Ilumina tus puntos ciegos personales. Esta lectura te ayuda a reconocer aspectos de ti que proyectas en el exterior o reprimes, revelando un valioso potencial oculto.',
           slots: [
-            { label: '1. El Punto Ciego', desc: 'Lo que proyectas afuera y te niegas a admitir.' },
-            { label: '2. Sombra Reprimida', desc: 'El temor o instinto acorralado que drena energía.' },
-            { label: '3. El Don Oculto', desc: 'El potencial luminoso listo para ser integrado.' }
+            { label: '1. Tu Punto Ciego', desc: 'Lo que proyectas fuera y te cuesta admitir.' },
+            { label: '2. La Sombra', desc: 'El miedo o instinto reprimido que resta energía.' },
+            { label: '3. El Don', desc: 'Tu talento oculto listo para ser integrado.' }
           ]
         },
         {
           key: "inner_voice",
           title: "La Voz Interior",
-          description: 'Diseñada para apagar el bullicio de opiniones ajenas y la sobreanalización mental, permitiéndote escuchar la respuesta inequívoca de tu intuición.',
+          description: 'Diseñada para silenciar opiniones externas y el exceso de análisis mental, permitiéndote escuchar con nitidez la respuesta intuitiva y sincera de tu interior.',
           slots: [
-            { label: '1. Ruido Externo', desc: 'Expectativas y mandatos que confunden tu criterio.' },
-            { label: '2. Duda Analítica', desc: 'El laberinto lógico donde tu mente te sabotea.' },
-            { label: '3. Certeza Instintiva', desc: 'El dictamen puro y sereno de tu voz interior.' }
+            { label: '1. El Ruido', desc: 'Expectativas ajenas que confunden tu criterio.' },
+            { label: '2. La Duda', desc: 'El laberinto mental donde te saboteas.' },
+            { label: '3. La Certeza', desc: 'La respuesta clara de tu intuición.' }
           ]
         },
         {
           key: "ghost",
           title: "Enfrentando al Fantasma",
-          description: 'Una confrontación valiente y directa con el origen de esa inseguridad o miedo paralizante que frena tu evolución personal.',
+          description: 'Una confrontación directa y constructiva con el origen de ese miedo o inseguridad que frena tu avance, dándote herramientas prácticas para disiparlo.',
           slots: [
-            { label: '1. Semilla Miedo', desc: 'El origen exacto donde se instaló la inseguridad.' },
-            { label: '2. Forma Actual', desc: 'El modo en que condiciona tus decisiones de hoy.' },
-            { label: '3. Acto de Valor', desc: 'La resolución consciente que disipa el fantasma.' }
+            { label: '1. La Semilla', desc: 'El origen exacto donde nació el temor.' },
+            { label: '2. Su Efecto', desc: 'Cómo limita tus decisiones cotidianas.' },
+            { label: '3. El Valor', desc: 'La acción consciente que vence al miedo.' }
           ]
         }
       ]
@@ -1085,31 +1125,31 @@
         {
           key: "foco",
           title: "El Foco Principal",
-          description: 'Indispensable cuando te sientes desbordado por exigencias externas, recupera el timón de tu dirección y alinea tu energía con lo verdaderamente esencial.',
+          description: 'Ideal cuando sientes dispersión o exceso de exigencias externas. Te ayuda a simplificar prioridades y alinear tu energía con lo que de verdad importa.',
           slots: [
-            { label: '1. Base Invisible', desc: 'Lo que requiere intimidad y blindaje en este momento.' },
-            { label: '2. Talento Expuesto', desc: 'El recurso brillante que debes proyectar al exterior.' },
-            { label: '3. Triunfo Coherente', desc: 'La cosecha tangible al asumir el mando.' }
+            { label: '1. Los Cimientos', desc: 'Lo que requiere intimidad y blindaje.' },
+            { label: '2. La Exposición', desc: 'El talento clave que debes proyectar.' },
+            { label: '3. El Éxito', desc: 'La recompensa de asumir el mando.' }
           ]
         },
         {
           key: "backstage",
           title: "Entre Bambalinas",
-          description: 'Auditoría estratégica para examinar con rigor los cimientos, recursos y preparativos invisibles antes de exponer un proyecto u obra ante el público.',
+          description: 'Una revisión estratégica de tus recursos y preparativos internos antes de lanzar un proyecto, negocio o idea al público.',
           slots: [
-            { label: '1. Solidez Estructural', desc: 'El estado real de los cimientos y recursos.' },
-            { label: '2. Factor Olvidado', desc: 'Ese detalle sutil que marcará la diferencia.' },
-            { label: '3. Veredicto Salida', desc: 'La señal definitiva de que es hora de actuar.' }
+            { label: '1. La Solidez', desc: 'El estado real de tus bases y medios.' },
+            { label: '2. El Detalle', desc: 'Ese factor sutil que marcará el éxito.' },
+            { label: '3. El Veredicto', desc: 'La señal de que estás listo/a para actuar.' }
           ]
         },
         {
           key: "chord",
           title: "El Acorde Perfecto",
-          description: 'Ideada para destrabar bloqueos creativos y restaurar la armonía y el ritmo natural en proyectos profesionales o artísticos que han quedado en pausa.',
+          description: 'Creado para destrabar bloqueos creativos o profesionales, devolviendo la fluidez, el ritmo y la armonía a tus metas en pausa.',
           slots: [
-            { label: '1. Nota Disonante', desc: 'El bloqueo exacto que rompió el flujo creador.' },
-            { label: '2. La Reafinación', desc: 'El ajuste conceptual o de actitud requerido.' },
-            { label: '3. El Gran Acorde', desc: 'El estado de gracia donde todo fluye sin resistencia.' }
+            { label: '1. La Disonancia', desc: 'El bloqueo exacto que detuvo tu flujo.' },
+            { label: '2. La Reafinación', desc: 'El ajuste conceptual o de enfoque necesario.' },
+            { label: '3. La Armonía', desc: 'El estado de gracia donde todo avanza.' }
           ]
         }
       ]
@@ -1132,11 +1172,14 @@
   const infoDesc = document.getElementById('infoDesc');
   const infoPositions = document.getElementById('infoPositions');
   const spreadSelector = document.getElementById('spreadSelector');
+  const mobileSpreadSelect = document.getElementById('mobileSpreadSelect');
   const masterBox = document.getElementById('masterBox');
   const masterTextContent = document.getElementById('masterTextContent');
 
   function renderSpreadSelector() {
     spreadSelector.innerHTML = '';
+    mobileSpreadSelect.innerHTML = '';
+
     const category = categoriesData[currentCategoryKey];
     
     category.spreads.forEach((spread) => {
@@ -1145,7 +1188,19 @@
       btn.textContent = spread.title;
       btn.onclick = (e) => switchSpread(spread.key, e);
       spreadSelector.appendChild(btn);
+
+      const option = document.createElement('option');
+      option.value = spread.key;
+      option.textContent = spread.title;
+      if (spread.key === currentSpreadKey) {
+        option.selected = true;
+      }
+      mobileSpreadSelect.appendChild(option);
     });
+  }
+
+  function onMobileSpreadChange(key) {
+    switchSpread(key);
   }
 
   function getCurrentSpreadConfig() {
@@ -1209,7 +1264,11 @@
   function switchSpread(key, event) {
     currentSpreadKey = key;
     document.querySelectorAll('.spread-btn').forEach(btn => btn.classList.remove('active'));
-    event.target.classList.add('active');
+    if (event && event.target) {
+      event.target.classList.add('active');
+    } else {
+      renderSpreadSelector();
+    }
     initReading();
   }
 
@@ -1273,7 +1332,6 @@
   function renderTableSlots() {
     const config = getCurrentSpreadConfig();
     
-    // Asignar clase grid-10 si es la tirada de 10 cartas para ordenar perfectamente en 5 columnas (2 filas)
     if (config.slots.length > 5) {
       table.className = 'arkanica-table grid-10';
     } else {
@@ -1335,7 +1393,6 @@
     }
   }
 
-  /* GENERADOR DE INTERPRETACIÓN CON IA OPTIMIZADA */
   async function generateGenerativeInterpretation() {
     const config = getCurrentSpreadConfig();
     
