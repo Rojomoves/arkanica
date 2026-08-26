@@ -1006,10 +1006,8 @@
 
     msg.textContent = 'Guardando datos y conectando con Stripe...';
 
-    // Guardamos los datos temporalmente
     localStorage.setItem('arkanica_pending_audio', JSON.stringify({ email, spreadType, query, date: new Date().toISOString() }));
 
-    // Redirección directa al Payment Link de Stripe
     setTimeout(() => {
       window.location.href = STRIPE_PAYMENT_LINK;
     }, 800);
@@ -1188,9 +1186,9 @@
   }
 
   function goToPrivateSession() {
-    // Limpiamos cualquier contexto anterior para que el Ente Superior arranque con el saludo predeterminado
+    // Limpiamos contexto previo para que cargue el saludo limpio por defecto
     localStorage.removeItem('arkanica_last_reading');
-    window.location.href = 'personalizada/personalizada.html';
+    window.location.href = 'ente-superior/ente-superior.html';
   }
 
   /* --- MAZO Y CATEGORÍAS COMPLETAS --- */
@@ -1342,7 +1340,6 @@
       if (userCrystals < 3) {
         hint.textContent = "Tirada ya realizada hoy. No tienes suficientes cristales (se necesitan 3).";
         
-        // --- LÓGICA INTEGRADA: AVISO AL BAJAR A MENOS DE 2/3 CRISTALES ---
         alert("Has agotado tu tirada gratuita de hoy para esta sección y tus cristales son insuficientes (tienes menos de 3). Adquiere o recarga tus cristales para continuar consultando los arcanos.");
         return;
       } else {
@@ -1467,7 +1464,6 @@
   async function generateGenerativeInterpretation() {
     const config = getCurrentSpreadConfig();
     
-    // Activamos la animación de giro mientras carga
     masterSymbol.classList.add('spinner-symbol');
     masterTextContent.innerHTML = `✦ Sintonizando los arcanos mayores y menores con el latido del universo...`;
     masterBox.style.setProperty('display', 'block', 'important');
@@ -1487,7 +1483,6 @@
     } catch(e) {
       masterTextContent.innerHTML = `Tras sintonizar los arcanos en esta tirada de <strong>${config.title}</strong>, la presencia de <em>${selectedCards[0].name}</em> marca un punto de inflexión decisivo. ${selectedCards[0].archetype}. Confía plenamente en tu intuición actual y permite que la claridad guíe tus próximos pasos sin vacilar.`;
     } finally {
-      // Detenemos la animación de giro cuando termina la carga
       masterSymbol.classList.remove('spinner-symbol');
     }
   }
