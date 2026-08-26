@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Arkanica — Sesión Privada y Profunda con el Oráculo</title>
+<!-- Cliente oficial de Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500&display=swap');
 
@@ -396,9 +398,9 @@
       <button class="audio-arrow-btn" onclick="changeAudioTrack(1); event.stopPropagation();" title="Pista siguiente">›</button>
     </div>
 
-    <div class="user-badge" id="userBadge">Alma: </div>
+    <div class="user-badge" id="userBadge">Alma: Invitado</div>
     <div class="crystals-badge" id="crystalsDisplay">
-      💎 <span id="crystalCount">0</span> Cristales (<span id="freeTrialBadge" style="color: var(--gold-light);">2 consultas gratis</span>)
+      💎 <span id="crystalCount">10</span> Cristales (<span id="freeTrialBadge" style="color: var(--gold-light);">2 consultas gratis</span>)
     </div>
     <a href="../index.html" class="back-link">← Volver</a>
   </div>
@@ -453,6 +455,66 @@
 </div>
 
 <script>
+  /* --- CONFIGURACIÓN DE SUPABASE --- */
+  const SUPABASE_URL = 'https://jcosmhiukmfsygrinfgy.supabase.co';
+  const SUPABASE_ANON_KEY = 'sb_publishable_UVGFZQhG36gD_67hInVz7g_4oLD7tWN';
+
+  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  let currentUser = null;
+  let crystals = 10;
+  let freeQuestionsUsed = 0;
+
+  async function initSession() {
+    const { data: { session } } = await supabaseClient.auth.getSession();
+    if (session) {
+      currentUser = session.user;
+      document.getElementById('userBadge').textContent = `Alma: ${currentUser.email.split('@')[0]}`;
+      
+      const { data, error } = await supabaseClient
+        .from('profiles')
+        .select('crystals, free_questions_used')
+        .eq('id', currentUser.id)
+        .single();
+
+      if (data) {
+        crystals = data.crystals ?? 10;
+        freeQuestionsUsed = data.free_questions_used ?? 0;
+      }
+    } else {
+      crystals = parseInt(localStorage.getItem('arkanica_crystals_guest')) || 10;
+      freeQuestionsUsed = parseInt(localStorage.getItem('arkanica_free_used_guest')) || 0;
+    }
+
+    // Verificar pago Stripe
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('pagado') === 'true') {
+      const addedCrystals = parseInt(urlParams.get('cristales')) || 0;
+      if (addedCrystals > 0) {
+        crystals += addedCrystals;
+        window.history.replaceState({}, document.title, window.location.pathname);
+        await saveUserData();
+        setTimeout(() => {
+          appendMessage(`✦ <strong>¡Recarga mística completada con éxito!</strong> Se han añadido ${addedCrystals} Cristales de Claridad a tu cuenta. El canal está completamente abierto.`, 'ai');
+        }, 500);
+      }
+    }
+
+    updateDisplayStatus();
+  }
+
+  async function saveUserData() {
+    if (currentUser) {
+      await supabaseClient
+        .from('profiles')
+        .upsert({ id: currentUser.id, crystals: crystals, free_questions_used: freeQuestionsUsed });
+    } else {
+      localStorage.setItem('arkanica_crystals_guest', crystals);
+      localStorage.setItem('arkanica_free_used_guest', freeQuestionsUsed);
+    }
+  }
+
+  initSession();
+
   const audioEl = document.getElementById('ambientAudio');
   audioEl.volume = 0.35;
 
@@ -490,57 +552,6 @@
     else if (touchEndX > touchStartX + 30) changeAudioTrack(-1);
   }, {passive: true});
 
-  let username = localStorage.getItem('arkanica_user');
-  if (!username) {
-    username = prompt("Introduce tu nombre para guardar tu sesión privada:") || "Viajero_" + Math.floor(Math.random()*1000);
-    localStorage.setItem('arkanica_user', username);
-  }
-  document.getElementById('userBadge').textContent = `Alma: ${username}`;
-
-  // Gestión de Cristales y Preguntas de Cortesía Gratuitas sincronizadas
-  const storageKeyCrystals = `arkanica_crystals_${username}`;
-  const storageKeyFreeCount = `arkanica_free_used_${username}`;
-
-  let crystals = parseInt(localStorage.getItem(storageKeyCrystals));
-  if (isNaN(crystals)) {
-    crystals = 10;
-    localStorage.setItem(storageKeyCrystals, crystals);
-  }
-
-  let freeQuestionsUsed = parseInt(localStorage.getItem(storageKeyFreeCount));
-  if (isNaN(freeQuestionsUsed)) {
-    freeQuestionsUsed = 0;
-    localStorage.setItem(storageKeyFreeCount, freeQuestionsUsed);
-  }
-
-  // Verificar si el usuario regresa de un pago exitoso de Stripe
-  const urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.get('pagado') === 'true') {
-    const addedCrystals = parseInt(urlParams.get('cristales')) || 0;
-    if (addedCrystals > 0) {
-      crystals += addedCrystals;
-      // Limpiar URL
-      window.history.replaceState({}, document.title, window.location.pathname);
-      setTimeout(() => {
-        appendMessage(`✦ <strong>¡Recarga mística completada con éxito!</strong> Se han añadido ${addedCrystals} Cristales de Claridad a tu cuenta. El canal está completamente abierto.`, 'ai');
-      }, 500);
-    }
-  }
-
-  updateDisplayStatus();
-
-  // Recuperar contexto de la tirada anterior del index
-  let lastReadingContext = localStorage.getItem('arkanica_last_reading');
-  if (lastReadingContext) {
-    try {
-      const readingData = JSON.parse(lastReadingContext);
-      document.getElementById('welcomeMessage').innerHTML = `
-        Saludos, <strong>${username}</strong>. Veo que acabas de realizar la tirada <em>"${readingData.spreadTitle}"</em> en la mesa principal. 
-        Tus cartas revelaron energías muy potentes. Como vienes directo de esa lectura, <strong>tus 2 primeras preguntas de profundización son totalmente gratuitas</strong> para darte una claridad absoluta. ¿Qué aspecto exacto deseas destrabar ahora?
-      `;
-    } catch(e) {}
-  }
-
   function updateDisplayStatus() {
     document.getElementById('crystalCount').textContent = crystals;
     const remainingFree = Math.max(0, 2 - freeQuestionsUsed);
@@ -554,11 +565,21 @@
       freeBadge.textContent = `0 gratis`;
       sendBtn.textContent = `Consultar (3 💎)`;
     }
-    localStorage.setItem(storageKeyCrystals, crystals);
-    localStorage.setItem(storageKeyFreeCount, freeQuestionsUsed);
+    saveUserData();
   }
 
-  /* INTEGRACIÓN CON PASARELA DE PAGO STRIPE */
+  // Recuperar contexto de la tirada anterior del index
+  let lastReadingContext = localStorage.getItem('arkanica_last_reading');
+  if (lastReadingContext) {
+    try {
+      const readingData = JSON.parse(lastReadingContext);
+      document.getElementById('welcomeMessage').innerHTML = `
+        Saludos en búsqueda. Veo que acabas de realizar la tirada <em>"${readingData.spreadTitle}"</em> en la mesa principal. 
+        Tus cartas revelaron energías muy potentes. Como vienes directo de esa lectura, <strong>tus 2 primeras preguntas de profundización son totalmente gratuitas</strong> para darte una claridad absoluta. ¿Qué aspecto exacto deseas destrabar ahora?
+      `;
+    } catch(e) {}
+  }
+
   async function buyPack(amount, packName, priceString) {
     const numericPrice = parseFloat(priceString.replace('€', '').trim());
     const priceInCents = Math.round(numericPrice * 100);
@@ -571,13 +592,13 @@
           packName: packName,
           priceInCents: priceInCents,
           crystalsAmount: amount,
-          username: username
+          username: currentUser ? currentUser.email : 'Invitado'
         })
       });
 
       const data = await response.json();
       if (data.url) {
-        window.location.href = data.url; // Redirige a Stripe Checkout
+        window.location.href = data.url;
       } else {
         throw new Error(data.error || 'No se pudo iniciar la pasarela de pago');
       }
@@ -625,7 +646,6 @@
     chatMessages.scrollTop = chatMessages.scrollHeight;
   }
 
-  /* IA PERSUASIVA CONECTADA A LA FUNCIÓN DE NETLIFY DE LA RAÍZ */
   async function generateAIResponse(userQuery, isFreeTrial) {
     const chatMessages = document.getElementById('chatMessages');
     const loadingId = 'loading_' + Date.now();
@@ -671,7 +691,7 @@
           `;
         } else if (isFreeTrial && freeQuestionsUsed === 2) {
           persuasionHTML += `
-            <div style="margin-top: 12px; padding: 12px; background: rgba(223, 177, 91, 0.12); border: 1px solid var(--gold); border-radius: 4px; font-size: 12px; color: var(--text-main);">
+            <div style="margin-top: 12px; padding: 12px; background: rgba(223, 177, 91, 0.12); border-left: 2px solid var(--gold); border-radius: 4px; font-size: 12px; color: var(--text-main);">
               ✦ <strong>Has agotado tus consultas gratuitas de cortesía.</strong> Has rozado la superficie de una revelación muy profunda, pero la respuesta definitiva requiere recargar tus Cristales de Claridad para mantener el canal abierto.
             </div>
           `;
