@@ -175,8 +175,8 @@
   }
   .nav-links a:hover { color: var(--gold); }
 
-  /* MODALES OCULTOS POR DEFECTO */
-  .auth-modal-overlay, .share-modal-overlay {
+  /* MODAL DE ACCESO / REGISTRO */
+  .auth-modal-overlay {
     position: fixed;
     inset: 0;
     background: rgba(5, 5, 8, 0.88);
@@ -188,7 +188,7 @@
     padding: 16px;
   }
 
-  .auth-modal-card, .share-modal-card {
+  .auth-modal-card {
     background: var(--surface);
     border: 1px solid var(--gold);
     border-radius: 12px;
@@ -281,31 +281,6 @@
     text-align: center;
   }
   .auth-switch-mode:hover { color: var(--gold); }
-
-  /* TARJETA DE PREVIEW PARA COMPARTIR (USA REVERSO Y RESUMEN IA) */
-  .story-preview-card {
-    width: 280px;
-    height: 420px;
-    background: linear-gradient(135deg, #13121b 0%, #07070b 100%);
-    border: 1.5px solid var(--gold);
-    border-radius: 10px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    text-align: center;
-    margin: 0 auto;
-    box-shadow: 0 10px 30px rgba(223, 177, 91, 0.2);
-  }
-
-  .story-card-img {
-    width: 75px;
-    height: 125px;
-    object-fit: cover;
-    border-radius: 6px;
-    border: 1px solid var(--gold);
-  }
 
   /* HERO COMPACTO */
   .hero-container {
@@ -629,12 +604,10 @@
 
   .master-cta {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     border-top: 1px solid rgba(223, 177, 91, 0.2);
     padding-top: 14px;
-    gap: 10px;
-    flex-wrap: wrap;
   }
 
   .arkanica-reset {
@@ -773,29 +746,6 @@
   </div>
 </div>
 
-<!-- MODAL DE COMPARTIR REVELACIÓN (CON REVERSO Y RESUMEN DE LA IA) -->
-<div class="share-modal-overlay" id="shareModal" style="display: none;">
-  <div class="share-modal-card">
-    <button class="auth-close-btn" onclick="closeShareModal()">✕</button>
-    <h2 class="auth-title" style="font-size: 20px; margin-bottom: 0;">Comparte tu Revelación</h2>
-    
-    <div class="story-preview-card" id="storyPreviewCard">
-      <div class="story-brand" style="font-family: 'Cormorant Garamond', serif; font-size: 13px; color: var(--gold); letter-spacing: 0.2em;">✦ Arkanica ✦</div>
-      <img id="storyCardImg" class="story-card-img" src="assets/reverse.jpg" alt="Reverso Arkanica">
-      <div>
-        <h4 id="storyCardSpreadTitle" class="story-card-title" style="font-family: 'Cormorant Garamond', serif; font-size: 16px; margin: 0 0 4px; color: var(--gold-light);">Tirada</h4>
-        <p id="storyCardSummaryText" class="story-card-archetype" style="font-size: 11px; color: var(--text-muted); font-style: italic; margin: 0; line-height: 1.4;">Resumen del oráculo...</p>
-      </div>
-      <div style="font-size: 9px; color: var(--gold-dim); letter-spacing: 0.1em;">ARKA-NICA.APP</div>
-    </div>
-
-    <div style="display: flex; flex-direction: column; gap: 10px; width: 100%;">
-      <button class="action-btn" onclick="shareToInstagramStory()" style="width: 100%;">Compartir</button>
-      <button class="arkanica-reset" style="width: 100%;" onclick="downloadStoryCard()">Descargar Imagen</button>
-    </div>
-  </div>
-</div>
-
 <header>
   <a href="#" class="logo">Arkanica</a>
   <div class="header-right">
@@ -857,16 +807,12 @@
   <div class="arkanica-table" id="table"></div>
   <p class="arkanica-hint" id="hint">Selecciona una carta del abanico superior</p>
 
-  <!-- CAJA DE SÍNTESIS MAGISTRAL -->
+  <!-- CAJA DE SÍNTESIS MAGISTRAL CON COPY MÍSTICO DE CARGA -->
   <div class="master-interpretation-box" id="masterBox">
     <div class="master-title">✦ Síntesis Magistral del Oráculo</div>
-    <p class="master-text" id="masterTextContent"></p>
+    <p class="master-text" id="masterTextContent">✦ Sintonizando los arcanos mayores y menores con el latido del universo...</p>
     <div class="master-cta">
-      <span>¿Necesitas desentrañar un caso más personal?</span>
-      <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-        <button class="action-btn" onclick="openShareModal()">Compartir</button>
-        <button class="action-btn" onclick="goToPrivateSession()">Profundizar en Sesión Privada</button>
-      </div>
+      <button class="action-btn" onclick="goToPrivateSession()">Profundizar en Sesión Privada</button>
     </div>
   </div>
 
@@ -1055,82 +1001,6 @@
     document.getElementById('authModal').style.display = 'flex';
   }
   function closeAuthModal() { document.getElementById('authModal').style.display = 'none'; }
-
-  function openShareModal() {
-    if (!selectedCards || selectedCards.length === 0) {
-      alert("Realiza una tirada primero para poder compartir tu lectura.");
-      return;
-    }
-    const config = getCurrentSpreadConfig();
-    const fullText = document.getElementById('masterTextContent').textContent;
-    // Creamos un resumen limpio de la IA (primeras 140 letras aprox)
-    const shortSummary = fullText.length > 140 ? fullText.substring(0, 137) + '...' : fullText;
-
-    document.getElementById('storyCardSpreadTitle').textContent = config.title;
-    document.getElementById('storyCardSummaryText').textContent = `"${shortSummary}"`;
-    document.getElementById('shareModal').style.display = 'flex';
-  }
-  function closeShareModal() { document.getElementById('shareModal').style.display = 'none'; }
-
-  async function shareToInstagramStory() {
-    if (!selectedCards || selectedCards.length === 0) return;
-    const config = getCurrentSpreadConfig();
-    const fullText = document.getElementById('masterTextContent').textContent;
-    try {
-      const canvas = document.createElement('canvas');
-      canvas.width = 1080; canvas.height = 1920;
-      const ctx = canvas.getContext('2d');
-      ctx.fillStyle = '#050508'; ctx.fillRect(0, 0, 1080, 1920);
-      ctx.strokeStyle = '#dfb15b'; ctx.lineWidth = 12; ctx.strokeRect(60, 60, 960, 1800);
-      
-      ctx.fillStyle = '#dfb15b'; ctx.font = '500 36px "Cormorant Garamond", serif'; ctx.textAlign = 'center';
-      ctx.fillText('✦  ARKA-NICA.APP  ✦', 540, 180);
-
-      // Pintar imagen de reverso del mazo en el canvas
-      const img = new Image(); img.crossOrigin = 'anonymous'; img.src = 'assets/reverse.jpg';
-      await new Promise((res, rej) => { img.onload = res; img.onerror = rej; });
-      ctx.drawImage(img, 360, 260, 360, 600);
-
-      ctx.fillStyle = '#f3d89d'; ctx.font = '600 52px "Cormorant Garamond", serif';
-      ctx.fillText(config.title, 540, 960);
-
-      // Dibujar texto de resumen IA adaptado al canvas
-      ctx.fillStyle = '#f4f2ee'; ctx.font = 'italic 34px "Inter", sans-serif';
-      wrapText(ctx, `"${fullText}"`, 540, 1060, 840, 50);
-
-      canvas.toBlob(async (blob) => {
-        const file = new File([blob], 'arkanica-tirada.png', { type: 'image/png' });
-        if (navigator.canShare && navigator.canShare({ files: [file] })) {
-          try { await navigator.share({ files: [file] }); closeShareModal(); } catch(e) { downloadBlob(blob); }
-        } else { downloadBlob(blob); }
-      }, 'image/png');
-    } catch(e) { alert("Error al generar la story."); }
-  }
-
-  function wrapText(context, text, x, y, maxWidth, lineHeight) {
-    const words = text.split(' ');
-    let line = '';
-    for(let n = 0; n < words.length; n++) {
-      let testLine = line + words[n] + ' ';
-      let metrics = context.measureText(testLine);
-      let testWidth = metrics.width;
-      if (testWidth > maxWidth && n > 0) {
-        context.fillText(line, x, y);
-        line = words[n] + ' ';
-        y += lineHeight;
-      } else {
-        line = testLine;
-      }
-    }
-    context.fillText(line, x, y);
-  }
-
-  function downloadBlob(blob) {
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a'); a.href = url; a.download = 'arkanica-tarot.png';
-    document.body.appendChild(a); a.click(); document.body.removeChild(a);
-    URL.revokeObjectURL(url); closeShareModal();
-  }
 
   function toggleAuthMode() {
     isRegisterMode = !isRegisterMode;
@@ -1431,7 +1301,8 @@
   async function generateGenerativeInterpretation() {
     const config = getCurrentSpreadConfig();
     
-    masterTextContent.innerHTML = `Tras sintonizar los arcanos en esta tirada de <strong>${config.title}</strong>, la presencia de <em>${selectedCards[0].name}</em> marca un punto de inflexión decisivo. ${selectedCards[0].archetype}. Confía plenamente en tu intuición actual y permite que la claridad guíe tus próximos pasos sin vacilar.`;
+    // Copy místico de carga mientras actúa la IA
+    masterTextContent.innerHTML = `✦ Sintonizando los arcanos mayores y menores con el latido del universo...`;
     masterBox.style.setProperty('display', 'block', 'important');
 
     try {
@@ -1447,7 +1318,7 @@
         }
       }
     } catch(e) {
-      console.log("Manteniendo síntesis generada localmente.");
+      masterTextContent.innerHTML = `Tras sintonizar los arcanos en esta tirada de <strong>${config.title}</strong>, la presencia de <em>${selectedCards[0].name}</em> marca un punto de inflexión decisivo. ${selectedCards[0].archetype}. Confía plenamente en tu intuición actual y permite que la claridad guíe tus próximos pasos sin vacilar.`;
     }
   }
 
