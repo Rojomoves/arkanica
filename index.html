@@ -1341,7 +1341,10 @@
 
     if (lastFreeDate === today) {
       if (userCrystals < 3) {
-        hint.textContent = "Tirada ya realizada hoy. Se necesitan 3 cristales para repetir.";
+        hint.textContent = "Tirada ya realizada hoy. No tienes suficientes cristales (se necesitan 3).";
+        
+        // --- LÓGICA INTEGRADA: AVISO AL BAJAR A MENOS DE 2/3 CRISTALES ---
+        alert("Has agotado tu tirada gratuita de hoy para esta sección y tus cristales son insuficientes (tienes menos de 3). Adquiere o recarga tus cristales para continuar consultando los arcanos.");
         return;
       } else {
         updateCrystalsStorage(userCrystals - 3);
