@@ -43,20 +43,66 @@
     align-items: center;
     font-family: 'Inter', sans-serif;
     color: var(--text-main);
-    padding: 20px 12px;
+    padding: 16px 12px 60px 12px;
     overflow-x: hidden;
   }
 
+  /* BOTÓN FLOTANTE DE AUDIO (ESQUINA INFERIOR IZQUIERDA) */
+  .floating-audio-btn {
+    position: fixed;
+    bottom: 24px;
+    left: 24px;
+    background: rgba(12, 11, 18, 0.92);
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.7), 0 0 15px rgba(223, 177, 91, 0.25);
+    z-index: 2500;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .floating-audio-btn:hover {
+    transform: scale(1.12);
+    background: var(--surface-hover);
+    border-color: var(--gold-light);
+  }
+
+  .audio-tooltip {
+    position: absolute;
+    left: 58px;
+    background: var(--surface);
+    border: 1px solid var(--gold-dim);
+    color: var(--text-main);
+    font-size: 10.5px;
+    padding: 5px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  }
+
+  .floating-audio-btn:hover .audio-tooltip {
+    opacity: 1;
+  }
+
+  /* HEADER MINIMALISTA */
   header {
     width: 100%;
     max-width: 1100px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
     border-bottom: 1px solid var(--line);
     padding-bottom: 12px;
-    gap: 12px;
   }
 
   .logo {
@@ -72,83 +118,31 @@
   .header-right {
     display: flex;
     align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
-    justify-content: flex-end;
+    gap: 12px;
   }
 
-  .audio-carousel {
-    background: rgba(223, 177, 91, 0.06);
-    border: 1px solid var(--gold-dim);
-    padding: 5px 10px;
-    border-radius: 20px;
-    font-size: 10.5px;
-    color: var(--gold);
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    transition: all 0.3s ease;
-    white-space: nowrap;
-    touch-action: pan-y;
-    user-select: none;
-  }
-
-  .audio-carousel:hover {
-    background: rgba(223, 177, 91, 0.12);
-    border-color: var(--gold);
-  }
-
-  .audio-arrow-btn {
-    background: none;
-    border: none;
-    color: var(--gold);
-    cursor: pointer;
-    font-size: 13px;
-    padding: 0 4px;
-    transition: transform 0.2s;
-  }
-
-  .audio-arrow-btn:hover {
-    transform: scale(1.2);
-    color: var(--gold-light);
-  }
-
-  .audio-label-container {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    cursor: pointer;
-  }
-
-  /* BOTÓN DE PERFIL / CRISTALES */
   .profile-badge {
     background: linear-gradient(135deg, rgba(223, 177, 91, 0.1) 0%, rgba(12, 11, 18, 0.9) 100%);
     border: 1px solid var(--gold-dim);
-    padding: 5px 12px;
+    padding: 6px 14px;
     border-radius: 24px;
-    font-size: 11px;
+    font-size: 11.5px;
     color: var(--text-main);
     display: flex;
     align-items: center;
     gap: 8px;
     text-decoration: none;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    white-space: nowrap;
+    transition: all 0.3s ease;
     cursor: pointer;
     box-shadow: 0 4px 15px rgba(0,0,0,0.3);
   }
 
-  .profile-badge:hover {
-    border-color: var(--gold);
-    background: linear-gradient(135deg, rgba(223, 177, 91, 0.18) 0%, rgba(19, 18, 28, 0.95) 100%);
-    box-shadow: 0 6px 20px rgba(223, 177, 91, 0.2);
-    transform: translateY(-1px);
-  }
+  .profile-badge:hover { border-color: var(--gold); }
 
   .profile-crystals {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 5px;
     color: var(--gold);
     font-weight: 500;
   }
@@ -161,13 +155,9 @@
   }
 
   .profile-user-info {
-    display: flex;
-    align-items: center;
-    gap: 4px;
     font-family: 'Cormorant Garamond', serif;
     font-size: 13px;
     color: var(--gold-light);
-    letter-spacing: 0.03em;
   }
 
   .nav-links {
@@ -181,39 +171,35 @@
   .nav-links a {
     color: var(--text-muted);
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: color 0.3s;
   }
+  .nav-links a:hover { color: var(--gold); }
 
-  .nav-links a:hover {
-    color: var(--gold);
-  }
-
-  /* MODAL DE AUTH */
-  .auth-modal-overlay {
+  /* MODALES OCULTOS POR DEFECTO */
+  .auth-modal-overlay, .share-modal-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(5, 5, 8, 0.85);
+    background: rgba(5, 5, 8, 0.88);
     backdrop-filter: blur(8px);
     display: none;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
+    z-index: 3000;
     padding: 16px;
   }
 
-  .auth-modal-card {
+  .auth-modal-card, .share-modal-card {
     background: var(--surface);
     border: 1px solid var(--gold);
     border-radius: 12px;
     width: 100%;
-    max-width: 420px;
-    padding: 32px;
+    max-width: 400px;
+    padding: 28px;
     box-shadow: 0 25px 50px rgba(0,0,0,0.8);
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 16px;
     position: relative;
-    animation: fadeIn 0.4s ease forwards;
   }
 
   .auth-close-btn {
@@ -225,21 +211,19 @@
     color: var(--text-muted);
     font-size: 18px;
     cursor: pointer;
-    transition: color 0.2s;
   }
-
   .auth-close-btn:hover { color: var(--gold); }
 
   .auth-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 26px;
+    font-size: 24px;
     color: var(--gold);
     margin: 0;
     text-align: center;
   }
 
   .auth-subtitle {
-    font-size: 12.5px;
+    font-size: 12px;
     color: var(--text-muted);
     text-align: center;
     margin: 0 0 10px;
@@ -249,11 +233,11 @@
   .auth-input-group {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 5px;
   }
 
   .auth-input-group label {
-    font-size: 11px;
+    font-size: 10.5px;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--text-muted);
@@ -263,43 +247,29 @@
     background: rgba(0,0,0,0.4);
     border: 1px solid var(--line);
     border-radius: 6px;
-    padding: 12px;
+    padding: 11px;
     color: var(--text-main);
-    font-family: 'Inter', sans-serif;
     font-size: 13px;
     outline: none;
-    transition: border-color 0.3s;
   }
+  .auth-input:focus { border-color: var(--gold); }
 
-  .auth-input:focus {
-    border-color: var(--gold);
-  }
-
-  .auth-msg {
-    font-size: 12px;
-    text-align: center;
-    min-height: 18px;
-  }
+  .auth-msg { font-size: 12px; text-align: center; min-height: 18px; }
 
   .auth-submit-btn {
     background: var(--gold);
     color: var(--bg);
     border: none;
-    font-family: 'Inter', sans-serif;
     font-size: 11.5px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     font-weight: 600;
-    padding: 13px;
+    padding: 12px;
     border-radius: 6px;
     cursor: pointer;
-    transition: background 0.3s ease, box-shadow 0.3s ease;
+    transition: background 0.3s;
   }
-
-  .auth-submit-btn:hover {
-    background: var(--gold-light);
-    box-shadow: 0 0 20px rgba(223, 177, 91, 0.4);
-  }
+  .auth-submit-btn:hover { background: var(--gold-light); }
 
   .auth-switch-mode {
     background: none;
@@ -309,135 +279,38 @@
     cursor: pointer;
     text-decoration: underline;
     text-align: center;
-    transition: color 0.2s;
   }
-
   .auth-switch-mode:hover { color: var(--gold); }
 
-  /* MODAL DE COMPARTIR HISTORIA */
-  .share-modal-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(5, 5, 8, 0.88);
-    backdrop-filter: blur(10px);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 2000;
-    padding: 16px;
-  }
-
-  .share-modal-card {
-    background: var(--surface);
-    border: 1px solid var(--gold);
-    border-radius: 12px;
-    width: 100%;
-    max-width: 380px;
-    padding: 24px;
-    box-shadow: 0 25px 50px rgba(0,0,0,0.8);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-    position: relative;
-    animation: fadeIn 0.4s ease forwards;
-  }
-
   .story-preview-card {
-    width: 260px;
-    height: 420px;
+    width: 250px;
+    height: 400px;
     background: linear-gradient(135deg, #13121b 0%, #07070b 100%);
     border: 1.5px solid var(--gold);
-    border-radius: 12px;
-    padding: 20px;
+    border-radius: 10px;
+    padding: 18px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
     text-align: center;
+    margin: 0 auto;
     box-shadow: 0 10px 30px rgba(223, 177, 91, 0.2);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .story-preview-card::before {
-    content: '';
-    position: absolute;
-    inset: 8px;
-    border: 1px solid rgba(223, 177, 91, 0.3);
-    border-radius: 8px;
-    pointer-events: none;
-  }
-
-  .story-brand {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 14px;
-    letter-spacing: 0.2em;
-    color: var(--gold);
-    text-transform: uppercase;
   }
 
   .story-card-img {
-    width: 90px;
-    height: 145px;
+    width: 85px;
+    height: 138px;
     object-fit: cover;
     border-radius: 6px;
     border: 1px solid var(--gold);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
   }
 
-  .story-card-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 18px;
-    color: var(--text-main);
-    margin: 0;
-  }
-
-  .story-card-archetype {
-    font-size: 11px;
-    color: var(--text-muted);
-    line-height: 1.4;
-    margin: 0;
-    font-style: italic;
-  }
-
-  .share-action-btns {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
-  }
-
-  .share-primary-btn {
-    background: linear-gradient(135deg, #E1306C 0%, #C13584 50%, #833AB4 100%);
-    color: #fff;
-    border: none;
-    font-family: 'Inter', sans-serif;
-    font-size: 11.5px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    font-weight: 600;
-    padding: 13px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: opacity 0.2s, box-shadow 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    box-shadow: 0 4px 15px rgba(225, 48, 108, 0.4);
-  }
-
-  .share-primary-btn:hover {
-    opacity: 0.92;
-    box-shadow: 0 6px 20px rgba(225, 48, 108, 0.6);
-  }
-
-  /* BANNER COMPACTO Y ELEGANTE */
+  /* HERO COMPACTO */
   .hero-container {
     text-align: center;
     max-width: 650px;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
     padding: 0 8px;
   }
 
@@ -446,119 +319,27 @@
     letter-spacing: 0.25em;
     text-transform: uppercase;
     color: var(--gold-dim);
-    margin-bottom: 6px;
+    margin-bottom: 5px;
     font-weight: 500;
   }
 
   .arkanica-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 26px;
+    font-size: 25px;
     font-weight: 400;
     color: var(--text-main);
-    margin: 0 0 4px;
+    margin: 0 0 3px;
     line-height: 1.2;
   }
 
   .arkanica-sub {
-    font-size: 12px;
+    font-size: 11.5px;
     color: var(--text-muted);
     font-weight: 300;
-    line-height: 1.4;
     margin: 0;
   }
 
-  /* CATEGORÍAS EN PÍLDORA HORIZONTAL DESLIZABLE (AHORRO VERTICAL) */
-  .categories-nav {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 14px;
-    justify-content: flex-start;
-    max-width: 1100px;
-    width: 100%;
-    overflow-x: auto;
-    padding-bottom: 6px;
-    scrollbar-width: none;
-  }
-
-  .categories-nav::-webkit-scrollbar {
-    display: none;
-  }
-
-  .category-tab {
-    background: rgba(15, 14, 23, 0.8);
-    border: 1px solid var(--line);
-    color: var(--text-muted);
-    font-family: 'Inter', sans-serif;
-    font-size: 10.5px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 8px 14px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-
-  .category-tab:hover {
-    border-color: var(--gold-dim);
-    color: var(--text-main);
-  }
-
-  .category-tab.active {
-    background: rgba(223, 177, 91, 0.12);
-    border-color: var(--gold);
-    color: var(--gold);
-    box-shadow: 0 0 15px rgba(223, 177, 91, 0.15);
-  }
-
-  /* SELECTOR DE TIRADAS (ESCRITORIO) */
-  .spread-selector {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 14px;
-    justify-content: flex-start;
-    max-width: 1100px;
-    width: 100%;
-    overflow-x: auto;
-    padding-bottom: 6px;
-    scrollbar-width: none;
-  }
-
-  .spread-selector::-webkit-scrollbar {
-    display: none;
-  }
-
-  .spread-btn {
-    background: var(--surface);
-    border: 1px solid var(--line);
-    color: var(--text-muted);
-    font-family: 'Inter', sans-serif;
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 8px 14px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-
-  .spread-btn:hover {
-    border-color: var(--gold-dim);
-    color: var(--text-main);
-    background: var(--surface-hover);
-  }
-
-  .spread-btn.active {
-    border-color: var(--gold);
-    color: var(--gold);
-    background: rgba(223, 177, 91, 0.08);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-  }
-
-  /* CADENA DE DESPLEGABLES (MOBILE & GENERAL) */
+  /* DESPLEGABLES DE CATEGORÍA Y TIRADA */
   .spread-dropdown-container {
     width: 100%;
     max-width: 1100px;
@@ -590,18 +371,14 @@
     font-family: 'Inter', sans-serif;
     font-size: 11.5px;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.06em;
     padding: 10px 12px;
     border-radius: 6px;
     outline: none;
     box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    transition: border-color 0.3s;
   }
 
-  .mobile-spread-select:focus {
-    border-color: var(--gold);
-  }
-
+  /* TARJETA INFORMATIVA */
   .spread-info-card {
     width: 100%;
     max-width: 1100px;
@@ -622,7 +399,6 @@
     font-size: 18px;
     color: var(--gold);
     margin: 0;
-    letter-spacing: 0.03em;
   }
 
   .spread-info-desc {
@@ -636,9 +412,9 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 12px;
-    margin-top: 4px;
     border-top: 1px solid rgba(223, 177, 91, 0.15);
     padding-top: 10px;
+    margin-top: 4px;
   }
 
   .spread-positions-grid.grid-10 {
@@ -659,6 +435,7 @@
     margin-bottom: 2px;
   }
 
+  /* MESA DE LECTURA Y ABANICO CON reverse.jpg */
   .table-container {
     width: 100%;
     max-width: 1100px;
@@ -692,7 +469,6 @@
     letter-spacing: 0.05em;
     font-style: italic;
     text-align: center;
-    padding: 0 10px;
   }
 
   .fan-container {
@@ -706,11 +482,11 @@
     perspective: 1000px;
   }
 
-  /* REVERSO OPTIMIZADO PARA EL ABANICO */
+  /* REVERSO EN EL ABANICO (assets/reverse.jpg) */
   .fan-card {
     width: 65px;
     height: 110px;
-    background: url('assets/reverse.jpeg') center/cover no-repeat #08070b;
+    background: url('assets/reverse.jpg') center/cover no-repeat #08070b;
     border: 1px solid var(--gold-dim);
     border-radius: 6px;
     position: absolute;
@@ -735,7 +511,6 @@
     perspective: 1800px;
     margin-bottom: 20px;
     width: 100%;
-    padding: 8px;
     justify-items: center;
   }
 
@@ -770,12 +545,6 @@
 
   .arkanica-card.flipped {
     transform: rotateY(180deg);
-    box-shadow: 0 15px 35px rgba(223, 177, 91, 0.25);
-  }
-
-  .arkanica-card:not(.flipped):hover {
-    transform: translateY(-4px) scale(1.03);
-    border-color: var(--gold);
   }
 
   .arkanica-card-face {
@@ -787,21 +556,18 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
   }
 
-  /* REVERSO OPTIMIZADO PARA LAS CARTAS EN LA MESA */
+  /* REVERSO EN LA MESA (assets/reverse.jpg) */
   .arkanica-card-back {
-    background: url('assets/reverse.jpeg') center/cover no-repeat #07070b;
+    background: url('assets/reverse.jpg') center/cover no-repeat #07070b;
     border: 1px solid var(--gold-dim);
-    padding: 0;
   }
 
   .arkanica-card-front {
     background: #08070b;
     border: 1.5px solid var(--gold);
     transform: rotateY(180deg);
-    padding: 0;
     overflow: hidden;
   }
 
@@ -818,10 +584,8 @@
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--text-muted);
-    font-weight: 500;
     text-align: center;
     max-width: 110px;
-    line-height: 1.2;
   }
 
   .arkanica-hint {
@@ -833,9 +597,9 @@
     min-height: 22px;
     text-align: center;
     margin-bottom: 12px;
-    padding: 0 10px;
   }
 
+  /* CAJA DE SÍNTESIS MAGISTRAL (OCULTA ESTRICTAMENTE CON DISPLAY: NONE) */
   .master-interpretation-box {
     width: 100%;
     background: linear-gradient(135deg, rgba(223, 177, 91, 0.08) 0%, rgba(12, 11, 18, 0.95) 100%);
@@ -843,14 +607,8 @@
     border-radius: 8px;
     padding: 24px;
     margin-top: 14px;
-    display: none;
-    animation: fadeIn 0.6s ease forwards;
+    display: none !important;
     box-shadow: 0 15px 35px rgba(0,0,0,0.4);
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
   }
 
   .master-title {
@@ -858,10 +616,6 @@
     font-size: 20px;
     color: var(--gold);
     margin-bottom: 12px;
-    letter-spacing: 0.05em;
-    display: flex;
-    align-items: center;
-    gap: 8px;
   }
 
   .master-text {
@@ -882,30 +636,19 @@
     flex-wrap: wrap;
   }
 
-  .master-cta span {
-    font-size: 11.5px;
-    color: var(--text-muted);
-  }
-
   .arkanica-reset {
     background: transparent;
     border: 1px solid var(--line);
     color: var(--text-muted);
-    font-family: 'Inter', sans-serif;
     font-size: 10px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     padding: 9px 18px;
     border-radius: 6px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.3s;
   }
-
-  .arkanica-reset:hover {
-    border-color: var(--gold);
-    color: var(--gold);
-    background: rgba(223, 177, 91, 0.06);
-  }
+  .arkanica-reset:hover { border-color: var(--gold); color: var(--gold); }
 
   .section-card {
     width: 100%;
@@ -924,7 +667,6 @@
     margin-top: 0;
     margin-bottom: 6px;
     color: var(--text-main);
-    font-weight: 400;
   }
 
   .section-card p {
@@ -932,14 +674,12 @@
     color: var(--text-muted);
     line-height: 1.5;
     margin-bottom: 16px;
-    max-width: 650px;
   }
 
   .action-btn {
     background: var(--gold);
     color: var(--bg);
     border: none;
-    font-family: 'Inter', sans-serif;
     font-size: 10.5px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
@@ -947,13 +687,9 @@
     padding: 11px 22px;
     border-radius: 6px;
     cursor: pointer;
-    transition: background 0.3s ease, box-shadow 0.3s ease;
+    transition: background 0.3s;
   }
-
-  .action-btn:hover {
-    background: var(--gold-light);
-    box-shadow: 0 0 20px rgba(223, 177, 91, 0.4);
-  }
+  .action-btn:hover { background: var(--gold-light); }
 
   .booking-grid {
     display: grid;
@@ -971,17 +707,8 @@
     margin-top: 14px;
   }
 
-  .benefit-item {
-    font-size: 12px;
-    color: var(--text-muted);
-  }
-
-  .benefit-item strong {
-    color: var(--text-main);
-    display: block;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 14px;
-  }
+  .benefit-item { font-size: 12px; color: var(--text-muted); }
+  .benefit-item strong { color: var(--text-main); display: block; font-family: 'Cormorant Garamond', serif; font-size: 14px; }
 
   .booking-card-action {
     background: rgba(0,0,0,0.35);
@@ -995,43 +722,17 @@
     align-items: center;
   }
 
-  .price-tag {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 26px;
-    color: var(--gold);
-  }
-
-  .ad-container-arkanica {
-    width: 100%;
-    max-width: 1100px;
-    margin: 16px auto;
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    padding: 14px;
-    text-align: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    overflow: hidden;
-  }
+  .price-tag { font-family: 'Cormorant Garamond', serif; font-size: 26px; color: var(--gold); }
 
   @media (max-width: 768px) {
-    body { padding: 12px 8px; }
-    header { margin-bottom: 16px; padding-bottom: 10px; }
-    .logo { font-size: 20px; }
-    .header-right { gap: 6px; }
-    .audio-carousel, .profile-badge { padding: 4px 8px; font-size: 9.5px; }
-    .nav-links { gap: 10px; font-size: 9px; }
+    body { padding: 12px 8px 40px 8px; }
     .arkanica-title { font-size: 22px; }
-    .arkanica-sub { font-size: 11.5px; }
     .arkanica-card { width: 75px; height: 125px; }
     .arkanica-table.grid-10 .arkanica-card { width: 55px; height: 95px; }
     .fan-card { width: 45px; height: 80px; }
     .spread-positions-grid { grid-template-columns: 1fr; gap: 8px; }
     .spread-positions-grid.grid-10 { grid-template-columns: repeat(2, 1fr); }
     .booking-grid { grid-template-columns: 1fr; gap: 16px; }
-    .section-card { padding: 18px 12px; }
-    .table-container { padding: 18px 10px; }
-    .spread-dropdown-container { grid-template-columns: 1fr; gap: 8px; }
   }
 </style>
 </head>
@@ -1041,8 +742,14 @@
   <source src="" type="audio/mpeg">
 </audio>
 
+<!-- BOTÓN FLOTANTE DE MÚSICA (ESQUINA INFERIOR IZQUIERDA) -->
+<button class="floating-audio-btn" id="floatingAudioBtn" onclick="toggleAudioTrack()" title="Cambiar ambiente musical">
+  <span id="audioIcon">🎵</span>
+  <span class="audio-tooltip" id="audioTooltip">Silencio</span>
+</button>
+
 <!-- MODAL DE ACCESO / REGISTRO -->
-<div class="auth-modal-overlay" id="authModal">
+<div class="auth-modal-overlay" id="authModal" style="display: none;">
   <div class="auth-modal-card">
     <button class="auth-close-btn" onclick="closeAuthModal()">✕</button>
     <h2 class="auth-title" id="authModalTitle">Portal de Acceso</h2>
@@ -1066,25 +773,24 @@
 </div>
 
 <!-- MODAL DE COMPARTIR HISTORIA -->
-<div class="share-modal-overlay" id="shareModal">
+<div class="share-modal-overlay" id="shareModal" style="display: none;">
   <div class="share-modal-card">
     <button class="auth-close-btn" onclick="closeShareModal()">✕</button>
     <h2 class="auth-title" style="font-size: 20px; margin-bottom: 0;">Comparte tu Revelación</h2>
     
     <div class="story-preview-card" id="storyPreviewCard">
-      <div class="story-brand">✦ Arkanica ✦</div>
+      <div class="story-brand" style="font-family: 'Cormorant Garamond', serif; font-size: 13px; color: var(--gold); letter-spacing: 0.2em;">✦ Arkanica ✦</div>
       <img id="storyCardImg" class="story-card-img" src="" alt="Carta">
       <div>
-        <h4 id="storyCardName" class="story-card-title">Nombre de la Carta</h4>
-        <p id="storyCardArchetype" class="story-card-archetype">Arquetipo o significado...</p>
+        <h4 id="storyCardName" class="story-card-title" style="font-family: 'Cormorant Garamond', serif; font-size: 17px; margin: 0;">Nombre de la Carta</h4>
+        <p id="storyCardArchetype" class="story-card-archetype" style="font-size: 11px; color: var(--text-muted); font-style: italic; margin: 0;">Arquetipo...</p>
       </div>
       <div style="font-size: 9px; color: var(--gold-dim); letter-spacing: 0.1em;">ARKA-NICA.APP</div>
     </div>
 
-    <div class="share-action-btns">
-      <button class="share-primary-btn" onclick="shareToInstagramStory()">
-        <span>📸</span> Subir a Historias de Instagram
-      </button>
+    <div style="display: flex; flex-direction: column; gap: 10px; width: 100%;">
+      <!-- BOTÓN DE COMPARTIR DORADO Y LIMPIO -->
+      <button class="action-btn" onclick="shareToInstagramStory()" style="width: 100%;">Compartir</button>
       <button class="arkanica-reset" style="width: 100%;" onclick="downloadStoryCard()">Descargar Imagen</button>
     </div>
   </div>
@@ -1093,14 +799,6 @@
 <header>
   <a href="#" class="logo">Arkanica</a>
   <div class="header-right">
-    <div class="audio-carousel" id="audioCarousel" title="Haz clic o desliza para cambiar la sintonía ambiental">
-      <button class="audio-arrow-btn" onclick="changeAudioTrack(-1); event.stopPropagation();" title="Anterior">‹</button>
-      <div class="audio-label-container" onclick="changeAudioTrack(1)">
-        <span>🎵</span> <strong id="soundLabel" style="color: var(--text-main);">Silencio</strong>
-      </div>
-      <button class="audio-arrow-btn" onclick="changeAudioTrack(1); event.stopPropagation();" title="Siguiente">›</button>
-    </div>
-
     <div class="profile-badge" id="profileBadge" onclick="openAuthModal()" title="Gestionar cuenta y cristales">
       <div class="profile-crystals">
         <span>💎</span> <strong id="headerCrystalCount">10</strong>
@@ -1110,7 +808,6 @@
         <span>✦</span> <span id="authBadgeLabel">Acceder</span>
       </div>
     </div>
-    
     <div class="nav-links">
       <a href="#mesa">Lecturas</a>
       <a href="#autor">Guía</a>
@@ -1125,15 +822,7 @@
   <p class="arkanica-sub">Disfruta de cada tirada gratis una vez al día (3 cristales adicionales por repetición).</p>
 </div>
 
-<!-- Selector de Categorías en Píldora Horizontal -->
-<div class="categories-nav" id="categoriesNav">
-  <button class="category-tab active" onclick="switchCategory('romanticas', event)">💖 Románticas</button>
-  <button class="category-tab" onclick="switchCategory('espirituales', event)">✨ Espirituales</button>
-  <button class="category-tab" onclick="switchCategory('sombras', event)">🌑 Trabajo de Sombras</button>
-  <button class="category-tab" onclick="switchCategory('proyectos', event)">🎬 Escenario Principal</button>
-</div>
-
-<!-- CADENA DE DESPLEGABLES (CATEGORÍA + TIRADA) PARA MÁXIMA ORDEN Y ACCESO DIRECTO -->
+<!-- CADENA DE DESPLEGABLES LIMPIA (CATEGORÍA + TIRADA) -->
 <div class="spread-dropdown-container">
   <div class="spread-select-wrapper">
     <label class="spread-select-label">Categoría</label>
@@ -1152,9 +841,6 @@
   </div>
 </div>
 
-<!-- Selector en línea para escritorio (también sincronizado) -->
-<div class="spread-selector" id="spreadSelector"></div>
-
 <!-- Tarjeta Informativa de la Tirada -->
 <div class="spread-info-card" id="spreadInfoCard">
   <h3 class="spread-info-title" id="infoTitle">Cargando...</h3>
@@ -1171,14 +857,14 @@
   <div class="arkanica-table" id="table"></div>
   <p class="arkanica-hint" id="hint">Selecciona una carta del abanico superior</p>
 
-  <!-- Caja de Interpretación Magistral Segura con Gemini -->
+  <!-- CAJA DE SÍNTESIS MAGISTRAL (OCULTA POR DEFECTO CON !IMPORTANT) -->
   <div class="master-interpretation-box" id="masterBox">
     <div class="master-title">✦ Síntesis Magistral del Oráculo</div>
     <p class="master-text" id="masterTextContent"></p>
     <div class="master-cta">
       <span>¿Necesitas desentrañar un caso más personal?</span>
       <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-        <button class="action-btn" onclick="openShareModal()" style="background: linear-gradient(135deg, #E1306C, #833AB4); color: white;">Compartir Story 📸</button>
+        <button class="action-btn" onclick="openShareModal()">Compartir</button>
         <button class="action-btn" onclick="goToPrivateSession()">Profundizar en Sesión Privada</button>
       </div>
     </div>
@@ -1188,7 +874,7 @@
 </div>
 
 <!-- Bloque opcional de AdSense -->
-<div class="ad-container-arkanica">
+<div class="ad-container-arkanica" style="width: 100%; max-width: 1100px; margin: 16px auto; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px; text-align: center;">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2698892755295064" crossorigin="anonymous"></script>
   <ins class="adsbygoogle"
        style="display:block"
@@ -1212,19 +898,13 @@
     <div>
       <h3>Reserva tu Sesión 1 a 1 en Directo</h3>
       <p>Una conversación cercana cara a cara mediante videollamada para destrabar tu energía y trazar un plan estratégico claro.</p>
-      
       <div class="booking-benefits">
         <div class="benefit-item">
           <strong>Videollamada Privada (30 min)</strong>
           Atención completamente enfocada en tu caso particular.
         </div>
-        <div class="benefit-item">
-          <strong>Selección Instantánea</strong>
-          El horario que mejor se adapte a tu agenda.
-        </div>
       </div>
     </div>
-
     <div class="booking-card-action">
       <div class="price-tag">Sesión Privada</div>
       <p style="font-size: 11.5px; color: var(--text-muted); margin: 0;">Selecciona día y hora directamente en nuestro calendario oficial.</p>
@@ -1234,300 +914,42 @@
 </div>
 
 <script>
-  /* --- PRE-CARGA OPTIMIZADA DEL REVERSO --- */
+  /* --- PRE-CARGA OPTIMIZADA DEL REVERSO (.jpg) --- */
   const preloadReverse = new Image();
-  preloadReverse.src = 'assets/reverse.jpeg';
+  preloadReverse.src = 'assets/reverse.jpg';
 
-  /* --- CONFIGURACIÓN DE SUPABASE Y ECONOMÍA DE CRISTALES --- */
-  const SUPABASE_URL = 'https://jcosmhiukmfsygrinfgy.supabase.co';
-  const SUPABASE_ANON_KEY = 'sb_publishable_UVGFZQhG36gD_67hInVz7g_4oLD7tWN';
+  /* --- CONTROL DE AUDIO FLOTANTE --- */
+  const audioEl = document.getElementById('ambientAudio');
+  audioEl.volume = 0.35;
+  const audioStates = [
+    { label: "Silencio", src: null },
+    { label: "Cuencos", src: "assets/cuencos-tibetanos.mp3" },
+    { label: "Lluvia", src: "assets/lluvia.mp3" },
+    { label: "Meditación", src: "assets/meditacion.mp3" }
+  ];
+  let currentAudioIndex = 0;
 
-  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-  let currentUser = null;
-  let userCrystals = 10;
-  let isRegisterMode = false;
-
-  function getTodayDateString() {
-    return new Date().toISOString().split('T')[0];
-  }
-
-  async function checkUserSession() {
-    const today = getTodayDateString();
-    const { data: { session } } = await supabaseClient.auth.getSession();
-    
-    if (session) {
-      currentUser = session.user;
-      const username = currentUser.email.split('@')[0];
-      document.getElementById('authBadgeLabel').textContent = username.charAt(0).toUpperCase() + username.slice(1);
-      
-      let { data, error } = await supabaseClient
-        .from('profiles')
-        .select('crystals, last_login_date')
-        .eq('id', currentUser.id)
-        .single();
-
-      if (data) {
-        userCrystals = data.crystals;
-        const lastLogin = data.last_login_date;
-
-        if (lastLogin !== today) {
-          if (userCrystals < 10) {
-            userCrystals = 10;
-          } else {
-            userCrystals += 3;
-          }
-          await supabaseClient.from('profiles').update({ crystals: userCrystals, last_login_date: today }).eq('id', currentUser.id);
-        }
-      } else {
-        await supabaseClient.from('profiles').insert([{ id: currentUser.id, crystals: 10, last_login_date: today }]);
-        userCrystals = 10;
-      }
+  function toggleAudioTrack() {
+    currentAudioIndex = (currentAudioIndex + 1) % audioStates.length;
+    const currentState = audioStates[currentAudioIndex];
+    document.getElementById('audioTooltip').textContent = currentState.label;
+    if (currentState.src === null) {
+      audioEl.pause();
+      audioEl.currentTime = 0;
     } else {
-      let savedCrystals = parseInt(localStorage.getItem('arkanica_crystals_guest')) || 10;
-      let lastLogin = localStorage.getItem('arkanica_last_login_guest');
-
-      if (lastLogin !== today) {
-        if (savedCrystals < 10) {
-          savedCrystals = 10;
-        } else {
-          savedCrystals += 3;
-        }
-        localStorage.setItem('arkanica_crystals_guest', savedCrystals);
-        localStorage.setItem('arkanica_last_login_guest', today);
-      }
-      userCrystals = savedCrystals;
-      document.getElementById('authBadgeLabel').textContent = 'Acceder';
-    }
-    document.getElementById('headerCrystalCount').textContent = userCrystals;
-  }
-
-  async function updateCrystalsStorage(newAmount) {
-    userCrystals = newAmount;
-    document.getElementById('headerCrystalCount').textContent = userCrystals;
-
-    if (currentUser) {
-      await supabaseClient.from('profiles').update({ crystals: userCrystals }).eq('id', currentUser.id);
-    } else {
-      localStorage.setItem('arkanica_crystals_guest', userCrystals);
+      audioEl.src = currentState.src;
+      audioEl.play().catch(err => { console.log("Audio bloqueado:", err); });
     }
   }
 
-  checkUserSession();
-
-  function openAuthModal() {
-    if (currentUser) {
-      if (confirm(`Estás conectado como ${currentUser.email}. ¿Deseas cerrar sesión?`)) {
-        supabaseClient.auth.signOut().then(() => {
-          window.location.reload();
-        });
-      }
-      return;
-    }
-    document.getElementById('authModal').style.display = 'flex';
-  }
-
-  function closeAuthModal() {
-    document.getElementById('authModal').style.display = 'none';
-  }
-
-  function openShareModal() {
-    if (!selectedCards || selectedCards.length === 0) {
-      alert("Realiza una tirada primero para poder compartir tu carta.");
-      return;
-    }
-    const mainCard = selectedCards[0];
-    document.getElementById('storyCardImg').src = mainCard.img;
-    document.getElementById('storyCardName').textContent = mainCard.name;
-    document.getElementById('storyCardArchetype').textContent = `"${mainCard.archetype}"`;
-    document.getElementById('shareModal').style.display = 'flex';
-  }
-
-  function closeShareModal() {
-    document.getElementById('shareModal').style.display = 'none';
-  }
-
-  async function shareToInstagramStory() {
-    if (!selectedCards || selectedCards.length === 0) return;
-    const mainCard = selectedCards[0];
-
-    try {
-      const canvas = document.createElement('canvas');
-      canvas.width = 1080;
-      canvas.height = 1920;
-      const ctx = canvas.getContext('2d');
-
-      const bgGradient = ctx.createLinearGradient(0, 0, 0, 1920);
-      bgGradient.addColorStop(0, '#13121b');
-      bgGradient.addColorStop(1, '#050508');
-      ctx.fillStyle = bgGradient;
-      ctx.fillRect(0, 0, 1080, 1920);
-
-      ctx.strokeStyle = '#dfb15b';
-      ctx.lineWidth = 12;
-      ctx.strokeRect(60, 60, 960, 1800);
-
-      ctx.fillStyle = '#dfb15b';
-      ctx.font = '500 36px "Cormorant Garamond", serif';
-      ctx.textAlign = 'center';
-      ctx.fillText('✦  ARKA-NICA.APP  ✦', 540, 180);
-
-      const img = new Image();
-      img.crossOrigin = 'anonymous';
-      img.src = mainCard.img;
-      
-      await new Promise((resolve, reject) => {
-        img.onload = resolve;
-        img.onerror = reject;
-      });
-
-      const imgWidth = 460;
-      const imgHeight = 746;
-      const imgX = (1080 - imgWidth) / 2;
-      const imgY = 260;
-      
-      ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
-      ctx.shadowBlur = 40;
-      ctx.drawImage(img, imgX, imgY, imgWidth, imgHeight);
-      ctx.shadowBlur = 0;
-
-      ctx.fillStyle = '#f4f2ee';
-      ctx.font = '600 56px "Cormorant Garamond", serif';
-      ctx.fillText(mainCard.name, 540, 1120);
-
-      ctx.fillStyle = '#9c98a6';
-      ctx.font = '300 32px "Inter", sans-serif';
-      wrapText(ctx, `"${mainCard.archetype}"`, 540, 1200, 800, 48);
-
-      ctx.fillStyle = '#dfb15b';
-      ctx.font = '500 28px "Inter", sans-serif';
-      ctx.fillText('Descubre tu claridad en arkanica.app', 540, 1720);
-
-      canvas.toBlob(async (blob) => {
-        const file = new File([blob], 'arkanica-tirada.png', { type: 'image/png' });
-
-        if (navigator.canShare && navigator.canShare({ files: [file] })) {
-          try {
-            await navigator.share({
-              files: [file],
-              title: 'Mi tirada en Arkanica',
-              text: 'Descubre lo que las cartas tienen que decir hoy en Arkanica ✦',
-            });
-            closeShareModal();
-          } catch (error) {
-            if (error.name !== 'AbortError') {
-              downloadBlob(blob);
-            }
-          }
-        } else {
-          downloadBlob(blob);
-        }
-      }, 'image/png');
-
-    } catch (err) {
-      console.error("Error al generar la story:", err);
-      alert("No se pudo generar la imagen automáticamente. Usa el botón de descargar.");
-    }
-  }
-
-  function wrapText(context, text, x, y, maxWidth, lineHeight) {
-    const words = text.split(' ');
-    let line = '';
-    for(let n = 0; n < words.length; n++) {
-      let testLine = line + words[n] + ' ';
-      let metrics = context.measureText(testLine);
-      let testWidth = metrics.width;
-      if (testWidth > maxWidth && n > 0) {
-        context.fillText(line, x, y);
-        line = words[n] + ' ';
-        y += lineHeight;
-      } else {
-        line = testLine;
-      }
-    }
-    context.fillText(line, x, y);
-  }
-
-  function downloadStoryCard() {
-    shareToInstagramStory();
-  }
-
-  function downloadBlob(blob) {
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'arkanica-tarot.png';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-    closeShareModal();
-  }
-
-  function toggleAuthMode() {
-    isRegisterMode = !isRegisterMode;
-    const title = document.getElementById('authModalTitle');
-    const sub = document.getElementById('authModalSub');
-    const btn = document.getElementById('authSubmitBtn');
-    const switchBtn = document.getElementById('authSwitchBtn');
-
-    if (isRegisterMode) {
-      title.textContent = 'Crear Cuenta';
-      sub.textContent = 'Regístrate para guardar tus cristales de claridad y acceder desde cualquier lugar.';
-      btn.textContent = 'Registrarse';
-      switchBtn.textContent = '¿Ya tienes cuenta? Inicia sesión';
-    } else {
-      title.textContent = 'Portal de Acceso';
-      sub.textContent = 'Inicia sesión para sincronizar tus cristales en la nube.';
-      btn.textContent = 'Iniciar Sesión';
-      switchBtn.textContent = '¿No tienes cuenta? Regístrate aquí';
-    }
-  }
-
-  async function handleAuthSubmit() {
-    const email = document.getElementById('authEmail').value.trim();
-    const password = document.getElementById('authPassword').value;
-    const msgEl = document.getElementById('authMsg');
-
-    if (!email || !password) {
-      msgEl.textContent = 'Por favor, completa todos los campos.';
-      return;
-    }
-
-    msgEl.textContent = 'Conectando con el oráculo...';
-
-    if (isRegisterMode) {
-      const { data, error } = await supabaseClient.auth.signUp({ email, password });
-      if (error) {
-        msgEl.textContent = error.message;
-      } else {
-        msgEl.textContent = '¡Cuenta creada! Revisa tu correo o inicia sesión.';
-        isRegisterMode = false;
-        toggleAuthMode();
-      }
-    } else {
-      const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
-      if (error) {
-        msgEl.textContent = error.message;
-      } else {
-        msgEl.textContent = '¡Acceso concedido!';
-        setTimeout(() => {
-          closeAuthModal();
-          checkUserSession();
-        }, 800);
-      }
-    }
-  }
-
+  /* --- EFECTOS DE SONIDO (SFX) --- */
   let sfxAudioCtx = null;
-
   function initSfxContext() {
     if (!sfxAudioCtx) {
       const AudioCtx = window.AudioContext || window.webkitAudioContext;
       sfxAudioCtx = new AudioCtx();
     }
-    if (sfxAudioCtx.state === 'suspended') {
-      sfxAudioCtx.resume();
-    }
+    if (sfxAudioCtx.state === 'suspended') { sfxAudioCtx.resume(); }
   }
 
   function playWoodSelectSound() {
@@ -1547,11 +969,8 @@
       const gain = sfxAudioCtx.createGain();
       gain.gain.setValueAtTime(0.12, now);
       gain.gain.exponentialRampToValueAtTime(0.001, now + 0.07);
-      noise.connect(filter);
-      filter.connect(gain);
-      gain.connect(sfxAudioCtx.destination);
-      noise.start(now);
-      noise.stop(now + 0.08);
+      noise.connect(filter); filter.connect(gain); gain.connect(sfxAudioCtx.destination);
+      noise.start(now); noise.stop(now + 0.08);
     } catch(e) {}
   }
 
@@ -1566,59 +985,157 @@
       osc.frequency.exponentialRampToValueAtTime(40, now + 0.12);
       gain.gain.setValueAtTime(0.18, now);
       gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
-      osc.connect(gain);
-      gain.connect(sfxAudioCtx.destination);
-      osc.start(now);
-      osc.stop(now + 0.13);
+      osc.connect(gain); gain.connect(sfxAudioCtx.destination);
+      osc.start(now); osc.stop(now + 0.13);
       setTimeout(() => { playWoodSelectSound(); }, 60);
     } catch(e) {}
   }
 
-  const audioEl = document.getElementById('ambientAudio');
-  audioEl.volume = 0.35;
+  /* --- SUPABASE Y ECONOMÍA DE CRISTALES --- */
+  const SUPABASE_URL = 'https://jcosmhiukmfsygrinfgy.supabase.co';
+  const SUPABASE_ANON_KEY = 'sb_publishable_UVGFZQhG36gD_67hInVz7g_4oLD7tWN';
+  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  let currentUser = null;
+  let userCrystals = 10;
+  let isRegisterMode = false;
 
-  const audioStates = [
-    { label: "Silencio", src: null },
-    { label: "Cuencos", src: "assets/cuencos-tibetanos.mp3" },
-    { label: "Lluvia", src: "assets/lluvia.mp3" },
-    { label: "Meditación", src: "assets/meditacion.mp3" }
-  ];
+  function getTodayDateString() { return new Date().toISOString().split('T')[0]; }
 
-  let currentAudioIndex = 0;
-
-  function changeAudioTrack(direction) {
-    currentAudioIndex = (currentAudioIndex + direction + audioStates.length) % audioStates.length;
-    const currentState = audioStates[currentAudioIndex];
-    document.getElementById('soundLabel').textContent = currentState.label;
-    if (currentState.src === null) {
-      audioEl.pause();
-      audioEl.currentTime = 0;
+  async function checkUserSession() {
+    const today = getTodayDateString();
+    const { data: { session } } = await supabaseClient.auth.getSession();
+    if (session) {
+      currentUser = session.user;
+      const username = currentUser.email.split('@')[0];
+      document.getElementById('authBadgeLabel').textContent = username.charAt(0).toUpperCase() + username.slice(1);
+      let { data } = await supabaseClient.from('profiles').select('crystals, last_login_date').eq('id', currentUser.id).single();
+      if (data) {
+        userCrystals = data.crystals;
+        if (data.last_login_date !== today) {
+          userCrystals = userCrystals < 10 ? 10 : userCrystals + 3;
+          await supabaseClient.from('profiles').update({ crystals: userCrystals, last_login_date: today }).eq('id', currentUser.id);
+        }
+      } else {
+        await supabaseClient.from('profiles').insert([{ id: currentUser.id, crystals: 10, last_login_date: today }]);
+        userCrystals = 10;
+      }
     } else {
-      audioEl.src = currentState.src;
-      audioEl.play().catch(err => { console.log("Audio bloqueado:", err); });
+      let savedCrystals = parseInt(localStorage.getItem('arkanica_crystals_guest')) || 10;
+      let lastLogin = localStorage.getItem('arkanica_last_login_guest');
+      if (lastLogin !== today) {
+        savedCrystals = savedCrystals < 10 ? 10 : savedCrystals + 3;
+        localStorage.setItem('arkanica_crystals_guest', savedCrystals);
+        localStorage.setItem('arkanica_last_login_guest', today);
+      }
+      userCrystals = savedCrystals;
+      document.getElementById('authBadgeLabel').textContent = 'Acceder';
+    }
+    document.getElementById('headerCrystalCount').textContent = userCrystals;
+  }
+
+  async function updateCrystalsStorage(newAmount) {
+    userCrystals = newAmount;
+    document.getElementById('headerCrystalCount').textContent = userCrystals;
+    if (currentUser) {
+      await supabaseClient.from('profiles').update({ crystals: userCrystals }).eq('id', currentUser.id);
+    } else {
+      localStorage.setItem('arkanica_crystals_guest', userCrystals);
     }
   }
 
-  const audioCarousel = document.getElementById('audioCarousel');
-  let touchStartX = 0;
-  let touchEndX = 0;
-  audioCarousel.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; }, {passive: true});
-  audioCarousel.addEventListener('touchend', (e) => {
-    touchEndX = e.changedTouches[0].screenX;
-    if (touchEndX < touchStartX - 30) changeAudioTrack(1);
-    else if (touchEndX > touchStartX + 30) changeAudioTrack(-1);
-  }, {passive: true});
+  checkUserSession();
+
+  function openAuthModal() {
+    if (currentUser) {
+      if (confirm(`Estás conectado como ${currentUser.email}. ¿Deseas cerrar sesión?`)) {
+        supabaseClient.auth.signOut().then(() => window.location.reload());
+      }
+      return;
+    }
+    document.getElementById('authModal').style.display = 'flex';
+  }
+  function closeAuthModal() { document.getElementById('authModal').style.display = 'none'; }
+
+  function openShareModal() {
+    if (!selectedCards || selectedCards.length === 0) {
+      alert("Realiza una tirada primero para poder compartir tu carta.");
+      return;
+    }
+    const mainCard = selectedCards[0];
+    document.getElementById('storyCardImg').src = mainCard.img;
+    document.getElementById('storyCardName').textContent = mainCard.name;
+    document.getElementById('storyCardArchetype').textContent = `"${mainCard.archetype}"`;
+    document.getElementById('shareModal').style.display = 'flex';
+  }
+  function closeShareModal() { document.getElementById('shareModal').style.display = 'none'; }
+
+  async function shareToInstagramStory() {
+    if (!selectedCards || selectedCards.length === 0) return;
+    const mainCard = selectedCards[0];
+    try {
+      const canvas = document.createElement('canvas');
+      canvas.width = 1080; canvas.height = 1920;
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#050508'; ctx.fillRect(0, 0, 1080, 1920);
+      ctx.strokeStyle = '#dfb15b'; ctx.lineWidth = 12; ctx.strokeRect(60, 60, 960, 1800);
+      ctx.fillStyle = '#dfb15b'; ctx.font = '500 36px "Cormorant Garamond", serif'; ctx.textAlign = 'center';
+      ctx.fillText('✦  ARKA-NICA.APP  ✦', 540, 180);
+
+      const img = new Image(); img.crossOrigin = 'anonymous'; img.src = mainCard.img;
+      await new Promise((res, rej) => { img.onload = res; img.onerror = rej; });
+      ctx.drawImage(img, 310, 260, 460, 746);
+
+      ctx.fillStyle = '#f4f2ee'; ctx.font = '600 56px "Cormorant Garamond", serif';
+      ctx.fillText(mainCard.name, 540, 1120);
+      ctx.fillStyle = '#9c98a6'; ctx.font = '300 32px "Inter", sans-serif';
+      ctx.fillText(`"${mainCard.archetype}"`, 540, 1200);
+
+      canvas.toBlob(async (blob) => {
+        const file = new File([blob], 'arkanica-tirada.png', { type: 'image/png' });
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          try { await navigator.share({ files: [file] }); closeShareModal(); } catch(e) { downloadBlob(blob); }
+        } else { downloadBlob(blob); }
+      }, 'image/png');
+    } catch(e) { alert("Error al generar la story."); }
+  }
+
+  function downloadBlob(blob) {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = url; a.download = 'arkanica-tarot.png';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    URL.revokeObjectURL(url); closeShareModal();
+  }
+
+  function toggleAuthMode() {
+    isRegisterMode = !isRegisterMode;
+    document.getElementById('authModalTitle').textContent = isRegisterMode ? 'Crear Cuenta' : 'Portal de Acceso';
+    document.getElementById('authSubmitBtn').textContent = isRegisterMode ? 'Registrarse' : 'Iniciar Sesión';
+    document.getElementById('authSwitchBtn').textContent = isRegisterMode ? '¿Ya tienes cuenta? Inicia sesión' : '¿No tienes cuenta? Regístrate aquí';
+  }
+
+  async function handleAuthSubmit() {
+    const email = document.getElementById('authEmail').value.trim();
+    const password = document.getElementById('authPassword').value;
+    const msg = document.getElementById('authMsg');
+    if (!email || !password) { msg.textContent = 'Completa todos los campos.'; return; }
+    if (isRegisterMode) {
+      const { error } = await supabaseClient.auth.signUp({ email, password });
+      msg.textContent = error ? error.message : '¡Cuenta creada!';
+    } else {
+      const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+      if (error) { msg.textContent = error.message; }
+      else { msg.textContent = '¡Acceso concedido!'; setTimeout(() => { closeAuthModal(); checkUserSession(); }, 800); }
+    }
+  }
 
   function goToPrivateSession() {
     const currentSpreadConfig = getCurrentSpreadConfig();
-    const readingContext = {
-      spreadTitle: currentSpreadConfig.title,
-      cards: selectedCards
-    };
+    const readingContext = { spreadTitle: currentSpreadConfig.title, cards: selectedCards };
     localStorage.setItem('arkanica_last_reading', JSON.stringify(readingContext));
     window.location.href = 'personalizada/personalizada.html';
   }
 
+  /* --- MAZO Y CATEGORÍAS COMPLETAS --- */
   const fullTarotDeck = [
     { symbol: '0', name: 'El Loco', archetype: 'Empieza algo nuevo sin miedo al qué dirán', img: 'assets/arcanos-mayores/el-loco.jpeg' },
     { symbol: 'I', name: 'El Mago', archetype: 'Tienes todos los recursos sobre la mesa para triunfar', img: 'assets/arcanos-mayores/the-magician.jpeg' },
@@ -1641,28 +1158,7 @@
     { symbol: 'XVIII', name: 'La Luna', archetype: 'Navega la niebla de las ilusiones y los miedos nocturnos', img: 'assets/arcanos-mayores/the-moon.jpeg' },
     { symbol: 'XIX', name: 'El Sol', archetype: 'Plenitud radiante, alegría y claridad absoluta', img: 'assets/arcanos-mayores/the-sun.jpeg' },
     { symbol: 'XX', name: 'El Juicio', archetype: 'Un despertar kármico y una gran llamada a trascender', img: 'assets/arcanos-mayores/judgment.jpeg' },
-    { symbol: 'XXI', name: 'El Mundo', archetype: 'Realización total; has completado una gran maestría', img: 'assets/arcanos-mayores/the-world.jpeg' },
-    
-    { symbol: 'As 🪙', name: 'As de Oros', archetype: 'Semilla firme de prosperidad material o laboral', img: 'assets/arcanos-menores/oros/as-oros.jpg' },
-    { symbol: '2 🪙', name: 'Dos de Oros', archetype: 'Haciendo malabares para equilibrar tus prioridades', img: 'assets/arcanos-menores/oros/2-oros.jpg' },
-    { symbol: '3 🪙', name: 'Tres de Oros', archetype: 'La maestría compartida y el esfuerzo engranado', img: 'assets/arcanos-menores/oros/3-oros.jpg' },
-    { symbol: '4 🪙', name: 'Cuatro de Oros', archetype: 'Exceso de control; aprende a abrir las manos y soltar', img: 'assets/arcanos-menores/oros/4-oros.jpg' },
-    { symbol: '10 🪙', name: 'Diez de Oros', archetype: 'Legado, estabilidad y raíz familiar profunda', img: 'assets/arcanos-menores/oros/10-oros.jpg' },
-
-    { symbol: 'As 🍷', name: 'As de Copas', archetype: 'Manantial puro de amor y apertura emocional', img: 'assets/arcanos-menores/copas/as-copas.jpg' },
-    { symbol: '2 🍷', name: 'Dos de Copas', archetype: 'Pacto de almas, sintonía y espejo mutuo', img: 'assets/arcanos-menores/copas/2-copas.jpg' },
-    { symbol: '3 🍷', name: 'Tres de Copas', archetype: 'Comunión, alegría y celebración con los afines', img: 'assets/arcanos-menores/copas/3-copas.jpg' },
-    { symbol: '5 🍷', name: 'Cinco de Copas', archetype: 'Lamentando lo que se derrumbó sin ver lo que queda', img: 'assets/arcanos-menores/copas/5-copas.jpg' },
-    { symbol: '10 🍷', name: 'Diez de Copas', archetype: 'Felicidad hogareña y paz emocional absoluta', img: 'assets/arcanos-menores/copas/10-copas.jpg' },
-
-    { symbol: 'As ⚔️', name: 'As de Espadas', archetype: 'Verdad incisiva que corta la confusión de raíz', img: 'assets/arcanos-menores/espadas/as-espadas.jpg' },
-    { symbol: '2 ⚔️', name: 'Dos de Espadas', archetype: 'Vendaje en los ojos ante una elección inevitable', img: 'assets/arcanos-menores/espadas/2-espadas.jpg' },
-    { symbol: '3 ⚔️', name: 'Tres de Espadas', archetype: 'Dolor punzante que purifica y abre los ojos', img: 'assets/arcanos-menores/espadas/3-espadas.jpg' },
-    { symbol: '8 ⚔️', name: 'Ocho de Espadas', archetype: 'Prisión mental construida por tus propios temores', img: 'assets/arcanos-menores/espadas/8-espadas.jpg' },
-
-    { symbol: 'As 🔥', name: 'As de Bastos', archetype: 'Pulsión creativa, deseo y fuego puro de arranque', img: 'assets/arcanos-menores/bastos/as-bastos.jpg' },
-    { symbol: '3 🔥', name: 'Tres de Bastos', archetype: 'Horizonte expandido esperando barcos lejanos', img: 'assets/arcanos-menores/bastos/3-bastos.jpg' },
-    { symbol: '8 🔥', name: 'Ocho de Bastos', archetype: 'Aceleración súbita; los acontecimientos se precipitan', img: 'assets/arcanos-menores/bastos/8-bastos.jpg' }
+    { symbol: 'XXI', name: 'El Mundo', archetype: 'Realización total; has completado una gran maestría', img: 'assets/arcanos-mayores/the-world.jpeg' }
   ];
 
   fullTarotDeck.forEach(card => {
@@ -1674,138 +1170,31 @@
     romanticas: {
       name: "Románticas",
       spreads: [
-        {
-          key: "thriller",
-          title: "Thriller Romántico",
-          description: '¿Atrapado/a en un "casi algo" o con mensajes ambiguos? Esta tirada de 3 cartas investiga los mensajes ocultos entre líneas para ayudarte a descifrar qué siente realmente la otra persona y qué debes hacer tú.',
-          slots: [
-            { label: '1. La Pista Falsa', desc: 'El espejismo o autoengaño en el que te estás refugiando.' },
-            { label: '2. El Móvil Oculto', desc: 'Las verdaderas intenciones que la otra persona no muestra abiertamente.' },
-            { label: '3. La Resolución', desc: 'El paso exacto que debes dar para recuperar tu paz emocional.' }
-          ]
-        },
-        {
-          key: "masks",
-          title: "Baile de Máscaras",
-          description: 'Examina con claridad los roles y expectativas que cada uno proyecta en la pareja. Ideal para identificar dinámicas repetitivas y conectar por fin con la autenticidad mutua.',
-          slots: [
-            { label: '1. Tu Personaje', desc: 'La careta o actitud defensiva que adoptas sin darte cuenta.' },
-            { label: '2. Su Dinámica', desc: 'El rol o bloqueo que la otra persona aporta a la relación.' },
-            { label: '3. El Vínculo Real', desc: 'La verdad esencial que surge al despojarse de toda actuación.' }
-          ]
-        },
-        {
-          key: "shadow_romance",
-          title: "Pacto en la Sombra",
-          description: 'Una mirada sincera a las pasiones intensas o atracciones magnéticas complejas donde la química y el vértigo se mezclan. Descubre qué equilibra o desestabiliza este lazo.',
-          slots: [
-            { label: '1. El Fricción', desc: 'El elemento tóxico o tensión latente que desgasta el vínculo.' },
-            { label: '2. La Atracción', desc: 'El imán inconsciente que los mantiene fuertemente unidos.' },
-            { label: '3. El Límite Sanador', desc: 'La pauta o decisión necesaria para equilibrar la conexión.' }
-          ]
-        }
+        { key: "thriller", title: "Thriller Romántico", description: '¿Atrapado/a en un "casi algo"? Descubre mensajes ocultos y qué siente realmente.', slots: [{label:'1. La Pista Falsa', desc:'Autoengaño.'},{label:'2. El Móvil Oculto', desc:'Intención real.'},{label:'3. La Resolución', desc:'Paso a dar.'}] },
+        { key: "masks", title: "Baile de Máscaras", description: 'Examina roles y expectativas en pareja.', slots: [{label:'1. Tu Personaje', desc:'Careta.'},{label:'2. Su Dinámica', desc:'Bloqueo.'},{label:'3. El Vínculo Real', desc:'Verdad.'}] },
+        { key: "shadow_romance", title: "Pacto en la Sombra", description: 'Pasiones intensas y atracciones magnéticas.', slots: [{label:'1. La Fricción', desc:'Tensión.'},{label:'2. La Atracción', desc:'Imán inconsciente.'},{label:'3. Límite Sanador', desc:'Equilibrio.'}] }
       ]
     },
     espirituales: {
       name: "Espirituales",
       spreads: [
-        {
-          key: "time_alt",
-          title: "Salto en el Tiempo",
-          description: 'Un mapa completo de 10 cartas que evalúa un gran cruce de caminos en tu vida. Analiza múltiples escenarios, bloqueos a dejar atrás y el horizonte final hacia el que te diriges.',
-          slots: [
-            { label: '1. Origen', desc: 'El impulso inicial en este cruce.' },
-            { label: '2. Prudencia', desc: 'La opción de mantener la cautela.' },
-            { label: '3. Audacia', desc: 'El riesgo calculado y su impacto.' },
-            { label: '4. Pasado', desc: 'Lastres kármicos que debes cortar.' },
-            { label: '5. Recursos', desc: 'Tu fortaleza interior disponible.' },
-            { label: '6. Razón', desc: 'La claridad mental necesaria.' },
-            { label: '7. Alianzas', desc: 'Factores o apoyos externos.' },
-            { label: '8. Pausa', desc: 'El beneficio de detener la marcha.' },
-            { label: '9. Fe', desc: 'El salto al vacío transformador.' },
-            { label: '10. Destino', desc: 'El gran aprendizaje y resultado.' }
-          ]
-        },
-        {
-          key: "past_lives",
-          title: "Vidas Pasadas",
-          description: 'Examina memorias de tu subconsciente que siguen influyendo en tus retos de hoy, ayudándote a comprender el origen de ciertos bloqueos y cómo trascenderlos.',
-          slots: [
-            { label: '1. La Raíz', desc: 'El eco del pasado que resuena hoy en ti.' },
-            { label: '2. La Prueba', desc: 'El aprendizaje pendiente que repites.' },
-            { label: '3. La Llave', desc: 'La comprensión que disuelve el bloqueo.' }
-          ]
-        }
+        { key: "time_alt", title: "Salto en el Tiempo", description: 'Mapa completo de 10 cartas sobre un cruce de caminos.', slots: Array.from({length:10}, (_,i)=>({label:`Posición ${i+1}`, desc:'Análisis energético.'})) },
+        { key: "past_lives", title: "Vidas Pasadas", description: 'Memorias subconscientes que influyen hoy.', slots: [{label:'1. La Raíz', desc:'Eco pasado.'},{label:'2. La Prueba', desc:'Aprendizaje.'},{label:'3. La Llave', desc:'Solución.'}] }
       ]
     },
     sombras: {
       name: "Trabajo de Sombras",
       spreads: [
-        {
-          key: "mirror",
-          title: "El Espejo Fragmentado",
-          description: 'Ilumina tus puntos ciegos personales. Esta lectura te ayuda a reconocer aspectos de ti que proyectas en el exterior o reprimes, revelando un valioso potencial oculto.',
-          slots: [
-            { label: '1. Tu Punto Ciego', desc: 'Lo que proyectas fuera y te cuesta admitir.' },
-            { label: '2. La Sombra', desc: 'El miedo o instinto reprimido que resta energía.' },
-            { label: '3. El Don', desc: 'Tu talento oculto listo para ser integrado.' }
-          ]
-        },
-        {
-          key: "inner_voice",
-          title: "La Voz Interior",
-          description: 'Diseñada para silenciar opiniones externas y el exceso de análisis mental, permitiéndote escuchar con nitidez la respuesta intuitiva y sincera de tu interior.',
-          slots: [
-            { label: '1. El Ruido', desc: 'Expectativas ajenas que confunden tu criterio.' },
-            { label: '2. La Duda', desc: 'El laberinto mental donde te saboteas.' },
-            { label: '3. La Certeza', desc: 'La respuesta clara de tu intuición.' }
-          ]
-        },
-        {
-          key: "ghost",
-          title: "Enfrentando al Fantasma",
-          description: 'Una confrontación directa y constructiva con el origen de ese miedo o inseguridad que frena tu avance, dándote herramientas prácticas para disiparlo.',
-          slots: [
-            { label: '1. La Semilla', desc: 'El origen exacto donde nació el temor.' },
-            { label: '2. Su Efecto', desc: 'Cómo limita tus decisiones cotidianas.' },
-            { label: '3. El Valor', desc: 'La acción consciente que vence al miedo.' }
-          ]
-        }
+        { key: "mirror", title: "El Espejo Fragmentado", description: 'Ilumina tus puntos ciegos personales.', slots: [{label:'1. Tu Punto Ciego', desc:'Proyección.'},{label:'2. La Sombra', desc:'Reprimido.'},{label:'3. El Don', desc:'Talento.'}] },
+        { key: "inner_voice", title: "La Voz Interior", description: 'Silencia opiniones externas y ruido mental.', slots: [{label:'1. El Ruido', desc:'Expectativa.'},{label:'2. La Duda', desc:'Sabotaje.'},{label:'3. La Certeza', desc:'Intuición.'}] },
+        { key: "ghost", title: "Enfrentando al Fantasma", description: 'Confronta el origen de tus miedos.', slots: [{label:'1. La Semilla', desc:'Origen.'},{label:'2. Su Efecto', desc:'Impacto.'},{label:'3. El Valor', desc:'Acción.'}] }
       ]
     },
     proyectos: {
       name: "Escenario Principal",
       spreads: [
-        {
-          key: "foco",
-          title: "El Foco Principal",
-          description: 'Ideal cuando sientes dispersión o exceso de exigencias externas. Te ayuda a simplificar prioridades y alinear tu energía con lo que de verdad importa.',
-          slots: [
-            { label: '1. Los Cimientos', desc: 'Lo que requiere intimidad y blindaje.' },
-            { label: '2. La Exposición', desc: 'El talento clave que debes proyectar.' },
-            { label: '3. El Éxito', desc: 'La recompensa de asumir el mando.' }
-          ]
-        },
-        {
-          key: "backstage",
-          title: "Entre Bambalinas",
-          description: 'Una revisión estratégica de tus recursos y preparativos internos antes de lanzar un proyecto, negocio o idea al público.',
-          slots: [
-            { label: '1. La Solidez', desc: 'El estado real de tus bases y medios.' },
-            { label: '2. El Detalle', desc: 'Ese factor sutil que marcará el éxito.' },
-            { label: '3. El Veredicto', desc: 'La señal de que estás listo/a para actuar.' }
-          ]
-        },
-        {
-          key: "chord",
-          title: "El Acorde Perfecto",
-          description: 'Creado para destrabar bloqueos creativos o profesionales, devolviendo la fluidez, el ritmo y la armonía a tus metas en pausa.',
-          slots: [
-            { label: '1. La Disonancia', desc: 'El bloqueo exacto que detuvo tu flujo.' },
-            { label: '2. La Reafinación', desc: 'El ajuste conceptual o de enfoque necesario.' },
-            { label: '3. La Armonía', desc: 'El estado de gracia donde todo avanza.' }
-          ]
-        }
+        { key: "foco", title: "El Foco Principal", description: 'Simplifica prioridades y alinea tu energía.', slots: [{label:'1. Los Cimientos', desc:'Intimidad.'},{label:'2. La Exposición', desc:'Talento.'},{label:'3. El Éxito', desc:'Recompensa.'}] },
+        { key: "backstage", title: "Entre Bambalinas", description: 'Revisión estratégica de recursos internos.', slots: [{label:'1. La Solidez', desc:'Bases.'},{label:'2. El Detalle', desc:'Factor sutil.'},{label:'3. El Veredicto', desc:'Señal.'}] }
       ]
     }
   };
@@ -1816,58 +1205,42 @@
   let selectedCards = [];
   let currentSlotIndex = 0;
 
+  const mobileCategorySelect = document.getElementById('mobileCategorySelect');
+  const mobileSpreadSelect = document.getElementById('mobileSpreadSelect');
+  const infoTitle = document.getElementById('infoTitle');
+  const infoDesc = document.getElementById('infoDesc');
+  const infoPositions = document.getElementById('infoPositions');
   const table = document.getElementById('table');
   const hint = document.getElementById('hint');
   const deckSection = document.getElementById('deckSection');
   const deckInstruction = document.getElementById('deckInstruction');
   const fanContainer = document.getElementById('fanContainer');
-  
-  const infoTitle = document.getElementById('infoTitle');
-  const infoDesc = document.getElementById('infoDesc');
-  const infoPositions = document.getElementById('infoPositions');
-  const spreadSelector = document.getElementById('spreadSelector');
-  const mobileCategorySelect = document.getElementById('mobileCategorySelect');
-  const mobileSpreadSelect = document.getElementById('mobileSpreadSelect');
   const masterBox = document.getElementById('masterBox');
   const masterTextContent = document.getElementById('masterTextContent');
 
-  function renderSpreadSelector() {
-    spreadSelector.innerHTML = '';
+  function renderSpreadDropdowns() {
     mobileSpreadSelect.innerHTML = '';
-
     const category = categoriesData[currentCategoryKey];
-    
-    category.spreads.forEach((spread) => {
-      const btn = document.createElement('button');
-      btn.className = `spread-btn ${spread.key === currentSpreadKey ? 'active' : ''}`;
-      btn.textContent = spread.title;
-      btn.onclick = (e) => switchSpread(spread.key, e);
-      spreadSelector.appendChild(btn);
-
-      const option = document.createElement('option');
-      option.value = spread.key;
-      option.textContent = spread.title;
-      if (spread.key === currentSpreadKey) {
-        option.selected = true;
-      }
-      mobileSpreadSelect.appendChild(option);
+    category.spreads.forEach(spread => {
+      const opt = document.createElement('option');
+      opt.value = spread.key;
+      opt.textContent = spread.title;
+      if (spread.key === currentSpreadKey) opt.selected = true;
+      mobileSpreadSelect.appendChild(opt);
     });
-
     mobileCategorySelect.value = currentCategoryKey;
   }
 
   function onMobileCategoryChange(catKey) {
     currentCategoryKey = catKey;
-    document.querySelectorAll('.category-tab').forEach(tab => {
-      tab.classList.toggle('active', tab.getAttribute('onclick').includes(catKey));
-    });
     currentSpreadKey = categoriesData[catKey].spreads[0].key;
-    renderSpreadSelector();
+    renderSpreadDropdowns();
     initReading();
   }
 
   function onMobileSpreadChange(key) {
-    switchSpread(key);
+    currentSpreadKey = key;
+    initReading();
   }
 
   function getCurrentSpreadConfig() {
@@ -1882,13 +1255,7 @@
     const config = getCurrentSpreadConfig();
     infoTitle.textContent = config.title;
     infoDesc.textContent = config.description;
-    
-    if (config.slots.length > 5) {
-      infoPositions.className = 'spread-positions-grid grid-10';
-    } else {
-      infoPositions.className = 'spread-positions-grid';
-    }
-
+    infoPositions.className = config.slots.length > 5 ? 'spread-positions-grid grid-10' : 'spread-positions-grid';
     infoPositions.innerHTML = '';
     config.slots.forEach(slot => {
       const div = document.createElement('div');
@@ -1914,18 +1281,15 @@
 
     if (lastFreeDate === today) {
       if (userCrystals < 3) {
-        alert("Has agotado tu tirada gratuita diaria para esta lectura y no tienes suficientes cristales (necesitas 3).");
+        hint.textContent = "Tirada ya realizada hoy. Se necesitan 3 cristales para repetir.";
         return;
       } else {
-        if (confirm("Ya has realizado esta tirada gratis hoy. ¿Deseas gastar 3 cristales para volver a consultarla?")) {
-          updateCrystalsStorage(userCrystals - 3);
-          initReadingExecution();
-        }
+        updateCrystalsStorage(userCrystals - 3);
       }
     } else {
       localStorage.setItem(freeKey, today);
-      initReadingExecution();
     }
+    initReadingExecution();
   }
 
   function initReading() {
@@ -1937,32 +1301,14 @@
     selectedCards = [];
     currentSlotIndex = 0;
     deckSection.style.display = 'flex';
-    masterBox.style.display = 'none';
+    
+    // Ocultar estrictamente la caja magistral al iniciar o reiniciar
+    masterBox.style.setProperty('display', 'none', 'important');
+    masterTextContent.innerHTML = '';
+    
     updateSpreadInfo();
     updateFanUI();
     renderTableSlots();
-  }
-
-  function switchCategory(catKey, event) {
-    currentCategoryKey = catKey;
-    document.querySelectorAll('.category-tab').forEach(tab => tab.classList.remove('active'));
-    if (event && event.target) {
-      event.target.classList.add('active');
-    }
-    currentSpreadKey = categoriesData[catKey].spreads[0].key;
-    renderSpreadSelector();
-    initReading();
-  }
-
-  function switchSpread(key, event) {
-    currentSpreadKey = key;
-    document.querySelectorAll('.spread-btn').forEach(btn => btn.classList.remove('active'));
-    if (event && event.target) {
-      event.target.classList.add('active');
-    } else {
-      renderSpreadSelector();
-    }
-    initReading();
   }
 
   function updateFanUI() {
@@ -1974,7 +1320,6 @@
       return;
     }
     deckInstruction.textContent = `Elige una carta del abanico para: "${config.slots[currentSlotIndex].label}"`;
-    
     fanContainer.innerHTML = '';
     const totalFanCards = 13;
     const angleRange = 60;
@@ -1984,7 +1329,6 @@
       cardEl.className = 'fan-card';
       const angle = -angleRange / 2 + (angleRange / (totalFanCards - 1)) * i;
       const xOffset = (i - (totalFanCards - 1) / 2) * 11;
-
       cardEl.style.transform = `translateX(${xOffset}px) rotate(${angle}deg)`;
       
       cardEl.addEventListener('pointerdown', (e) => {
@@ -1992,16 +1336,12 @@
         playWoodSelectSound();
         pickCardFromFan();
       });
-
       fanContainer.appendChild(cardEl);
     }
   }
 
   let fanTouchStartX = 0;
-  fanContainer.addEventListener('touchstart', (e) => {
-    fanTouchStartX = e.changedTouches[0].screenX;
-  }, {passive: true});
-
+  fanContainer.addEventListener('touchstart', (e) => { fanTouchStartX = e.changedTouches[0].screenX; }, {passive: true});
   fanContainer.addEventListener('touchend', (e) => {
     let fanTouchEndX = e.changedTouches[0].screenX;
     if (Math.abs(fanTouchEndX - fanTouchStartX) > 20) {
@@ -2013,49 +1353,35 @@
   function pickCardFromFan() {
     const config = getCurrentSpreadConfig();
     if (currentSlotIndex >= config.slots.length) return;
-
     const chosenCard = currentDeck.pop();
     selectedCards.push(chosenCard);
     currentSlotIndex++;
-
     renderTableSlots();
     updateFanUI();
   }
 
   function renderTableSlots() {
     const config = getCurrentSpreadConfig();
-    
-    if (config.slots.length > 5) {
-      table.className = 'arkanica-table grid-10';
-    } else {
-      table.className = 'arkanica-table';
-    }
-
+    table.className = config.slots.length > 5 ? 'arkanica-table grid-10' : 'arkanica-table';
     table.innerHTML = '';
 
     config.slots.forEach((slotData, i) => {
       const slot = document.createElement('div');
       slot.className = 'arkanica-slot';
-
       const card = document.createElement('div');
       card.className = 'arkanica-card';
-
       const label = document.createElement('div');
       label.className = 'arkanica-slot-label';
       label.textContent = slotData.label;
 
       if (i < selectedCards.length) {
         const cardData = selectedCards[i];
-        
         const back = document.createElement('div');
         back.className = 'arkanica-card-face arkanica-card-back';
-
         const front = document.createElement('div');
         front.className = 'arkanica-card-face arkanica-card-front';
         front.innerHTML = `<img src="${cardData.img}" alt="${cardData.name}" title="${cardData.name}: ${cardData.archetype}" decoding="async">`;
-
-        card.appendChild(back);
-        card.appendChild(front);
+        card.appendChild(back); card.appendChild(front);
 
         card.addEventListener('click', () => {
           card.classList.toggle('flipped');
@@ -2066,51 +1392,38 @@
           card.classList.add('flipped');
           playCardFlipSound();
         }, 200 + (i * 40));
-
       } else {
-        const dataBack = document.createElement('div');
-        dataBack.className = 'arkanica-card-face arkanica-card-back';
-        dataBack.style.opacity = '0.5';
-        card.appendChild(dataBack);
+        const back = document.createElement('div');
+        back.className = 'arkanica-card-face arkanica-card-back';
+        card.appendChild(back);
       }
-
-      slot.appendChild(card);
-      slot.appendChild(label);
+      slot.appendChild(card); slot.appendChild(label);
       table.appendChild(slot);
     });
-
-    if (currentSlotIndex === 0) {
-      hint.textContent = 'Selecciona una carta del abanico superior.';
-    }
+    if (currentSlotIndex === 0) hint.textContent = 'Selecciona una carta del abanico superior.';
   }
 
   async function generateGenerativeInterpretation() {
     const config = getCurrentSpreadConfig();
     
-    masterTextContent.innerHTML = "<em>El oráculo está sintonizando las energías de tus cartas...</em>";
-    masterBox.style.display = 'block';
+    // Texto base instantáneo mientras actúa la IA
+    masterTextContent.innerHTML = `Tras sintonizar los arcanos en esta tirada de <strong>${config.title}</strong>, la presencia de <em>${selectedCards[0].name}</em> marca un punto de inflexión decisivo. ${selectedCards[0].archetype}. Confía plenamente en tu intuición actual y permite que la claridad guíe tus próximos pasos sin vacilar.`;
+    masterBox.style.setProperty('display', 'block', 'important');
 
     try {
       const response = await fetch('/.netlify/functions/interpretar', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          spreadTitle: config.title,
-          cards: selectedCards
-        })
+        body: JSON.stringify({ spreadTitle: config.title, cards: selectedCards })
       });
-
-      const data = await response.json();
-
-      if (response.ok && data.interpretacion) {
-        masterTextContent.innerHTML = data.interpretacion;
-      } else {
-        throw new Error(data.error || 'Respuesta vacía del oráculo');
+      if (response.ok) {
+        const data = await response.json();
+        if (data.interpretacion) {
+          masterTextContent.innerHTML = data.interpretacion;
+        }
       }
-
-    } catch (error) {
-      console.error("Error de conexión con la IA:", error);
-      masterTextContent.innerHTML = `Tras más de treinta años interpretando los arcanos, esta tirada de ${config.title} nos muestra un camino de evolución muy claro. La energía de ${selectedCards[0].name} marca tu punto de partida, guiándote hacia una nueva perspectiva. Confía en thy intuición y da el paso con absoluta confianza. ¿Qué te dice el corazón respecto a este camino?`;
+    } catch(e) {
+      console.log("Manteniendo síntesis generada localmente.");
     }
   }
 
@@ -2119,7 +1432,7 @@
     initReading();
   });
 
-  renderSpreadSelector();
+  renderSpreadDropdowns();
   initReading();
 </script>
 
