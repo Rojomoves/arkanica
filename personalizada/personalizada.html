@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Arkanica — Sesión Privada y Profunda con el Oráculo</title>
+<title>Arkanica — Sesión Privada con el Ente Superior</title>
 <!-- Cliente oficial de Supabase -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -40,30 +40,91 @@
     align-items: center;
     font-family: 'Inter', sans-serif;
     color: var(--text-main);
-    padding: 30px 16px;
+    padding: 16px 12px 60px 12px;
     overflow-x: hidden;
   }
 
+  /* BOTÓN FLOTANTE DE AUDIO (ESQUINA INFERIOR IZQUIERDA) */
+  .floating-audio-btn {
+    position: fixed;
+    bottom: 24px;
+    left: 24px;
+    background: rgba(12, 11, 18, 0.92);
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.7), 0 0 15px rgba(223, 177, 91, 0.25);
+    z-index: 2500;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .floating-audio-btn:hover {
+    transform: scale(1.12);
+    background: var(--surface-hover);
+    border-color: var(--gold-light);
+  }
+
+  .audio-tooltip {
+    position: absolute;
+    left: 58px;
+    background: var(--surface);
+    border: 1px solid var(--gold-dim);
+    color: var(--text-main);
+    font-size: 10.5px;
+    padding: 5px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  }
+
+  .floating-audio-btn:hover .audio-tooltip {
+    opacity: 1;
+  }
+
+  /* HEADER RESPONSIVE */
   header {
     width: 100%;
     max-width: 900px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 30px;
+    margin-bottom: 16px;
     border-bottom: 1px solid var(--line);
-    padding-bottom: 16px;
-    gap: 12px;
+    padding-bottom: 12px;
     flex-wrap: wrap;
+    gap: 10px;
   }
 
   .logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 24px;
-    letter-spacing: 0.08em;
-    color: var(--gold);
+    display: flex;
+    align-items: center;
+    gap: 8px;
     text-decoration: none;
-    white-space: nowrap;
+  }
+
+  .logo-symbol {
+    width: 26px;
+    height: 26px;
+    fill: none;
+    stroke: var(--gold);
+    stroke-width: 1.5;
+    filter: drop-shadow(0 0 8px rgba(223, 177, 91, 0.4));
+  }
+
+  .logo-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    letter-spacing: 0.12em;
+    color: var(--gold);
     text-shadow: 0 2px 10px rgba(223, 177, 91, 0.2);
   }
 
@@ -71,115 +132,102 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    flex-wrap: wrap;
-    justify-content: flex-end;
   }
 
-  .audio-carousel {
-    background: rgba(223, 177, 91, 0.06);
-    border: 1px solid var(--gold-dim);
-    padding: 6px 12px;
+  /* INSIGNIA DE CRISTALES Y USUARIO EN HEADER */
+  .profile-badge {
+    background: linear-gradient(135deg, rgba(223, 177, 91, 0.2) 0%, rgba(12, 11, 18, 0.95) 100%);
+    border: 1px solid var(--gold);
+    padding: 5px 12px;
     border-radius: 20px;
-    font-size: 11px;
-    color: var(--gold);
+    font-size: 11.5px;
+    color: var(--text-main);
     display: flex;
     align-items: center;
     gap: 6px;
+    text-decoration: none;
     transition: all 0.3s ease;
-    white-space: nowrap;
-    touch-action: pan-y;
-    user-select: none;
+    box-shadow: 0 0 15px rgba(223, 177, 91, 0.2);
   }
 
-  .audio-carousel:hover {
-    background: rgba(223, 177, 91, 0.12);
-    border-color: var(--gold);
-  }
-
-  .audio-arrow-btn {
-    background: none;
-    border: none;
-    color: var(--gold);
-    cursor: pointer;
-    font-size: 14px;
-    padding: 0 4px;
-    transition: transform 0.2s;
-  }
-
-  .audio-arrow-btn:hover {
-    transform: scale(1.2);
+  .profile-crystals {
+    display: flex;
+    align-items: center;
+    gap: 4px;
     color: var(--gold-light);
+    font-weight: 600;
   }
 
-  .audio-label-container {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    cursor: pointer;
+  .profile-divider {
+    width: 1px;
+    height: 10px;
+    background: var(--gold);
+    opacity: 0.6;
   }
 
-  .user-badge {
-    font-size: 11px;
-    color: var(--text-muted);
-    border-right: 1px solid var(--line);
-    padding-right: 12px;
-    white-space: nowrap;
-  }
-
-  .crystals-badge {
-    background: rgba(223, 177, 91, 0.08);
-    border: 1px solid var(--gold-dim);
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 11px;
-    color: var(--gold);
-    letter-spacing: 0.05em;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    white-space: nowrap;
+  .profile-user-info {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12.5px;
+    color: var(--gold-light);
+    font-weight: 500;
   }
 
   .back-link {
-    font-size: 10.5px;
+    font-size: 10px;
     text-transform: uppercase;
     letter-spacing: 0.15em;
     color: var(--text-muted);
     text-decoration: none;
     transition: color 0.3s;
-    white-space: nowrap;
+  }
+  .back-link:hover { color: var(--gold); }
+
+  /* HERO / BANNER PRINCIPAL REDISEÑADO */
+  .hero-container {
+    text-align: center;
+    max-width: 650px;
+    margin-bottom: 20px;
+    padding: 0 8px;
   }
 
-  .back-link:hover {
-    color: var(--gold);
+  .arkanica-eyebrow {
+    font-size: 9.5px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 5px;
+    font-weight: 500;
   }
 
+  .arkanica-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 400;
+    color: var(--text-main);
+    margin: 0 0 6px;
+    line-height: 1.2;
+  }
+
+  .arkanica-sub {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 300;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* CONTENEDOR DEL CHAT */
   .chat-container {
     width: 100%;
     max-width: 900px;
     background: var(--surface);
     border: 1px solid var(--line);
-    border-radius: 8px;
-    padding: 32px 24px;
+    border-radius: 10px;
+    padding: 28px 24px;
     box-shadow: 0 20px 40px rgba(0,0,0,0.5);
     display: flex;
     flex-direction: column;
     gap: 20px;
-  }
-
-  .chat-header h1 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 26px;
-    margin: 0 0 6px;
-    color: var(--text-main);
-    font-weight: 400;
-  }
-
-  .chat-header p {
-    font-size: 12.5px;
-    color: var(--text-muted);
-    line-height: 1.5;
-    margin: 0;
   }
 
   .chat-messages {
@@ -241,15 +289,12 @@
     border: 1px solid var(--line);
     color: var(--text-main);
     padding: 12px 14px;
-    border-radius: 4px;
+    border-radius: 6px;
     font-size: 12.5px;
     font-family: 'Inter', sans-serif;
-  }
-
-  .chat-input:focus {
     outline: none;
-    border-color: var(--gold);
   }
+  .chat-input:focus { border-color: var(--gold); }
 
   .send-btn {
     background: var(--gold);
@@ -261,25 +306,23 @@
     text-transform: uppercase;
     font-weight: 600;
     padding: 0 20px;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
     transition: background 0.3s;
     white-space: nowrap;
   }
+  .send-btn:hover { background: var(--gold-light); }
 
-  .send-btn:hover {
-    background: var(--gold-light);
-  }
-
+  /* TIENDA DE CRISTALES */
   .store-section {
-    margin-top: 20px;
+    margin-top: 10px;
     border-top: 1px solid var(--line);
     padding-top: 20px;
   }
 
   .store-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 17px;
+    font-size: 18px;
     color: var(--gold);
     margin-bottom: 14px;
     letter-spacing: 0.03em;
@@ -294,7 +337,7 @@
   .pack-card {
     background: linear-gradient(145deg, #13121b 0%, #0a0910 100%);
     border: 1px solid var(--line);
-    border-radius: 6px;
+    border-radius: 8px;
     padding: 18px 14px;
     text-align: center;
     display: flex;
@@ -330,9 +373,7 @@
     transform: translateY(-3px);
   }
 
-  .pack-info {
-    margin-bottom: 14px;
-  }
+  .pack-info { margin-bottom: 14px; }
 
   .pack-name {
     font-family: 'Cormorant Garamond', serif;
@@ -357,7 +398,7 @@
     text-transform: uppercase;
     letter-spacing: 0.15em;
     padding: 8px 16px;
-    border-radius: 3px;
+    border-radius: 6px;
     cursor: pointer;
     transition: all 0.3s ease;
     width: 100%;
@@ -376,14 +417,14 @@
     border-color: var(--gold);
   }
 
-  /* Contenedor elegante para anuncios de AdSense */
+  /* ANUNCIO ADSENSE */
   .ad-container-arkanica {
     width: 100%;
     max-width: 900px;
     margin: 20px auto 0;
     background: var(--surface);
     border: 1px solid var(--line);
-    border-radius: 8px;
+    border-radius: 10px;
     padding: 16px;
     text-align: center;
     box-shadow: 0 10px 30px rgba(0,0,0,0.3);
@@ -391,10 +432,10 @@
   }
 
   @media (max-width: 768px) {
-    body { padding: 16px 10px; }
+    body { padding: 12px 8px 40px 8px; }
     .packs-grid { grid-template-columns: 1fr; gap: 12px; }
-    header { flex-direction: column; align-items: flex-start; gap: 12px; }
-    .header-right { width: 100%; justify-content: space-between; }
+    header { justify-content: center; padding-bottom: 10px; }
+    .header-right { width: 100%; justify-content: space-between; border-top: 1px solid rgba(223, 177, 91, 0.15); padding-top: 10px; margin-top: 4px; }
     .chat-container { padding: 20px 14px; }
   }
 </style>
@@ -405,31 +446,43 @@
   <source src="" type="audio/mpeg">
 </audio>
 
-<header>
-  <a href="../index.html" class="logo">Arkanica</a>
-  <div class="header-right">
-    <div class="audio-carousel" id="audioCarousel" title="Desliza o usa las flechas para sintonizar">
-      <button class="audio-arrow-btn" onclick="changeAudioTrack(-1); event.stopPropagation();" title="Pista anterior">‹</button>
-      <div class="audio-label-container" onclick="changeAudioTrack(1)">
-        <span>🎵 Sintoniza:</span> <strong id="soundLabel" style="color: var(--text-main);">Silencio</strong>
-      </div>
-      <button class="audio-arrow-btn" onclick="changeAudioTrack(1); event.stopPropagation();" title="Pista siguiente">›</button>
-    </div>
+<!-- BOTÓN FLOTANTE DE MÚSICA (ESQUINA INFERIOR IZQUIERDA) -->
+<button class="floating-audio-btn" id="floatingAudioBtn" onclick="toggleAudioTrack()" title="Cambiar ambiente musical">
+  <span id="audioIcon">🎵</span>
+  <span class="audio-tooltip" id="audioTooltip">Silencio</span>
+</button>
 
-    <div class="user-badge" id="userBadge">Alma: Invitado</div>
-    <div class="crystals-badge" id="crystalsDisplay">
-      💎 <span id="crystalCount">10</span> Cristales (<span id="freeTrialBadge" style="color: var(--gold-light);">2 consultas gratis</span>)
+<header>
+  <a href="../index.html" class="logo">
+    <svg class="logo-symbol" viewBox="0 0 32 32">
+      <ellipse cx="16" cy="16" rx="14" ry="6" transform="rotate(-30 16 16)" />
+      <circle cx="16" cy="16" r="4" />
+      <path d="M16 2 L16 30" stroke-dasharray="1 3" />
+    </svg>
+    <span class="logo-text">Arkanica</span>
+  </a>
+  <div class="header-right">
+    <div class="profile-badge">
+      <div class="profile-crystals">
+        <span>💎</span> <strong id="crystalCount">10</strong>
+      </div>
+      <div class="profile-divider"></div>
+      <div class="profile-user-info">
+        <span>✦</span> <span id="userBadge">Invitado</span>
+      </div>
     </div>
     <a href="../index.html" class="back-link">← Volver</a>
   </div>
 </header>
 
-<div class="chat-container">
-  <div class="chat-header">
-    <h1>Sala de Profundización con el Oráculo</h1>
-    <p id="headerSubtitle">Tus dos primeras preguntas de profundización son <strong>100% gratuitas y de cortesía</strong>. Diseñadas para revelarte lo que tu tirada anterior dejó entrever.</p>
-  </div>
+<!-- BANNER PRINCIPAL / HERO REDISEÑADO -->
+<div class="hero-container">
+  <div class="arkanica-eyebrow">Canal directo e íntimo</div>
+  <h1 class="arkanica-title">Sala de Profundización con el Ente Superior</h1>
+  <p class="arkanica-sub" id="headerSubtitle">Tus dos primeras preguntas de profundización son <strong>100% gratuitas y de cortesía</strong>, diseñadas para revelarte lo que tu tirada anterior dejó entrever.</p>
+</div>
 
+<div class="chat-container">
   <div class="chat-messages" id="chatMessages">
     <div class="message ai" id="welcomeMessage">
       Saludos, alma en búsqueda. He capturado la energía de tu reciente tirada en la mesa principal. Escribe tu duda o dilema más profundo y desentrañaremos juntos la respuesta exacta que necesitas.
@@ -487,7 +540,7 @@
 </div>
 
 <script>
-  /* --- CONFIGURACIÓN DE SUPABASE --- */
+  /* --- CONFIGURACIÓN DE SUPABASE Y ESTADO --- */
   const SUPABASE_URL = 'https://jcosmhiukmfsygrinfgy.supabase.co';
   const SUPABASE_ANON_KEY = 'sb_publishable_UVGFZQhG36gD_67hInVz7g_4oLD7tWN';
 
@@ -500,9 +553,10 @@
     const { data: { session } } = await supabaseClient.auth.getSession();
     if (session) {
       currentUser = session.user;
-      document.getElementById('userBadge').textContent = `Alma: ${currentUser.email.split('@')[0]}`;
+      const username = currentUser.email.split('@')[0];
+      document.getElementById('userBadge').textContent = username.charAt(0).toUpperCase() + username.slice(1);
       
-      const { data, error } = await supabaseClient
+      const { data } = await supabaseClient
         .from('profiles')
         .select('crystals, free_questions_used')
         .eq('id', currentUser.id)
@@ -515,9 +569,10 @@
     } else {
       crystals = parseInt(localStorage.getItem('arkanica_crystals_guest')) || 10;
       freeQuestionsUsed = parseInt(localStorage.getItem('arkanica_free_used_guest')) || 0;
+      document.getElementById('userBadge').textContent = 'Invitado';
     }
 
-    // Verificar pago Stripe
+    // Verificar retorno de pago con éxito en Stripe
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('pagado') === 'true') {
       const addedCrystals = parseInt(urlParams.get('cristales')) || 0;
@@ -526,7 +581,7 @@
         window.history.replaceState({}, document.title, window.location.pathname);
         await saveUserData();
         setTimeout(() => {
-          appendMessage(`✦ <strong>¡Recarga mística completada con éxito!</strong> Se han añadido ${addedCrystals} Cristales de Claridad a tu cuenta. El canal está completamente abierto.`, 'ai');
+          appendMessage(`✦ <strong>¡Recarga mística completada con éxito!</strong> Se han añadido ${addedCrystals} Cristales de Claridad a tu cuenta. El canal con el Ente Superior está completamente abierto.`, 'ai');
         }, 500);
       }
     }
@@ -547,23 +602,21 @@
 
   initSession();
 
+  /* --- CONTROL DE AUDIO FLOTANTE --- */
   const audioEl = document.getElementById('ambientAudio');
   audioEl.volume = 0.35;
-
   const audioStates = [
     { label: "Silencio", src: null },
     { label: "Cuencos", src: "../assets/cuencos-tibetanos.mp3" },
     { label: "Lluvia", src: "../assets/lluvia.mp3" },
     { label: "Meditación", src: "../assets/meditacion.mp3" }
   ];
-
   let currentAudioIndex = 0;
 
-  function changeAudioTrack(direction) {
-    currentAudioIndex = (currentAudioIndex + direction + audioStates.length) % audioStates.length;
+  function toggleAudioTrack() {
+    currentAudioIndex = (currentAudioIndex + 1) % audioStates.length;
     const currentState = audioStates[currentAudioIndex];
-    document.getElementById('soundLabel').textContent = currentState.label;
-
+    document.getElementById('audioTooltip').textContent = currentState.label;
     if (currentState.src === null) {
       audioEl.pause();
       audioEl.currentTime = 0;
@@ -573,40 +626,27 @@
     }
   }
 
-  const audioCarousel = document.getElementById('audioCarousel');
-  let touchStartX = 0;
-  let touchEndX = 0;
-
-  audioCarousel.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; }, {passive: true});
-  audioCarousel.addEventListener('touchend', (e) => {
-    touchEndX = e.changedTouches[0].screenX;
-    if (touchEndX < touchStartX - 30) changeAudioTrack(1);
-    else if (touchEndX > touchStartX + 30) changeAudioTrack(-1);
-  }, {passive: true});
-
   function updateDisplayStatus() {
     document.getElementById('crystalCount').textContent = crystals;
     const remainingFree = Math.max(0, 2 - freeQuestionsUsed);
-    const freeBadge = document.getElementById('freeTrialBadge');
     const sendBtn = document.getElementById('sendBtn');
 
     if (remainingFree > 0) {
-      freeBadge.textContent = `${remainingFree} gratis restantes`;
-      sendBtn.textContent = `Consultar (Gratis)`;
+      sendBtn.textContent = `Consultar (${remainingFree} gratis)`;
     } else {
-      freeBadge.textContent = `0 gratis`;
       sendBtn.textContent = `Consultar (3 💎)`;
     }
     saveUserData();
   }
 
+  /* --- CONEXIÓN CON LA LECTURA DEL INDEX --- */
   let lastReadingContext = localStorage.getItem('arkanica_last_reading');
   if (lastReadingContext) {
     try {
       const readingData = JSON.parse(lastReadingContext);
       document.getElementById('welcomeMessage').innerHTML = `
         Saludos en búsqueda. Veo que acabas de realizar la tirada <em>"${readingData.spreadTitle}"</em> en la mesa principal. 
-        Tus cartas revelaron energías muy potentes. Como vienes directo de esa lectura, <strong>tus 2 primeras preguntas de profundización son totalmente gratuitas</strong> para darte una claridad absoluta. ¿Qué aspecto exacto deseas destrabar ahora?
+        Tus cartas revelaron energías muy potentes. Como vienes directo de esa lectura, <strong>tus 2 primeras preguntas de profundización con el Ente Superior son totalmente gratuitas</strong> para darte una claridad absoluta. ¿Qué aspecto exacto deseas destrabar ahora?
       `;
     } catch(e) {}
   }
@@ -651,7 +691,7 @@
     const COST = 3;
 
     if (remainingFree === 0 && crystals < COST) {
-      alert(`Has agotado tus dos preguntas gratuitas de cortesía y tus cristales disponibles.\n\nAdquiere un pack de cristales abajo para continuar tu sesión privada con el oráculo.`);
+      alert(`Has agotado tus dos preguntas gratuitas de cortesía y tus cristales disponibles.\n\nAdquiere un pack de cristales abajo para continuar tu sesión privada con el Ente Superior.`);
       return;
     }
 
@@ -683,11 +723,11 @@
     const loadingDiv = document.createElement('div');
     loadingDiv.className = 'message ai';
     loadingDiv.id = loadingId;
-    loadingDiv.innerHTML = `<em>El oráculo sintoniza la respuesta profunda para: "${userQuery}"...</em>`;
+    loadingDiv.innerHTML = `<em>El Ente Superior sintoniza la respuesta profunda para: "${userQuery}"...</em>`;
     chatMessages.appendChild(loadingDiv);
     chatMessages.scrollTop = chatMessages.scrollHeight;
 
-    let contextPrompt = `El usuario pregunta en sesión privada: "${userQuery}".`;
+    let contextPrompt = `El usuario pregunta en sesión privada al Ente Superior: "${userQuery}".`;
     if (lastReadingContext) {
       contextPrompt += ` Viene de una tirada previa en la web principal.`;
     }
@@ -703,7 +743,7 @@
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          spreadTitle: `Sesión Privada Profunda`,
+          spreadTitle: `Sesión Privada Profunda con el Ente Superior`,
           cards: [{ name: "El Arcano de la Revelación", archetype: contextPrompt }]
         })
       });
@@ -717,13 +757,13 @@
         if (isFreeTrial && freeQuestionsUsed === 1) {
           persuasionHTML += `
             <div style="margin-top: 12px; padding: 10px; background: rgba(223, 177, 91, 0.08); border-left: 2px solid var(--gold); font-size: 11.5px; color: var(--gold-light);">
-              ✦ <em>Te queda 1 pregunta gratuita de cortesía. Tu mente está intentando protegerte de una verdad que ya intuías. ¿Te atreves a preguntar el siguiente paso antes de que el velo se cierre?</em>
+              ✦ <em>Te queda 1 pregunta gratuita de cortesía. Tu mente está intentando protegerte de una verdad que ya intuías. ¿Te atreves a preguntar el siguiente paso al Ente Superior antes de que el velo se cierre?</em>
             </div>
           `;
         } else if (isFreeTrial && freeQuestionsUsed === 2) {
           persuasionHTML += `
             <div style="margin-top: 12px; padding: 12px; background: rgba(223, 177, 91, 0.12); border-left: 2px solid var(--gold); border-radius: 4px; font-size: 12px; color: var(--text-main);">
-              ✦ <strong>Has agotado tus consultas gratuitas de cortesía.</strong> Has rozado la superficie de una revelación muy profunda, pero la respuesta definitiva requiere recargar tus Cristales de Claridad abajo para mantener el canal abierto.
+              ✦ <strong>Has agotado tus consultas gratuitas de cortesía.</strong> Has rozado la superficie de una revelación muy profunda, pero la respuesta definitiva del Ente Superior requiere recargar tus Cristales de Claridad abajo para mantener el canal abierto.
             </div>
           `;
         }
@@ -737,8 +777,8 @@
       console.error("Error en sesión privada:", error);
       if (document.getElementById(loadingId)) document.getElementById(loadingId).remove();
       
-      const fallbackText = `Tras sintonizar con tu pregunta sobre "${userQuery}", percibo un bloqueo energético que llevas arrastrando sin admitirlo. La superficie de tu dilema oculta una decisión inevitable que cambiará tu rumbo actual. ${isFreeTrial ? '<em>(Esta ha sido tu consulta gratuita de cortesía. Para desenterrar la raíz completa del problema, recarga tus cristales abajo).</em>' : ''}`;
-      appendMessage(`El oráculo te revela:`, 'ai', `<div class="ai-response-body">${fallbackText}</div>`);
+      const fallbackText = `Tras sintonizar con tu pregunta sobre "${userQuery}", percibo un bloqueo energético que llevas arrastrando sin admitirlo. La superficie de tu dilema oculta una decisión inevitable que cambiará tu rumbo actual. ${isFreeTrial ? '<em>(Esta ha sido tu consulta gratuita de cortesía. Para desenterrar la raíz completa del problema con el Ente Superior, recarga tus cristales abajo).</em>' : ''}`;
+      appendMessage(`El Ente Superior te revela:`, 'ai', `<div class="ai-response-body">${fallbackText}</div>`);
     }
   }
 </script>
