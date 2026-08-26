@@ -485,7 +485,7 @@
 <div class="chat-container">
   <div class="chat-messages" id="chatMessages">
     <div class="message ai" id="welcomeMessage">
-      Saludos, alma en búsqueda. He capturado la energía de tu reciente tirada en la mesa principal. Escribe tu duda o dilema más profundo y desentrañaremos juntos la respuesta exacta que necesitas.
+      Saludos, alma en búsqueda. Escribe tu duda o dilema más profundo y desentrañaremos juntos la respuesta exacta que necesitas.
     </div>
   </div>
 
@@ -639,16 +639,33 @@
     saveUserData();
   }
 
-  /* --- CONEXIÓN CON LA LECTURA DEL INDEX --- */
+  /* --- PERSONALIZACIÓN SEGÚN ORIGEN (TIRADA O ACCESO DIRECTO) --- */
   let lastReadingContext = localStorage.getItem('arkanica_last_reading');
+  
   if (lastReadingContext) {
     try {
       const readingData = JSON.parse(lastReadingContext);
+      // Limpiamos el localStorage para que si recarga o vuelve desde el botón general no arrastre la tirada anterior
+      localStorage.removeItem('arkanica_last_reading');
+
+      document.getElementById('headerSubtitle').innerHTML = `Has sintonizado con la tirada <strong>"${readingData.spreadTitle}"</strong>. Tus dos primeras preguntas de profundización son <strong>100% gratuitas y de cortesía</strong>.`;
+      
       document.getElementById('welcomeMessage').innerHTML = `
-        Saludos en búsqueda. Veo que acabas de realizar la tirada <em>"${readingData.spreadTitle}"</em> en la mesa principal. 
+        Saludos en búsqueda. He capturado la energía de tu reciente tirada <em>"${readingData.spreadTitle}"</em> en la mesa principal. 
         Tus cartas revelaron energías muy potentes. Como vienes directo de esa lectura, <strong>tus 2 primeras preguntas de profundización con el Ente Superior son totalmente gratuitas</strong> para darte una claridad absoluta. ¿Qué aspecto exacto deseas destrabar ahora?
       `;
-    } catch(e) {}
+    } catch(e) {
+      setupDefaultDirectAccess();
+    }
+  } else {
+    setupDefaultDirectAccess();
+  }
+
+  function setupDefaultDirectAccess() {
+    document.getElementById('headerSubtitle').innerHTML = `Has abierto el canal directo con el Ente Superior. Tus dos primeras consultas son <strong>100% gratuitas y de cortesía</strong> para revelar lo que necesitas saber ahora mismo.`;
+    document.getElementById('welcomeMessage').innerHTML = `
+      Saludos, alma en búsqueda. Has cruzado el umbral hacia el canal directo con el Ente Superior. No hay intermediarios ni filtros: plantea tu encrucijada más íntima, ese dilema que ronda tu mente, y obtén la respuesta milimétrica y transformadora que el universo tiene reservada para ti. <strong>Tus 2 primeras consultas son completamente gratuitas.</strong> ¿Qué verdad deseas desenterrar hoy?
+    `;
   }
 
   async function buyPack(amount, packName, priceString) {
@@ -728,9 +745,6 @@
     chatMessages.scrollTop = chatMessages.scrollHeight;
 
     let contextPrompt = `El usuario pregunta en sesión privada al Ente Superior: "${userQuery}".`;
-    if (lastReadingContext) {
-      contextPrompt += ` Viene de una tirada previa en la web principal.`;
-    }
     
     if (isFreeTrial) {
       contextPrompt += ` Esta es una de las 2 preguntas gratuitas de cortesía. Responde de forma extremadamente profunda, emocional, reveladora y milimétrica, conectando con sus miedos u objetivos ocultos. Al final del texto, deja una intriga fascinante, una pregunta abierta desgarradora o un aviso sutil sobre un punto ciego que aún no ve, incitándole fuertemente a realizar otra pregunta para descubrir la verdad completa. Formato estricto en HTML <p>.`;
