@@ -433,6 +433,7 @@
     justify-content: center;
     padding: 8px;
     position: relative;
+    touch-action: pan-y;
   }
 
   .product-img-wrap img {
@@ -442,6 +443,7 @@
     height: auto;
     object-fit: contain;
     transition: transform 0.4s ease, opacity 0.25s ease;
+    pointer-events: none;
   }
 
   .store-product-card:hover .product-img-wrap img { transform: scale(1.06); }
@@ -467,6 +469,9 @@
     transition: opacity 0.2s ease, background 0.2s ease;
     z-index: 6;
     padding: 0;
+  }
+  @media (max-width: 900px) {
+    .img-nav { opacity: 0.75; }
   }
   .product-img-wrap:hover .img-nav { opacity: 1; }
   .img-nav:hover { background: var(--gold); color: var(--bg); }
@@ -588,7 +593,7 @@
   }
   .buy-stripe-btn:hover { background: var(--gold-light); transform: translateY(-1px); }
 
-  /* --- MODAL CON CARRUSEL Y PRECIOS TACHADOS --- */
+  /* --- MODAL CON CARRUSEL TÁCTIL Y PRECIOS TACHADOS --- */
   .modal-overlay {
     position: fixed;
     inset: 0;
@@ -646,6 +651,7 @@
     justify-content: center;
     position: relative;
     padding: 10px;
+    touch-action: pan-y;
   }
 
   .modal-img-wrap img {
@@ -653,6 +659,7 @@
     max-height: 100%;
     object-fit: contain;
     transition: opacity 0.25s ease;
+    pointer-events: none;
   }
 
   .modal-title {
@@ -766,13 +773,13 @@
   <div><strong id="toastUser">Marta de Barcelona</strong> acaba de adquirir un artículo místico.</div>
 </div>
 
-<!-- MODAL DE DETALLES CON CARRUSEL E INVERSIÓN ENERGÉTICA TACHADA -->
+<!-- MODAL DE DETALLES CON CARRUSEL TÁCTIL Y PRECIOS TACHADOS -->
 <div class="modal-overlay" id="productModal" onclick="closeProductModal()">
   <div class="modal-content" onclick="event.stopPropagation()">
     <button class="modal-close" onclick="closeProductModal()">✕</button>
     <div style="font-size: 9.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 4px;">Arkanica • Legado Sagrado</div>
     
-    <!-- Carrusel dentro del Modal -->
+    <!-- Carrusel dentro del Modal con soporte táctil -->
     <div class="modal-img-wrap" id="modalImgWrap" data-images="[]" data-current="0">
       <img id="modalMainImg" src="" alt="Detalle del artículo">
       <button class="img-nav img-nav-prev" onclick="changeModalImage(-1)" aria-label="Anterior">‹</button>
@@ -835,7 +842,7 @@
       </button>
 
       <div class="nav-dropdown-menu" id="navDropdownMenu">
-        <a href="ente-superior.html" class="highlight" onclick="closeNavMenu()">🔮 Sala Ente Superior</a>
+        <a href="/ente-superior/ente-superior.html" class="highlight" onclick="closeNavMenu()">🔮 Sala Ente Superior</a>
         <a href="index.html#mesa" onclick="closeNavMenu()">Lecturas</a>
         <a href="index.html#reservas" onclick="closeNavMenu()">Sesiones Privadas</a>
         <a href="index.html" onclick="closeNavMenu()">← Volver al Oráculo</a>
@@ -918,7 +925,7 @@
   <!-- Producto 3: Set de Runas de Amatista -->
   <div class="store-product-card" data-category="minerales">
     <div class="product-badge-discount">-30% OFF</div>
-    <div class="product-img-wrap" data-images="[&quot;https://media.aiku.io/xronDSgjDjwK5oJk9RmgVFxJq49uTH65KMCcddR3_DU/bG9jYWw6Ly9tZWRpYS85Si9KQy82MFIzMEMxRzZDU0tKQzlKLzliZTRhZGI5LmpwZWc&quot;, &quot;https://media.aiku.io/mABCIWNCNko1EY6zllg4R0t9NDSh61t8pfff5ag9dRg/bG9jYWw6Ly9tZWRpYS85Sy9KQy82MFIzMEMxRzZDU0tKQzlLL2JiMDQ2OTZiLmpwZWc&quot;]" data-current="0">
+    <div class="product-img-wrap" data-images="[&quot;https://media.aiku.io/xronDSgjDjwK5oJk9RmgVFxJq49uTH65KMCcddR3_DU/bG9jYWw6Ly9tZWRpYS85Si/KQy82MFIzMEMxRzZDU0tKQzlKLzliZTRhZGI5LmpwZWc&quot;, &quot;https://media.aiku.io/mABCIWNCNko1EY6zllg4R0t9NDSh61t8pfff5ag9dRg/bG9jYWw6Ly9tZWRpYS85Sy9KQy82MFIzMEMxRzZDU0tKQzlLL2JiMDQ2OTZiLmpwZWc&quot;]" data-current="0">
       <img src="https://media.aiku.io/xronDSgjDjwK5oJk9RmgVFxJq49uTH65KMCcddR3_DU/bG9jYWw6Ly9tZWRpYS85Si9KQy82MFIzMEMxRzZDU0tKQzlKLzliZTRhZGI5LmpwZWc" alt="Set de Runas de la India en Bolsa - Amatista" loading="lazy">
       <button class="img-nav img-nav-prev" onclick="event.stopPropagation(); changeProductImage(this, -1)" aria-label="Anterior">‹</button>
       <button class="img-nav img-nav-next" onclick="event.stopPropagation(); changeProductImage(this, 1)" aria-label="Siguiente">›</button>
@@ -1080,7 +1087,7 @@
     closeNavMenu();
   });
 
-  /* --- CONTROL DEL MODAL CON CARRUSEL DE IMÁGENES --- */
+  /* --- CONTROL DEL MODAL CON CARRUSEL TÁCTIL --- */
   let modalImages = [];
   let modalCurrentIdx = 0;
 
@@ -1092,7 +1099,6 @@
     document.getElementById('modalOrigPrice').textContent = (origPriceInCents / 100).toFixed(2).replace('.', ',') + ' €';
     document.getElementById('modalFinalPrice').textContent = (priceInCents / 100).toFixed(2).replace('.', ',') + ' €';
     
-    // Obtener imágenes del producto desde la tarjeta principal
     const card = btnEl.closest('.store-product-card');
     const imgWrap = card.querySelector('.product-img-wrap');
     modalImages = JSON.parse(imgWrap.dataset.images || '[]');
@@ -1100,7 +1106,6 @@
     
     updateModalImageDisplay();
 
-    // Configurar botón de compra
     const buyBtn = document.getElementById('modalBuyBtn');
     buyBtn.onclick = function() {
       buyProductStripe(productNameForStripe, priceInCents, crystalsBonus);
@@ -1127,7 +1132,6 @@
       mainImg.style.opacity = 1;
     }, 120);
 
-    // Renderizar puntitos del carrusel en el modal
     const dotsContainer = document.getElementById('modalImgDots');
     dotsContainer.innerHTML = '';
     modalImages.forEach((_, idx) => {
@@ -1139,6 +1143,52 @@
       };
       dotsContainer.appendChild(dot);
     });
+  }
+
+  /* --- SOPORTE GESTOS TÁCTILES (SWIPE) EN MÓVILES --- */
+  function addTouchSwipeSupport(wrapElement, onSwipeLeft, onSwipeRight) {
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    wrapElement.addEventListener('touchstart', e => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, {passive: true});
+
+    wrapElement.addEventListener('touchend', e => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    }, {passive: true});
+
+    function handleSwipe() {
+      const threshold = 40;
+      if (touchEndX < touchStartX - threshold) {
+        onSwipeLeft();
+      }
+      if (touchEndX > touchStartX + threshold) {
+        onSwipeRight();
+      }
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const modalWrap = document.getElementById('modalImgWrap');
+    addTouchSwipeSupport(modalWrap, () => changeModalImage(1), () => changeModalImage(-1));
+
+    document.querySelectorAll('.product-img-wrap').forEach(wrap => {
+      addTouchSwipeSupport(
+        wrap, 
+        () => changeProductImageDirect(wrap, 1), 
+        () => changeProductImageDirect(wrap, -1)
+      );
+    });
+  });
+
+  function changeProductImageDirect(wrap, direction) {
+    const images = JSON.parse(wrap.dataset.images || '[]');
+    if (images.length <= 1) return;
+    let idx = parseInt(wrap.dataset.current || '0', 10);
+    idx = (idx + direction + images.length) % images.length;
+    setCardImageIndex(wrap, images, idx);
   }
 
   /* --- FILTROS RÁPIDOS DE PRODUCTOS --- */
