@@ -46,7 +46,17 @@
     overflow-x: hidden;
   }
 
-  /* BOTÓN FLOTANTE DE AUDIO (ESQUINA INFERIOR IZQUIERDA) */
+  /* --- EFECTO DE VIÑETA OSCURA ENVOLVENTE --- */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at center, transparent 40%, rgba(3, 3, 5, 0.75) 100%);
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  /* BOTÓN FLOTANTE DE AUDIO */
   .floating-audio-btn {
     position: fixed;
     bottom: 24px;
@@ -92,6 +102,31 @@
     opacity: 1;
   }
 
+  /* NOTIFICACIÓN FLOTANTE DE VALIDACIÓN SOCIAL */
+  .social-proof-toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: rgba(12, 11, 18, 0.95);
+    border: 1px solid var(--gold);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 11.5px;
+    color: var(--text-main);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 15px rgba(223, 177, 91, 0.2);
+    z-index: 2400;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .social-proof-toast.show {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
   /* HEADER RESPONSIVE */
   header {
     width: 100%;
@@ -103,6 +138,7 @@
     border-bottom: 1px solid var(--line);
     padding-bottom: 12px;
     position: relative;
+    z-index: 100;
   }
 
   .logo {
@@ -171,7 +207,7 @@
     font-weight: 500;
   }
 
-  /* MENÚ HAMBURGUESA Y DESPLEGABLE */
+  /* MENÚ HAMBURGUESA Y DESPLEGABLE OPACADO */
   .hamburger-btn {
     background: rgba(12, 11, 18, 0.92);
     border: 1px solid var(--gold);
@@ -200,19 +236,25 @@
     transition: all 0.3s ease;
   }
 
+  .header-menu-wrapper {
+    position: relative;
+    z-index: 99999;
+  }
+
   .nav-dropdown-menu {
     position: absolute;
-    top: 60px;
+    top: 50px;
     right: 0;
-    background: var(--surface);
-    border: 1px solid var(--gold);
+    background-color: #08070b !important;
+    backdrop-filter: none !important;
+    border: 1.5px solid var(--gold);
     border-radius: 10px;
     width: 220px;
-    padding: 12px 0;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.8), 0 0 20px rgba(223, 177, 91, 0.15);
+    padding: 10px 0;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.95), 0 0 30px rgba(0, 0, 0, 0.9);
     display: none;
     flex-direction: column;
-    z-index: 2900;
+    z-index: 99999;
   }
   .nav-dropdown-menu.active {
     display: flex;
@@ -223,12 +265,13 @@
     font-size: 11.5px;
     text-transform: uppercase;
     letter-spacing: 0.12em;
-    padding: 10px 18px;
+    padding: 12px 20px;
     transition: background 0.2s, color 0.2s;
     display: block;
+    background-color: #08070b !important;
   }
   .nav-dropdown-menu a:hover {
-    background: rgba(223, 177, 91, 0.1);
+    background: rgba(223, 177, 91, 0.15) !important;
     color: var(--gold);
   }
   .nav-dropdown-menu a.highlight {
@@ -243,8 +286,9 @@
   .hero-container {
     text-align: center;
     max-width: 700px;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
     padding: 0 8px;
+    z-index: 2;
   }
 
   .arkanica-eyebrow {
@@ -277,6 +321,35 @@
     color: var(--gold-light);
   }
 
+  /* FILTROS RÁPIDOS POR CATEGORÍA */
+  .store-filters {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+    z-index: 2;
+  }
+
+  .filter-pill {
+    background: rgba(12, 11, 18, 0.8);
+    border: 1px solid var(--line);
+    color: var(--text-muted);
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .filter-pill:hover, .filter-pill.active {
+    background: var(--gold);
+    color: var(--bg);
+    border-color: var(--gold);
+    font-weight: 600;
+  }
+
   /* REJILLA DE PRODUCTOS */
   .store-grid {
     width: 100%;
@@ -285,6 +358,7 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 16px;
     margin-bottom: 30px;
+    z-index: 2;
   }
 
   .store-product-card {
@@ -305,11 +379,12 @@
     transform: translateY(-3px);
   }
 
-  /* DESTELLO DORADO DISIMULADO SOLO EN TARJETA ESTRELLA / BOTÓN */
+  /* DESTACADO BUNDLE / GOLD SHIMMER */
   .gold-shimmer-card {
     position: relative;
     overflow: hidden;
     border-color: var(--gold);
+    background: linear-gradient(145deg, #161422 0%, #0a0910 100%);
   }
   .gold-shimmer-card::before {
     content: '';
@@ -382,7 +457,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
 
   .original-price {
@@ -401,12 +476,22 @@
   .product-bonus {
     font-size: 11px;
     color: var(--gold);
-    margin-bottom: 16px;
+    margin-bottom: 8px;
     font-style: italic;
     background: rgba(223, 177, 91, 0.05);
     padding: 6px 8px;
     border-radius: 6px;
     border-left: 2px solid var(--gold);
+  }
+
+  /* SELLO DE CONTAGRACIÓN ENERGÉTICA */
+  .energy-seal {
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
   }
 
   .buy-stripe-btn {
@@ -420,25 +505,77 @@
     padding: 11px;
     border-radius: 6px;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: background 0.3s, transform 0.2s;
     width: 100%;
   }
-  .buy-stripe-btn:hover { background: var(--gold-light); }
+  .buy-stripe-btn:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+  /* SECCIÓN DE RESEÑAS VERIFICADAS */
+  .reviews-section {
+    width: 100%;
+    max-width: 1100px;
+    background: linear-gradient(135deg, rgba(14, 13, 20, 0.85) 0%, rgba(6, 5, 10, 0.95) 100%);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 20px 45px rgba(0,0,0,0.5);
+    z-index: 2;
+  }
+
+  .reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-top: 14px;
+  }
+
+  .review-card {
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 14px;
+    font-size: 11.5px;
+    color: var(--text-main);
+    line-height: 1.5;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  /* ANUNCIO ADSENSE */
+  .ad-container-arkanica {
+    width: 100%;
+    max-width: 1100px;
+    margin: 16px auto 0;
+    background: linear-gradient(135deg, rgba(14, 13, 20, 0.85) 0%, rgba(6, 5, 10, 0.95) 100%);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 14px;
+    text-align: center;
+    box-shadow: 0 20px 45px rgba(0,0,0,0.5);
+    overflow: hidden;
+    position: relative;
+    z-index: 2;
+  }
 
   @media (max-width: 900px) {
-    .store-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
+    .store-grid { grid-template-columns: repeat(2, 1fr); }
+    .reviews-grid { grid-template-columns: 1fr; }
   }
 
   @media (max-width: 600px) {
-    .store-grid {
-      grid-template-columns: 1fr;
-    }
+    .store-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
 <body>
+
+<!-- NOTIFICACIÓN FLOTANTE DE VALIDACIÓN SOCIAL -->
+<div class="social-proof-toast" id="socialProofToast">
+  <span>✨</span>
+  <div><strong id="toastUser">Marta de Barcelona</strong> acaba de adquirir un artículo místico.</div>
+</div>
 
 <audio id="ambientAudio" loop>
   <source src="" type="audio/mpeg">
@@ -472,8 +609,8 @@
       </div>
     </div>
 
-    <!-- Botón de Hamburguesa y Menú Desplegable -->
-    <div style="position: relative;">
+    <!-- Menú Hamburguesa -->
+    <div class="header-menu-wrapper">
       <button class="hamburger-btn" onclick="toggleNavMenu(event)" title="Menú de navegación">
         <span class="hamburger-line"></span>
         <span class="hamburger-line"></span>
@@ -481,10 +618,10 @@
       </button>
 
       <div class="nav-dropdown-menu" id="navDropdownMenu">
+        <a href="ente-superior.html" class="highlight" onclick="closeNavMenu()">🔮 Sala Ente Superior</a>
         <a href="index.html#mesa" onclick="closeNavMenu()">Lecturas</a>
-        <a href="index.html#autor" onclick="closeNavMenu()">Guía</a>
         <a href="index.html#reservas" onclick="closeNavMenu()">Sesiones Privadas</a>
-        <a href="index.html" class="highlight" onclick="closeNavMenu()">← Volver al Oráculo</a>
+        <a href="index.html" onclick="closeNavMenu()">← Volver al Oráculo</a>
       </div>
     </div>
   </div>
@@ -493,14 +630,41 @@
 <div class="hero-container">
   <div class="arkanica-eyebrow">Objetos de poder y altares</div>
   <h1 class="arkanica-title">Tienda Mística Arkanica</h1>
-  <p class="arkanica-sub">Selección exclusiva de minerales, herramientas de radiestesia y oráculos físicos. <strong>Aprovecha un 40% de descuento directo</strong> y llévate de regalo <strong>+25 Cristales de Claridad 💎</strong> para tus consultas digitales con el Ente Superior.</p>
+  <p class="arkanica-sub">Selección exclusiva de minerales, herramientas de radiestesia y oráculos físicos. <strong>Aprovecha un 40% de descuento directo</strong> y llévate cristales de regalo para tus consultas digitales con el Ente Superior.</p>
 </div>
 
-<!-- REJILLA DE PRODUCTOS CON 40% OFF Y REGALO DE CRISTALES -->
-<div class="store-grid">
+<!-- FILTROS RÁPIDOS POR CATEGORÍA -->
+<div class="store-filters">
+  <button class="filter-pill active" onclick="filterProducts('all')">Todos</button>
+  <button class="filter-pill" onclick="filterProducts('minerales')">Minerales y Cristales</button>
+  <button class="filter-pill" onclick="filterProducts('oraculos')">Oráculos y Cartas</button>
+  <button class="filter-pill" onclick="filterProducts('altares')">Altares y Rituales</button>
+</div>
+
+<!-- REJILLA DE PRODUCTOS CON PACKS Y FILTROS -->
+<div class="store-grid" id="storeGrid">
+
+  <!-- Producto Estrella: Pack Altar Maestro (Bundle) -->
+  <div class="store-product-card gold-shimmer-card" data-category="altares">
+    <div class="product-badge-discount">PACK EXCLUSIVO</div>
+    <div class="product-icon-wrap">🕯️🔮</div>
+    <div>
+      <h3 class="product-name">Pack Altar Maestro (Edición Integral)</h3>
+      <p class="product-desc">El kit definitivo para tu espacio sagrado: incluye Paño de Terciopelo, Drusa de Cuarzo Blanco y Péndulo de Cuarzo Maestro combinados.</p>
+    </div>
+    <div>
+      <div class="product-pricing">
+        <span class="original-price">74.99 €</span>
+        <span class="discounted-price">39.99 €</span>
+      </div>
+      <div class="product-bonus">✦ Incluye +50 Cristales de Claridad de regalo</div>
+      <div class="energy-seal"><span>✨</span> Consagrado y purificado energéticamente a mano</div>
+      <button class="buy-stripe-btn" onclick="buyProductStripe('Pack Altar Maestro Integral', 3999, 50)">Adquirir Pack Maestro</button>
+    </div>
+  </div>
 
   <!-- Producto 1: Péndulo -->
-  <div class="store-product-card">
+  <div class="store-product-card" data-category="minerales">
     <div class="product-badge-discount">-40% OFF</div>
     <div class="product-icon-wrap">🔮</div>
     <div>
@@ -513,12 +677,13 @@
         <span class="discounted-price">14.99 €</span>
       </div>
       <div class="product-bonus">✦ Incluye +25 Cristales de Claridad de regalo</div>
-      <button class="buy-stripe-btn" onclick="buyProductStripe('Péndulo de Cuarzo Maestro', '1499')">Comprar con 40% Dto.</button>
+      <div class="energy-seal"><span>✨</span> Consagrado y purificado energéticamente a mano</div>
+      <button class="buy-stripe-btn" onclick="buyProductStripe('Péndulo de Cuarzo Maestro', 1499, 25)">Comprar con 40% Dto.</button>
     </div>
   </div>
 
-  <!-- Producto 2: Baraja (Tarjeta Estrella con Destello Dorado) -->
-  <div class="store-product-card gold-shimmer-card">
+  <!-- Producto 2: Baraja -->
+  <div class="store-product-card" data-category="oraculos">
     <div class="product-badge-discount">-40% OFF</div>
     <div class="product-icon-wrap">🃏</div>
     <div>
@@ -531,12 +696,13 @@
         <span class="discounted-price">23.99 €</span>
       </div>
       <div class="product-bonus">✦ Incluye +25 Cristales de Claridad de regalo</div>
-      <button class="buy-stripe-btn" onclick="buyProductStripe('Baraja de Tarot Dorada', '2399')">Comprar con 40% Dto.</button>
+      <div class="energy-seal"><span>✨</span> Consagrado y purificado energéticamente a mano</div>
+      <button class="buy-stripe-btn" onclick="buyProductStripe('Baraja de Tarot Dorada', 2399, 25)">Comprar con 40% Dto.</button>
     </div>
   </div>
 
   <!-- Producto 3: Runas -->
-  <div class="store-product-card">
+  <div class="store-product-card" data-category="minerales">
     <div class="product-badge-discount">-40% OFF</div>
     <div class="product-icon-wrap">🪨</div>
     <div>
@@ -549,12 +715,13 @@
         <span class="discounted-price">19.79 €</span>
       </div>
       <div class="product-bonus">✦ Incluye +25 Cristales de Claridad de regalo</div>
-      <button class="buy-stripe-btn" onclick="buyProductStripe('Runas de Amatista', '1979')">Comprar con 40% Dto.</button>
+      <div class="energy-seal"><span>✨</span> Consagrado y purificado energéticamente a mano</div>
+      <button class="buy-stripe-btn" onclick="buyProductStripe('Runas de Amatista', 1979, 25)">Comprar con 40% Dto.</button>
     </div>
   </div>
 
   <!-- Producto 4: Drusa de Cuarzo -->
-  <div class="store-product-card">
+  <div class="store-product-card" data-category="minerales">
     <div class="product-badge-discount">-40% OFF</div>
     <div class="product-icon-wrap">✨</div>
     <div>
@@ -567,12 +734,13 @@
         <span class="discounted-price">17.99 €</span>
       </div>
       <div class="product-bonus">✦ Incluye +25 Cristales de Claridad de regalo</div>
-      <button class="buy-stripe-btn" onclick="buyProductStripe('Drusa de Cuarzo Blanco', '1799')">Comprar con 40% Dto.</button>
+      <div class="energy-seal"><span>✨</span> Consagrado y purificado energéticamente a mano</div>
+      <button class="buy-stripe-btn" onclick="buyProductStripe('Drusa de Cuarzo Blanco', 1799, 25)">Comprar con 40% Dto.</button>
     </div>
   </div>
 
   <!-- Producto 5: Colgante -->
-  <div class="store-product-card">
+  <div class="store-product-card" data-category="minerales">
     <div class="product-badge-discount">-40% OFF</div>
     <div class="product-icon-wrap">📿</div>
     <div>
@@ -585,12 +753,13 @@
         <span class="discounted-price">13.19 €</span>
       </div>
       <div class="product-bonus">✦ Incluye +25 Cristales de Claridad de regalo</div>
-      <button class="buy-stripe-btn" onclick="buyProductStripe('Colgante de Obsidiana', '1319')">Comprar con 40% Dto.</button>
+      <div class="energy-seal"><span>✨</span> Consagrado y purificado energéticamente a mano</div>
+      <button class="buy-stripe-btn" onclick="buyProductStripe('Colgante de Obsidiana', 1319, 25)">Comprar con 40% Dto.</button>
     </div>
   </div>
 
   <!-- Producto 6: Paño de Lectura -->
-  <div class="store-product-card">
+  <div class="store-product-card" data-category="altares">
     <div class="product-badge-discount">-40% OFF</div>
     <div class="product-icon-wrap">🕯️</div>
     <div>
@@ -603,14 +772,39 @@
         <span class="discounted-price">11.99 €</span>
       </div>
       <div class="product-bonus">✦ Incluye +25 Cristales de Claridad de regalo</div>
-      <button class="buy-stripe-btn" onclick="buyProductStripe('Paño de Terciopelo', '1199')">Comprar con 40% Dto.</button>
+      <div class="energy-seal"><span>✨</span> Consagrado y purificado energéticamente a mano</div>
+      <button class="buy-stripe-btn" onclick="buyProductStripe('Paño de Terciopelo', 1199, 25)">Comprar con 40% Dto.</button>
     </div>
   </div>
 
 </div>
 
+<!-- SECCIÓN DE RESEÑAS VERIFICADAS -->
+<div class="reviews-section">
+  <div style="font-size: 9.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 4px; text-align: center;">Comunidad Arkanica</div>
+  <h3 style="margin-top: 0; font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--gold); text-align: center; margin-bottom: 12px;">Lo que dicen quienes ya han cruzado</h3>
+  
+  <div class="reviews-grid">
+    <div class="review-card">
+      <div style="color: var(--gold);">★★★★★</div>
+      <p style="margin: 0; font-style: italic;">«El péndulo llegó perfectamente empaquetado y con una energía preciosa. Los cristales de regalo en mi cuenta se sumaron al instante.»</p>
+      <span style="font-family: 'Cormorant Garamond', serif; color: var(--gold-light);">— Elena G. (Valencia)</span>
+    </div>
+    <div class="review-card">
+      <div style="color: var(--gold);">★★★★★</div>
+      <p style="margin: 0; font-style: italic;">«La baraja dorada es una auténtica obra de arte. Se nota el cuidado y el detalle en cada elemento físico que envían.»</p>
+      <span style="font-family: 'Cormorant Garamond', serif; color: var(--gold-light);">— Sergio M. (Madrid)</span>
+    </div>
+    <div class="review-card">
+      <div style="color: var(--gold);">★★★★★</div>
+      <p style="margin: 0; font-style: italic;">«Compré el paño de terciopelo y la drusa. La atención y la experiencia en la tienda son impecables. Repetiré seguro.»</p>
+      <span style="font-family: 'Cormorant Garamond', serif; color: var(--gold-light);">— Andrea V. (Sevilla)</span>
+    </div>
+  </div>
+</div>
+
 <!-- Bloque inferior de AdSense -->
-<div class="ad-container-arkanica" style="width: 100%; max-width: 1100px; margin: 16px auto; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px; text-align: center;">
+<div class="ad-container-arkanica">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2698892755295064" crossorigin="anonymous"></script>
   <ins class="adsbygoogle"
        style="display:block"
@@ -636,10 +830,94 @@
     menu.classList.remove('active');
   }
 
-  // Cerrar el menú desplegable si se hace clic fuera de él
   window.addEventListener('click', () => {
     closeNavMenu();
   });
+
+  /* --- FILTROS RÁPIDOS DE PRODUCTOS --- */
+  function filterProducts(category) {
+    playWoodSelectSound();
+    const pills = document.querySelectorAll('.filter-pill');
+    pills.forEach(p => p.classList.remove('active'));
+    event.target.classList.add('active');
+
+    const cards = document.querySelectorAll('.store-product-card');
+    cards.forEach(card => {
+      if (category === 'all' || card.getAttribute('data-category') === category) {
+        card.style.display = 'flex';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+
+  /* --- NOTIFICACIONES FLOTANTES DE VALIDACIÓN SOCIAL (15 COMPRADORES Y TIEMPOS AMPLIADOS) --- */
+  const buyersList = [
+    { name: "Marta de Barcelona", item: "el Péndulo de Cuarzo" },
+    { name: "Alejandro de Bilbao", item: "la Baraja de Tarot Dorada" },
+    { name: "Lucía de Valencia", item: "el Pack Altar Maestro" },
+    { name: "David de Sevilla", item: "el Set de Runas de Amatista" },
+    { name: "Sofía de Madrid", item: "la Drusa de Cuarzo Blanco" },
+    { name: "Carlos de Málaga", item: "el Colgante de Obsidiana" },
+    { name: "Elena de Zaragoza", item: "el Paño de Terciopelo" },
+    { name: "Javier de Murcia", item: "el Pack Altar Maestro" },
+    { name: "Carmen de Palma", item: "la Baraja de Tarot Dorada" },
+    { name: "Adrián de Las Palmas", item: "el Péndulo de Cuarzo" },
+    { name: "Claudia de Alicante", item: "el Set de Runas de Amatista" },
+    { name: "Marcos de Granada", item: "la Drusa de Cuarzo Blanco" },
+    { name: "Valeria de Vigo", item: "el Colgante de Obsidiana" },
+    { name: "Hugo de Valladolid", item: "el Paño de Terciopelo" },
+    { name: "Beatriz de Córdoba", item: "el Pack Altar Maestro" }
+  ];
+
+  function triggerSocialProof() {
+    const toast = document.getElementById('socialProofToast');
+    const randomBuyer = buyersList[Math.floor(Math.random() * buyersList.length)];
+    document.getElementById('toastUser').textContent = `${randomBuyer.name} (${randomBuyer.item})`;
+    
+    toast.classList.add('show');
+    setTimeout(() => {
+      toast.classList.remove('show');
+    }, 4500);
+  }
+
+  // Primera aparición a los 10 segundos, y se repite cada 35 segundos
+  setTimeout(() => {
+    triggerSocialProof();
+    setInterval(triggerSocialProof, 35000);
+  }, 10000);
+
+  /* --- EFECTOS DE SONIDO (SFX) --- */
+  let sfxAudioCtx = null;
+  function initSfxContext() {
+    if (!sfxAudioCtx) {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      sfxAudioCtx = new AudioCtx();
+    }
+    if (sfxAudioCtx.state === 'suspended') { sfxAudioCtx.resume(); }
+  }
+
+  function playWoodSelectSound() {
+    try {
+      initSfxContext();
+      const now = sfxAudioCtx.currentTime;
+      const bufferSize = sfxAudioCtx.sampleRate * 0.08;
+      const buffer = sfxAudioCtx.createBuffer(1, bufferSize, sfxAudioCtx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
+      const noise = sfxAudioCtx.createBufferSource();
+      noise.buffer = buffer;
+      const filter = sfxAudioCtx.createBiquadFilter();
+      filter.type = 'bandpass';
+      filter.frequency.setValueAtTime(800, now);
+      filter.Q.setValueAtTime(3.0, now);
+      const gain = sfxAudioCtx.createGain();
+      gain.gain.setValueAtTime(0.12, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.07);
+      noise.connect(filter); filter.connect(gain); gain.connect(sfxAudioCtx.destination);
+      noise.start(now); noise.stop(now + 0.08);
+    } catch(e) {}
+  }
 
   /* --- CONTROL DE AUDIO FLOTANTE --- */
   const audioEl = document.getElementById('ambientAudio');
@@ -665,32 +943,85 @@
     }
   }
 
-  /* --- SUPABASE PARA MOSTRAR CRISTALES ACTUALES --- */
+  /* --- SUPABASE Y ESTADO DE CRISTALES --- */
   const SUPABASE_URL = 'https://jcosmhiukmfsygrinfgy.supabase.co';
   const SUPABASE_ANON_KEY = 'sb_publishable_UVGFZQhG36gD_67hInVz7g_4oLD7tWN';
   const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  let currentUser = null;
+  let crystals = 10;
 
   async function checkUserSession() {
     const { data: { session } } = await supabaseClient.auth.getSession();
     if (session) {
-      const user = session.user;
-      const username = user.email.split('@')[0];
+      currentUser = session.user;
+      const username = currentUser.email.split('@')[0];
       document.getElementById('authBadgeLabel').textContent = username.charAt(0).toUpperCase() + username.slice(1);
-      let { data } = await supabaseClient.from('profiles').select('crystals').eq('id', user.id).single();
+      
+      let { data } = await supabaseClient.from('profiles').select('crystals').eq('id', currentUser.id).single();
       if (data) {
-        document.getElementById('headerCrystalCount').textContent = data.crystals;
+        crystals = data.crystals ?? 10;
       }
     } else {
-      let savedCrystals = localStorage.getItem('arkanica_crystals_guest') || 10;
-      document.getElementById('headerCrystalCount').textContent = savedCrystals;
+      crystals = parseInt(localStorage.getItem('arkanica_crystals_guest')) || 10;
       document.getElementById('authBadgeLabel').textContent = 'Invitado';
     }
+
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('pagado') === 'true') {
+      const addedCrystals = parseInt(urlParams.get('cristales')) || 25;
+      crystals += addedCrystals;
+      window.history.replaceState({}, document.title, window.location.pathname);
+      await saveUserData();
+      setTimeout(() => {
+        alert(`✦ ¡Compra mística completada con éxito! Se han sumado ${addedCrystals} Cristales de Claridad de regalo a tu cuenta.`);
+      }, 500);
+    }
+
+    updateCrystalDisplay();
   }
+
+  async function saveUserData() {
+    if (currentUser) {
+      await supabaseClient
+        .from('profiles')
+        .upsert({ id: currentUser.id, crystals: crystals });
+    } else {
+      localStorage.setItem('arkanica_crystals_guest', crystals);
+    }
+  }
+
+  function updateCrystalDisplay() {
+    document.getElementById('headerCrystalCount').textContent = crystals;
+  }
+
   checkUserSession();
 
-  /* --- FUNCIÓN DE COMPRA EN STRIPE (CON RELEVO DE DATOS) --- */
-  function buyProductStripe(productName, priceInCents) {
-    alert(`Has seleccionado: "${productName}". Redirigiendo a la pasarela de pago segura de Stripe con tu 40% de descuento y los +25 Cristales de Claridad de regalo...`);
+  /* --- FUNCIÓN DE COMPRA EN STRIPE CON CANTIDAD DE CRISTALES PERSONALIZADA --- */
+  async function buyProductStripe(productName, priceInCents, crystalBonus = 25) {
+    playWoodSelectSound();
+
+    try {
+      const response = await fetch('.netlify/functions/crear-checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          packName: `${productName} (+${crystalBonus} Cristales Regalo)`,
+          priceInCents: priceInCents,
+          crystalsAmount: crystalBonus,
+          username: currentUser ? currentUser.email : 'Invitado'
+        })
+      });
+
+      const data = await response.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        throw new Error(data.error || 'No se pudo iniciar la pasarela de pago');
+      }
+    } catch (err) {
+      console.error("Error al procesar el pago:", err);
+      alert("Hubo un error al conectar con la pasarela de pago. Inténtalo de nuevo.");
+    }
   }
 </script>
 

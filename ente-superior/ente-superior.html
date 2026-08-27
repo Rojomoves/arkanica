@@ -6,6 +6,8 @@
 <title>Arkanica — Sesión Privada con el Ente Superior</title>
 <!-- Cliente oficial de Supabase -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- SDK oficial de Stripe -->
+<script src="https://js.stripe.com/v3/"></script>
 
 <!-- CÓDIGO OFICIAL DE GOOGLE ADSENSE -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2698892755295064" crossorigin="anonymous"></script>
@@ -40,20 +42,123 @@
     align-items: center;
     font-family: 'Inter', sans-serif;
     color: var(--text-main);
-    padding: 12px 10px 50px 10px;
+    padding: 16px 12px 60px 12px;
     overflow-x: hidden;
+    position: relative;
+    scroll-behavior: smooth;
+  }
+
+  /* --- EFECTO DE VIÑETA OSCURA ENVOLVENTE --- */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at center, transparent 40%, rgba(3, 3, 5, 0.75) 100%);
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  /* --- EL VELO DEL UMBRAL AUTOMÁTICO (2.5s) --- */
+  .threshold-overlay {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at center, #0f0c1b 0%, #050508 100%);
+    z-index: 999999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    text-align: center;
+    transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), visibility 1.2s ease;
+  }
+
+  .threshold-overlay.fade-out {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .threshold-particles {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(223, 177, 91, 0.6) 1px, transparent 1px);
+    background-size: 50px 50px;
+    opacity: 0.15;
+    animation: driftParticles 20s linear infinite;
+  }
+
+  @keyframes driftParticles {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-50px); }
+  }
+
+  .threshold-content {
+    position: relative;
+    z-index: 2;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    animation: pulseThreshold 3s ease-in-out infinite alternate;
+  }
+
+  @keyframes pulseThreshold {
+    0% { transform: scale(1); opacity: 0.95; }
+    100% { transform: scale(1.02); opacity: 1; }
+  }
+
+  .threshold-symbol {
+    width: 50px;
+    height: 50px;
+    fill: none;
+    stroke: var(--gold);
+    stroke-width: 1.5;
+    filter: drop-shadow(0 0 15px rgba(223, 177, 91, 0.6));
+    animation: spinSymbol 12s linear infinite;
+  }
+
+  @keyframes spinSymbol {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .threshold-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+  }
+
+  .threshold-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 400;
+    color: var(--text-main);
+    line-height: 1.3;
+    margin: 0;
+  }
+
+  .threshold-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14.5px;
+    font-style: italic;
+    color: var(--gold-light);
+    opacity: 0.9;
+    margin: 0;
   }
 
   /* BOTÓN FLOTANTE DE AUDIO (ESQUINA INFERIOR IZQUIERDA) */
   .floating-audio-btn {
     position: fixed;
-    bottom: 20px;
-    left: 20px;
+    bottom: 24px;
+    left: 24px;
     background: rgba(12, 11, 18, 0.92);
     border: 1px solid var(--gold);
     color: var(--gold);
-    width: 44px;
-    height: 44px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -72,12 +177,12 @@
 
   .audio-tooltip {
     position: absolute;
-    left: 54px;
+    left: 58px;
     background: var(--surface);
     border: 1px solid var(--gold-dim);
     color: var(--text-main);
-    font-size: 10px;
-    padding: 4px 8px;
+    font-size: 10.5px;
+    padding: 5px 10px;
     border-radius: 6px;
     white-space: nowrap;
     pointer-events: none;
@@ -90,31 +195,32 @@
     opacity: 1;
   }
 
-  /* HEADER RESPONSIVE ADAPTADO */
+  /* HEADER RESPONSIVE */
   header {
     width: 100%;
     max-width: 900px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
     border-bottom: 1px solid var(--line);
-    padding-bottom: 10px;
+    padding-bottom: 12px;
     position: relative;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 10px;
+    z-index: 100;
   }
 
   .logo {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
     text-decoration: none;
   }
 
   .logo-symbol {
-    width: 24px;
-    height: 24px;
+    width: 26px;
+    height: 26px;
     fill: none;
     stroke: var(--gold);
     stroke-width: 1.5;
@@ -123,7 +229,7 @@
 
   .logo-text {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 20px;
+    font-size: 22px;
     letter-spacing: 0.12em;
     color: var(--gold);
     text-shadow: 0 2px 10px rgba(223, 177, 91, 0.2);
@@ -132,17 +238,16 @@
   .header-right {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     flex-wrap: wrap;
   }
 
-  /* INSIGNIA DE CRISTALES Y USUARIO EN HEADER */
   .profile-badge {
     background: linear-gradient(135deg, rgba(223, 177, 91, 0.2) 0%, rgba(12, 11, 18, 0.95) 100%);
     border: 1px solid var(--gold);
-    padding: 4px 10px;
+    padding: 5px 12px;
     border-radius: 20px;
-    font-size: 11px;
+    font-size: 11.5px;
     color: var(--text-main);
     display: flex;
     align-items: center;
@@ -155,38 +260,38 @@
   .profile-crystals {
     display: flex;
     align-items: center;
-    gap: 3px;
+    gap: 4px;
     color: var(--gold-light);
     font-weight: 600;
   }
 
   .profile-divider {
     width: 1px;
-    height: 9px;
+    height: 10px;
     background: var(--gold);
     opacity: 0.6;
   }
 
   .profile-user-info {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 12px;
+    font-size: 12.5px;
     color: var(--gold-light);
     font-weight: 500;
   }
 
-  /* MENÚ HAMBURGUESA Y DESPLEGABLE */
+  /* MENÚ HAMBURGUESA Y DESPLEGABLE OPACADO Y SEGURO */
   .hamburger-btn {
     background: rgba(12, 11, 18, 0.92);
     border: 1px solid var(--gold);
     color: var(--gold);
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
     border-radius: 8px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 4px;
+    gap: 5px;
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 0 10px rgba(223, 177, 91, 0.15);
@@ -196,26 +301,32 @@
     border-color: var(--gold-light);
   }
   .hamburger-line {
-    width: 16px;
+    width: 18px;
     height: 2px;
     background: var(--gold);
     border-radius: 2px;
     transition: all 0.3s ease;
   }
 
+  .header-menu-wrapper {
+    position: relative;
+    z-index: 99999;
+  }
+
   .nav-dropdown-menu {
     position: absolute;
-    top: 55px;
+    top: 50px;
     right: 0;
-    background: var(--surface);
-    border: 1px solid var(--gold);
+    background-color: #08070b !important;
+    backdrop-filter: none !important;
+    border: 1.5px solid var(--gold);
     border-radius: 10px;
-    width: 210px;
+    width: 220px;
     padding: 10px 0;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.8), 0 0 20px rgba(223, 177, 91, 0.15);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.95), 0 0 30px rgba(0, 0, 0, 0.9);
     display: none;
     flex-direction: column;
-    z-index: 2900;
+    z-index: 99999;
   }
   .nav-dropdown-menu.active {
     display: flex;
@@ -223,15 +334,16 @@
   .nav-dropdown-menu a {
     color: var(--text-main);
     text-decoration: none;
-    font-size: 11px;
+    font-size: 11.5px;
     text-transform: uppercase;
     letter-spacing: 0.12em;
-    padding: 9px 16px;
+    padding: 12px 20px;
     transition: background 0.2s, color 0.2s;
     display: block;
+    background-color: #08070b !important;
   }
   .nav-dropdown-menu a:hover {
-    background: rgba(223, 177, 91, 0.1);
+    background: rgba(223, 177, 91, 0.15) !important;
     color: var(--gold);
   }
   .nav-dropdown-menu a.highlight {
@@ -242,26 +354,27 @@
     margin: 4px 0;
   }
 
-  /* HERO / BANNER PRINCIPAL REDISEÑADO CON ACCESOS RÁPIDOS */
+  /* HERO / BANNER PRINCIPAL */
   .hero-container {
     text-align: center;
     max-width: 700px;
-    margin-bottom: 14px;
-    padding: 0 6px;
+    margin-bottom: 16px;
+    padding: 0 8px;
+    z-index: 2;
   }
 
   .arkanica-eyebrow {
-    font-size: 9px;
-    letter-spacing: 0.2em;
+    font-size: 9.5px;
+    letter-spacing: 0.25em;
     text-transform: uppercase;
     color: var(--gold-dim);
-    margin-bottom: 4px;
+    margin-bottom: 5px;
     font-weight: 500;
   }
 
   .arkanica-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 22px;
+    font-size: 25px;
     font-weight: 400;
     color: var(--text-main);
     margin: 0 0 4px;
@@ -272,31 +385,31 @@
     font-size: 11.5px;
     color: var(--text-muted);
     font-weight: 300;
-    margin: 0 0 10px;
-    line-height: 1.45;
+    margin: 0 0 12px;
+    line-height: 1.5;
   }
 
   .banner-quick-actions {
     display: flex;
     justify-content: center;
-    gap: 8px;
+    gap: 10px;
     flex-wrap: wrap;
-    margin-top: 8px;
+    margin-top: 10px;
   }
 
   .banner-action-pill {
     background: rgba(223, 177, 91, 0.08);
     border: 1px solid var(--gold-dim);
     color: var(--gold-light);
-    font-size: 10px;
+    font-size: 10.5px;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    padding: 6px 12px;
+    padding: 7px 14px;
     border-radius: 20px;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
-    gap: 5px;
+    gap: 6px;
     transition: all 0.3s ease;
     cursor: pointer;
   }
@@ -306,23 +419,29 @@
     border-color: var(--gold);
   }
 
-  /* CONTENEDOR DEL CHAT CON DESTELLO DORADO LENTO (CADA ~6 SEGUNDOS / 12S TOTALES) */
+  /* CONTENEDOR DEL CHAT CON ESTÉTICA FLOTANTE Y GOLD SHIMMER */
   .chat-container {
     width: 100%;
     max-width: 900px;
-    background: var(--surface);
+    background: linear-gradient(135deg, rgba(14, 13, 20, 0.85) 0%, rgba(6, 5, 10, 0.95) 100%);
     border: 1px solid var(--line);
-    border-radius: 10px;
-    padding: 16px 12px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    border-radius: 14px;
+    padding: 22px 18px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.7), inset 0 0 40px rgba(0,0,0,0.8);
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 16px;
+    position: relative;
+    overflow: hidden;
+    z-index: 2;
+    margin-bottom: 20px;
+  }
+
+  .gold-shimmer-card {
     position: relative;
     overflow: hidden;
   }
-
-  .chat-container::before {
+  .gold-shimmer-card::before {
     content: '';
     position: absolute;
     top: 0;
@@ -332,9 +451,9 @@
     background: linear-gradient(
       90deg,
       transparent,
-      rgba(223, 177, 91, 0.06),
-      rgba(243, 216, 157, 0.12),
-      rgba(223, 177, 91, 0.06),
+      rgba(223, 177, 91, 0.08),
+      rgba(243, 216, 157, 0.15),
+      rgba(223, 177, 91, 0.08),
       transparent
     );
     transform: skewX(-20deg);
@@ -351,10 +470,10 @@
   .chat-messages {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    max-height: 400px;
+    gap: 14px;
+    max-height: 420px;
     overflow-y: auto;
-    padding-right: 4px;
+    padding-right: 6px;
     scrollbar-width: thin;
     scrollbar-color: var(--gold-dim) var(--surface);
   }
@@ -368,15 +487,16 @@
   }
 
   .message {
-    padding: 12px 14px;
-    border-radius: 6px;
-    font-size: 12.5px;
-    line-height: 1.55;
+    padding: 14px 16px;
+    border-radius: 10px;
+    font-size: 13px;
+    line-height: 1.6;
     max-width: 96%;
+    word-break: break-word;
   }
 
   .message.ai {
-    background: rgba(223, 177, 91, 0.05);
+    background: rgba(223, 177, 91, 0.06);
     border: 1px solid var(--line);
     color: var(--text-main);
     align-self: flex-start;
@@ -384,109 +504,113 @@
 
   .message.user {
     background: var(--surface-hover);
-    border: 1px solid rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.06);
     color: var(--text-main);
     align-self: flex-end;
   }
 
   .ai-response-body {
-    margin-top: 6px;
+    margin-top: 8px;
     font-style: italic;
     color: var(--text-main);
   }
 
-  /* ÁREA DE INPUT Y BOTÓN ADAPTADA PARA MÓVILES */
+  /* ÁREA DE INPUT Y BOTÓN */
   .chat-input-area {
     display: flex;
     flex-direction: row;
-    gap: 8px;
-    margin-top: 4px;
+    gap: 10px;
+    margin-top: 6px;
   }
 
   .chat-input {
     flex: 1;
-    background: rgba(0,0,0,0.4);
+    background: rgba(0,0,0,0.45);
     border: 1px solid var(--line);
     color: var(--text-main);
-    padding: 11px 12px;
-    border-radius: 6px;
-    font-size: 12px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-size: 12.5px;
     font-family: 'Inter', sans-serif;
     outline: none;
     min-width: 0;
+    transition: border-color 0.3s, box-shadow 0.3s;
   }
-  .chat-input:focus { border-color: var(--gold); }
+  .chat-input:focus { 
+    border-color: var(--gold); 
+    box-shadow: 0 0 15px rgba(223, 177, 91, 0.2);
+  }
 
   .send-btn {
     background: var(--gold);
     color: var(--bg);
     border: none;
     font-family: 'Inter', sans-serif;
-    font-size: 10px;
-    letter-spacing: 0.1em;
+    font-size: 10.5px;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     font-weight: 600;
-    padding: 0 14px;
-    border-radius: 6px;
+    padding: 0 18px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: background 0.3s, transform 0.2s;
     white-space: nowrap;
-    min-height: 42px;
+    min-height: 44px;
   }
-  .send-btn:hover { background: var(--gold-light); }
+  .send-btn:hover { background: var(--gold-light); transform: translateY(-1px); }
 
   /* TIENDA DE CRISTALES */
   .store-section {
-    margin-top: 6px;
-    border-top: 1px solid var(--line);
-    padding-top: 14px;
+    margin-top: 8px;
+    border-top: 1px solid rgba(223, 177, 91, 0.15);
+    padding-top: 16px;
   }
 
   .store-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 16px;
+    font-size: 18px;
     color: var(--gold);
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     letter-spacing: 0.03em;
   }
 
   .packs-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+    gap: 12px;
   }
 
   .pack-card {
     background: linear-gradient(145deg, #13121b 0%, #0a0910 100%);
     border: 1px solid var(--line);
-    border-radius: 8px;
-    padding: 14px 10px;
+    border-radius: 10px;
+    padding: 16px 12px;
     text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
     position: relative;
   }
 
   .pack-card.featured {
     border-color: var(--gold);
     background: linear-gradient(145deg, #1c1926 0%, #0e0d16 100%);
-    box-shadow: 0 8px 24px rgba(223, 177, 91, 0.15);
+    box-shadow: 0 10px 28px rgba(223, 177, 91, 0.2);
   }
 
   .popular-badge {
     position: absolute;
-    top: -9px;
+    top: -10px;
     background: var(--gold);
     color: var(--bg);
-    font-size: 8px;
+    font-size: 8.5px;
     font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    padding: 2px 8px;
+    padding: 3px 9px;
     border-radius: 10px;
   }
 
@@ -495,18 +619,18 @@
     transform: translateY(-2px);
   }
 
-  .pack-info { margin-bottom: 10px; }
+  .pack-info { margin-bottom: 12px; }
 
   .pack-name {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 500;
     color: var(--text-main);
-    margin-bottom: 2px;
+    margin-bottom: 3px;
   }
 
   .pack-amount {
-    font-size: 11px;
+    font-size: 11.5px;
     color: var(--gold);
     letter-spacing: 0.04em;
   }
@@ -516,10 +640,10 @@
     border: 1px solid var(--gold-dim);
     color: var(--gold);
     font-family: 'Inter', sans-serif;
-    font-size: 9.5px;
+    font-size: 10px;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    padding: 7px 10px;
+    padding: 8px 12px;
     border-radius: 6px;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -539,28 +663,149 @@
     border-color: var(--gold);
   }
 
+  /* SECCIÓN DE SESIONES PRIVADAS EN VÍDEO */
+  .section-card {
+    width: 100%;
+    max-width: 900px;
+    background: linear-gradient(135deg, rgba(14, 13, 20, 0.85) 0%, rgba(6, 5, 10, 0.95) 100%);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 20px 45px rgba(0,0,0,0.5);
+    position: relative;
+    z-index: 2;
+  }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+
+  .testimonial-card {
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-size: 12px;
+    color: var(--text-main);
+    line-height: 1.5;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .testimonial-stars {
+    color: var(--gold);
+    font-size: 13px;
+    letter-spacing: 2px;
+  }
+
+  .testimonial-author {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    color: var(--gold-light);
+    font-style: italic;
+  }
+
+  .auth-modal-card {
+    background: radial-gradient(circle at top, #141220 0%, var(--surface) 80%);
+    border: 1px solid var(--gold);
+    border-radius: 14px;
+    width: 100%;
+    padding: 24px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.9), 0 0 40px rgba(223, 177, 91, 0.12);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .auth-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .auth-input-group label {
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .auth-input, .auth-textarea, .auth-select {
+    background: rgba(0,0,0,0.4);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 11px;
+    color: var(--text-main);
+    font-size: 13px;
+    outline: none;
+    font-family: 'Inter', sans-serif;
+  }
+  .auth-input:focus, .auth-textarea:focus, .auth-select:focus { border-color: var(--gold); }
+  .auth-textarea { resize: vertical; min-height: 80px; }
+
+  .action-btn {
+    background: var(--gold);
+    color: var(--bg);
+    border: none;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 12px 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s;
+    width: 100%;
+  }
+  .action-btn:hover { background: var(--gold-light); }
+
   /* ANUNCIO ADSENSE */
   .ad-container-arkanica {
     width: 100%;
     max-width: 900px;
-    margin: 14px auto 0;
-    background: var(--surface);
+    margin: 16px auto 0;
+    background: linear-gradient(135deg, rgba(14, 13, 20, 0.85) 0%, rgba(6, 5, 10, 0.95) 100%);
     border: 1px solid var(--line);
-    border-radius: 10px;
-    padding: 12px;
+    border-radius: 12px;
+    padding: 14px;
     text-align: center;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    box-shadow: 0 20px 45px rgba(0,0,0,0.5);
     overflow: hidden;
+    position: relative;
+    z-index: 2;
   }
 
+  /* --- ADAPTABILIDAD MÓVIL OPTIMIZADA --- */
   @media (max-width: 768px) {
-    body { padding: 8px 6px 40px 6px; }
+    body { padding: 12px 8px 45px 8px; }
     
-    .arkanica-title { font-size: 20px; }
-    .arkanica-sub { font-size: 11px; }
+    header {
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+    }
+
+    .logo-text { font-size: 19px; }
+    .arkanica-title { font-size: 21px; }
+    .arkanica-sub { font-size: 11px; margin-bottom: 10px; }
 
     .chat-container {
-      padding: 14px 10px;
+      padding: 16px 12px;
+      border-radius: 10px;
+    }
+
+    .chat-messages {
+      max-height: 360px;
+      gap: 10px;
+    }
+
+    .message {
+      font-size: 12px;
+      padding: 11px 13px;
     }
 
     .chat-input-area {
@@ -568,11 +813,26 @@
       gap: 8px;
     }
 
+    .chat-input {
+      padding: 12px;
+      font-size: 12px;
+    }
+
     .send-btn {
       width: 100%;
-      padding: 11px;
+      padding: 12px;
       font-size: 11px;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.15em;
+    }
+
+    .store-section {
+      margin-top: 10px;
+      padding-top: 12px;
+    }
+
+    .store-title {
+      font-size: 16px;
+      margin-bottom: 8px;
     }
 
     .packs-grid {
@@ -594,7 +854,7 @@
 
     .pack-btn {
       width: auto;
-      min-width: 90px;
+      min-width: 95px;
       padding: 8px 12px;
     }
 
@@ -602,10 +862,38 @@
       top: -8px;
       left: 14px;
     }
+
+    .floating-audio-btn {
+      bottom: 16px;
+      left: 16px;
+      width: 42px;
+      height: 42px;
+    }
+
+    .testimonials-grid {
+      grid-template-columns: 1fr;
+    }
   }
 </style>
 </head>
 <body>
+
+<!-- VELO DEL UMBRAL AUTOMÁTICO (2.5 SEGUNDOS) -->
+<div class="threshold-overlay" id="thresholdOverlay">
+  <div class="threshold-particles"></div>
+  <div class="threshold-content">
+    <svg class="threshold-symbol" viewBox="0 0 32 32">
+      <ellipse cx="16" cy="16" rx="14" ry="6" transform="rotate(-30 16 16)" />
+      <circle cx="16" cy="16" r="4" />
+      <path d="M16 2 L16 30" stroke-dasharray="1 3" />
+    </svg>
+    <div>
+      <div class="threshold-eyebrow">Canal Directo Místico</div>
+      <h2 class="threshold-title">El Ente Superior sintoniza tu frecuencia...</h2>
+    </div>
+    <p class="threshold-subtitle">«Prepárate para adentrarte en la respuesta exacta que tu alma necesita.»</p>
+  </div>
+</div>
 
 <audio id="ambientAudio" loop>
   <source src="" type="audio/mpeg">
@@ -639,8 +927,8 @@
       </div>
     </div>
 
-    <!-- Botón de Hamburguesa y Menú Desplegable -->
-    <div style="position: relative;">
+    <!-- Botón de Hamburguesa y Menú Desplegable con Envoltorio Seguro -->
+    <div class="header-menu-wrapper">
       <button class="hamburger-btn" onclick="toggleNavMenu(event)" title="Menú de navegación">
         <span class="hamburger-line"></span>
         <span class="hamburger-line"></span>
@@ -649,7 +937,7 @@
 
       <div class="nav-dropdown-menu" id="navDropdownMenu">
         <a href="../tienda.html" class="highlight" onclick="closeNavMenu()">🛍️ Tienda Mística</a>
-        <a href="../index.html#reservas" onclick="closeNavMenu()">📅 Sesiones 1 a 1</a>
+        <a href="#reservas" onclick="closeNavMenu()">📅 Sesiones Privadas</a>
         <a href="../index.html" onclick="closeNavMenu()">← Volver al Inicio</a>
       </div>
     </div>
@@ -660,24 +948,24 @@
 <div class="hero-container">
   <div class="arkanica-eyebrow">Canal directo e íntimo</div>
   <h1 class="arkanica-title">Sala de Profundización con el Ente Superior</h1>
-  <p class="arkanica-sub" id="headerSubtitle">Tus dos primeras preguntas de profundización son <strong>100% gratuitas y de cortesía</strong>, diseñadas para revelarte lo que tu tirada anterior dejó entrever.</p>
+  <p class="arkanica-sub" id="headerSubtitle">Disfruta de <strong>1 pregunta de cortesía 100% gratuita</strong> para revelar lo que tu tirada anterior dejó entrever.</p>
   
   <div class="banner-quick-actions">
-    <a href="../index.html#reservas" class="banner-action-pill">📅 Sesiones 1 a 1</a>
+    <a href="#reservas" class="banner-action-pill">📅 Sesiones Privadas</a>
     <a href="../tienda.html" class="banner-action-pill">🛍️ Tienda Mística</a>
   </div>
 </div>
 
-<div class="chat-container">
+<div class="chat-container gold-shimmer-card">
   <div class="chat-messages" id="chatMessages">
     <div class="message ai" id="welcomeMessage">
-       Saludos, alma en búsqueda. Escribe tu duda o dilema más profundo y desentrañaremos juntos la respuesta exacta que necesitas.
+        ✦ Saludos, alma en búsqueda. Has cruzado el umbral hacia el canal directo con el Ente Superior. Sin filtros ni intermediarios: plantea tu dilema más íntimo y recibe la respuesta que necesitas. Tu primera consulta es de cortesía. ¿Qué verdad deseas desenterrar hoy?
     </div>
   </div>
 
   <div class="chat-input-area" id="inputArea">
     <input type="text" id="userInput" class="chat-input" placeholder="Escribe tu consulta o dilema aquí..." onkeypress="handleKeyPress(event)">
-    <button class="send-btn" id="sendBtn" onclick="sendUserMessage()">Consultar (2 Gratis)</button>
+    <button class="send-btn" id="sendBtn" onclick="sendUserMessage()">Consultar (1 Gratis)</button>
   </div>
 
   <div class="store-section">
@@ -711,6 +999,65 @@
   </div>
 </div>
 
+<!-- SECCIÓN DE SESIONES PRIVADAS EN VÍDEO -->
+<div class="section-card gold-shimmer-card" id="reservas">
+  <div style="max-width: 650px; margin: 0 auto; text-align: center; margin-bottom: 20px;">
+    <div style="font-size: 9.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 4px;">Exclusivo & Confidencial</div>
+    <h3 style="margin-top: 0; font-family: 'Cormorant Garamond', serif; font-size: 24px; color: var(--gold);">Sesiones privadas en vídeo</h3>
+    <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.6; margin-bottom: 0;">
+      ¿Atrapado/a en una encrucijada y necesitas una guía íntima? Detalla tu caso a continuación y recibe un análisis profundo en vídeo privado exclusivo para ti.
+    </p>
+  </div>
+
+  <!-- TESTIMONIOS / VALIDACIÓN SOCIAL -->
+  <div class="testimonials-grid" style="max-width: 650px; margin: 0 auto 20px auto;">
+    <div class="testimonial-card">
+      <div class="testimonial-stars">★★★★★</div>
+      <p style="margin: 0; font-style: italic;">«Ver el vídeo me dio una paz tremenda. Acertó de pleno en detalles de mi situación que no había mencionado en ningún sitio.»</p>
+      <div class="testimonial-author">— Lucía M.</div>
+    </div>
+    <div class="testimonial-card">
+      <div class="testimonial-stars">★★★★★</div>
+      <p style="margin: 0; font-style: italic;">«La claridad con la que desgrana el problema vale cada céntimo. Te habla directo al alma y con los siguientes pasos claros.»</p>
+      <div class="testimonial-author">— Carlos R.</div>
+    </div>
+  </div>
+
+  <!-- FORMULARIO DE SOLICITUD -->
+  <div class="auth-modal-card" style="margin: 0 auto; max-width: 550px;">
+    <div class="auth-input-group">
+      <label>Tu Correo Electrónico</label>
+      <input type="email" id="videoUserEmail" class="auth-input" placeholder="tu@correo.com">
+    </div>
+
+    <div class="auth-input-group">
+      <label>Enfoque de la Consulta</label>
+      <select id="videoSpreadType" class="auth-select">
+        <option value="amor">💖 Amor y Relaciones (Casi algo, vínculo actual)</option>
+        <option value="trabajo">💼 Trabajo, Proyectos y Dinero</option>
+        <option value="crecimiento">✨ Crecimiento Personal y Decisiones Vitales</option>
+        <option value="general">🔮 Lectura General / Libre</option>
+      </select>
+    </div>
+
+    <div class="auth-input-group">
+      <label>Describe tu Asunto o Pregunta Exacta</label>
+      <textarea id="videoUserQuery" class="auth-textarea" placeholder="Cuéntame qué está pasando y qué te gustaría que el oráculo analice en el vídeo..."></textarea>
+    </div>
+
+    <!-- AVISO DE PLAZO DE ENTREGA -->
+    <div style="font-size: 11.5px; color: var(--gold-light); text-align: center; font-style: italic; background: rgba(223, 177, 91, 0.08); padding: 8px; border-radius: 6px; border: 1px solid rgba(223, 177, 91, 0.2);">
+      ✦ Tu vídeo personalizado será elaborado y entregado en tu correo en un plazo de <strong>24 a 48 horas</strong>.
+    </div>
+
+    <div class="auth-msg" id="videoFormMsg" style="color: var(--gold);"></div>
+
+    <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 6px;">
+      <button class="action-btn" onclick="submitVideoConsultation()">Solicitar Sesión Privada</button>
+    </div>
+  </div>
+</div>
+
 <!-- Bloque de AdSense integrado en la zona inferior -->
 <div class="ad-container-arkanica">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2698892755295064" crossorigin="anonymous"></script>
@@ -726,6 +1073,19 @@
 </div>
 
 <script>
+  /* --- TRANSICIÓN AUTOMÁTICA DEL UMBRAL (2.5 SEGUNDOS) --- */
+  window.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+      const overlay = document.getElementById('thresholdOverlay');
+      if (overlay) {
+        overlay.classList.add('fade-out');
+        setTimeout(() => {
+          overlay.style.display = 'none';
+        }, 1200);
+      }
+    }, 2500);
+  });
+
   /* --- CONTROL DEL MENÚ DE HAMBURGUESA --- */
   function toggleNavMenu(e) {
     e.stopPropagation();
@@ -738,12 +1098,43 @@
     menu.classList.remove('active');
   }
 
-  // Cerrar el menú desplegable si se hace clic fuera de él
   window.addEventListener('click', () => {
     closeNavMenu();
   });
 
-  /* --- CONFIGURACIÓN DE SUPABASE Y ESTADO --- */
+  /* --- EFECTOS DE SONIDO (SFX) --- */
+  let sfxAudioCtx = null;
+  function initSfxContext() {
+    if (!sfxAudioCtx) {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      sfxAudioCtx = new AudioCtx();
+    }
+    if (sfxAudioCtx.state === 'suspended') { sfxAudioCtx.resume(); }
+  }
+
+  function playWoodSelectSound() {
+    try {
+      initSfxContext();
+      const now = sfxAudioCtx.currentTime;
+      const bufferSize = sfxAudioCtx.sampleRate * 0.08;
+      const buffer = sfxAudioCtx.createBuffer(1, bufferSize, sfxAudioCtx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
+      const noise = sfxAudioCtx.createBufferSource();
+      noise.buffer = buffer;
+      const filter = sfxAudioCtx.createBiquadFilter();
+      filter.type = 'bandpass';
+      filter.frequency.setValueAtTime(800, now);
+      filter.Q.setValueAtTime(3.0, now);
+      const gain = sfxAudioCtx.createGain();
+      gain.gain.setValueAtTime(0.12, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.07);
+      noise.connect(filter); filter.connect(gain); gain.connect(sfxAudioCtx.destination);
+      noise.start(now); noise.stop(now + 0.08);
+    } catch(e) {}
+  }
+
+  /* --- CONFIGURACIÓN DE SUPABASE Y ESTADO (1 CONSULTA GRATIS) --- */
   const SUPABASE_URL = 'https://jcosmhiukmfsygrinfgy.supabase.co';
   const SUPABASE_ANON_KEY = 'sb_publishable_UVGFZQhG36gD_67hInVz7g_4oLD7tWN';
 
@@ -759,6 +1150,10 @@
       const username = currentUser.email.split('@')[0];
       document.getElementById('userBadge').textContent = username.charAt(0).toUpperCase() + username.slice(1);
       
+      if (document.getElementById('videoUserEmail')) {
+        document.getElementById('videoUserEmail').value = currentUser.email;
+      }
+
       const { data } = await supabaseClient
         .from('profiles')
         .select('crystals, free_questions_used')
@@ -775,7 +1170,6 @@
       document.getElementById('userBadge').textContent = 'Invitado';
     }
 
-    // Verificar retorno de pago con éxito en Stripe
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('pagado') === 'true') {
       const addedCrystals = parseInt(urlParams.get('cristales')) || 0;
@@ -805,6 +1199,44 @@
 
   initSession();
 
+  /* --- CONFIGURACIÓN DE STRIPE Y FORMULARIO DE VÍDEO --- */
+  const STRIPE_VIDEO_PAYMENT_LINK = 'https://buy.stripe.com/eVqbIUgJp1JV4VM5jTfQI00';
+
+  async function submitVideoConsultation() {
+    const email = document.getElementById('videoUserEmail').value.trim();
+    const spreadType = document.getElementById('videoSpreadType').value;
+    const query = document.getElementById('videoUserQuery').value.trim();
+    const msg = document.getElementById('videoFormMsg');
+
+    if (!email || !query) {
+      msg.textContent = 'Por favor, introduce tu correo y describe tu asunto.';
+      return;
+    }
+
+    if (!email.includes('@') || !email.includes('.')) {
+      msg.textContent = 'Por favor, introduce un correo electrónico válido.';
+      return;
+    }
+
+    msg.textContent = 'Registrando consulta y conectando con el pago...';
+
+    try {
+      const { error } = await supabaseClient
+        .from('video_consultas')
+        .insert([{ email: email, enfoque: spreadType, consulta: query }]);
+
+      if (error) {
+        console.error("Error al registrar en Supabase:", error);
+      }
+    } catch (err) {
+      console.error("Excepción:", err);
+    }
+
+    setTimeout(() => {
+      window.location.href = STRIPE_VIDEO_PAYMENT_LINK;
+    }, 800);
+  }
+
   /* --- CONTROL DE AUDIO FLOTANTE --- */
   const audioEl = document.getElementById('ambientAudio');
   audioEl.volume = 0.35;
@@ -831,11 +1263,11 @@
 
   function updateDisplayStatus() {
     document.getElementById('crystalCount').textContent = crystals;
-    const remainingFree = Math.max(0, 2 - freeQuestionsUsed);
+    const remainingFree = Math.max(0, 1 - freeQuestionsUsed);
     const sendBtn = document.getElementById('sendBtn');
 
     if (remainingFree > 0) {
-      sendBtn.textContent = `Consultar (${remainingFree} gratis)`;
+      sendBtn.textContent = `Consultar (1 Gratis)`;
     } else {
       sendBtn.textContent = `Consultar (3 💎)`;
     }
@@ -850,11 +1282,11 @@
       const readingData = JSON.parse(lastReadingContext);
       localStorage.removeItem('arkanica_last_reading');
 
-      document.getElementById('headerSubtitle').innerHTML = `Has sintonizado con la tirada <strong>"${readingData.spreadTitle}"</strong>. Tus dos primeras preguntas de profundización son <strong>100% gratuitas y de cortesía</strong>.`;
+      document.getElementById('headerSubtitle').innerHTML = `Has sintonizado con la tirada <strong>"${readingData.spreadTitle}"</strong>. Tu primera pregunta de profundización es <strong>100% gratuita y de cortesía</strong>.`;
       
       document.getElementById('welcomeMessage').innerHTML = `
-         Saludos en búsqueda. He capturado la energía de tu reciente tirada <em>"${readingData.spreadTitle}"</em> en la mesa principal. 
-        Tus cartas revelaron energías muy potentes. Como vienes directo de esa lectura, <strong>tus 2 primeras preguntas de profundización con el Ente Superior son totalmente gratuitas</strong> para darte una claridad absoluta. ¿Qué aspecto exacto deseas destrabar ahora?
+          ✦ Saludos en búsqueda. He capturado la energía de tu reciente tirada <em>"${readingData.spreadTitle}"</em> en la mesa principal. 
+         Tus cartas revelaron energías muy potentes. Como vienes directo de esa lectura, <strong>tu primera pregunta de profundización con el Ente Superior es totalmente gratuita</strong> para darte una claridad absoluta. ¿Qué aspecto exacto deseas destrabar ahora?
       `;
     } catch(e) {
       setupDefaultDirectAccess();
@@ -864,13 +1296,14 @@
   }
 
   function setupDefaultDirectAccess() {
-    document.getElementById('headerSubtitle').innerHTML = `Has abierto el canal directo con el Ente Superior. Tus dos primeras consultas son <strong>100% gratuitas y de cortesía</strong> para revelar lo que necesitas saber ahora mismo.`;
+    document.getElementById('headerSubtitle').innerHTML = `Has abierto el canal directo con el Ente Superior. Tu primera consulta es <strong>100% gratuita y de cortesía</strong> para revelar lo que necesitas saber ahora mismo.`;
     document.getElementById('welcomeMessage').innerHTML = `
-       Saludos, alma en búsqueda. Has cruzado el umbral hacia el canal directo con el Ente Superior. No hay intermediarios ni filtros: plantea tu encrucijada más íntima, ese dilema que ronda tu mente, y obtén la respuesta milimétrica y transformadora que el universo tiene reservada para ti. <strong>Tus 2 primeras consultas son completamente gratuitas.</strong> ¿Qué verdad deseas desenterrar hoy?
+        ✦ Saludos, alma en búsqueda. Has cruzado el umbral hacia el canal directo con el Ente Superior. Sin filtros ni intermediarios: plantea tu dilema más íntimo y recibe la respuesta que necesitas. Tu primera consulta es de cortesía. ¿Qué verdad deseas desenterrar hoy?
     `;
   }
 
   async function buyPack(amount, packName, priceString) {
+    playWoodSelectSound();
     const numericPrice = parseFloat(priceString.replace('€', '').trim());
     const priceInCents = Math.round(numericPrice * 100);
 
@@ -906,15 +1339,17 @@
     const text = document.getElementById('userInput').value.trim();
     if (!text) return;
 
-    const remainingFree = Math.max(0, 2 - freeQuestionsUsed);
+    playWoodSelectSound();
+    const remainingFree = Math.max(0, 1 - freeQuestionsUsed);
     const COST = 3;
 
     if (remainingFree === 0 && crystals < COST) {
-      alert(`Has agotado tus dos preguntas gratuitas de cortesía y tus cristales disponibles.\n\nAdquiere un pack de cristales abajo para continuar tu sesión privada con el Ente Superior.`);
+      alert(`Has agotado tu pregunta gratuita de cortesía y tus cristales disponibles.\n\nAdquiere un pack de cristales abajo para continuar tu sesión privada con el Ente Superior.`);
       return;
     }
 
-    if (remainingFree > 0) {
+    const wasFree = remainingFree > 0;
+    if (wasFree) {
       freeQuestionsUsed++;
     } else {
       crystals -= COST;
@@ -924,7 +1359,7 @@
     appendMessage(text, 'user');
     document.getElementById('userInput').value = '';
 
-    generateAIResponse(text, remainingFree > 0);
+    generateAIResponse(text, wasFree);
   }
 
   function appendMessage(text, sender, extraHTML = '') {
@@ -942,14 +1377,14 @@
     const loadingDiv = document.createElement('div');
     loadingDiv.className = 'message ai';
     loadingDiv.id = loadingId;
-    loadingDiv.innerHTML = `<em>El Ente Superior sintoniza la respuesta profunda para: "${userQuery}"...</em>`;
+    loadingDiv.innerHTML = `<em>✦ El Ente Superior sintoniza la respuesta profunda para: "${userQuery}"...</em>`;
     chatMessages.appendChild(loadingDiv);
     chatMessages.scrollTop = chatMessages.scrollHeight;
 
     let contextPrompt = `El usuario pregunta en sesión privada al Ente Superior: "${userQuery}".`;
     
     if (isFreeTrial) {
-      contextPrompt += ` Esta es una de las 2 preguntas gratuitas de cortesía. Responde de forma extremadamente profunda, emocional, reveladora y milimétrica, conectando con sus miedos u objetivos ocultos. Al final del texto, deja una intriga fascinante, una pregunta abierta desgarradora o un aviso sutil sobre un punto ciego que aún no ve, incitándole fuertemente a realizar otra pregunta para descubrir la verdad completa. Formato estricto en HTML <p>.`;
+      contextPrompt += ` Esta ha sido su única pregunta gratuita de cortesía. Responde de forma extremadamente profunda, emocional, reveladora y milimétrica, conectando con sus miedos u objetivos ocultos. Al final del texto, deja una intriga fascinante, una pregunta abierta desgarradora o un aviso sutil sobre un punto ciego que aún no ve, incitándole fuertemente a realizar otra pregunta para descubrir la verdad completa. Formato estricto en HTML <p>.`;
     } else {
       contextPrompt += ` El usuario ya está pagando con cristales. Dale una respuesta directa, estratégica, altamente mística y transformadora en formato <p>.`;
     }
@@ -970,16 +1405,10 @@
       if (response.ok && data.interpretacion) {
         let persuasionHTML = `<div class="ai-response-body">${data.interpretacion}</div>`;
         
-        if (isFreeTrial && freeQuestionsUsed === 1) {
+        if (isFreeTrial) {
           persuasionHTML += `
-            <div style="margin-top: 10px; padding: 8px 10px; background: rgba(223, 177, 91, 0.08); border-left: 2px solid var(--gold); font-size: 11px; color: var(--gold-light);">
-              ✦ <em>Te queda 1 pregunta gratuita de cortesía. Tu mente está intentando protegerte de una verdad que ya intuías. ¿Te atreves a preguntar el siguiente paso al Ente Superior antes de que el velo se cierre?</em>
-            </div>
-          `;
-        } else if (isFreeTrial && freeQuestionsUsed === 2) {
-          persuasionHTML += `
-            <div style="margin-top: 10px; padding: 10px; background: rgba(223, 177, 91, 0.12); border-left: 2px solid var(--gold); border-radius: 4px; font-size: 11.5px; color: var(--text-main);">
-              ✦ <strong>Has agotado tus consultas gratuitas de cortesía.</strong> Has rozado la superficie de una revelación muy profunda, pero la respuesta definitiva del Ente Superior requiere recargar tus Cristales de Claridad abajo para mantener el canal abierto.
+            <div style="margin-top: 12px; padding: 12px; background: rgba(223, 177, 91, 0.12); border-left: 2px solid var(--gold); border-radius: 6px; font-size: 12px; color: var(--text-main);">
+              ✦ <strong>Has utilizado tu consulta gratuita de cortesía.</strong> A partir de ahora, el Ente Superior requiere <strong>3 Cristales de Claridad</strong> por cada nueva consulta (puedes recargar tus cristales abajo).
             </div>
           `;
         }
@@ -993,8 +1422,8 @@
       console.error("Error en sesión privada:", error);
       if (document.getElementById(loadingId)) document.getElementById(loadingId).remove();
       
-      const fallbackText = `Tras sintonizar con tu pregunta sobre "${userQuery}", percibo un bloqueo energético que llevas arrastrando sin admitirlo. La superficie de tu dilema oculta una decisión inevitable que cambiará tu rumbo actual. ${isFreeTrial ? '<em>(Esta ha sido tu consulta gratuita de cortesía. Para desenterrar la raíz completa del problema con el Ente Superior, recarga tus cristales abajo).</em>' : ''}`;
-      appendMessage(`El Ente Superior te revela:`, 'ai', `<div class="ai-response-body">${fallbackText}</div>`);
+      const fallbackText = `Tras sintonizar con tu pregunta sobre "${userQuery}", percibo un bloqueo energético que llevas arrastrando sin admitirlo. La superficie de tu dilema oculta una decisión inevitable que cambiará tu rumbo actual. ${isFreeTrial ? '<em>(Esta ha sido tu consulta gratuita de cortesía. A partir de ahora, el Ente Superior requiere 3 Cristales de Claridad por consulta).</em>' : ''}`;
+      appendMessage(`El Ente Superior te revela:`, 'ai', `<div class="ai-response-body">✦ ${fallbackText}</div>`);
     }
   }
 </script>
