@@ -256,9 +256,7 @@
     flex-direction: column;
     z-index: 99999;
   }
-  .nav-dropdown-menu.active {
-    display: flex;
-  }
+  .nav-dropdown-menu.active { display: flex; }
   .nav-dropdown-menu a {
     color: var(--text-main);
     text-decoration: none;
@@ -316,10 +314,7 @@
     margin: 0;
     line-height: 1.5;
   }
-
-  .arkanica-sub strong {
-    color: var(--gold-light);
-  }
+  .arkanica-sub strong { color: var(--gold-light); }
 
   /* FILTROS RÁPIDOS POR CATEGORÍA */
   .store-filters {
@@ -379,7 +374,6 @@
     transform: translateY(-3px);
   }
 
-  /* DESTACADO BUNDLE / GOLD SHIMMER */
   .gold-shimmer-card {
     position: relative;
     overflow: hidden;
@@ -423,21 +417,84 @@
     padding: 3px 8px;
     border-radius: 4px;
     letter-spacing: 0.1em;
+    z-index: 5;
   }
 
-  .product-icon-wrap {
+  .product-img-wrap {
     width: 100%;
-    height: 120px;
-    background: rgba(0,0,0,0.3);
-    border: 1px solid rgba(223, 177, 91, 0.1);
+    height: 150px;
+    background: radial-gradient(circle, rgba(223, 177, 91, 0.05) 0%, rgba(0,0,0,0.6) 100%);
+    border: 1px solid rgba(223, 177, 91, 0.15);
     border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 38px;
-    margin-bottom: 14px;
-    box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
+    padding: 8px;
+    position: relative;
   }
+
+  .product-img-wrap img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    transition: transform 0.4s ease, opacity 0.25s ease;
+  }
+
+  .store-product-card:hover .product-img-wrap img { transform: scale(1.06); }
+
+  /* CARRUSEL */
+  .img-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(5, 5, 8, 0.55);
+    border: 1px solid var(--line);
+    color: var(--gold-light);
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    line-height: 1;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s ease, background 0.2s ease;
+    z-index: 6;
+    padding: 0;
+  }
+  .product-img-wrap:hover .img-nav { opacity: 1; }
+  .img-nav:hover { background: var(--gold); color: var(--bg); }
+  .img-nav-prev { left: 6px; }
+  .img-nav-next { right: 6px; }
+
+  .img-dots {
+    position: absolute;
+    bottom: 6px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    z-index: 6;
+  }
+
+  .img-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: rgba(244, 242, 238, 0.35);
+    border: 1px solid rgba(5, 5, 8, 0.4);
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .img-dot:hover { transform: scale(1.3); }
+  .img-dot.active { background: var(--gold); }
 
   .product-name {
     font-family: 'Cormorant Garamond', serif;
@@ -484,22 +541,42 @@
     border-left: 2px solid var(--gold);
   }
 
-  /* SELLO DE CONTAGRACIÓN ENERGÉTICA */
   .energy-seal {
     font-size: 10px;
     color: var(--text-muted);
-    margin-bottom: 14px;
+    margin-bottom: 10px;
     display: flex;
     align-items: center;
     gap: 4px;
   }
+
+  .card-actions {
+    display: flex;
+    gap: 8px;
+  }
+
+  .details-btn {
+    background: transparent;
+    border: 1px solid var(--gold-dim);
+    color: var(--gold-light);
+    font-size: 9.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+    padding: 11px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+  .details-btn:hover { background: rgba(223, 177, 91, 0.1); border-color: var(--gold); }
 
   .buy-stripe-btn {
     background: var(--gold);
     color: var(--bg);
     border: none;
     font-size: 10px;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     font-weight: 600;
     padding: 11px;
@@ -507,10 +584,123 @@
     cursor: pointer;
     transition: background 0.3s, transform 0.2s;
     width: 100%;
+    flex: 1;
   }
   .buy-stripe-btn:hover { background: var(--gold-light); transform: translateY(-1px); }
 
-  /* SECCIÓN DE RESEÑAS VERIFICADAS */
+  /* --- MODAL CON CARRUSEL Y PRECIOS TACHADOS --- */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(3, 3, 5, 0.85);
+    backdrop-filter: blur(5px);
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+  .modal-overlay.active { display: flex; }
+
+  .modal-content {
+    background: linear-gradient(145deg, #121019 0%, #07060a 100%);
+    border: 1.5px solid var(--gold);
+    border-radius: 14px;
+    max-width: 520px;
+    width: 100%;
+    padding: 24px;
+    position: relative;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.9), 0 0 30px rgba(223, 177, 91, 0.2);
+    animation: modalScaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes modalScaleIn {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    background: none;
+    border: none;
+    color: var(--gold);
+    font-size: 20px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    z-index: 10;
+  }
+  .modal-close:hover { transform: scale(1.2); }
+
+  .modal-img-wrap {
+    width: 100%;
+    height: 220px;
+    background: radial-gradient(circle, rgba(223, 177, 91, 0.08) 0%, rgba(0,0,0,0.7) 100%);
+    border: 1px solid rgba(223, 177, 91, 0.2);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 10px;
+  }
+
+  .modal-img-wrap img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transition: opacity 0.25s ease;
+  }
+
+  .modal-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    color: var(--gold-light);
+    margin: 0 0 10px;
+    line-height: 1.2;
+  }
+
+  .modal-body {
+    font-size: 12.5px;
+    color: var(--text-main);
+    line-height: 1.55;
+    margin-bottom: 16px;
+    max-height: 150px;
+    overflow-y: auto;
+    padding-right: 4px;
+  }
+
+  .modal-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--line);
+    padding-top: 14px;
+  }
+
+  .modal-pricing-box {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .modal-orig-price {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-decoration: line-through;
+  }
+
+  .modal-final-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--gold-light);
+    line-height: 1;
+  }
+
+  /* RESEÑAS Y ADSENSE */
   .reviews-section {
     width: 100%;
     max-width: 1100px;
@@ -543,7 +733,6 @@
     gap: 6px;
   }
 
-  /* ANUNCIO ADSENSE */
   .ad-container-arkanica {
     width: 100%;
     max-width: 1100px;
@@ -577,6 +766,36 @@
   <div><strong id="toastUser">Marta de Barcelona</strong> acaba de adquirir un artículo místico.</div>
 </div>
 
+<!-- MODAL DE DETALLES CON CARRUSEL E INVERSIÓN ENERGÉTICA TACHADA -->
+<div class="modal-overlay" id="productModal" onclick="closeProductModal()">
+  <div class="modal-content" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeProductModal()">✕</button>
+    <div style="font-size: 9.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 4px;">Arkanica • Legado Sagrado</div>
+    
+    <!-- Carrusel dentro del Modal -->
+    <div class="modal-img-wrap" id="modalImgWrap" data-images="[]" data-current="0">
+      <img id="modalMainImg" src="" alt="Detalle del artículo">
+      <button class="img-nav img-nav-prev" onclick="changeModalImage(-1)" aria-label="Anterior">‹</button>
+      <button class="img-nav img-nav-next" onclick="changeModalImage(1)" aria-label="Siguiente">›</button>
+      <div class="img-dots" id="modalImgDots"></div>
+    </div>
+
+    <h2 class="modal-title" id="modalProductName">Detalles del Artículo</h2>
+    <div class="modal-body" id="modalProductDescription"></div>
+
+    <div class="modal-footer">
+      <div class="modal-pricing-box">
+        <span style="font-size: 9.5px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em;">Inversión Energética</span>
+        <div style="display: flex; align-items: baseline; gap: 8px;">
+          <span class="modal-orig-price" id="modalOrigPrice">0,00 €</span>
+          <span class="modal-final-price" id="modalFinalPrice">0,00 €</span>
+        </div>
+      </div>
+      <button class="buy-stripe-btn" id="modalBuyBtn" style="width: auto; padding: 12px 24px;">Adquirir con Beneficio</button>
+    </div>
+  </div>
+</div>
+
 <audio id="ambientAudio" loop>
   <source src="" type="audio/mpeg">
 </audio>
@@ -598,7 +817,6 @@
   </a>
 
   <div class="header-right">
-    <!-- Insignia de Cristales / Perfil -->
     <div class="profile-badge">
       <div class="profile-crystals">
         <span>💎</span> <strong id="headerCrystalCount">10</strong>
@@ -609,7 +827,6 @@
       </div>
     </div>
 
-    <!-- Menú Hamburguesa -->
     <div class="header-menu-wrapper">
       <button class="hamburger-btn" onclick="toggleNavMenu(event)" title="Menú de navegación">
         <span class="hamburger-line"></span>
@@ -630,7 +847,7 @@
 <div class="hero-container">
   <div class="arkanica-eyebrow">Objetos de poder y altares</div>
   <h1 class="arkanica-title">Tienda Mística Arkanica</h1>
-  <p class="arkanica-sub">Selección exclusiva de minerales, herramientas de radiestesia y oráculos físicos. <strong>Aprovecha un 40% de descuento directo</strong> y llévate cristales de regalo para tus consultas digitales con el Ente Superior.</p>
+  <p class="arkanica-sub">Selección exclusiva de minerales, herramientas de radiestesia y oráculos físicos. <strong>Desbloquea Cristales de Claridad de regalo</strong> y acceso prioritario para tus consultas con el Ente Superior.</p>
 </div>
 
 <!-- FILTROS RÁPIDOS POR CATEGORÍA -->
@@ -641,139 +858,168 @@
   <button class="filter-pill" onclick="filterProducts('altares')">Altares y Rituales</button>
 </div>
 
-<!-- REJILLA DE PRODUCTOS CON PACKS Y FILTROS -->
+<!-- REJILLA DE 6 PRODUCTOS ESTRELLA -->
 <div class="store-grid" id="storeGrid">
 
-  <!-- Producto Estrella: Pack Altar Maestro (Bundle) -->
-  <div class="store-product-card gold-shimmer-card" data-category="altares">
-    <div class="product-badge-discount">PACK EXCLUSIVO</div>
-    <div class="product-icon-wrap">🕯️🔮</div>
+  <!-- Producto 1: Baraja de Tarot Dorada -->
+  <div class="store-product-card gold-shimmer-card" data-category="oraculos">
+    <div class="product-badge-discount">DESTACADO</div>
+    <div class="product-img-wrap" data-images="[&quot;https://media.aiku.io/wq7_OtJdWYTgz-kBB8LUWDb7kD8kAN1xPJoeUDd-evM/bG9jYWw6Ly9tZWRpYS9IUS8yQy82MFIzMEMxSjZHVzMyQ0hRL2ZmNjQwMjllLmpwZw&quot;, &quot;https://media.aiku.io/uMUXKh8gWn-zJQmegkp0zRNv25_Fesn0UhdLHpZS7G0/bG9jYWw6Ly9tZWRpYS9IUC8yQy82MFIzMEMxSjZHVzMyQ0hQLzZhNzJmY2U2LmpwZw&quot;, &quot;https://media.aiku.io/qSP1XYBd0ppM4WY3mP6k9dKc1KYpAJfQGqliSm5M3GQ/bG9jYWw6Ly9tZWRpYS9IUi8yQy82MFIzMEMxSjZHVzMyQ0hSLzE0YjNkYjIzLmpwZw&quot;]" data-current="0">
+      <img src="https://media.aiku.io/wq7_OtJdWYTgz-kBB8LUWDb7kD8kAN1xPJoeUDd-evM/bG9jYWw6Ly9tZWRpYS9IUS8yQy82MFIzMEMxSjZHVzMyQ0hRL2ZmNjQwMjllLmpwZw" alt="Baraja de Tarot Lámina Dorada con Folleto" loading="lazy">
+      <button class="img-nav img-nav-prev" onclick="event.stopPropagation(); changeProductImage(this, -1)" aria-label="Anterior">‹</button>
+      <button class="img-nav img-nav-next" onclick="event.stopPropagation(); changeProductImage(this, 1)" aria-label="Siguiente">›</button>
+      <div class="img-dots"><span class="img-dot active" onclick="event.stopPropagation(); setProductImage(this, 0)"></span><span class="img-dot" onclick="event.stopPropagation(); setProductImage(this, 1)"></span><span class="img-dot" onclick="event.stopPropagation(); setProductImage(this, 2)"></span></div>
+    </div>
     <div>
-      <h3 class="product-name">Pack Altar Maestro (Edición Integral)</h3>
-      <p class="product-desc">El kit definitivo para tu espacio sagrado: incluye Paño de Terciopelo, Drusa de Cuarzo Blanco y Péndulo de Cuarzo Maestro combinados.</p>
+      <h3 class="product-name">Baraja de Tarot Lámina Dorada con Folleto</h3>
+      <p class="product-desc">Edición especial con detalles dorados de gran calidad y folleto explicativo para tiradas intuitivas profundas.</p>
     </div>
     <div>
       <div class="product-pricing">
-        <span class="original-price">74.99 €</span>
-        <span class="discounted-price">39.99 €</span>
+        <span class="original-price">35.00 €</span>
+        <span class="discounted-price">24.95 €</span>
       </div>
-      <div class="product-bonus">✦ Incluye +50 Cristales de Claridad de regalo</div>
+      <div class="product-bonus">✦ Incluye +35 Cristales de Claridad y Acceso Prioritario</div>
       <div class="energy-seal"><span>✨</span> Consagrado y purificado energéticamente a mano</div>
-      <button class="buy-stripe-btn" onclick="buyProductStripe('Pack Altar Maestro Integral', 3999, 50)">Adquirir Pack Maestro</button>
+      <div class="card-actions">
+        <button class="details-btn" onclick="openProductModal('Baraja de Tarot Lámina Dorada con Folleto', 'Siente la vibración de un mazo concebido para los buscadores de la verdad absoluta. Cada carta ha sido impresa con láminas de oro puro sobre un fondo de medianoche, diseñada no solo para leer el futuro, sino para abrir portales de profunda intuición. Al adquirir esta baraja, no adquieres papel y tinta; adquieres un canal directo con tu propia clarividencia y el respaldo energético del Ente Superior.', 2495, 3500, 'Baraja de Tarot Lámina Dorada con Folleto', 35, this)">Detalles</button>
+        <button class="buy-stripe-btn" onclick="buyProductStripe('Baraja de Tarot Lámina Dorada con Folleto', 2495, 35)">Adquirir</button>
+      </div>
     </div>
   </div>
 
-  <!-- Producto 1: Péndulo -->
+  <!-- Producto 2: Péndulo Mágico Siete Chakras -->
   <div class="store-product-card" data-category="minerales">
-    <div class="product-badge-discount">-40% OFF</div>
-    <div class="product-icon-wrap">🔮</div>
+    <div class="product-badge-discount">-35% OFF</div>
+    <div class="product-img-wrap" data-images="[&quot;https://media.aiku.io/LVvkbnYau-zgsLy4lRXhFJL0nnX56EWGdS0e9ReC_jU/bG9jYWw6Ly9tZWRpYS9IUS80Qy82MFIzMEMxRzZXUks0Q0hRL2M4OTQ4Y2UzLmpwZWc&quot;, &quot;https://media.aiku.io/7aA5dK1lfJUq0EKIu3i4w_qYgml99WtJGrT_tQVcClU/bG9jYWw6Ly9tZWRpYS9IUC80Qy82MFIzMEMxRzZXUks0Q0hQL2FhNmRkNzYyLmpwZWc&quot;]" data-current="0">
+      <img src="https://media.aiku.io/LVvkbnYau-zgsLy4lRXhFJL0nnX56EWGdS0e9ReC_jU/bG9jYWw6Ly9tZWRpYS9IUS80Qy82MFIzMEMxRzZXUks0Q0hRL2M4OTQ4Y2UzLmpwZWc" alt="Péndulo Mágico Siete Chakras - Amatista" loading="lazy">
+      <button class="img-nav img-nav-prev" onclick="event.stopPropagation(); changeProductImage(this, -1)" aria-label="Anterior">‹</button>
+      <button class="img-nav img-nav-next" onclick="event.stopPropagation(); changeProductImage(this, 1)" aria-label="Siguiente">›</button>
+      <div class="img-dots"><span class="img-dot active" onclick="event.stopPropagation(); setProductImage(this, 0)"></span><span class="img-dot" onclick="event.stopPropagation(); setProductImage(this, 1)"></span></div>
+    </div>
     <div>
-      <h3 class="product-name">Péndulo de Cuarzo Maestro</h3>
-      <p class="product-desc">Piedra natural pulida a mano con cadena de latón. Ideal para radiestesia, preguntas de precisión y desbloqueo energético.</p>
+      <h3 class="product-name">Péndulo Mágico Siete Chakras - Amatista</h3>
+      <p class="product-desc">Piedra natural pulida con cadena de metal y fragmentos minerales. Ideal para radiestesia y preguntas de precisión.</p>
     </div>
     <div>
       <div class="product-pricing">
-        <span class="original-price">24.99 €</span>
-        <span class="discounted-price">14.99 €</span>
+        <span class="original-price">22.00 €</span>
+        <span class="discounted-price">14.00 €</span>
       </div>
       <div class="product-bonus">✦ Incluye +25 Cristales de Claridad de regalo</div>
       <div class="energy-seal"><span>✨</span> Consagrado y purificado energéticamente a mano</div>
-      <button class="buy-stripe-btn" onclick="buyProductStripe('Péndulo de Cuarzo Maestro', 1499, 25)">Comprar con 40% Dto.</button>
-    </div>
-  </div>
-
-  <!-- Producto 2: Baraja -->
-  <div class="store-product-card" data-category="oraculos">
-    <div class="product-badge-discount">-40% OFF</div>
-    <div class="product-icon-wrap">🃏</div>
-    <div>
-      <h3 class="product-name">Baraja de Tarot Minimalista Dorada</h3>
-      <p class="product-desc">Edición especial con cantos dorados y diseño arquetípico limpio para tiradas profundas y desarrollo intuitivo.</p>
-    </div>
-    <div>
-      <div class="product-pricing">
-        <span class="original-price">39.99 €</span>
-        <span class="discounted-price">23.99 €</span>
+      <div class="card-actions">
+        <button class="details-btn" onclick="openProductModal('Péndulo Mágico Siete Chakras - Amatista', 'La herramienta definitiva de precisión espiritual. Este péndulo combina la alta frecuencia de la amatista natural con los siete chakras principales para desvelar respuestas que tu mente lógica no puede alcanzar. Su peso perfectamente equilibrado y su consagración individual garantizan respuestas claras, eliminando el ruido mental y conectando tu energía con el plano sutil.', 1400, 2200, 'Péndulo Mágico Siete Chakras - Amatista', 25, this)">Detalles</button>
+        <button class="buy-stripe-btn" onclick="buyProductStripe('Péndulo Mágico Siete Chakras - Amatista', 1400, 25)">Adquirir</button>
       </div>
-      <div class="product-bonus">✦ Incluye +25 Cristales de Claridad de regalo</div>
-      <div class="energy-seal"><span>✨</span> Consagrado y purificado energéticamente a mano</div>
-      <button class="buy-stripe-btn" onclick="buyProductStripe('Baraja de Tarot Dorada', 2399, 25)">Comprar con 40% Dto.</button>
     </div>
   </div>
 
-  <!-- Producto 3: Runas -->
+  <!-- Producto 3: Set de Runas de Amatista -->
   <div class="store-product-card" data-category="minerales">
-    <div class="product-badge-discount">-40% OFF</div>
-    <div class="product-icon-wrap">🪨</div>
+    <div class="product-badge-discount">-30% OFF</div>
+    <div class="product-img-wrap" data-images="[&quot;https://media.aiku.io/xronDSgjDjwK5oJk9RmgVFxJq49uTH65KMCcddR3_DU/bG9jYWw6Ly9tZWRpYS85Si9KQy82MFIzMEMxRzZDU0tKQzlKLzliZTRhZGI5LmpwZWc&quot;, &quot;https://media.aiku.io/mABCIWNCNko1EY6zllg4R0t9NDSh61t8pfff5ag9dRg/bG9jYWw6Ly9tZWRpYS85Sy9KQy82MFIzMEMxRzZDU0tKQzlLL2JiMDQ2OTZiLmpwZWc&quot;]" data-current="0">
+      <img src="https://media.aiku.io/xronDSgjDjwK5oJk9RmgVFxJq49uTH65KMCcddR3_DU/bG9jYWw6Ly9tZWRpYS85Si9KQy82MFIzMEMxRzZDU0tKQzlKLzliZTRhZGI5LmpwZWc" alt="Set de Runas de la India en Bolsa - Amatista" loading="lazy">
+      <button class="img-nav img-nav-prev" onclick="event.stopPropagation(); changeProductImage(this, -1)" aria-label="Anterior">‹</button>
+      <button class="img-nav img-nav-next" onclick="event.stopPropagation(); changeProductImage(this, 1)" aria-label="Siguiente">›</button>
+      <div class="img-dots"><span class="img-dot active" onclick="event.stopPropagation(); setProductImage(this, 0)"></span><span class="img-dot" onclick="event.stopPropagation(); setProductImage(this, 1)"></span></div>
+    </div>
     <div>
-      <h3 class="product-name">Set de Runas Vikingas en Amatista</h3>
-      <p class="product-desc">24 runas del Futhark Antiguo talladas en auténtica piedra de amatista natural con bolsita de terciopelo incluida.</p>
+      <h3 class="product-name">Set de Runas de la India en Bolsa - Amatista</h3>
+      <p class="product-desc">24 runas talladas en auténtica piedra de amatista natural presentadas en bolsita protectora para adivinación.</p>
     </div>
     <div>
       <div class="product-pricing">
-        <span class="original-price">32.99 €</span>
-        <span class="discounted-price">19.79 €</span>
+        <span class="original-price">28.00 €</span>
+        <span class="discounted-price">19.00 €</span>
       </div>
       <div class="product-bonus">✦ Incluye +25 Cristales de Claridad de regalo</div>
       <div class="energy-seal"><span>✨</span> Consagrado y purificado energéticamente a mano</div>
-      <button class="buy-stripe-btn" onclick="buyProductStripe('Runas de Amatista', 1979, 25)">Comprar con 40% Dto.</button>
-    </div>
-  </div>
-
-  <!-- Producto 4: Drusa de Cuarzo -->
-  <div class="store-product-card" data-category="minerales">
-    <div class="product-badge-discount">-40% OFF</div>
-    <div class="product-icon-wrap">✨</div>
-    <div>
-      <h3 class="product-name">Drusa de Cuarzo Blanco para Altar</h3>
-      <p class="product-desc">Cristal natural en bruto ideal para limpiar y recargar energéticamente tus joyas, barajas de tarot y péndulos.</p>
-    </div>
-    <div>
-      <div class="product-pricing">
-        <span class="original-price">29.99 €</span>
-        <span class="discounted-price">17.99 €</span>
+      <div class="card-actions">
+        <button class="details-btn" onclick="openProductModal('Set de Runas de la India en Bolsa - Amatista', 'Directamente desde vetas sagradas, este juego de 24 runas de amatista pura encarna la sabiduría ancestral de los antiguos oráculos. Cada pieza es única, tallada a mano y cargada magnéticamente para transformar el caos de tus dudas en directrices claras. Guárdalas en su bolsa ritual y permite que los símbolos nórdicos te muestren el camino oculto.', 1900, 2800, 'Set de Runas de la India en Bolsa - Amatista', 25, this)">Detalles</button>
+        <button class="buy-stripe-btn" onclick="buyProductStripe('Set de Runas de la India en Bolsa - Amatista', 1900, 25)">Adquirir</button>
       </div>
-      <div class="product-bonus">✦ Incluye +25 Cristales de Claridad de regalo</div>
-      <div class="energy-seal"><span>✨</span> Consagrado y purificado energéticamente a mano</div>
-      <button class="buy-stripe-btn" onclick="buyProductStripe('Drusa de Cuarzo Blanco', 1799, 25)">Comprar con 40% Dto.</button>
     </div>
   </div>
 
-  <!-- Producto 5: Colgante -->
-  <div class="store-product-card" data-category="minerales">
-    <div class="product-badge-discount">-40% OFF</div>
-    <div class="product-icon-wrap">📿</div>
-    <div>
-      <h3 class="product-name">Colgante de Obsidiana Protectora</h3>
-      <p class="product-desc">Talismán tallado en obsidiana negra pura con cordón ajustable. Escudo energético frente a densidades externas.</p>
-    </div>
-    <div>
-      <div class="product-pricing">
-        <span class="original-price">21.99 €</span>
-        <span class="discounted-price">13.19 €</span>
-      </div>
-      <div class="product-bonus">✦ Incluye +25 Cristales de Claridad de regalo</div>
-      <div class="energy-seal"><span>✨</span> Consagrado y purificado energéticamente a mano</div>
-      <button class="buy-stripe-btn" onclick="buyProductStripe('Colgante de Obsidiana', 1319, 25)">Comprar con 40% Dto.</button>
-    </div>
-  </div>
-
-  <!-- Producto 6: Paño de Lectura -->
+  <!-- Producto 4: Mantel de Altar - Chakras -->
   <div class="store-product-card" data-category="altares">
-    <div class="product-badge-discount">-40% OFF</div>
-    <div class="product-icon-wrap">🕯️</div>
+    <div class="product-badge-discount">-35% OFF</div>
+    <div class="product-img-wrap" data-images="[&quot;https://media.aiku.io/VGO3EjLNzim8WweeNPFOEc0Z5qTVjabGAbvIpgT3ucM/bG9jYWw6Ly9tZWRpYS85Uy9KRS82MFIzMEMxRzZXU0tKRTlTL2I2ZWY3Njc2LmpwZWc&quot;, &quot;https://media.aiku.io/L2i_u83x1mgkUNwW4_GCGVWxZuNvWcP0pgGvYal5UhI/bG9jYWw6Ly9tZWRpYS8xRy8wQy82MFIzMEMxRzZXVDMwQzFHLzI3YWMyMTFlLmpwZWc&quot;]" data-current="0">
+      <img src="https://media.aiku.io/VGO3EjLNzim8WweeNPFOEc0Z5qTVjabGAbvIpgT3ucM/bG9jYWw6Ly9tZWRpYS85Uy9KRS82MFIzMEMxRzZXU0tKRTlTL2I2ZWY3Njc2LmpwZWc" alt="Mantel de Altar con Flecos - Chakras (50x50cm)" loading="lazy">
+      <button class="img-nav img-nav-prev" onclick="event.stopPropagation(); changeProductImage(this, -1)" aria-label="Anterior">‹</button>
+      <button class="img-nav img-nav-next" onclick="event.stopPropagation(); changeProductImage(this, 1)" aria-label="Siguiente">›</button>
+      <div class="img-dots"><span class="img-dot active" onclick="event.stopPropagation(); setProductImage(this, 0)"></span><span class="img-dot" onclick="event.stopPropagation(); setProductImage(this, 1)"></span></div>
+    </div>
     <div>
-      <h3 class="product-name">Paño de Terciopelo para Tiradas</h3>
-      <p class="product-desc">Tapete ritual con geometría sagrada impresa en tono dorado. Protege tus cartas y delimita tu espacio de lectura.</p>
+      <h3 class="product-name">Mantel de Altar con Flecos - Chakras (50x50cm)</h3>
+      <p class="product-desc">Tapete ritual de algodón con gráfico de los chakras y flecos, diseñado para proteger y potenciar tus lecturas.</p>
     </div>
     <div>
       <div class="product-pricing">
-        <span class="original-price">19.99 €</span>
-        <span class="discounted-price">11.99 €</span>
+        <span class="original-price">19.95 €</span>
+        <span class="discounted-price">12.95 €</span>
       </div>
-      <div class="product-bonus">✦ Incluye +25 Cristales de Claridad de regalo</div>
+      <div class="product-bonus">✦ Incluye +15 Cristales de Claridad de regalo</div>
       <div class="energy-seal"><span>✨</span> Consagrado y purificado energéticamente a mano</div>
-      <button class="buy-stripe-btn" onclick="buyProductStripe('Paño de Terciopelo', 1199, 25)">Comprar con 40% Dto.</button>
+      <div class="card-actions">
+        <button class="details-btn" onclick="openProductModal('Mantel de Altar con Flecos - Chakras (50x50cm)', 'Crea un espacio sagrado libre de interferencias energéticas. Este mantel de 50x50 cm con el gráfico sagrado de los chakras aísla tu mesa de trabajo esotérico, elevando la vibración de tus tiradas de tarot, runas o péndulo. Su tejido de algodón denso y sus flecos artesanales sellan el perímetro ritual, asegurando que solo fluyan energías de luz y alta frecuencia.', 1295, 1995, 'Mantel de Altar con Flecos - Chakras (50x50cm)', 15, this)">Detalles</button>
+        <button class="buy-stripe-btn" onclick="buyProductStripe('Mantel de Altar con Flecos - Chakras (50x50cm)', 1295, 15)">Adquirir</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Producto 5: Cuaderno de Cuero Artesanal - Grimorio -->
+  <div class="store-product-card" data-category="altares">
+    <div class="product-badge-discount">-30% OFF</div>
+    <div class="product-img-wrap" data-images="[&quot;https://media.aiku.io/Ew1A9tgxk86azIr1ADZ3oGpAEHstm4GankmOH7G3TSo/bG9jYWw6Ly9tZWRpYS9TUy8yQy82MFIzMEMxRzZSVDMyQ1NTLzEwZDZjOTg0LmpwZWc&quot;, &quot;https://media.aiku.io/L7OBVV8IKV-RDOrvCcwaFf1JOu6ieztdx5T5pQ6Rr_E/bG9jYWw6Ly9tZWRpYS9TUi8yQy82MFIzMEMxRzZSVDMyQ1NSL2IwMTQyN2I4LmpwZWc&quot;]" data-current="0">
+      <img src="https://media.aiku.io/Ew1A9tgxk86azIr1ADZ3oGpAEHstm4GankmOH7G3TSo/bG9jYWw6Ly9tZWRpYS9TUy8yQy82MFIzMEMxRzZSVDMyQ1NTLzEwZDZjOTg0LmpwZWc" alt="Cuaderno de Cuero Artesanal - Grimorio" loading="lazy">
+      <button class="img-nav img-nav-prev" onclick="event.stopPropagation(); changeProductImage(this, -1)" aria-label="Anterior">‹</button>
+      <button class="img-nav img-nav-next" onclick="event.stopPropagation(); changeProductImage(this, 1)" aria-label="Siguiente">›</button>
+      <div class="img-dots"><span class="img-dot active" onclick="event.stopPropagation(); setProductImage(this, 0)"></span><span class="img-dot" onclick="event.stopPropagation(); setProductImage(this, 1)"></span></div>
+    </div>
+    <div>
+      <h3 class="product-name">Cuaderno de Cuero Artesanal - Grimorio</h3>
+      <p class="product-desc">Libreta de notas en cuero rústico de alta calidad ideal para registrar tus tiradas, sueños e interpretaciones del oráculo.</p>
+    </div>
+    <div>
+      <div class="product-pricing">
+        <span class="original-price">39.90 €</span>
+        <span class="discounted-price">27.50 €</span>
+      </div>
+      <div class="product-bonus">✦ Incluye +30 Cristales de Claridad de regalo</div>
+      <div class="energy-seal"><span>✨</span> Consagrado y purificado energéticamente a mano</div>
+      <div class="card-actions">
+        <button class="details-btn" onclick="openProductModal('Cuaderno de Cuero Artesanal - Grimorio', 'Tu historia mística merece un cofre a su altura. Este grimorio encuadernado en cuero rústico de curtido artesanal es el santuario perfecto para registrar tus sueños lúcidos, tiradas de oráculo y epifanías espirituales. Páginas envejecidas de tacto celestial que absorben tu energía y se convierten, con el tiempo, en el legado más valioso de tu evolución interior.', 2750, 3990, 'Cuaderno de Cuero Artesanal - Grimorio', 30, this)">Detalles</button>
+        <button class="buy-stripe-btn" onclick="buyProductStripe('Cuaderno de Cuero Artesanal - Grimorio', 2750, 30)">Adquirir</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Producto 6: Cuenco Tibetano Set - Tara Verde -->
+  <div class="store-product-card" data-category="altares">
+    <div class="product-badge-discount">MAGNO</div>
+    <div class="product-img-wrap" data-images="[&quot;https://media.aiku.io/80sLOhMMYEHAxAwyMPZeariWJa7lTZkZQr7xzZU6BNk/bG9jYWw6Ly9tZWRpYS9ITi82RC82MFIzMEMxRzZNVDM2REhOLzgyNzVhNDU3LmpwZWc&quot;, &quot;https://media.aiku.io/_ASzi330IfhPVfvFpTv2YQuAxtCMsksYbVn-PbTqmmk/bG9jYWw6Ly9tZWRpYS9IUC82RC82MFIzMEMxRzZNVDM2REhQL2EyOWRhMjFkLmpwZWc&quot;]" data-current="0">
+      <img src="https://media.aiku.io/80sLOhMMYEHAxAwyMPZeariWJa7lTZkZQr7xzZU6BNk/bG9jYWw6Ly9tZWRpYS9ITi82RC82MFIzMEMxRzZNVDM2REhOLzgyNzVhNDU3LmpwZWc" alt="Cuenco Tibetano Set - Tara Verde 10cm" loading="lazy">
+      <button class="img-nav img-nav-prev" onclick="event.stopPropagation(); changeProductImage(this, -1)" aria-label="Anterior">‹</button>
+      <button class="img-nav img-nav-next" onclick="event.stopPropagation(); changeProductImage(this, 1)" aria-label="Siguiente">›</button>
+      <div class="img-dots"><span class="img-dot active" onclick="event.stopPropagation(); setProductImage(this, 0)"></span><span class="img-dot" onclick="event.stopPropagation(); setProductImage(this, 1)"></span></div>
+    </div>
+    <div>
+      <h3 class="product-name">Cuenco Tibetano Set - Tara Verde 10cm</h3>
+      <p class="product-desc">Set artesanal con cuenco sonoro de alta vibración, baqueta y cojín, perfecto para limpiezas energéticas de espacios y altares.</p>
+    </div>
+    <div>
+      <div class="product-pricing">
+        <span class="original-price">79.00 €</span>
+        <span class="discounted-price">57.00 €</span>
+      </div>
+      <div class="product-bonus">✦ Incluye +60 Cristales y Sesión VIP Ente Superior</div>
+      <div class="energy-seal"><span>✨</span> Consagrado y purificado energéticamente a mano</div>
+      <div class="card-actions">
+        <button class="details-btn" onclick="openProductModal('Cuenco Tibetano Set - Tara Verde 10cm', 'Una obra maestra de la sonoterapia sagrada. Afinada bajo la esencia de la deidad Tara Verde, la vibración de este cuenco de más de 400 gramos disuelve bloqueos energéticos instantáneamente, limpia el aura de tus espacios y armoniza los chakras con solo hacer cantar su borde de latón. Incluye baqueta de madera y cojín de seda ritual para una experiencia trascendental.', 5700, 7900, 'Cuenco Tibetano Set - Tara Verde 10cm', 60, this)">Detalles</button>
+        <button class="buy-stripe-btn" onclick="buyProductStripe('Cuenco Tibetano Set - Tara Verde 10cm', 5700, 60)">Adquirir</button>
+      </div>
     </div>
   </div>
 
@@ -797,7 +1043,7 @@
     </div>
     <div class="review-card">
       <div style="color: var(--gold);">★★★★★</div>
-      <p style="margin: 0; font-style: italic;">«Compré el paño de terciopelo y la drusa. La atención y la experiencia en la tienda son impecables. Repetiré seguro.»</p>
+      <p style="margin: 0; font-style: italic;">«Compré el cuaderno y el set de runas. La atención y la experiencia en la tienda son impecables. Repetiré seguro.»</p>
       <span style="font-family: 'Cormorant Garamond', serif; color: var(--gold-light);">— Andrea V. (Sevilla)</span>
     </div>
   </div>
@@ -834,6 +1080,67 @@
     closeNavMenu();
   });
 
+  /* --- CONTROL DEL MODAL CON CARRUSEL DE IMÁGENES --- */
+  let modalImages = [];
+  let modalCurrentIdx = 0;
+
+  function openProductModal(name, desc, priceInCents, origPriceInCents, productNameForStripe, crystalsBonus, btnEl) {
+    playWoodSelectSound();
+    document.getElementById('modalProductName').textContent = name;
+    document.getElementById('modalProductDescription').textContent = desc;
+    
+    document.getElementById('modalOrigPrice').textContent = (origPriceInCents / 100).toFixed(2).replace('.', ',') + ' €';
+    document.getElementById('modalFinalPrice').textContent = (priceInCents / 100).toFixed(2).replace('.', ',') + ' €';
+    
+    // Obtener imágenes del producto desde la tarjeta principal
+    const card = btnEl.closest('.store-product-card');
+    const imgWrap = card.querySelector('.product-img-wrap');
+    modalImages = JSON.parse(imgWrap.dataset.images || '[]');
+    modalCurrentIdx = parseInt(imgWrap.dataset.current || '0', 10);
+    
+    updateModalImageDisplay();
+
+    // Configurar botón de compra
+    const buyBtn = document.getElementById('modalBuyBtn');
+    buyBtn.onclick = function() {
+      buyProductStripe(productNameForStripe, priceInCents, crystalsBonus);
+    };
+
+    document.getElementById('productModal').classList.add('active');
+  }
+
+  function closeProductModal() {
+    document.getElementById('productModal').classList.remove('active');
+  }
+
+  function changeModalImage(direction) {
+    if (modalImages.length === 0) return;
+    modalCurrentIdx = (modalCurrentIdx + direction + modalImages.length) % modalImages.length;
+    updateModalImageDisplay();
+  }
+
+  function updateModalImageDisplay() {
+    const mainImg = document.getElementById('modalMainImg');
+    mainImg.style.opacity = 0;
+    setTimeout(() => {
+      mainImg.src = modalImages[modalCurrentIdx];
+      mainImg.style.opacity = 1;
+    }, 120);
+
+    // Renderizar puntitos del carrusel en el modal
+    const dotsContainer = document.getElementById('modalImgDots');
+    dotsContainer.innerHTML = '';
+    modalImages.forEach((_, idx) => {
+      const dot = document.createElement('span');
+      dot.className = `img-dot ${idx === modalCurrentIdx ? 'active' : ''}`;
+      dot.onclick = () => {
+        modalCurrentIdx = idx;
+        updateModalImageDisplay();
+      };
+      dotsContainer.appendChild(dot);
+    });
+  }
+
   /* --- FILTROS RÁPIDOS DE PRODUCTOS --- */
   function filterProducts(category) {
     playWoodSelectSound();
@@ -851,23 +1158,49 @@
     });
   }
 
-  /* --- NOTIFICACIONES FLOTANTES DE VALIDACIÓN SOCIAL (15 COMPRADORES Y TIEMPOS AMPLIADOS) --- */
+  /* --- CARRUSEL EN TARJETAS PRINCIPALES --- */
+  function changeProductImage(btn, direction) {
+    const wrap = btn.closest('.product-img-wrap');
+    const images = JSON.parse(wrap.dataset.images);
+    let idx = parseInt(wrap.dataset.current, 10);
+    idx = (idx + direction + images.length) % images.length;
+    setCardImageIndex(wrap, images, idx);
+  }
+
+  function setProductImage(dot, index) {
+    const wrap = dot.closest('.product-img-wrap');
+    const images = JSON.parse(wrap.dataset.images);
+    setCardImageIndex(wrap, images, index);
+  }
+
+  function setCardImageIndex(wrap, images, idx) {
+    wrap.dataset.current = idx;
+    const img = wrap.querySelector('img');
+    img.style.opacity = 0;
+    setTimeout(() => {
+      img.src = images[idx];
+      img.style.opacity = 1;
+    }, 120);
+    wrap.querySelectorAll('.img-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
+  }
+
+  /* --- NOTIFICACIONES FLOTANTES DE VALIDACIÓN SOCIAL --- */
   const buyersList = [
-    { name: "Marta de Barcelona", item: "el Péndulo de Cuarzo" },
+    { name: "Marta de Barcelona", item: "el Péndulo Mágico" },
     { name: "Alejandro de Bilbao", item: "la Baraja de Tarot Dorada" },
-    { name: "Lucía de Valencia", item: "el Pack Altar Maestro" },
-    { name: "David de Sevilla", item: "el Set de Runas de Amatista" },
-    { name: "Sofía de Madrid", item: "la Drusa de Cuarzo Blanco" },
-    { name: "Carlos de Málaga", item: "el Colgante de Obsidiana" },
-    { name: "Elena de Zaragoza", item: "el Paño de Terciopelo" },
-    { name: "Javier de Murcia", item: "el Pack Altar Maestro" },
-    { name: "Carmen de Palma", item: "la Baraja de Tarot Dorada" },
-    { name: "Adrián de Las Palmas", item: "el Péndulo de Cuarzo" },
-    { name: "Claudia de Alicante", item: "el Set de Runas de Amatista" },
-    { name: "Marcos de Granada", item: "la Drusa de Cuarzo Blanco" },
-    { name: "Valeria de Vigo", item: "el Colgante de Obsidiana" },
-    { name: "Hugo de Valladolid", item: "el Paño de Terciopelo" },
-    { name: "Beatriz de Córdoba", item: "el Pack Altar Maestro" }
+    { name: "Lucía de Valencia", item: "el Set de Runas de Amatista" },
+    { name: "David de Sevilla", item: "el Mantel de Altar Chakras" },
+    { name: "Sofía de Madrid", item: "el Cuaderno Artesanal" },
+    { name: "Carlos de Málaga", item: "el Cuenco Tibetano" },
+    { name: "Elena de Zaragoza", item: "la Baraja de Tarot Dorada" },
+    { name: "Javier de Murcia", item: "el Péndulo Mágico" },
+    { name: "Carmen de Palma", item: "el Set de Runas de Amatista" },
+    { name: "Adrián de Las Palmas", item: "el Cuenco Tibetano" },
+    { name: "Claudia de Alicante", item: "el Mantel de Altar Chakras" },
+    { name: "Marcos de Granada", item: "el Cuaderno Artesanal" },
+    { name: "Valeria de Vigo", item: "el Péndulo Mágico" },
+    { name: "Hugo de Valladolid", item: "la Baraja de Tarot Dorada" },
+    { name: "Beatriz de Córdoba", item: "el Set de Runas de Amatista" }
   ];
 
   function triggerSocialProof() {
@@ -881,7 +1214,6 @@
     }, 4500);
   }
 
-  // Primera aparición a los 10 segundos, y se repite cada 35 segundos
   setTimeout(() => {
     triggerSocialProof();
     setInterval(triggerSocialProof, 35000);
@@ -996,7 +1328,7 @@
 
   checkUserSession();
 
-  /* --- FUNCIÓN DE COMPRA EN STRIPE CON CANTIDAD DE CRISTALES PERSONALIZADA --- */
+  /* --- FUNCIÓN DE COMPRA EN STRIPE --- */
   async function buyProductStripe(productName, priceInCents, crystalBonus = 25) {
     playWoodSelectSound();
 
