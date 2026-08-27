@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ansiedad por incertidumbre: Cómo aprender a soltar el control — Diario de Arkanica</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://js.stripe.com/v3/"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500&display=swap');
+  :root { --bg: #050508; --surface: #0c0b12; --surface-hover: #13121c; --gold: #dfb15b; --gold-dim: #947437; --gold-light: #f3d89d; --text-main: #f4f2ee; --text-muted: #9c98a6; --line: rgba(223, 177, 91, 0.25); }
+  * { box-sizing: border-box; }
+  body { margin: 0; background-color: var(--bg); background-image: radial-gradient(circle at 50% 0%, rgba(45, 30, 70, 0.25) 0%, transparent 60%); background-attachment: fixed; min-height: 100vh; display: flex; flex-direction: column; align-items: center; font-family: 'Inter', sans-serif; color: var(--text-main); padding: 16px 12px 60px 12px; position: relative; }
+  body::after { content: ''; position: fixed; inset: 0; background: radial-gradient(circle at center, transparent 40%, rgba(3, 3, 5, 0.75) 100%); pointer-events: none; z-index: 1000; }
+  header { width: 100%; max-width: 1100px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; border-bottom: 1px solid var(--line); padding-bottom: 12px; z-index: 100; }
+  .logo { display: flex; align-items: center; gap: 8px; text-decoration: none; }
+  .logo-symbol { width: 26px; height: 26px; fill: none; stroke: var(--gold); stroke-width: 1.5; }
+  .logo-text { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--gold); }
+  .blog-container { width: 100%; max-width: 850px; z-index: 2; display: flex; flex-direction: column; gap: 20px; }
+  .blog-post-card { background: linear-gradient(135deg, rgba(14, 13, 20, 0.85) 0%, rgba(6, 5, 10, 0.95) 100%); border: 1px solid var(--line); border-radius: 14px; padding: 32px 28px; box-shadow: 0 20px 45px rgba(0,0,0,0.5); }
+  .blog-eyebrow { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 6px; }
+  .blog-post-card h2 { font-family: 'Cormorant Garamond', serif; font-size: 26px; color: var(--gold); margin-top: 0; margin-bottom: 6px; }
+  .blog-date { font-size: 11px; color: var(--text-muted); margin-bottom: 22px; font-style: italic; }
+  .blog-content h3 { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--text-main); margin-top: 24px; margin-bottom: 8px; }
+  .blog-content p, .blog-content ul, .blog-content ol { font-size: 13.5px; color: var(--text-main); line-height: 1.7; margin-bottom: 16px; }
+  .blog-content ul, .blog-content ol { padding-left: 20px; }
+  .action-btn { background: var(--gold); color: var(--bg); border: none; font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; padding: 11px 22px; border-radius: 6px; text-decoration: none; display: inline-block; }
+  .action-btn:hover { background: var(--gold-light); }
+  .banner-action-pill { background: rgba(223, 177, 91, 0.08); border: 1px solid var(--gold-dim); color: var(--gold-light); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.1em; padding: 9px 18px; border-radius: 20px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+  .banner-action-pill:hover { background: var(--gold); color: var(--bg); }
+</style>
+</head>
+<body>
+<header>
+  <a href="../index.html" class="logo">
+    <svg class="logo-symbol" viewBox="0 0 32 32"><ellipse cx="16" cy="16" rx="14" ry="6" transform="rotate(-30 16 16)" /><circle cx="16" cy="16" r="4" /><path d="M16 2 L16 30" stroke-dasharray="1 3" /></svg>
+    <span class="logo-text">Arkanica</span>
+  </a>
+  <a href="../blog.html" class="banner-action-pill">← Volver al Diario de Arkanica</a>
+</header>
+<div class="blog-container">
+  <article class="blog-post-card">
+    <div class="blog-eyebrow">✦ Paz Mental & Transformación</div>
+    <h2>Ansiedad por incertidumbre: Por qué necesitas dejar de intentar controlar el futuro (y cómo el Arcano sin Nombre te enseña a soltar)</h2>
+    <p class="blog-date">Publicado en el Diario de Arkanica</p>
+    <div class="blog-content">
+      <p>Vivimos en una época hipertecnológica obsesionada con la previsibilidad absoluta. Diseñamos hojas de cálculo detalladas para nuestras finanzas, planificamos nuestras vacaciones con meses de margen y experimentamos un profundo malestar emocional cuando los acontecimientos imprevistos alteran nuestros planes meticulosos. Queremos que la vida nos entregue un manual de instrucciones sellado y garantizado frente a cualquier eventualidad.</p>
+      
+      <p>Sin embargo, la realidad opera bajo dinámicas completamente distintas. El intento desesperado por anticipar y controlar cada variable del mañana es la causa principal de la fatiga crónica y la ansiedad contemporánea. Cuanto más intentas retener el agua con fuerza entre las manos, más deprisa se escapa.</p>
+
+      <h3>La ilusión de dominio y la enseñanza del Arcano XIII</h3>
+      <p>Cuando nos enfrentamos al cambio inesperado —como una reestructuración laboral o un giro drástico en lo personal— nuestro sistema nervioso entra en alerta porque interpreta la incertidumbre como una amenaza directa para nuestra supervivencia. Es precisamente aquí donde la sabiduría tradicional del tarot nos ofrece una de sus lecciones más liberadoras a través del Arcano XIII, conocido como <em>La Muerte</em> o el Arcano sin Nombre.</p>
+      
+      <p>En la iconografía clásica, esta carta representa un proceso natural e ineludible: el desapego obligatorio de estructuras, identidades o proyectos que ya han cumplido su función vital. La ansiedad patológica surge en el preciso instante en que te aferras a un modelo agotado pretendiendo que mantengaartificialmente su pulso.</p>
+
+      <h3>Tres pasos esenciales para reconciliarte con el fluir de la existencia</h3>
+      <ul>
+        <li><strong>Aceptar el vacío provisional:</strong> Todo nacimiento creativo requiere un periodo de gestación en la penumbra. Antes de que surja una nueva etapa enriquecedora en tu vida, es imprescindible habilitar un espacio vacío. Deja de temerle al silencio y a la pausa.</li>
+        <li><strong>Diferenciar entre acción y control:</strong> Tienes la potestad de decidir qué dirección tomar hoy (acción constructiva), pero careces de poder para obligar a que el resultado se ajuste exactamente a tus plazos rígidos (control). Aprende a soltar el timón una vez que hayas remado con honestidad.</li>
+        <li><strong>Habitar el presente como única realidad:</strong> La ansiedad habita exclusivamente en proyecciones catastróficas del futuro hipotético. El presente, por muy desafiante que resulte, siempre es manejable si lo abordas paso a paso.</li>
+      </ul>
+
+      <div style="background: rgba(223, 177, 91, 0.05); border: 1px solid var(--line); border-left: 3px solid var(--gold); padding: 16px 20px; border-radius: 8px; margin: 24px 0;">
+        <p style="margin: 0 0 10px 0; font-family: 'Cormorant Garamond', serif; font-size: 16px; color: var(--gold-light);">✦ <em>¿Te abruma la dirección que está tomando tu presente?</em></p>
+        <p style="margin: 0 0 12px 0; font-size: 12.5px; color: var(--text-muted); line-height: 1.5;">Permítete pausar el flujo de la mente y consultar qué transición energética te demanda el momento actual.</p>
+        <a href="../index.html#mesa" class="banner-action-pill" style="text-decoration: none;">Consultar tirada de calma</a>
+      </div>
+
+      <h3>El verdadero alivio que acompaña al acto de soltar</h3>
+      <p>El instante en que dejas de luchar contra la corriente natural de los acontecimientos y aceptas la incertidumbre como un componente intrínseco de la experiencia humana, se produce un cambio energético radical: la tensión acumulada en el cuerpo se disipa. El futuro deja de percibirse como un abismo amenazante y se transforma en una página en blanco lista para ser escrita con madurez.</p>
+
+      <hr style="border: 0; border-top: 1px solid var(--line); margin: 32px 0;">
+      <p style="text-align: center; font-style: italic; color: var(--gold-light); font-size: 15px;">"La paz mental no llega cuando logras dominar el mundo exterior, sino cuando comprendes que ya no necesitas cargar con ese peso."</p>
+      
+      <div style="background: linear-gradient(135deg, rgba(223, 177, 91, 0.1) 0%, rgba(12, 11, 18, 0.95) 100%); border: 1px solid var(--gold); border-radius: 10px; padding: 24px; margin-top: 28px; text-align: center;">
+        <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--gold); margin-top: 0; margin-bottom: 8px;">¿Buscas serenidad en medio de la tormenta?</h3>
+        <p style="font-size: 12.5px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.5;">El Ente Superior te acompaña a encontrar tu centro de gravedad emocional con total ecuanimidad.</p>
+        <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
+          <a href="../index.html#mesa" class="action-btn" style="text-decoration: none; display: inline-block;">Hacer una tirada</a>
+          <a href="../ente-superior/ente-superior.html" class="banner-action-pill" style="text-decoration: none; display: inline-block; padding: 11px 22px;">Consultar al Ente Superior ✦</a>
+        </div>
+      </div>
+    </div>
+  </article>
+</div>
+</body>
+</html>

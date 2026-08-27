@@ -301,7 +301,7 @@
     font-weight: 500;
   }
 
-  /* MENÚ HAMBURGUESA Y DESPLEGABLE CORREGIDO Y OPACADO */
+  /* MENÚ HAMBURGUESA Y DESPLEGABLE HOMOGÉNEO */
   .hamburger-btn {
     background: rgba(12, 11, 18, 0.92);
     border: 1px solid var(--gold);
@@ -339,16 +339,16 @@
     position: absolute;
     top: 50px;
     right: 0;
-    background-color: #08070b !important; /* Fondo 100% sólido y opaco */
+    background-color: #08070b !important;
     backdrop-filter: none !important;
     border: 1.5px solid var(--gold);
     border-radius: 10px;
-    width: 230px;
-    padding: 10px 0;
+    width: 245px;
+    padding: 8px 0;
     box-shadow: 0 25px 50px rgba(0, 0, 0, 0.95), 0 0 30px rgba(0, 0, 0, 0.9);
     display: none;
     flex-direction: column;
-    z-index: 99999; /* Por encima de todo */
+    z-index: 99999;
   }
 
   .nav-dropdown-menu.active {
@@ -361,23 +361,15 @@
     font-size: 11.5px;
     text-transform: uppercase;
     letter-spacing: 0.12em;
-    padding: 12px 20px;
+    padding: 11px 20px;
     transition: background 0.2s, color 0.2s;
     display: block;
-    background-color: #08070b !important; /* Solidez asegurada en los ítems */
+    background-color: #08070b !important;
   }
 
   .nav-dropdown-menu a:hover {
     background: rgba(223, 177, 91, 0.15) !important;
     color: var(--gold);
-  }
-
-  .nav-dropdown-menu a.highlight {
-    color: var(--gold-light);
-    font-weight: 650;
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
-    margin: 4px 0;
   }
 
   /* MODALES GENERALES */
@@ -1083,7 +1075,7 @@
 </head>
 <body>
 
-<!-- VELO DEL UMBRAL (INMERSIÓN INICIAL) -->
+<!-- VELO DEL UMBRAL (INMERSIÓN INICIAL CON AUTO-ENTRADA A LOS 5 SEGUNDOS) -->
 <div class="threshold-overlay" id="thresholdOverlay">
   <div class="threshold-particles"></div>
   <div class="threshold-content">
@@ -1157,7 +1149,7 @@
       </div>
     </div>
 
-    <!-- Botón de Hamburguesa y Menú Desplegable con Envoltorio Seguro -->
+    <!-- Botón de Hamburguesa y Menú Desplegable Uniforme -->
     <div class="header-menu-wrapper">
       <button class="hamburger-btn" onclick="toggleNavMenu(event)" title="Menú de navegación">
         <span class="hamburger-line"></span>
@@ -1167,7 +1159,8 @@
 
       <div class="nav-dropdown-menu" id="navDropdownMenu">
         <a href="#mesa" onclick="closeNavMenu()">Lecturas</a>
-        <a href="tienda.html" class="highlight" onclick="closeNavMenu()">🛍️ Tienda Mística</a>
+        <a href="blog.html" onclick="closeNavMenu()">✦ Diario de Arkanica</a>
+        <a href="tienda.html" onclick="closeNavMenu()">🛍️ Tienda Mística</a>
         <a href="#autor" onclick="closeNavMenu()">Guía</a>
         <a href="#reservas" onclick="closeNavMenu()">Sesiones privadas</a>
       </div>
@@ -1183,6 +1176,7 @@
   
   <div class="banner-quick-actions">
     <a href="#reservas" class="banner-action-pill">🎥 Sesiones privadas</a>
+    <a href="blog.html" class="banner-action-pill">✦ Diario de Arkanica</a>
     <a href="tienda.html" class="banner-action-pill">🛍️ Tienda Mística</a>
   </div>
 </div>
@@ -1235,20 +1229,6 @@
 
   <!-- BOTÓN DE REINICIO CON LENGUAJE ARCANO -->
   <button class="arkanica-reset" id="reset" style="margin-top: 14px;">Volver a consultar al destino</button>
-</div>
-
-<!-- Bloque opcional de AdSense -->
-<div class="ad-container-arkanica" style="width: 100%; max-width: 1100px; margin: 16px auto; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px; text-align: center;">
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2698892755295064" crossorigin="anonymous"></script>
-  <ins class="adsbygoogle"
-       style="display:block"
-       data-ad-client="ca-pub-2698892755295064"
-       data-ad-slot="REEMPLAZAR_CON_TU_AD_SLOT"
-       data-ad-format="auto"
-       data-full-width-responsive="true"></ins>
-  <script>
-       (adsbygoogle = window.adsbygoogle || []).push({});
-  </script>
 </div>
 
 <div class="section-card" id="autor">
@@ -1340,14 +1320,21 @@
 </div>
 
 <script>
-  /* --- CONTROL DEL UMBRAL (INMERSIÓN INICIAL) --- */
+  /* --- CONTROL DEL UMBRAL (INMERSIÓN INICIAL + AUTO-ENTRADA A LOS 5 SEGUNDOS) --- */
+  let thresholdTimeout = setTimeout(() => {
+    crossTheThreshold();
+  }, 5000);
+
   function crossTheThreshold() {
+    clearTimeout(thresholdTimeout);
     playWoodSelectSound();
     const overlay = document.getElementById('thresholdOverlay');
-    overlay.classList.add('fade-out');
-    setTimeout(() => {
-      overlay.style.display = 'none';
-    }, 1200);
+    if (overlay && !overlay.classList.contains('fade-out')) {
+      overlay.classList.add('fade-out');
+      setTimeout(() => {
+        overlay.style.display = 'none';
+      }, 1200);
+    }
   }
 
   /* --- CONTROL DEL MENÚ DE HAMBURGUESA --- */
@@ -1902,11 +1889,16 @@
       const xOffset = (i - (totalFanCards - 1) / 2) * 11;
       cardEl.style.transform = `translateX(${xOffset}px) rotate(${angle}deg)`;
       
-      cardEl.addEventListener('pointerdown', (e) => {
+      const handleFanCardClick = (e) => {
         e.preventDefault();
+        e.stopPropagation();
         playWoodSelectSound();
         pickCardFromFan();
-      });
+      };
+
+      cardEl.addEventListener('pointerdown', handleFanCardClick);
+      cardEl.addEventListener('click', handleFanCardClick);
+
       fanContainer.appendChild(cardEl);
     }
   }
@@ -1975,10 +1967,13 @@
         front.innerHTML = `<img src="${cardData.img}" alt="${cardData.name}" title="${cardData.name}: ${cardData.archetype}" decoding="async">`;
         card.appendChild(back); card.appendChild(front);
 
-        card.addEventListener('click', () => {
+        const handleCardToggle = () => {
           card.classList.toggle('flipped');
           playCardFlipSound();
-        });
+        };
+
+        card.addEventListener('click', handleCardToggle);
+        card.addEventListener('pointerdown', handleCardToggle);
 
         setTimeout(() => {
           card.classList.add('flipped');

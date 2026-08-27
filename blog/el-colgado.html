@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Colgado: El arte de parar el mundo — Arkanica</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500&display=swap');
+
+  :root {
+    --bg: #050508;
+    --surface: #0c0b12;
+    --surface-hover: #13121c;
+    --gold: #dfb15b;
+    --gold-dim: #947437;
+    --gold-light: #f3d89d;
+    --text-main: #f4f2ee;
+    --text-muted: #9c98a6;
+    --line: rgba(223, 177, 91, 0.25);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background-color: var(--bg);
+    background-image: 
+      radial-gradient(circle at 50% 0%, rgba(45, 30, 70, 0.25) 0%, transparent 60%),
+      radial-gradient(circle at 50% 100%, rgba(223, 177, 91, 0.05) 0%, transparent 50%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Inter', sans-serif;
+    color: var(--text-main);
+    padding: 16px 12px 60px 12px;
+    overflow-x: hidden;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at center, transparent 40%, rgba(3, 3, 5, 0.75) 100%);
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  header {
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 12px;
+    position: relative;
+    z-index: 100;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+  }
+
+  .logo-symbol {
+    width: 26px;
+    height: 26px;
+    fill: none;
+    stroke: var(--gold);
+    stroke-width: 1.5;
+  }
+
+  .logo-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+  }
+
+  .nav-back {
+    background: rgba(223, 177, 91, 0.08);
+    border: 1px solid var(--gold-dim);
+    color: var(--gold-light);
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 8px 16px;
+    border-radius: 20px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .nav-back:hover {
+    background: var(--gold);
+    color: var(--bg);
+    border-color: var(--gold);
+  }
+
+  .post-container {
+    width: 100%;
+    max-width: 740px;
+    z-index: 2;
+    background: linear-gradient(135deg, rgba(14, 13, 20, 0.85) 0%, rgba(6, 5, 10, 0.95) 100%);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 36px 30px;
+    box-shadow: 0 20px 45px rgba(0,0,0,0.6);
+  }
+
+  .post-category {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+
+  .post-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px;
+    color: var(--text-main);
+    margin: 0 0 16px;
+    line-height: 1.25;
+  }
+
+  .post-meta {
+    font-size: 11.5px;
+    color: var(--text-muted);
+    margin-bottom: 28px;
+    border-bottom: 1px solid rgba(223, 177, 91, 0.15);
+    padding-bottom: 14px;
+  }
+
+  .post-content {
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--text-main);
+  }
+
+  .post-content h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    color: var(--gold);
+    margin-top: 28px;
+    margin-bottom: 10px;
+  }
+
+  .post-content p {
+    margin-bottom: 16px;
+    color: var(--text-muted);
+  }
+
+  .post-content ul {
+    margin-bottom: 16px;
+    padding-left: 20px;
+    color: var(--text-muted);
+  }
+
+  .post-content li {
+    margin-bottom: 8px;
+  }
+
+  .post-cta {
+    margin-top: 36px;
+    background: rgba(223, 177, 91, 0.08);
+    border: 1px solid var(--gold);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .post-cta p {
+    margin: 0 0 14px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  .cta-btn {
+    background: var(--gold);
+    color: var(--bg);
+    border: none;
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.3s;
+  }
+
+  .cta-btn:hover { background: var(--gold-light); }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html" class="logo">
+    <svg class="logo-symbol" viewBox="0 0 32 32">
+      <ellipse cx="16" cy="16" rx="14" ry="6" transform="rotate(-30 16 16)" />
+      <circle cx="16" cy="16" r="4" />
+      <path d="M16 2 L16 30" stroke-dasharray="1 3" />
+    </svg>
+    <span class="logo-text">Arkanica</span>
+  </a>
+  <a href="../blog.html" class="nav-back">← Volver al Blog</a>
+</header>
+
+<article class="post-container">
+  <div class="post-category">✦ Arquetipos & Autoterapia</div>
+  <h1 class="post-title">El Colgado: El arte de parar el mundo cuando tu mente pide tregua</h1>
+  <div class="post-meta">Publicado en el Diario de Arkanica · Lectura de 4 min</div>
+
+  <div class="post-content">
+    <p>¿Alguna vez has tenido la sensación de que, por mucho que corras, empujes o te esfuerces, tu vida está completamente estancada?</p>
+    
+    <p>Vivimos en una sociedad que nos empuja a la acción constante. Si no estás produciendo, si no estás decidiendo o si te paras a pensar, sientes que estás perdiendo el tiempo. Nos han enseñado que avanzar siempre es hacia delante y a toda velocidad.</p>
+    
+    <p>Pero llega un momento en el que el cuerpo o la mente dicen basta. Aparece la fatiga mental, la apatía o esa crisis sutil que te obliga a frenar, te apetezca o no. Es ahí, justo en medio de ese vértigo, donde aparece <strong>El Colgado</strong>.</p>
+
+    <h3>La trampa de ver las cosas al revés</h3>
+    <p>Si miras el Arcano de El Colgado, lo primero que llama la atención es su postura: está suspendido por un pie, colgado boca abajo, pero su rostro no muestra dolor ni desesperación; al contrario, tiene una expresión de absoluta calma y una especie de halo luminoso alrededor de la cabeza.</p>
+    
+    <p>La sabiduría psicológica de esta carta es fascinante: <strong>El Colgado no está atrapado porque el mundo le obligue, sino porque ha decidido cambiar de perspectiva.</strong></p>
+    
+    <p>Cuando estás atascado en un dilema (una relación que no avanza, un trabajo que te vacía o una decisión vital que te paraliza), tu ego insiste en aplicar la misma fórmula una y otra vez: <em>«Si me esfuerzo más, cambiará»</em>. Y lo único que consigues es desgastarte.</p>
+    
+    <p>El Colgado te propone el acto más radical del mundo moderno: <strong>soltar el control y rendirte a la pausa.</strong></p>
+
+    <h3>Qué pasa cuando dejas de luchar contra la corriente</h3>
+    <p>Cuando aceptas colgarte boca abajo, dejas de gastar energía en resistirte a lo que hay.</p>
+    <ul>
+      <li><strong>Tu perspectiva se invierte:</strong> Lo que ayer te parecía una tragedia insuperable, visto desde este nuevo ángulo, empieza a parecer una oportunidad para reorganizar tus prioridades.</li>
+      <li><strong>El cerebro procesa en silencio:</strong> Mientras tú crees que estás perdiendo el tiempo "estancado", tu inconsciente está haciendo el trabajo suciamente: digiriendo duelos, descartando expectativas ajenas y alineando lo que haces con lo que de verdad necesitas.</li>
+    </ul>
+
+    <h3>Tres preguntas para integrar la energía de El Colgado hoy</h3>
+    <p>La próxima vez que sientas que la vida te ha frenado en seco, en lugar de frustrarte y patalear, hazte estas tres preguntas desde la honestidad más absoluta:</p>
+    
+    <p><strong>1. ¿Qué estructura, expectativa o relación estoy sosteniendo únicamente por miedo a soltarla?<br>
+    2. Si dejara de empujar contra esta situación durante una semana, ¿qué pasaría realmente?<br>
+    3. ¿Qué me está pidiendo mi intuición que detenga para poder escucharme por fin?</strong></p>
+    
+    <p>No estás atascado. Estás haciendo cueva. Y a veces, dar un paso atrás es la única forma de coger el impulso mental necesario para elegir bien tu siguiente movimiento.</p>
+  </div>
+
+  <div class="post-cta">
+    <p>¿Sientes que estás atravesando una fase de pausa o bloqueo mental?</p>
+    <a href="../index.html#mesa" class="cta-btn">Consulta tu carta en Arkanica →</a>
+  </div>
+</article>
+
+</body>
+</html>

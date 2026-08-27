@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Tarot no adivina tu futuro — Arkanica</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500&display=swap');
+
+  :root {
+    --bg: #050508;
+    --surface: #0c0b12;
+    --surface-hover: #13121c;
+    --gold: #dfb15b;
+    --gold-dim: #947437;
+    --gold-light: #f3d89d;
+    --text-main: #f4f2ee;
+    --text-muted: #9c98a6;
+    --line: rgba(223, 177, 91, 0.25);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background-color: var(--bg);
+    background-image: 
+      radial-gradient(circle at 50% 0%, rgba(45, 30, 70, 0.25) 0%, transparent 60%),
+      radial-gradient(circle at 50% 100%, rgba(223, 177, 91, 0.05) 0%, transparent 50%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Inter', sans-serif;
+    color: var(--text-main);
+    padding: 16px 12px 60px 12px;
+    overflow-x: hidden;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at center, transparent 40%, rgba(3, 3, 5, 0.75) 100%);
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  header {
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 12px;
+    position: relative;
+    z-index: 100;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+  }
+
+  .logo-symbol {
+    width: 26px;
+    height: 26px;
+    fill: none;
+    stroke: var(--gold);
+    stroke-width: 1.5;
+  }
+
+  .logo-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+  }
+
+  .nav-back {
+    background: rgba(223, 177, 91, 0.08);
+    border: 1px solid var(--gold-dim);
+    color: var(--gold-light);
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 8px 16px;
+    border-radius: 20px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .nav-back:hover {
+    background: var(--gold);
+    color: var(--bg);
+    border-color: var(--gold);
+  }
+
+  .post-container {
+    width: 100%;
+    max-width: 740px;
+    z-index: 2;
+    background: linear-gradient(135deg, rgba(14, 13, 20, 0.85) 0%, rgba(6, 5, 10, 0.95) 100%);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 36px 30px;
+    box-shadow: 0 20px 45px rgba(0,0,0,0.6);
+  }
+
+  .post-category {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+
+  .post-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px;
+    color: var(--text-main);
+    margin: 0 0 16px;
+    line-height: 1.25;
+  }
+
+  .post-meta {
+    font-size: 11.5px;
+    color: var(--text-muted);
+    margin-bottom: 28px;
+    border-bottom: 1px solid rgba(223, 177, 91, 0.15);
+    padding-bottom: 14px;
+  }
+
+  .post-content {
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--text-main);
+  }
+
+  .post-content h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    color: var(--gold);
+    margin-top: 28px;
+    margin-bottom: 10px;
+  }
+
+  .post-content p {
+    margin-bottom: 16px;
+    color: var(--text-muted);
+  }
+
+  .post-content ul {
+    margin-bottom: 16px;
+    padding-left: 20px;
+    color: var(--text-muted);
+  }
+
+  .post-content li {
+    margin-bottom: 8px;
+  }
+
+  .post-cta {
+    margin-top: 36px;
+    background: rgba(223, 177, 91, 0.08);
+    border: 1px solid var(--gold);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .post-cta p {
+    margin: 0 0 14px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  .cta-btn {
+    background: var(--gold);
+    color: var(--bg);
+    border: none;
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.3s;
+  }
+
+  .cta-btn:hover { background: var(--gold-light); }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html" class="logo">
+    <svg class="logo-symbol" viewBox="0 0 32 32">
+      <ellipse cx="16" cy="16" rx="14" ry="6" transform="rotate(-30 16 16)" />
+      <circle cx="16" cy="16" r="4" />
+      <path d="M16 2 L16 30" stroke-dasharray="1 3" />
+    </svg>
+    <span class="logo-text">Arkanica</span>
+  </a>
+  <a href="../blog.html" class="nav-back">← Volver al Blog</a>
+</header>
+
+<article class="post-container">
+  <div class="post-category">✦ Manifiesto</div>
+  <h1 class="post-title">El Tarot no adivina tu futuro (y qué bueno que sea así)</h1>
+  <div class="post-meta">Publicado en el Diario de Arkanica · Lectura de 3 min</div>
+
+  <div class="post-content">
+    <p>¿Cuántas veces has acudido al tarot buscando una fecha exacta, un "sí" o un "no" rotundo, o la confirmación de que alguien va a volver a llamar a tu puerta?</p>
+    
+    <p>Es completamente normal. Cuando estamos perdidos, con ansiedad o en medio de una encrucijada vital, lo último que queremos es reflexionar: queremos una respuesta rápida que nos salve de la incertidumbre.</p>
+    
+    <p>Pero aquí es donde Arkanica cambia las reglas del juego. <strong>En Arkanica no creemos en un destino escrito en piedra.</strong> Creemos en algo mucho más poderoso: <strong>en tu capacidad de decidir.</strong></p>
+
+    <h3>Las cartas no leen el futuro, leen tu inconsciente</h3>
+    <p>Si miras el tarot a través de los siglos, te darás cuenta de que no son más que arquetipos humanos. Las 78 cartas de la baraja representan todas las emociones, miedos, alegrías y lecciones por las que pasamos las personas a lo largo de nuestra vida.</p>
+    
+    <p>Cuando sacas una carta, no estás viendo el futuro mágico que te va a caer del cielo; estás viendo una <strong>fotografía exacta de tu estado mental actual</strong>.</p>
+    
+    <ul>
+      <li>Cuando sale <em>La Torre</em>, el tarot no te está amenazando con una catástrofe; te está poniendo delante de los ojos lo que ya sabes: que estás sosteniendo una estructura (un trabajo, una relación, una rutina) que ya se ha roto por dentro y que necesitas soltar.</li>
+      <li>Cuando aparece <em>El Ermitaño</em>, no habla de una soledad triste, sino de la urgencia psicológica que tienes de parar el ruido exterior para escucharte de verdad.</li>
+    </ul>
+
+    <p>Las cartas actúan como un espejo o como un test de Rorschach: sacan a la superficie eso que intentas ignorar, disimular o barrer bajo la alfombra.</p>
+
+    <h3>El peligro de ceder tu poder</h3>
+    <p>Durante demasiado tiempo, el esoterismo se ha vendido desde el miedo o la dependencia: <em>«Alguien externo te dice lo que va a pasar y tú solo obedeces»</em>.</p>
+    
+    <p>Ese enfoque es peligroso, porque te despoja de tu agencia personal. Si te dicen que vas a fracasar, te resignas. Si te dicen que todo se solucionará solo, te cruzas de brazos.</p>
+    
+    <p>En <strong>Arkanica</strong> rompemos con eso. El tarot no está aquí para quitarte el timón, sino para <strong>devolvértelo</strong>. Saber hacia dónde apuntan tus tendencias actuales gracias a una lectura profunda no sirve para saber qué va a pasar, sino para saber <strong>qué vas a hacer tú al respecto</strong>.</p>
+
+    <h3>El arte de hacerte las preguntas correctas</h3>
+    <p>La próxima vez que te acerques a una tirada, cambia la pregunta:</p>
+    <ul>
+      <li>En lugar de preguntar: <em>«¿Me va a ir bien en este proyecto?»</em></li>
+      <li>Pregúntate: <em>«¿Qué parte de mí boicotea mi propio éxito y qué bloqueo necesito resolver?»</em></li>
+    </ul>
+    
+    <p>Ese pequeño matiz es la diferencia entre esperar pasivamente a que la vida te sacuda, o convertirte en el arquitecto consciente de tu propia mente.</p>
+  </div>
+
+  <div class="post-cta">
+    <p>¿Listo/a para dejar atrás las respuestas automáticas y mirar hacia dentro?</p>
+    <a href="../index.html#mesa" class="cta-btn">Empieza tu primera lectura →</a>
+  </div>
+</article>
+
+</body>
+</html>

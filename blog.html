@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog — Arkanica | Tarot, Psicología y Claridad Profunda</title>
+<!-- Cliente oficial de Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- CÓDIGO OFICIAL DE GOOGLE ADSENSE -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2698892755295064" crossorigin="anonymous"></script>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500&display=swap');
+
+  :root {
+    --bg: #050508;
+    --surface: #0c0b12;
+    --surface-hover: #13121c;
+    --gold: #dfb15b;
+    --gold-dim: #947437;
+    --gold-light: #f3d89d;
+    --text-main: #f4f2ee;
+    --text-muted: #9c98a6;
+    --line: rgba(223, 177, 91, 0.25);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background-color: var(--bg);
+    background-image: 
+      radial-gradient(circle at 50% 0%, rgba(45, 30, 70, 0.25) 0%, transparent 60%),
+      radial-gradient(circle at 50% 100%, rgba(223, 177, 91, 0.05) 0%, transparent 50%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Inter', sans-serif;
+    color: var(--text-main);
+    padding: 16px 12px 60px 12px;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* VIÑETA OSCURA */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at center, transparent 40%, rgba(3, 3, 5, 0.75) 100%);
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  /* HEADER */
+  header {
+    width: 100%;
+    max-width: 1100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 12px;
+    position: relative;
+    z-index: 100;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+  }
+
+  .logo-symbol {
+    width: 26px;
+    height: 26px;
+    fill: none;
+    stroke: var(--gold);
+    stroke-width: 1.5;
+  }
+
+  .logo-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+  }
+
+  .nav-back-home {
+    background: rgba(223, 177, 91, 0.08);
+    border: 1px solid var(--gold-dim);
+    color: var(--gold-light);
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 8px 16px;
+    border-radius: 20px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .nav-back-home:hover {
+    background: var(--gold);
+    color: var(--bg);
+    border-color: var(--gold);
+  }
+
+  /* CONTENEDOR DEL BLOG */
+  .blog-container {
+    width: 100%;
+    max-width: 800px;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .blog-header {
+    text-align: center;
+    margin-bottom: 4px;
+  }
+
+  .blog-eyebrow {
+    font-size: 9.5px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 6px;
+  }
+
+  .blog-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    color: var(--text-main);
+    margin: 0 0 8px;
+  }
+
+  .blog-sub {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  /* SISTEMA DE FILTROS POR CATEGORÍA */
+  .category-filter-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .filter-pill {
+    background: rgba(12, 11, 18, 0.8);
+    border: 1px solid var(--line);
+    color: var(--text-muted);
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 7px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .filter-pill:hover, .filter-pill.active {
+    background: rgba(223, 177, 91, 0.15);
+    border-color: var(--gold);
+    color: var(--gold-light);
+    box-shadow: 0 0 15px rgba(223, 177, 91, 0.2);
+  }
+
+  /* LISTADO DE ARTÍCULOS */
+  .articles-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* TARJETAS DE ARTÍCULOS */
+  .article-card {
+    background: linear-gradient(135deg, rgba(14, 13, 20, 0.85) 0%, rgba(6, 5, 10, 0.95) 100%);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-shadow: 0 20px 45px rgba(0,0,0,0.5);
+    transition: border-color 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
+    text-decoration: none;
+  }
+
+  .article-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-2px);
+  }
+
+  .article-card.hidden {
+    display: none;
+  }
+
+  .article-category {
+    font-size: 9.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .article-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    color: var(--text-main);
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  .article-excerpt {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .article-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    color: var(--gold-dim);
+    margin-top: 6px;
+    border-top: 1px solid rgba(223, 177, 91, 0.1);
+    padding-top: 12px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" class="logo">
+    <svg class="logo-symbol" viewBox="0 0 32 32">
+      <ellipse cx="16" cy="16" rx="14" ry="6" transform="rotate(-30 16 16)" />
+      <circle cx="16" cy="16" r="4" />
+      <path d="M16 2 L16 30" stroke-dasharray="1 3" />
+    </svg>
+    <span class="logo-text">Arkanica</span>
+  </a>
+  <a href="index.html" class="nav-back-home">← Volver a la Mesa</a>
+</header>
+
+<div class="blog-container">
+  <div class="blog-header">
+    <div class="blog-eyebrow">Diario de Arkanauta</div>
+    <h1 class="blog-title">Reflexiones del Inconsciente</h1>
+    <p class="blog-sub">Artículos de autoconocimiento, arquetipos y mirada psicológica.</p>
+  </div>
+
+  <!-- FILTROS DE CATEGORÍA -->
+  <div class="category-filter-container" id="categoryFilters">
+    <button class="filter-pill active" onclick="filterArticles('all', this)">Todos</button>
+    <button class="filter-pill" onclick="filterArticles('mitos', this)">Mitos & Realidades</button>
+    <button class="filter-pill" onclick="filterArticles('relaciones', this)">Relaciones</button>
+    <button class="filter-pill" onclick="filterArticles('psicologia', this)">Psicología</button>
+    <button class="filter-pill" onclick="filterArticles('claridad', this)">Claridad & Decisiones</button>
+  </div>
+
+  <div class="articles-wrapper" id="articlesWrapper">
+
+    <!-- Artículo: Mitos y verdades del Tarot -->
+    <a href="blog/mitos-y-verdades-del-tarot.html" class="article-card" data-category="mitos">
+      <div class="article-category">✦ Mitos & Realidades</div>
+      <h2 class="article-title">Mitos y verdades del Tarot: Lo que nadie te cuenta sobre las cartas (y por qué deberías dejar de temerles)</h2>
+      <p class="article-excerpt">Desmontando el estigma histórico y el miedo infundado. Descubre por qué las cartas actúan como un espejo psicológico para devolverte el control de tus decisiones.</p>
+      <div class="article-footer">
+        <span>Lectura de 5 min</span>
+        <span>Leer artículo →</span>
+      </div>
+    </a>
+
+    <!-- Artículo: Relaciones y Patrones -->
+    <a href="blog/por-que-atraigo-el-mismo-tipo-de-relaciones.html" class="article-card" data-category="relaciones">
+      <div class="article-category">✦ Relaciones & Vínculos</div>
+      <h2 class="article-title">¿Por qué siempre atraigo el mismo tipo de relaciones? Lo que el Tarot (y tu inconsciente) intentan decirte</h2>
+      <p class="article-excerpt">Explorando por qué repetimos bucles afectivos y qué revelan los arquetipos de pareja sobre nuestras heridas internas no resueltas.</p>
+      <div class="article-footer">
+        <span>Lectura de 5 min</span>
+        <span>Leer artículo →</span>
+      </div>
+    </a>
+
+    <!-- Artículo: Decisiones Difíciles -->
+    <a href="blog/como-tomar-decisiones-dificiles.html" class="article-card" data-category="claridad">
+      <div class="article-category">✦ Introspección & Claridad</div>
+      <h2 class="article-title">Cómo tomar decisiones difíciles cuando la mente está colapsada: Guía práctica de introspección</h2>
+      <p class="article-excerpt">Supera la parálisis por análisis y apaga el ruido mental mediante un método estructurado de claridad y toma de conciencia.</p>
+      <div class="article-footer">
+        <span>Lectura de 5 min</span>
+        <span>Leer artículo →</span>
+      </div>
+    </a>
+
+    <!-- Artículo: Ansiedad e Incertidumbre -->
+    <a href="blog/ansiedad-por-incertidumbre-y-aprender-a-soltar.html" class="article-card" data-category="claridad">
+      <div class="article-category">✦ Paz Mental & Transformación</div>
+      <h2 class="article-title">Ansiedad por incertidumbre: Por qué necesitas dejar de intentar controlar el futuro (y cómo el Arcano sin Nombre te enseña a soltar)</h2>
+      <p class="article-excerpt">Descubre la paz mental que surge al aceptar los ciclos naturales del cambio y abandonar el control obsesivo sobre el mañana.</p>
+      <div class="article-footer">
+        <span>Lectura de 5 min</span>
+        <span>Leer artículo →</span>
+      </div>
+    </a>
+
+    <!-- Artículo: Predicción vs Autoengaño -->
+    <a href="blog/prediccion-o-autoengano-el-peligro-del-tarot.html" class="article-card" data-category="mitos">
+      <div class="article-category">✦ Honestidad & Autocrítica</div>
+      <h2 class="article-title">¿Predicción o Autoengaño? El peligro de buscar respuestas falsas que ya sabes que son mentira</h2>
+      <p class="article-excerpt">Una reflexión valiente contra el sesgo de confirmación y el uso adictivo de las cartas como coartada del ego.</p>
+      <div class="article-footer">
+        <span>Lectura de 5 min</span>
+        <span>Leer artículo →</span>
+      </div>
+    </a>
+
+    <!-- Artículo: Integrando la Sombra -->
+    <a href="blog/integrando-la-sombra-arcanos-oscuros.html" class="article-card" data-category="psicologia">
+      <div class="article-category">✦ Psicología & Arquetipos</div>
+      <h2 class="article-title">Integrando la Sombra: Qué son los arcanos oscuros del Tarot y por qué huir de tus miedos te hace más vulnerable</h2>
+      <p class="article-excerpt">Comprende la psicología junguiana detrás de las cartas "oscuras" y aprende a abrazar aquello que intentas reprimir.</p>
+      <div class="article-footer">
+        <span>Lectura de 5 min</span>
+        <span>Leer artículo →</span>
+      </div>
+    </a>
+
+    <!-- Artículo: La Crisis del Propósito -->
+    <a href="blog/la-crisis-del-proposito-y-el-loco.html" class="article-card" data-category="psicologia">
+      <div class="article-category">✦ Transiciones & Propósito</div>
+      <h2 class="article-title">La crisis del propósito: Qué hacer cuando sientes que tu vida no va a ninguna parte (Y cómo usar el Arcano de El Loco para empezar de cero)</h2>
+      <p class="article-excerpt">Acepta el vacío de la reinvención personal y aprende a dar el salto hacia tu autenticidad sin miedo al juicio externo.</p>
+      <div class="article-footer">
+        <span>Lectura de 5 min</span>
+        <span>Leer artículo →</span>
+      </div>
+    </a>
+
+    <!-- Artículo: Sincronicidad y Cartas Repetidas -->
+    <a href="blog/sincronicidad-y-cartas-repetidas-en-el-tarot.html" class="article-card" data-category="psicologia">
+      <div class="article-category">✦ Sincronicidad & Subconsciente</div>
+      <h2 class="article-title">¿Coincidencia o Sincronicidad? Por qué ves las mismas cartas repetidas y qué intenta decirte tu mente subconsciente</h2>
+      <p class="article-excerpt">Analiza el significado oculto detrás de las cartas que se repiten una y otra vez en tus lecturas cotidianas.</p>
+      <div class="article-footer">
+        <span>Lectura de 5 min</span>
+        <span>Leer artículo →</span>
+      </div>
+    </a>
+
+    <!-- Artículo: Bloqueos Creativos y Profesionales -->
+    <a href="blog/bloqueo-mental-y-procrastinacion-cronica.html" class="article-card" data-category="claridad">
+      <div class="article-category">✦ Productividad & Enfoque</div>
+      <h2 class="article-title">Bloqueo mental y procrastinación crónica: Cómo descifrar el origen de tu parálisis con los Arcanos Menores</h2>
+      <p class="article-excerpt">Identifica si tu parálisis laboral o creativa proviene del exceso mental (Espadas) o del agotamiento vital (Bastos).</p>
+      <div class="article-footer">
+        <span>Lectura de 5 min</span>
+        <span>Leer artículo →</span>
+      </div>
+    </a>
+
+    <!-- Artículo: Astrología y Tarot -->
+    <a href="blog/conexion-entre-signos-del-zodiaco-y-arcanos-mayores.html" class="article-card" data-category="mitos">
+      <div class="article-category">✦ Astrología & Arcanos</div>
+      <h2 class="article-title">La conexión oculta entre los Signos del Zodiaco y los Arcanos Mayores: Tu mapa energético personal</h2>
+      <p class="article-excerpt">Descubre la correspondencia milenaria entre los ciclos celestes del zodiaco y las fuerzas arquetípicas del tarot.</p>
+      <div class="article-footer">
+        <span>Lectura de 5 min</span>
+        <span>Leer artículo →</span>
+      </div>
+    </a>
+
+    <!-- Artículo clásico 1: El Colgado -->
+    <a href="blog/el-colgado.html" class="article-card" data-category="psicologia">
+      <div class="article-category">✦ Arquetipos & Autoterapia</div>
+      <h2 class="article-title">El Colgado: El arte de parar el mundo cuando tu mente pide tregua</h2>
+      <p class="article-excerpt">¿Alguna vez has tenido la sensación de que, por mucho que corras o te esfuerces, tu vida está completamente estancada? Descubre por qué dar un paso atrás y cambiar de perspectiva es a veces la única solución.</p>
+      <div class="article-footer">
+        <span>Lectura de 4 min</span>
+        <span>Leer artículo →</span>
+      </div>
+    </a>
+
+    <!-- Artículo clásico 2: Manifiesto -->
+    <a href="blog/el-tarot-no-adivina-tu-futuro.html" class="article-card" data-category="mitos">
+      <div class="article-category">✦ Manifiesto</div>
+      <h2 class="article-title">El Tarot no adivina tu futuro (y qué bueno que sea así)</h2>
+      <p class="article-excerpt">Huyendo del miedo y la dependencia predictiva. Por qué las cartas actúan como un espejo de tu estado mental actual y cómo te devuelven el timón de tus decisiones.</p>
+      <div class="article-footer">
+        <span>Lectura de 3 min</span>
+        <span>Leer artículo →</span>
+      </div>
+    </a>
+
+  </div>
+</div>
+
+<script>
+  function filterArticles(category, btnElement) {
+    // Actualizar botones activos
+    const buttons = document.querySelectorAll('.filter-pill');
+    buttons.forEach(btn => btn.classList.remove('active'));
+    btnElement.classList.add('active');
+
+    // Filtrar tarjetas
+    const articles = document.querySelectorAll('.article-card');
+    articles.forEach(card => {
+      const cardCategory = card.getAttribute('data-category');
+      if (category === 'all' || cardCategory === category) {
+        card.classList.remove('hidden');
+      } else {
+        card.classList.add('hidden');
+      }
+    });
+  }
+</script>
+
+</body>
+</html>

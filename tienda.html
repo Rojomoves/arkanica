@@ -46,7 +46,6 @@
     overflow-x: hidden;
   }
 
-  /* --- EFECTO DE VIÑETA OSCURA ENVOLVENTE --- */
   body::after {
     content: '';
     position: fixed;
@@ -56,7 +55,6 @@
     z-index: 1000;
   }
 
-  /* BOTÓN FLOTANTE DE AUDIO */
   .floating-audio-btn {
     position: fixed;
     bottom: 24px;
@@ -102,7 +100,6 @@
     opacity: 1;
   }
 
-  /* NOTIFICACIÓN FLOTANTE DE VALIDACIÓN SOCIAL */
   .social-proof-toast {
     position: fixed;
     bottom: 24px;
@@ -127,7 +124,6 @@
     opacity: 1;
   }
 
-  /* HEADER RESPONSIVE */
   header {
     width: 100%;
     max-width: 1100px;
@@ -207,7 +203,6 @@
     font-weight: 500;
   }
 
-  /* MENÚ HAMBURGUESA Y DESPLEGABLE OPACADO */
   .hamburger-btn {
     background: rgba(12, 11, 18, 0.92);
     border: 1px solid var(--gold);
@@ -249,7 +244,7 @@
     backdrop-filter: none !important;
     border: 1.5px solid var(--gold);
     border-radius: 10px;
-    width: 220px;
+    width: 230px;
     padding: 10px 0;
     box-shadow: 0 25px 50px rgba(0, 0, 0, 0.95), 0 0 30px rgba(0, 0, 0, 0.9);
     display: none;
@@ -280,7 +275,6 @@
     margin: 4px 0;
   }
 
-  /* HERO DE LA TIENDA */
   .hero-container {
     text-align: center;
     max-width: 700px;
@@ -316,7 +310,6 @@
   }
   .arkanica-sub strong { color: var(--gold-light); }
 
-  /* FILTROS RÁPIDOS POR CATEGORÍA */
   .store-filters {
     display: flex;
     justify-content: center;
@@ -345,7 +338,6 @@
     font-weight: 600;
   }
 
-  /* REJILLA DE PRODUCTOS */
   .store-grid {
     width: 100%;
     max-width: 1100px;
@@ -448,7 +440,6 @@
 
   .store-product-card:hover .product-img-wrap img { transform: scale(1.06); }
 
-  /* CARRUSEL */
   .img-nav {
     position: absolute;
     top: 50%;
@@ -593,7 +584,6 @@
   }
   .buy-stripe-btn:hover { background: var(--gold-light); transform: translateY(-1px); }
 
-  /* --- MODAL CON CARRUSEL TÁCTIL Y PRECIOS TACHADOS --- */
   .modal-overlay {
     position: fixed;
     inset: 0;
@@ -707,7 +697,6 @@
     line-height: 1;
   }
 
-  /* RESEÑAS Y ADSENSE */
   .reviews-section {
     width: 100%;
     max-width: 1100px;
@@ -740,21 +729,6 @@
     gap: 6px;
   }
 
-  .ad-container-arkanica {
-    width: 100%;
-    max-width: 1100px;
-    margin: 16px auto 0;
-    background: linear-gradient(135deg, rgba(14, 13, 20, 0.85) 0%, rgba(6, 5, 10, 0.95) 100%);
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    padding: 14px;
-    text-align: center;
-    box-shadow: 0 20px 45px rgba(0,0,0,0.5);
-    overflow: hidden;
-    position: relative;
-    z-index: 2;
-  }
-
   @media (max-width: 900px) {
     .store-grid { grid-template-columns: repeat(2, 1fr); }
     .reviews-grid { grid-template-columns: 1fr; }
@@ -767,19 +741,16 @@
 </head>
 <body>
 
-<!-- NOTIFICACIÓN FLOTANTE DE VALIDACIÓN SOCIAL -->
 <div class="social-proof-toast" id="socialProofToast">
   <span>✨</span>
   <div><strong id="toastUser">Marta de Barcelona</strong> acaba de adquirir un artículo místico.</div>
 </div>
 
-<!-- MODAL DE DETALLES CON CARRUSEL TÁCTIL Y PRECIOS TACHADOS -->
 <div class="modal-overlay" id="productModal" onclick="closeProductModal()">
   <div class="modal-content" onclick="event.stopPropagation()">
     <button class="modal-close" onclick="closeProductModal()">✕</button>
     <div style="font-size: 9.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 4px;">Arkanica • Legado Sagrado</div>
     
-    <!-- Carrusel dentro del Modal con soporte táctil -->
     <div class="modal-img-wrap" id="modalImgWrap" data-images="[]" data-current="0">
       <img id="modalMainImg" src="" alt="Detalle del artículo">
       <button class="img-nav img-nav-prev" onclick="changeModalImage(-1)" aria-label="Anterior">‹</button>
@@ -807,7 +778,6 @@
   <source src="" type="audio/mpeg">
 </audio>
 
-<!-- BOTÓN FLOTANTE DE MÚSICA -->
 <button class="floating-audio-btn" id="floatingAudioBtn" onclick="toggleAudioTrack()" title="Cambiar ambiente musical">
   <span id="audioIcon">🎵</span>
   <span class="audio-tooltip" id="audioTooltip">Silencio</span>
@@ -842,7 +812,8 @@
       </button>
 
       <div class="nav-dropdown-menu" id="navDropdownMenu">
-        <a href="/ente-superior/ente-superior.html" class="highlight" onclick="closeNavMenu()">🔮 Sala Ente Superior</a>
+        <a href="blog.html" class="highlight" onclick="closeNavMenu()">✦ Diario de Arkanica</a>
+        <a href="ente-superior/ente-superior.html" onclick="closeNavMenu()">🔮 Sala Ente Superior</a>
         <a href="index.html#mesa" onclick="closeNavMenu()">Lecturas</a>
         <a href="index.html#reservas" onclick="closeNavMenu()">Sesiones Privadas</a>
         <a href="index.html" onclick="closeNavMenu()">← Volver al Oráculo</a>
@@ -857,7 +828,6 @@
   <p class="arkanica-sub">Selección exclusiva de minerales, herramientas de radiestesia y oráculos físicos. <strong>Desbloquea Cristales de Claridad de regalo</strong> y acceso prioritario para tus consultas con el Ente Superior.</p>
 </div>
 
-<!-- FILTROS RÁPIDOS POR CATEGORÍA -->
 <div class="store-filters">
   <button class="filter-pill active" onclick="filterProducts('all')">Todos</button>
   <button class="filter-pill" onclick="filterProducts('minerales')">Minerales y Cristales</button>
@@ -865,13 +835,10 @@
   <button class="filter-pill" onclick="filterProducts('altares')">Altares y Rituales</button>
 </div>
 
-<!-- REJILLA DE 6 PRODUCTOS ESTRELLA -->
 <div class="store-grid" id="storeGrid">
-
-  <!-- Producto 1: Baraja de Tarot Dorada -->
   <div class="store-product-card gold-shimmer-card" data-category="oraculos">
     <div class="product-badge-discount">DESTACADO</div>
-    <div class="product-img-wrap" data-images="[&quot;https://media.aiku.io/wq7_OtJdWYTgz-kBB8LUWDb7kD8kAN1xPJoeUDd-evM/bG9jYWw6Ly9tZWRpYS9IUS8yQy82MFIzMEMxSjZHVzMyQ0hRL2ZmNjQwMjllLmpwZw&quot;, &quot;https://media.aiku.io/uMUXKh8gWn-zJQmegkp0zRNv25_Fesn0UhdLHpZS7G0/bG9jYWw6Ly9tZWRpYS9IUC8yQy82MFIzMEMxSjZHVzMyQ0hQLzZhNzJmY2U2LmpwZw&quot;, &quot;https://media.aiku.io/qSP1XYBd0ppM4WY3mP6k9dKc1KYpAJfQGqliSm5M3GQ/bG9jYWw6Ly9tZWRpYS9IUi8yQy82MFIzMEMxSjZHVzMyQ0hSLzE0YjNkYjIzLmpwZw&quot;]" data-current="0">
+    <div class="product-img-wrap" data-images="[&quot;https://media.aiku.io/wq7_OtJdWYTgz-kBB8LUWDb7kD8kAN1xPJoeUDd-evM/bG9jYWw6Ly9tZWRpYS9IUS8yQy82MFIzMEMxSjZHVzMyQ0hRL2ZmNjQwMjllLmpwZw&quot;, &quot;https://media.aiku.io/uMUXKh8gWn-zJQmegkp0zRNv25_Fesn0UhdLHpZS7G0/bG9jYWw6Ly9tZWRpYS9IUC8yQy82MFIzMEMxSjZHVzMyQ0hQLzZhNzJmY2U2LmpwZWc&quot;, &quot;https://media.aiku.io/qSP1XYBd0ppM4WY3mP6k9dKc1KYpAJfQGqliSm5M3GQ/bG9jYWw6Ly9tZWRpYS9IUi8yQy82MFIzMEMxSjZHVzMyQ0hSLzE0YjNkYjIzLmpwZWc&quot;]" data-current="0">
       <img src="https://media.aiku.io/wq7_OtJdWYTgz-kBB8LUWDb7kD8kAN1xPJoeUDd-evM/bG9jYWw6Ly9tZWRpYS9IUS8yQy82MFIzMEMxSjZHVzMyQ0hRL2ZmNjQwMjllLmpwZw" alt="Baraja de Tarot Lámina Dorada con Folleto" loading="lazy">
       <button class="img-nav img-nav-prev" onclick="event.stopPropagation(); changeProductImage(this, -1)" aria-label="Anterior">‹</button>
       <button class="img-nav img-nav-next" onclick="event.stopPropagation(); changeProductImage(this, 1)" aria-label="Siguiente">›</button>
@@ -895,7 +862,6 @@
     </div>
   </div>
 
-  <!-- Producto 2: Péndulo Mágico Siete Chakras -->
   <div class="store-product-card" data-category="minerales">
     <div class="product-badge-discount">-35% OFF</div>
     <div class="product-img-wrap" data-images="[&quot;https://media.aiku.io/LVvkbnYau-zgsLy4lRXhFJL0nnX56EWGdS0e9ReC_jU/bG9jYWw6Ly9tZWRpYS9IUS80Qy82MFIzMEMxRzZXUks0Q0hRL2M4OTQ4Y2UzLmpwZWc&quot;, &quot;https://media.aiku.io/7aA5dK1lfJUq0EKIu3i4w_qYgml99WtJGrT_tQVcClU/bG9jYWw6Ly9tZWRpYS9IUC80Qy82MFIzMEMxRzZXUks0Q0hQL2FhNmRkNzYyLmpwZWc&quot;]" data-current="0">
@@ -922,7 +888,6 @@
     </div>
   </div>
 
-  <!-- Producto 3: Set de Runas de Amatista -->
   <div class="store-product-card" data-category="minerales">
     <div class="product-badge-discount">-30% OFF</div>
     <div class="product-img-wrap" data-images="[&quot;https://media.aiku.io/xronDSgjDjwK5oJk9RmgVFxJq49uTH65KMCcddR3_DU/bG9jYWw6Ly9tZWRpYS85Si/KQy82MFIzMEMxRzZDU0tKQzlKLzliZTRhZGI5LmpwZWc&quot;, &quot;https://media.aiku.io/mABCIWNCNko1EY6zllg4R0t9NDSh61t8pfff5ag9dRg/bG9jYWw6Ly9tZWRpYS85Sy9KQy82MFIzMEMxRzZDU0tKQzlLL2JiMDQ2OTZiLmpwZWc&quot;]" data-current="0">
@@ -949,7 +914,6 @@
     </div>
   </div>
 
-  <!-- Producto 4: Mantel de Altar - Chakras -->
   <div class="store-product-card" data-category="altares">
     <div class="product-badge-discount">-35% OFF</div>
     <div class="product-img-wrap" data-images="[&quot;https://media.aiku.io/VGO3EjLNzim8WweeNPFOEc0Z5qTVjabGAbvIpgT3ucM/bG9jYWw6Ly9tZWRpYS85Uy9KRS82MFIzMEMxRzZXU0tKRTlTL2I2ZWY3Njc2LmpwZWc&quot;, &quot;https://media.aiku.io/L2i_u83x1mgkUNwW4_GCGVWxZuNvWcP0pgGvYal5UhI/bG9jYWw6Ly9tZWRpYS8xRy8wQy82MFIzMEMxRzZXVDMwQzFHLzI3YWMyMTFlLmpwZWc&quot;]" data-current="0">
@@ -976,7 +940,6 @@
     </div>
   </div>
 
-  <!-- Producto 5: Cuaderno de Cuero Artesanal - Grimorio -->
   <div class="store-product-card" data-category="altares">
     <div class="product-badge-discount">-30% OFF</div>
     <div class="product-img-wrap" data-images="[&quot;https://media.aiku.io/Ew1A9tgxk86azIr1ADZ3oGpAEHstm4GankmOH7G3TSo/bG9jYWw6Ly9tZWRpYS9TUy8yQy82MFIzMEMxRzZSVDMyQ1NTLzEwZDZjOTg0LmpwZWc&quot;, &quot;https://media.aiku.io/L7OBVV8IKV-RDOrvCcwaFf1JOu6ieztdx5T5pQ6Rr_E/bG9jYWw6Ly9tZWRpYS9TUi8yQy82MFIzMEMxRzZSVDMyQ1NSL2IwMTQyN2I4LmpwZWc&quot;]" data-current="0">
@@ -1003,7 +966,6 @@
     </div>
   </div>
 
-  <!-- Producto 6: Cuenco Tibetano Set - Tara Verde -->
   <div class="store-product-card" data-category="altares">
     <div class="product-badge-discount">MAGNO</div>
     <div class="product-img-wrap" data-images="[&quot;https://media.aiku.io/80sLOhMMYEHAxAwyMPZeariWJa7lTZkZQr7xzZU6BNk/bG9jYWw6Ly9tZWRpYS9ITi82RC82MFIzMEMxRzZNVDM2REhOLzgyNzVhNDU3LmpwZWc&quot;, &quot;https://media.aiku.io/_ASzi330IfhPVfvFpTv2YQuAxtCMsksYbVn-PbTqmmk/bG9jYWw6Ly9tZWRpYS9IUC82RC82MFIzMEMxRzZNVDM2REhQL2EyOWRhMjFkLmpwZWc&quot;]" data-current="0">
@@ -1029,10 +991,8 @@
       </div>
     </div>
   </div>
-
 </div>
 
-<!-- SECCIÓN DE RESEÑAS VERIFICADAS -->
 <div class="reviews-section">
   <div style="font-size: 9.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 4px; text-align: center;">Comunidad Arkanica</div>
   <h3 style="margin-top: 0; font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--gold); text-align: center; margin-bottom: 12px;">Lo que dicen quienes ya han cruzado</h3>
@@ -1056,22 +1016,7 @@
   </div>
 </div>
 
-<!-- Bloque inferior de AdSense -->
-<div class="ad-container-arkanica">
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2698892755295064" crossorigin="anonymous"></script>
-  <ins class="adsbygoogle"
-       style="display:block"
-       data-ad-client="ca-pub-2698892755295064"
-       data-ad-slot="REEMPLAZAR_CON_TU_AD_SLOT"
-       data-ad-format="auto"
-       data-full-width-responsive="true"></ins>
-  <script>
-       (adsbygoogle = window.adsbygoogle || []).push({});
-  </script>
-</div>
-
 <script>
-  /* --- CONTROL DEL MENÚ DE HAMBURGUESA --- */
   function toggleNavMenu(e) {
     e.stopPropagation();
     const menu = document.getElementById('navDropdownMenu');
@@ -1087,7 +1032,6 @@
     closeNavMenu();
   });
 
-  /* --- CONTROL DEL MODAL CON CARRUSEL TÁCTIL --- */
   let modalImages = [];
   let modalCurrentIdx = 0;
 
@@ -1145,7 +1089,6 @@
     });
   }
 
-  /* --- SOPORTE GESTOS TÁCTILES (SWIPE) EN MÓVILES --- */
   function addTouchSwipeSupport(wrapElement, onSwipeLeft, onSwipeRight) {
     let touchStartX = 0;
     let touchEndX = 0;
@@ -1191,7 +1134,6 @@
     setCardImageIndex(wrap, images, idx);
   }
 
-  /* --- FILTROS RÁPIDOS DE PRODUCTOS --- */
   function filterProducts(category) {
     playWoodSelectSound();
     const pills = document.querySelectorAll('.filter-pill');
@@ -1208,7 +1150,6 @@
     });
   }
 
-  /* --- CARRUSEL EN TARJETAS PRINCIPALES --- */
   function changeProductImage(btn, direction) {
     const wrap = btn.closest('.product-img-wrap');
     const images = JSON.parse(wrap.dataset.images);
@@ -1234,7 +1175,6 @@
     wrap.querySelectorAll('.img-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
   }
 
-  /* --- NOTIFICACIONES FLOTANTES DE VALIDACIÓN SOCIAL --- */
   const buyersList = [
     { name: "Marta de Barcelona", item: "el Péndulo Mágico" },
     { name: "Alejandro de Bilbao", item: "la Baraja de Tarot Dorada" },
@@ -1269,7 +1209,6 @@
     setInterval(triggerSocialProof, 35000);
   }, 10000);
 
-  /* --- EFECTOS DE SONIDO (SFX) --- */
   let sfxAudioCtx = null;
   function initSfxContext() {
     if (!sfxAudioCtx) {
@@ -1301,7 +1240,6 @@
     } catch(e) {}
   }
 
-  /* --- CONTROL DE AUDIO FLOTANTE --- */
   const audioEl = document.getElementById('ambientAudio');
   audioEl.volume = 0.35;
   const audioStates = [
@@ -1325,7 +1263,6 @@
     }
   }
 
-  /* --- SUPABASE Y ESTADO DE CRISTALES --- */
   const SUPABASE_URL = 'https://jcosmhiukmfsygrinfgy.supabase.co';
   const SUPABASE_ANON_KEY = 'sb_publishable_UVGFZQhG36gD_67hInVz7g_4oLD7tWN';
   const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -1378,7 +1315,6 @@
 
   checkUserSession();
 
-  /* --- FUNCIÓN DE COMPRA EN STRIPE --- */
   async function buyProductStripe(productName, priceInCents, crystalBonus = 25) {
     playWoodSelectSound();
 

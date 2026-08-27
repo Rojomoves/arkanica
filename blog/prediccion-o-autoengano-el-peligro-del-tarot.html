@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>¿Predicción o Autoengaño? El peligro de buscar respuestas falsas — Diario de Arkanica</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://js.stripe.com/v3/"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500&display=swap');
+  :root { --bg: #050508; --surface: #0c0b12; --surface-hover: #13121c; --gold: #dfb15b; --gold-dim: #947437; --gold-light: #f3d89d; --text-main: #f4f2ee; --text-muted: #9c98a6; --line: rgba(223, 177, 91, 0.25); }
+  * { box-sizing: border-box; }
+  body { margin: 0; background-color: var(--bg); background-image: radial-gradient(circle at 50% 0%, rgba(45, 30, 70, 0.25) 0%, transparent 60%); background-attachment: fixed; min-height: 100vh; display: flex; flex-direction: column; align-items: center; font-family: 'Inter', sans-serif; color: var(--text-main); padding: 16px 12px 60px 12px; position: relative; }
+  body::after { content: ''; position: fixed; inset: 0; background: radial-gradient(circle at center, transparent 40%, rgba(3, 3, 5, 0.75) 100%); pointer-events: none; z-index: 1000; }
+  header { width: 100%; max-width: 1100px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; border-bottom: 1px solid var(--line); padding-bottom: 12px; z-index: 100; }
+  .logo { display: flex; align-items: center; gap: 8px; text-decoration: none; }
+  .logo-symbol { width: 26px; height: 26px; fill: none; stroke: var(--gold); stroke-width: 1.5; }
+  .logo-text { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--gold); }
+  .blog-container { width: 100%; max-width: 850px; z-index: 2; display: flex; flex-direction: column; gap: 20px; }
+  .blog-post-card { background: linear-gradient(135deg, rgba(14, 13, 20, 0.85) 0%, rgba(6, 5, 10, 0.95) 100%); border: 1px solid var(--line); border-radius: 14px; padding: 32px 28px; box-shadow: 0 20px 45px rgba(0,0,0,0.5); }
+  .blog-eyebrow { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 6px; }
+  .blog-post-card h2 { font-family: 'Cormorant Garamond', serif; font-size: 26px; color: var(--gold); margin-top: 0; margin-bottom: 6px; }
+  .blog-date { font-size: 11px; color: var(--text-muted); margin-bottom: 22px; font-style: italic; }
+  .blog-content h3 { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--text-main); margin-top: 24px; margin-bottom: 8px; }
+  .blog-content p, .blog-content ul, .blog-content ol { font-size: 13.5px; color: var(--text-main); line-height: 1.7; margin-bottom: 16px; }
+  .blog-content ul, .blog-content ol { padding-left: 20px; }
+  .action-btn { background: var(--gold); color: var(--bg); border: none; font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; padding: 11px 22px; border-radius: 6px; text-decoration: none; display: inline-block; }
+  .action-btn:hover { background: var(--gold-light); }
+  .banner-action-pill { background: rgba(223, 177, 91, 0.08); border: 1px solid var(--gold-dim); color: var(--gold-light); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.1em; padding: 9px 18px; border-radius: 20px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+  .banner-action-pill:hover { background: var(--gold); color: var(--bg); }
+</style>
+</head>
+<body>
+<header>
+  <a href="../index.html" class="logo">
+    <svg class="logo-symbol" viewBox="0 0 32 32"><ellipse cx="16" cy="16" rx="14" ry="6" transform="rotate(-30 16 16)" /><circle cx="16" cy="16" r="4" /><path d="M16 2 L16 30" stroke-dasharray="1 3" /></svg>
+    <span class="logo-text">Arkanica</span>
+  </a>
+  <a href="../blog.html" class="banner-action-pill">← Volver al Diario de Arkanica</a>
+</header>
+<div class="blog-container">
+  <article class="blog-post-card">
+    <div class="blog-eyebrow">✦ Honestidad & Autocrítica</div>
+    <h2>¿Predicción o Autoengaño? El peligro de usar el Tarot para buscar respuestas falsas que ya sabes que son mentira</h2>
+    <p class="blog-date">Publicado en el Diario de Arkanica</p>
+    <div class="blog-content">
+      <p>Existe una verdad profundamente incómoda de la que casi nadie en el ecosistema del esoterismo moderno se atreve a debatir abiertamente: el mayor riesgo asociado al uso del tarot no es que aparezca en tu tirada una carta de perfil desafiante, sino que conviertas el mazo en una sofisticada máquina de validación para justificar tus propios autoengaños cotidianos.</p>
+      
+      <p>Todos hemos caído en esta trampa en algún momento. Preguntas una y otra vez por un vínculo afectivo que sabes perfectamente que está acabado, pero barajas con insistencia buscando desesperadamente un arcano luminoso que te asegure que "esta vez será diferente". Consultas de forma compulsiva hasta dar con la combinación simbólica que pacifique temporalmente tus dudas.</p>
+
+      <h3>El sesgo de confirmación disfrazado de revelación mística</h3>
+      <p>En el ámbito de la psicología cognitiva, el sesgo de confirmación describe nuestra propensión a buscar e interpretar los datos de manera que refuercen nuestras creencias previas. Trasladado al tarot, este mecanismo opera como un bucle sutil de dependencia emocional.</p>
+      
+      <p>Si te acercas a las cartas con el objetivo oculto de que respalden un capricho del ego, tu mente distorsionará cualquier símbolo neutral para interpretarlo como la señal cósmica que estabas esperando. En lugar de emplear el mazo como un espejo neutral de autoconocimiento, lo estás utilizando como un cómplice silencioso que valida tu resistencia al cambio.</p>
+
+      <h3>Cómo transitar de la dependencia predictiva a la soberanía personal</h3>
+      <ul>
+        <li><strong>Confrontar tu verdad antes de barajar:</strong> Antes de extraer la primera carta, detente un momento y plantéate con honestidad radical: <em>¿Qué respuesta temo escuchar porque sé perfectamente que me exigirá tomar una decisión drástica?</em></li>
+        <li><strong>Prohibir el reintento por cabezonería:</strong> Si una lectura te muestra con claridad analítica que un ciclo ha concluido, acepta el diagnóstico con madurez. Repetir la tirada buscando una versión más amable es una forma de autoengaño.</li>
+        <li><strong>Entender el tarot como palanca de acción:</strong> Una consulta honesta no te exime de la responsabilidad de actuar; al contrario, te devuelve el peso de tus decisiones.</li>
+      </ul>
+
+      <div style="background: rgba(223, 177, 91, 0.05); border: 1px solid var(--line); border-left: 3px solid var(--gold); padding: 16px 20px; border-radius: 8px; margin: 24px 0;">
+        <p style="margin: 0 0 10px 0; font-family: 'Cormorant Garamond', serif; font-size: 16px; color: var(--gold-light);">✦ <em>¿Estás buscando claridad objetiva o meramente un aval para tus deseos?</em></p>
+        <p style="margin: 0 0 12px 0; font-size: 12.5px; color: var(--text-muted); line-height: 1.5;">Pon a prueba tus motivaciones en un espacio analítico, lúcido y completamente libre de artificios.</p>
+        <a href="../index.html#mesa" class="banner-action-pill" style="text-decoration: none;">Hacer una lectura honesta</a>
+      </div>
+
+      <h3>La libertad liberadora de la verdad sin filtros</h3>
+      <p>Desprenderse de las ilusiones del ego resulta incómodo al principio, pero otorga una paz instantánea. Cuando renuncias a usar las cartas como herramientas de fantasía y decides afrontar tus propias sombras, el mazo recupera su verdadera dignidad como el recurso analítico más lúcido de tu autoconocimiento.</p>
+
+      <hr style="border: 0; border-top: 1px solid var(--line); margin: 32px 0;">
+      <p style="text-align: center; font-style: italic; color: var(--gold-light); font-size: 15px;">"La respuesta más valiosa que puede regalarte el tarot es aquella que te obliga a mirarte al espejo sin coartadas ni excusas."</p>
+      
+      <div style="background: linear-gradient(135deg, rgba(223, 177, 91, 0.1) 0%, rgba(12, 11, 18, 0.95) 100%); border: 1px solid var(--gold); border-radius: 10px; padding: 24px; margin-top: 28px; text-align: center;">
+        <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--gold); margin-top: 0; margin-bottom: 8px;">¿Preparado/a para escuchar la verdad sin filtros?</h3>
+        <p style="font-size: 12.5px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.5;">El Ente Superior te ofrece una lectura analítica orientada rigurosamente hacia tu crecimiento personal.</p>
+        <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
+          <a href="../index.html#mesa" class="action-btn" style="text-decoration: none; display: inline-block;">Hacer una tirada</a>
+          <a href="../ente-superior/ente-superior.html" class="banner-action-pill" style="text-decoration: none; display: inline-block; padding: 11px 22px;">Consultar al Ente Superior ✦</a>
+        </div>
+      </div>
+    </div>
+  </article>
+</div>
+</body>
+</html>

@@ -48,7 +48,6 @@
     scroll-behavior: smooth;
   }
 
-  /* --- EFECTO DE VIÑETA OSCURA ENVOLVENTE --- */
   body::after {
     content: '';
     position: fixed;
@@ -58,7 +57,6 @@
     z-index: 1000;
   }
 
-  /* --- EL VELO DEL UMBRAL AUTOMÁTICO (2.5s) --- */
   .threshold-overlay {
     position: fixed;
     inset: 0;
@@ -149,7 +147,6 @@
     margin: 0;
   }
 
-  /* BOTÓN FLOTANTE DE AUDIO (ESQUINA INFERIOR IZQUIERDA) */
   .floating-audio-btn {
     position: fixed;
     bottom: 24px;
@@ -195,7 +192,6 @@
     opacity: 1;
   }
 
-  /* HEADER RESPONSIVE */
   header {
     width: 100%;
     max-width: 900px;
@@ -279,7 +275,6 @@
     font-weight: 500;
   }
 
-  /* MENÚ HAMBURGUESA Y DESPLEGABLE OPACADO Y SEGURO */
   .hamburger-btn {
     background: rgba(12, 11, 18, 0.92);
     border: 1px solid var(--gold);
@@ -321,7 +316,7 @@
     backdrop-filter: none !important;
     border: 1.5px solid var(--gold);
     border-radius: 10px;
-    width: 220px;
+    width: 230px;
     padding: 10px 0;
     box-shadow: 0 25px 50px rgba(0, 0, 0, 0.95), 0 0 30px rgba(0, 0, 0, 0.9);
     display: none;
@@ -354,7 +349,6 @@
     margin: 4px 0;
   }
 
-  /* HERO / BANNER PRINCIPAL */
   .hero-container {
     text-align: center;
     max-width: 700px;
@@ -419,7 +413,6 @@
     border-color: var(--gold);
   }
 
-  /* CONTENEDOR DEL CHAT CON ESTÉTICA FLOTANTE Y GOLD SHIMMER */
   .chat-container {
     width: 100%;
     max-width: 900px;
@@ -515,7 +508,6 @@
     color: var(--text-main);
   }
 
-  /* ÁREA DE INPUT Y BOTÓN */
   .chat-input-area {
     display: flex;
     flex-direction: row;
@@ -559,7 +551,6 @@
   }
   .send-btn:hover { background: var(--gold-light); transform: translateY(-1px); }
 
-  /* TIENDA DE CRISTALES */
   .store-section {
     margin-top: 8px;
     border-top: 1px solid rgba(223, 177, 91, 0.15);
@@ -663,7 +654,6 @@
     border-color: var(--gold);
   }
 
-  /* SECCIÓN DE SESIONES PRIVADAS EN VÍDEO */
   .section-card {
     width: 100%;
     max-width: 900px;
@@ -764,23 +754,6 @@
   }
   .action-btn:hover { background: var(--gold-light); }
 
-  /* ANUNCIO ADSENSE */
-  .ad-container-arkanica {
-    width: 100%;
-    max-width: 900px;
-    margin: 16px auto 0;
-    background: linear-gradient(135deg, rgba(14, 13, 20, 0.85) 0%, rgba(6, 5, 10, 0.95) 100%);
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    padding: 14px;
-    text-align: center;
-    box-shadow: 0 20px 45px rgba(0,0,0,0.5);
-    overflow: hidden;
-    position: relative;
-    z-index: 2;
-  }
-
-  /* --- ADAPTABILIDAD MÓVIL OPTIMIZADA --- */
   @media (max-width: 768px) {
     body { padding: 12px 8px 45px 8px; }
     
@@ -878,7 +851,6 @@
 </head>
 <body>
 
-<!-- VELO DEL UMBRAL AUTOMÁTICO (2.5 SEGUNDOS) -->
 <div class="threshold-overlay" id="thresholdOverlay">
   <div class="threshold-particles"></div>
   <div class="threshold-content">
@@ -899,7 +871,6 @@
   <source src="" type="audio/mpeg">
 </audio>
 
-<!-- BOTÓN FLOTANTE DE MÚSICA (ESQUINA INFERIOR IZQUIERDA) -->
 <button class="floating-audio-btn" id="floatingAudioBtn" onclick="toggleAudioTrack()" title="Cambiar ambiente musical">
   <span id="audioIcon">🎵</span>
   <span class="audio-tooltip" id="audioTooltip">Silencio</span>
@@ -916,7 +887,6 @@
   </a>
 
   <div class="header-right">
-    <!-- Insignia de Cristales / Usuario -->
     <div class="profile-badge">
       <div class="profile-crystals">
         <span>💎</span> <strong id="crystalCount">10</strong>
@@ -927,7 +897,6 @@
       </div>
     </div>
 
-    <!-- Botón de Hamburguesa y Menú Desplegable con Envoltorio Seguro -->
     <div class="header-menu-wrapper">
       <button class="hamburger-btn" onclick="toggleNavMenu(event)" title="Menú de navegación">
         <span class="hamburger-line"></span>
@@ -936,7 +905,8 @@
       </button>
 
       <div class="nav-dropdown-menu" id="navDropdownMenu">
-        <a href="../tienda.html" class="highlight" onclick="closeNavMenu()">🛍️ Tienda Mística</a>
+        <a href="../blog.html" class="highlight" onclick="closeNavMenu()">✦ Diario de Arkanica</a>
+        <a href="../tienda.html" onclick="closeNavMenu()">🛍️ Tienda Mística</a>
         <a href="#reservas" onclick="closeNavMenu()">📅 Sesiones Privadas</a>
         <a href="../index.html" onclick="closeNavMenu()">← Volver al Inicio</a>
       </div>
@@ -944,13 +914,13 @@
   </div>
 </header>
 
-<!-- BANNER PRINCIPAL / HERO REDISEÑADO CON ACCESOS RÁPIDOS ADAPTADOS -->
 <div class="hero-container">
   <div class="arkanica-eyebrow">Canal directo e íntimo</div>
   <h1 class="arkanica-title">Sala de Profundización con el Ente Superior</h1>
   <p class="arkanica-sub" id="headerSubtitle">Disfruta de <strong>1 pregunta de cortesía 100% gratuita</strong> para revelar lo que tu tirada anterior dejó entrever.</p>
   
   <div class="banner-quick-actions">
+    <a href="../blog.html" class="banner-action-pill">✦ Diario de Arkanica</a>
     <a href="#reservas" class="banner-action-pill">📅 Sesiones Privadas</a>
     <a href="../tienda.html" class="banner-action-pill">🛍️ Tienda Mística</a>
   </div>
@@ -999,7 +969,6 @@
   </div>
 </div>
 
-<!-- SECCIÓN DE SESIONES PRIVADAS EN VÍDEO -->
 <div class="section-card gold-shimmer-card" id="reservas">
   <div style="max-width: 650px; margin: 0 auto; text-align: center; margin-bottom: 20px;">
     <div style="font-size: 9.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 4px;">Exclusivo & Confidencial</div>
@@ -1009,7 +978,6 @@
     </p>
   </div>
 
-  <!-- TESTIMONIOS / VALIDACIÓN SOCIAL -->
   <div class="testimonials-grid" style="max-width: 650px; margin: 0 auto 20px auto;">
     <div class="testimonial-card">
       <div class="testimonial-stars">★★★★★</div>
@@ -1023,7 +991,6 @@
     </div>
   </div>
 
-  <!-- FORMULARIO DE SOLICITUD -->
   <div class="auth-modal-card" style="margin: 0 auto; max-width: 550px;">
     <div class="auth-input-group">
       <label>Tu Correo Electrónico</label>
@@ -1045,7 +1012,6 @@
       <textarea id="videoUserQuery" class="auth-textarea" placeholder="Cuéntame qué está pasando y qué te gustaría que el oráculo analice en el vídeo..."></textarea>
     </div>
 
-    <!-- AVISO DE PLAZO DE ENTREGA -->
     <div style="font-size: 11.5px; color: var(--gold-light); text-align: center; font-style: italic; background: rgba(223, 177, 91, 0.08); padding: 8px; border-radius: 6px; border: 1px solid rgba(223, 177, 91, 0.2);">
       ✦ Tu vídeo personalizado será elaborado y entregado en tu correo en un plazo de <strong>24 a 48 horas</strong>.
     </div>
@@ -1058,22 +1024,7 @@
   </div>
 </div>
 
-<!-- Bloque de AdSense integrado en la zona inferior -->
-<div class="ad-container-arkanica">
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2698892755295064" crossorigin="anonymous"></script>
-  <ins class="adsbygoogle"
-       style="display:block"
-       data-ad-client="ca-pub-2698892755295064"
-       data-ad-slot="REEMPLAZAR_CON_TU_AD_SLOT"
-       data-ad-format="auto"
-       data-full-width-responsive="true"></ins>
-  <script>
-       (adsbygoogle = window.adsbygoogle || []).push({});
-  </script>
-</div>
-
 <script>
-  /* --- TRANSICIÓN AUTOMÁTICA DEL UMBRAL (2.5 SEGUNDOS) --- */
   window.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
       const overlay = document.getElementById('thresholdOverlay');
@@ -1086,7 +1037,6 @@
     }, 2500);
   });
 
-  /* --- CONTROL DEL MENÚ DE HAMBURGUESA --- */
   function toggleNavMenu(e) {
     e.stopPropagation();
     const menu = document.getElementById('navDropdownMenu');
@@ -1102,7 +1052,6 @@
     closeNavMenu();
   });
 
-  /* --- EFECTOS DE SONIDO (SFX) --- */
   let sfxAudioCtx = null;
   function initSfxContext() {
     if (!sfxAudioCtx) {
@@ -1134,7 +1083,6 @@
     } catch(e) {}
   }
 
-  /* --- CONFIGURACIÓN DE SUPABASE Y ESTADO (1 CONSULTA GRATIS) --- */
   const SUPABASE_URL = 'https://jcosmhiukmfsygrinfgy.supabase.co';
   const SUPABASE_ANON_KEY = 'sb_publishable_UVGFZQhG36gD_67hInVz7g_4oLD7tWN';
 
@@ -1199,7 +1147,6 @@
 
   initSession();
 
-  /* --- CONFIGURACIÓN DE STRIPE Y FORMULARIO DE VÍDEO --- */
   const STRIPE_VIDEO_PAYMENT_LINK = 'https://buy.stripe.com/eVqbIUgJp1JV4VM5jTfQI00';
 
   async function submitVideoConsultation() {
@@ -1237,7 +1184,6 @@
     }, 800);
   }
 
-  /* --- CONTROL DE AUDIO FLOTANTE --- */
   const audioEl = document.getElementById('ambientAudio');
   audioEl.volume = 0.35;
   const audioStates = [
@@ -1274,7 +1220,6 @@
     saveUserData();
   }
 
-  /* --- PERSONALIZACIÓN SEGÚN ORIGEN (TIRADA O ACCESO DIRECTO) --- */
   let lastReadingContext = localStorage.getItem('arkanica_last_reading');
   
   if (lastReadingContext) {
