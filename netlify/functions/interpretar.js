@@ -1,16 +1,15 @@
-import { GoogleGenAI } from "@google/genai";
+const { GoogleGenAI } = require("@google/genai");
 
-export default async (req, context) => {
-  if (req.method !== "POST") {
-    return new Response(JSON.stringify({ error: "Método no permitido" }), {
-      status: 405,
-      headers: { "Content-Type": "application/json" }
-    });
+exports.handler = async (event, context) => {
+  if (event.httpMethod !== "POST") {
+    return {
+      statusCode: 405,
+      body: JSON.stringify({ error: "Método no permitido" }),
+    };
   }
 
   try {
-    const { prompt } = await req.json();
-
+    const { prompt } = JSON.parse(event.body);
     const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
     
     const response = await ai.models.generateContent({
@@ -18,14 +17,17 @@ export default async (req, context) => {
       contents: prompt,
     });
 
-    return new Response(JSON.stringify({ text: response.text }), {
-      status: 200,
-      headers: { "Content-Type": "application/json" }
-    });
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ text: response.text }),
+    };
   } catch (error) {
-    return new Response(JSON.stringify({ error: error.message }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" }
-    });
+    // ESTA LÍNEA ES LA CLAVE PARA VER EL FALLO EN LOS LOGS DE NETLIFY:
+    console.error("🔥 Error interno en Gemini:", error);
+    
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: error.message }),
+    };
   }
 };
