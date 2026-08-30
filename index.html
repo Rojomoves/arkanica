@@ -6,14 +6,9 @@
 <title>Arkanica — Tarot Interactivo y Claridad Profunda</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://js.stripe.com/v3/"></script>
-<!-- SDK oficial de Google Gen AI para evitar fallos de fetch plano -->
-<script type="importmap">
-  {
-    "imports": {
-      "@google/genai": "https://esm.run/@google/genai"
-    }
-  }
-</script>
+
+<!-- CÓDIGO OFICIAL DE GOOGLE ADSENSE -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2698892755295064" crossorigin="anonymous"></script>
 
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap');
@@ -1107,10 +1102,8 @@
   </div>
 </div>
 
-<script type="module">
-  import { GoogleGenAI } from "@google/genai";
-
-  window.crossTheThreshold = function() {
+<script>
+  function crossTheThreshold() {
     playWoodSelectSound();
     const overlay = document.getElementById('thresholdOverlay');
     if (overlay && !overlay.classList.contains('fade-out')) {
@@ -1119,13 +1112,13 @@
     }
   }
 
-  window.toggleNavMenu = function(e) {
+  function toggleNavMenu(e) {
     e.stopPropagation();
     const menu = document.getElementById('navDropdownMenu');
     menu.classList.toggle('active');
   }
 
-  window.closeNavMenu = function() {
+  function closeNavMenu() {
     const menu = document.getElementById('navDropdownMenu');
     menu.classList.remove('active');
   }
@@ -1142,7 +1135,7 @@
   ];
   let currentAudioIndex = 0;
 
-  window.toggleAudioTrack = function() {
+  function toggleAudioTrack() {
     currentAudioIndex = (currentAudioIndex + 1) % audioStates.length;
     const currentState = audioStates[currentAudioIndex];
     document.getElementById('audioTooltip').textContent = currentState.label;
@@ -1260,7 +1253,7 @@
 
   checkUserSession();
 
-  window.handleAccountClick = function() {
+  function handleAccountClick() {
     if (currentUser) {
       if (confirm(`Estás conectado como ${currentUser.email}. ¿Deseas cerrar sesión?`)) {
         supabaseClient.auth.signOut().then(() => window.location.reload());
@@ -1270,12 +1263,12 @@
     }
   }
 
-  window.goToEnteSuperior = function() {
+  function goToEnteSuperior() {
     localStorage.removeItem('arkanica_last_reading');
     window.location.href = 'ente-superior/ente-superior.html';
   }
 
-  window.goToSesionesPrivadas = function() {
+  function goToSesionesPrivadas() {
     window.location.href = 'sesiones-privadas.html';
   }
 
@@ -1565,7 +1558,7 @@
     }
   }
 
-  window.onMobileCategoryChange = function(catKey) {
+  function onMobileCategoryChange(catKey) {
     currentCategoryKey = catKey;
     currentSpreadKey = categoriesData[catKey].spreads[0].key;
     renderSpreadDropdowns();
@@ -1772,18 +1765,28 @@
 
       const prompt = `Actúa como un guía espiritual empático, cercano y experto en claridad emocional. Explica de forma muy sencilla, humana y directa esta tirada de "${config.title}" con la pregunta "${userCustomQuery}" compuesta por: ${cardsText}. Estructura tu respuesta estrictamente en formato HTML utilizando etiquetas <p> (máximo 3 párrafos cortos). El último párrafo DEBE terminar obligatoriamente con una pregunta abierta y reflexiva. No incluyas markdown, solo etiquetas <p>.`;
 
-      // Inicialización oficial con el SDK de Google Gen AI
-      const ai = new GoogleGenAI({ apiKey: "AQ.Ab8RN6Ky74zTSQLXtjtxEnPQwEYXlSL6juwMr4y_ULS4ou4OmQ" });
-      const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash',
-        contents: prompt,
+      const apiKey = "AQ.Ab8RN6Ky74zTSQLXtjtxEnPQwEYXlSL6juwMr4y_ULS4ou4OmQ";
+      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent`;
+
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiKey}`
+        },
+        body: JSON.stringify({ 
+          contents: [{ parts: [{ text: prompt }] }]
+        })
       });
 
-      if (response && response.text) {
-        masterTextContent.innerHTML = response.text;
-      } else {
-        throw new Error("Respuesta vacía del SDK");
+      if (response.ok) {
+        const data = await response.json();
+        if (data.candidates && data.candidates[0].content) {
+          masterTextContent.innerHTML = data.candidates[0].content.parts[0].text;
+          return;
+        }
       }
+      throw new Error("Respuesta inválida de la API");
     } catch(e) {
       const mainCard = selectedCards[0];
       const secondCard = selectedCards[1] || selectedCards[0];
