@@ -1,5 +1,3 @@
-// Archivo: netlify/functions/interpretar.js
-
 exports.handler = async function(event, context) {
   const headers = {
     "Access-Control-Allow-Origin": "*",
@@ -23,53 +21,35 @@ exports.handler = async function(event, context) {
   try {
     const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
     if (!apiKey) {
-      throw new Error("GEMINI_API_KEY no está configurada en el entorno de Netlify.");
+      throw new Error("Falta la variable GEMINI_API_KEY en Netlify.");
     }
 
-    let bodyData;
-    try {
-      bodyData = JSON.parse(event.body || "{}");
-    } catch (e) {
-      throw new Error("El formato del cuerpo de la solicitud no es un JSON válido.");
-    }
-
+    let bodyData = JSON.parse(event.body || "{}");
     const { spreadTitle, cards, customQuery } = bodyData;
+    
     if (!cards || !Array.isArray(cards) || cards.length === 0) {
-      throw new Error("No se han proporcionado cartas válidas para la lectura.");
+      throw new Error("No hay cartas proporcionadas.");
     }
 
-    const cardsText = cards.map((c, i) => 
-      `Posición ${i + 1}: ${c.name} (Significado: ${c.archetype})`
-    ).join(', ');
+    const cardsText = cards.map((c, i) => `Posición ${i + 1}: ${c.name} (${c.archetype})`).join(', ');
+    const intention = customQuery ? ` con la pregunta: "${customQuery}"` : '';
 
-    const intentionContext = customQuery ? ` con la intención / pregunta específica del usuario: "${customQuery}"` : '';
+    const prompt = `Actúa como un guía espiritual empático y cercano. Explica de forma sencilla esta tirada de "${spreadTitle || 'Claridad'}"${intention} compuesta por: ${cardsText}. Estructura la respuesta estrictamente en formato HTML con etiquetas <p> (máximo 3 párrafos cortos). El último párrafo DEBE terminar obligatoriamente con una pregunta abierta y reflexiva. No uses markdown.`;
 
-    const prompt = `Actúa como un guía espiritual empático, cercano y experto en claridad emocional. Explica de forma muy sencilla, humana y directa esta tirada de "${spreadTitle || 'Lectura de Claridad'}"${intentionContext} compuesta por: ${cardsText}. 
-    Estructura tu respuesta estrictamente en formato HTML utilizando etiquetas <p> para separar los párrafos (máximo 3 párrafos cortos y conversacionales). 
-    CRUCIAL: El último párrafo DEBE terminar obligatoriamente con una pregunta abierta, persuasiva y reflexiva que invite al usuario a seguir pensando en su situación o a profundizar más. 
-    No incluyas markdown ni bloques de código adicionales, solo texto con etiquetas <p>.`;
-
-    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
     const apiResponse = await fetch(endpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        contents: [{
-          parts: [{ text: prompt }]
-        }]
+        contents: [{ parts: [{ text: prompt }] }]
       })
     });
 
     const resultJson = await apiResponse.json();
 
     if (!apiResponse.ok) {
-      const errorMsg = resultJson.error?.message || "Error desconocido devuelto por la API de Google Gemini.";
-      throw new Error(errorMsg);
-    }
-
-    if (!resultJson.candidates || resultJson.candidates.length === 0 || !resultJson.candidates[0].content) {
-      throw new Error("La IA no generó ninguna respuesta válida para esta tirada.");
+      throw new Error(resultJson.error?.message || "Error al conectar con Google.");
     }
 
     const generatedText = resultJson.candidates[0].content.parts[0].text;
@@ -81,7 +61,6 @@ exports.handler = async function(event, context) {
     };
 
   } catch (err) {
-    console.error("Error crítico en Netlify Function (interpretar):", err.message);
     return {
       statusCode: 500,
       headers,
