@@ -21,33 +21,19 @@ exports.handler = async function(event, context) {
   }
 
   try {
-    const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
-    if (!apiKey) {
-      return {
-        statusCode: 500,
-        headers,
-        body: JSON.stringify({ error: "Fallo crítico: GEMINI_API_KEY no detectada por el servidor." })
-      };
-    }
+    // Clave integrada directamente para evitar problemas de lectura en el servidor de Netlify
+    const apiKey = "AQ.Ab8RN6Ky74zTSQLXtjtxEnPQwEYXlSL6juwMr4y_ULS4ou4OmQ";
 
     let bodyData;
     try {
       bodyData = JSON.parse(event.body || "{}");
     } catch (e) {
-      return {
-        statusCode: 400,
-        headers,
-        body: JSON.stringify({ error: "El cuerpo de la petición no es un JSON válido." })
-      };
+      throw new Error("El formato del cuerpo de la solicitud no es un JSON válido.");
     }
 
     const { spreadTitle, cards, customQuery } = bodyData;
     if (!cards || !Array.isArray(cards) || cards.length === 0) {
-      return {
-        statusCode: 400,
-        headers,
-        body: JSON.stringify({ error: "No se han proporcionado cartas." })
-      };
+      throw new Error("No se han proporcionado cartas válidas para la lectura.");
     }
 
     const cardsText = cards.map((c, i) => 
@@ -61,7 +47,6 @@ exports.handler = async function(event, context) {
     CRUCIAL: El último párrafo DEBE terminar obligatoriamente con una pregunta abierta, persuasiva y reflexiva que invite al usuario a seguir pensando en su situación o a profundizar más. 
     No incluyas markdown ni bloques de código adicionales, solo texto con etiquetas <p>.`;
 
-    // Usamos el endpoint oficial compatible con el token de ayer
     const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
     const apiResponse = await fetch(endpoint, {
@@ -77,20 +62,12 @@ exports.handler = async function(event, context) {
     const resultJson = await apiResponse.json();
 
     if (!apiResponse.ok) {
-      const errorMsg = resultJson.error?.message || "Error devuelto por la API de Google.";
-      return {
-        statusCode: 500,
-        headers,
-        body: JSON.stringify({ error: `Google API Error: ${errorMsg}` })
-      };
+      const errorMsg = resultJson.error?.message || "Error desconocido devuelto por la API de Google Gemini.";
+      throw new Error(errorMsg);
     }
 
     if (!resultJson.candidates || resultJson.candidates.length === 0 || !resultJson.candidates[0].content) {
-      return {
-        statusCode: 500,
-        headers,
-        body: JSON.stringify({ error: "La IA no devolvió ningún contenido." })
-      };
+      throw new Error("La IA no generó ninguna respuesta válida para esta tirada.");
     }
 
     const generatedText = resultJson.candidates[0].content.parts[0].text;
@@ -102,10 +79,11 @@ exports.handler = async function(event, context) {
     };
 
   } catch (err) {
+    console.error("Error crítico en Netlify Function (interpretar):", err.message);
     return {
       statusCode: 500,
       headers,
-      body: JSON.stringify({ error: `Excepción interna: ${err.message}` })
+      body: JSON.stringify({ error: err.message })
     };
   }
 };
