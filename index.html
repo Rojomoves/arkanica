@@ -48,7 +48,6 @@
     position: relative;
   }
 
-  /* --- EFECTO DE VIÑETA OSCURA ENVOLVENTE --- */
   body::after {
     content: '';
     position: fixed;
@@ -58,7 +57,6 @@
     z-index: 1000;
   }
 
-  /* --- EL VELO DEL UMBRAL (INMERSIÓN INICIAL CRO-FRIENDLY) --- */
   .threshold-overlay {
     position: fixed;
     inset: 0;
@@ -159,7 +157,6 @@
     box-shadow: 0 6px 25px rgba(223, 177, 91, 0.4);
   }
 
-  /* BOTÓN FLOTANTE DE AUDIO */
   .floating-audio-btn {
     position: fixed;
     bottom: 24px;
@@ -203,7 +200,6 @@
     opacity: 1;
   }
 
-  /* HEADER CRO */
   header {
     width: 100%;
     max-width: 1050px;
@@ -287,7 +283,6 @@
     font-weight: 500;
   }
 
-  /* MENÚ HAMBURGUESA */
   .hamburger-btn {
     background: var(--surface);
     border: 1px solid var(--gold-dim);
@@ -353,7 +348,6 @@
     color: var(--gold-light);
   }
 
-  /* HERO MINIMALISTA & ORIENTADO A CONVERSIÓN */
   .hero-container {
     text-align: center;
     max-width: 650px;
@@ -387,7 +381,6 @@
     margin: 0;
   }
 
-  /* BOTONES DISIMULADOS DE ACCESO RÁPIDO */
   .quick-links-bar {
     display: flex;
     justify-content: center;
@@ -417,7 +410,6 @@
     background: rgba(223, 177, 91, 0.1);
   }
 
-  /* CONTENEDOR DE SELECTORES */
   .spread-dropdown-container {
     width: 100%;
     max-width: 1050px;
@@ -461,7 +453,6 @@
     border-color: var(--gold);
   }
 
-  /* TARJETA INFORMATIVA */
   .spread-info-card {
     width: 100%;
     max-width: 1050px;
@@ -537,7 +528,6 @@
     margin-bottom: 2px;
   }
 
-  /* MESA DE LECTURA */
   .table-container {
     width: 100%;
     max-width: 1050px;
@@ -594,6 +584,8 @@
     max-width: 650px;
     position: relative;
     perspective: 1000px;
+    /* Efecto latido aplicado al contenedor del abanico */
+    animation: pulseInstruction 2s infinite ease-in-out;
   }
 
   .fan-card {
@@ -716,7 +708,6 @@
     margin-bottom: 10px;
   }
 
-  /* CAJA DE SÍNTESIS MAGISTRAL */
   .master-interpretation-box {
     width: 100%;
     background: linear-gradient(135deg, rgba(25, 20, 35, 0.95) 0%, rgba(10, 9, 15, 0.98) 100%);
@@ -781,7 +772,6 @@
   }
   .arkanica-reset:hover { border-color: var(--gold); color: var(--gold); }
 
-  /* --- SECCIONES DE CONVERSIÓN (CRO OPTIMIZADAS) --- */
   .cro-section-container {
     width: 100%;
     max-width: 1050px;
@@ -860,7 +850,6 @@
     box-shadow: 0 6px 20px rgba(223, 177, 91, 0.35);
   }
 
-  /* ESTILO AUTORA & ESTADÍSTICAS CRO */
   .about-flex {
     display: flex;
     align-items: center;
@@ -928,7 +917,6 @@
 </head>
 <body>
 
-<!-- VELO DEL UMBRAL OPTIMIZADO -->
 <div class="threshold-overlay" id="thresholdOverlay">
   <div class="threshold-particles"></div>
   <div class="threshold-content">
@@ -950,7 +938,6 @@
   <source src="" type="audio/mpeg">
 </audio>
 
-<!-- BOTÓN FLOTANTE DE AUDIO -->
 <button class="floating-audio-btn" id="floatingAudioBtn" onclick="toggleAudioTrack()" title="Cambiar ambiente musical">
   <span id="audioIcon">🎵</span>
   <span class="audio-tooltip" id="audioTooltip">Silencio</span>
@@ -967,7 +954,6 @@
   </a>
 
   <div class="header-right">
-    <!-- Insignia de Cristales / Perfil -->
     <div class="profile-badge" id="profileBadge" onclick="handleAccountClick()" title="Gestionar cuenta y cristales">
       <div class="profile-crystals">
         <span>💎</span> <strong id="headerCrystalCount">10</strong>
@@ -978,7 +964,6 @@
       </div>
     </div>
 
-    <!-- Menú Hamburguesa optimizado -->
     <div class="header-menu-wrapper">
       <button class="hamburger-btn" onclick="toggleNavMenu(event)" title="Menú de navegación">
         <span class="hamburger-line"></span>
@@ -997,13 +982,11 @@
   </div>
 </header>
 
-<!-- HERO COMPACTO CRO -->
 <div class="hero-container">
   <div class="arkanica-eyebrow">✦ Tu espacio de claridad interior ✦</div>
   <h1 class="arkanica-title">Elige qué te gustaría consultar hoy</h1>
   <p class="arkanica-sub">Disfruta de cada tirada gratis una vez al día (3 cristales adicionales por repetición).</p>
   
-  <!-- BOTONES DISIMULADOS DE ACCESO RÁPIDO -->
   <div class="quick-links-bar">
     <a href="tienda.html" class="quick-link-pill">🛍️ Tienda Mística</a>
     <a href="comunidad-privada.html" class="quick-link-pill">💬 Comunidad VIP</a>
@@ -1011,7 +994,6 @@
   </div>
 </div>
 
-<!-- CADENA DE DESPLEGABLES -->
 <div class="spread-dropdown-container">
   <div class="spread-select-wrapper">
     <label class="spread-select-label">Naturaleza de la Consulta</label>
@@ -1031,7 +1013,6 @@
   </div>
 </div>
 
-<!-- Tarjeta Informativa de la Tirada -->
 <div class="spread-info-card" id="spreadInfoCard">
   <h3 class="spread-info-title" id="infoTitle">Cargando...</h3>
   <p class="spread-info-desc" id="infoDesc">Cargando...</p>
@@ -1048,7 +1029,6 @@
   <div class="arkanica-table" id="table"></div>
   <p class="arkanica-hint" id="hint">Selecciona una carta del abanico superior</p>
 
-  <!-- CAJA DE SÍNTESIS MAGISTRAL -->
   <div class="master-interpretation-box" id="masterBox">
     <div class="master-title"><span class="spinner-symbol" id="masterSymbol">✦</span> Síntesis Magistral del Oráculo</div>
     <p class="master-text" id="masterTextContent">✦ Sintonizando los arcanos mayores y menores con el latido del universo...</p>
@@ -1060,10 +1040,7 @@
   <button class="arkanica-reset" id="reset" style="margin-top: 14px;">Volver a consultar al destino</button>
 </div>
 
-<!-- BLOQUES DE CONVERSIÓN CRO (GRID LIMPIO DE 3 ACCIONES CLAVE) -->
 <div class="cro-section-container">
-  
-  <!-- 1. ACOMPAÑAMIENTO CON ANDREA (DESTACADO PRINCIPAL + ESTADÍSTICAS CRO ACTUALIZADAS) -->
   <div class="cro-card featured" id="autor">
     <div class="about-flex">
       <img src="assets/tarotista.jpg" alt="Andrea - Creadora de Arkanica" class="about-avatar" loading="lazy">
@@ -1077,7 +1054,6 @@
       Si tus tiradas requieren una mirada humana, experta y profundamente empática, reserva una sesión privada directamente conmigo para despejar cada bloqueo sin filtros.
     </p>
 
-    <!-- BLOQUE DE ESTADÍSTICAS DE CONFIANZA ACTUALIZADO -->
     <div class="stats-grid">
       <div class="stat-item">
         <span class="stat-number">+2000</span>
@@ -1102,7 +1078,6 @@
     </div>
   </div>
 
-  <!-- 2. ENTE SUPERIOR -->
   <div class="cro-card">
     <div>
       <div class="cro-eyebrow">✦ Inteligencia Mística Avanzada ✦</div>
@@ -1116,7 +1091,6 @@
     </div>
   </div>
 
-  <!-- 3. COMUNIDAD VIP -->
   <div class="cro-card">
     <div>
       <div class="cro-eyebrow">✦ Círculo de Claridad ✦</div>
@@ -1129,7 +1103,6 @@
       <a href="comunidad-privada.html" class="action-btn" style="width: 100%;">Unirme al Círculo</a>
     </div>
   </div>
-
 </div>
 
 <script>
@@ -1335,8 +1308,8 @@
     { symbol: 'XX', name: 'El Juicio', archetype: 'Un despertar kármico y una gran llamada a trascender', img: 'assets/arcanos-mayores/judgment.jpeg' },
     { symbol: 'XXI', name: 'El Mundo', archetype: 'Realización total; has completado una gran maestría', img: 'assets/arcanos-mayores/the-world.jpeg' },
     { symbol: 'As B', name: 'As de Bastos', archetype: 'Chispa creativa, energía vital y nuevos comienzos de acción', img: 'assets/arcanos-menores/bastos/as-bastos.jpg' },
-    { symbol: '2 B', name: '2 de Bastos', archetype: 'Planificación a futuro, visión estratégica y encrucijada de decisiones', img: 'assets/arcanos-menores/bastos/2-bastos.jpg' },
-    { symbol: '3 B', name: '3 de Bastos', archetype: 'Expansión de horizontes, comercio y espera de frutos', img: 'assets/arcanos-menores/bastos/3-bastos.jpg' },
+    { symbol: '2 B', name: '2 de Bastos', archetype: 'Planificación a futuro, visión estratégica y encrucijada de decisiones', img: 'assets/arcanos-menores/bastos/2-bastos.jpeg' },
+    { symbol: '3 B', name: '3 de Bastos', archetype: 'Expansión de horizontes, comercio y espera de frutos', img: 'assets/arcanos-menores/bastos/3-bastos.jpeg' },
     { symbol: '4 B', name: '4 de Bastos', archetype: 'Celebración, hogar armónico, estabilidad y comunidad', img: 'assets/arcanos-menores/bastos/4-bastos.jpg' },
     { symbol: '5 B', name: '5 de Bastos', archetype: 'Competencia, pugna de egos y desafíos de opiniones', img: 'assets/arcanos-menores/bastos/5-bastos.jpg' },
     { symbol: '6 B', name: '6 de Bastos', archetype: 'Victoria pública, reconocimiento y triunfo merecido', img: 'assets/arcanos-menores/bastos/6-bastos.jpg' },
@@ -1348,7 +1321,7 @@
     { symbol: 'Knight B', name: 'Caballero de Bastos', archetype: 'Acción impulsiva, pasión desbordada y aventura veloz', img: 'assets/arcanos-menores/bastos/caballero-bastos.jpg' },
     { symbol: 'Queen B', name: 'Reina de Bastos', archetype: 'Carisma magnético, independencia, calidez y liderazgo vibrante', img: 'assets/arcanos-menores/bastos/riena-bastos.jpg' },
     { symbol: 'King B', name: 'Rey de Bastos', archetype: 'Visionario inspirador, autoridad emprendedora y dinamismo', img: 'assets/arcanos-menores/bastos/rey-bastos.jpg' },
-    { symbol: 'As C', name: 'As de Copas', archetype: 'Desborde emocional, amor incondicional y apertura del alma', img: 'assets/arcanos-menores/copas/as copas.jpg' },
+    { symbol: 'As C', name: 'As de Copas', archetype: 'Desborde emocional, amor incondicional y apertura del alma', img: 'assets/arcanos-menores/copas/as-copas.jpg' },
     { symbol: '2 C', name: '2 de Copas', archetype: 'Unión profunda, pacto de almas, reciprocidad y sintonía', img: 'assets/arcanos-menores/copas/2-copas.jpg' },
     { symbol: '3 C', name: '3 de Copas', archetype: 'Alegría compartida, celebración íntima y amistad genuina', img: 'assets/arcanos-menores/copas/3-copas.jpg' },
     { symbol: '4 C', name: '4 de Copas', archetype: 'Apatía emocional, hartazgo y rechazo de nuevas oportunidades', img: 'assets/arcanos-menores/copas/4-copas.jpg' },
@@ -1359,7 +1332,7 @@
     { symbol: '9 C', name: '9 de Copas', archetype: 'Deseos cumplidos, satisfacción emocional y bienestar personal', img: 'assets/arcanos-menores/copas/9-copas.jpg' },
     { symbol: '10 C', name: '10 de Copas', archetype: 'Felicidad familiar duradera, plenitud y paz en el hogar', img: 'assets/arcanos-menores/copas/10-copas.jpg' },
     { symbol: 'Page C', name: 'Sota de Copas', archetype: 'Sensibilidad artística, intuición poética y mensajes tiernos', img: 'assets/arcanos-menores/copas/page-copas.jpg' },
-    { symbol: 'Knight C', name: 'Caballero de Copas', archetype: 'El pretendiente romántico, proposiciones y seguimiento del corazón', img: 'assets/arcanos-menores/copas/caballero copas.jpg' },
+    { symbol: 'Knight C', name: 'Caballero de Copas', archetype: 'El pretendiente romántico, proposiciones y seguimiento del corazón', img: 'assets/arcanos-menores/copas/caballero-copas.jpg' },
     { symbol: 'Queen C', name: 'Reina de Copas', archetype: 'Empatía compasiva, profundidad emocional y sanación intuitiva', img: 'assets/arcanos-menores/copas/reina.copas.jpg' },
     { symbol: 'King C', name: 'Rey de Copas', archetype: 'Maestría emocional, diplomacia serena y madurez afectiva', img: 'assets/arcanos-menores/copas/rey-copas.jpg' },
     { symbol: 'As E', name: 'As de Espadas', archetype: 'Claridad mental cortante, verdad absoluta y triunfo de la razón', img: 'assets/arcanos-menores/espadas/as-espadas.jpg' },
@@ -1391,11 +1364,6 @@
     { symbol: 'Queen O', name: 'Reina de Oros', archetype: 'Pragmatismo protector, nutrición del hogar y seguridad material', img: 'assets/arcanos-menores/oros/reina-oros.jpg' },
     { symbol: 'King O', name: 'Rey de Oros', archetype: 'Éxito empresarial consolidado, provisión y solidez financiera', img: 'assets/arcanos-menores/oros/rey-oros.jpg' }
   ];
-
-  fullTarotDeck.forEach(card => {
-    const imgPreload = new Image();
-    imgPreload.src = card.img;
-  });
 
   const categoriesData = {
     consulta_dia: {
@@ -1836,7 +1804,7 @@
     if (queryInput && queryInput.value.trim() !== '') {
       userCustomQuery = queryInput.value.trim();
     } else {
-      userCustomQuery = userCustomQuery || "Claridad general del día";
+      userCustomQuery = userCustomQuery || config.title;
     }
 
     masterSymbol.classList.add('spinner-symbol');
@@ -1853,13 +1821,20 @@
       const response = await fetch('/.netlify/functions/interpretar', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ spreadTitle: config.title, cards: selectedCards, customQuery: userCustomQuery })
+        body: JSON.stringify({ 
+          spreadTitle: config.title, 
+          spreadKey: currentSpreadKey,
+          cards: selectedCards, 
+          customQuery: userCustomQuery 
+        })
       });
       if (response.ok) {
         const data = await response.json();
         if (data.interpretacion) {
           masterTextContent.innerHTML = data.interpretacion;
         }
+      } else {
+        throw new Error("Error en la respuesta del servidor");
       }
     } catch(e) {
       masterTextContent.innerHTML = `Tras sintonizar los arcanos para tu consulta sobre "${userCustomQuery}", la presencia de <em>${selectedCards[0].name}</em> marca un punto de inflexión decisivo. ${selectedCards[0].archetype}. Confía plenamente en tu intuición actual y permite que la claridad guíe tus próximos pasos sin vacilar.`;

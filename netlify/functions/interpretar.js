@@ -8,12 +8,10 @@ exports.handler = async function(event, context) {
     "Content-Type": "application/json"
   };
 
-  // Manejo de preflight CORS
   if (event.httpMethod === "OPTIONS") {
     return { statusCode: 200, headers, body: "" };
   }
 
-  // Validación estricta de método HTTP
   if (event.httpMethod !== "POST") {
     return { 
       statusCode: 405, 
@@ -23,12 +21,12 @@ exports.handler = async function(event, context) {
   }
 
   try {
-    const apiKey = process.env.GEMINI_API_KEY;
+    // Busca la clave tanto en GEMINI_API_KEY como por si estuviera en GOOGLE_API_KEY
+    const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
     if (!apiKey) {
       throw new Error("GEMINI_API_KEY no está configurada en el entorno de Netlify.");
     }
 
-    // Parseo seguro del cuerpo de la petición
     let bodyData;
     try {
       bodyData = JSON.parse(event.body || "{}");
@@ -36,24 +34,23 @@ exports.handler = async function(event, context) {
       throw new Error("El formato del cuerpo de la solicitud no es un JSON válido.");
     }
 
-    const { spreadTitle, cards } = bodyData;
+    const { spreadTitle, cards, customQuery } = bodyData;
     if (!cards || !Array.isArray(cards) || cards.length === 0) {
       throw new Error("No se han proporcionado cartas válidas para la lectura.");
     }
 
-    // Mapeo limpio de las cartas seleccionadas
     const cardsText = cards.map((c, i) => 
       `Posición ${i + 1}: ${c.name} (Significado: ${c.archetype})`
     ).join(', ');
 
-    // PROMPT ACTUALIZADO (Cercano, sin tecnicismos y con llamada a la acción / pregunta final)
-    const prompt = `Actúa como un guía espiritual empático, cercano y experto en claridad emocional. Explica de forma muy sencilla, humana y directa (como si hablaras con un buen amigo que necesita consejo, sin palabras rebuscadas ni tecnicismos de tarot) esta tirada de "${spreadTitle || 'Lectura de Claridad'}" compuesta por: ${cardsText}. 
+    const intentionContext = customQuery ? ` con la intención / pregunta específica del usuario: "${customQuery}"` : '';
+
+    const prompt = `Actúa como un guía espiritual empático, cercano y experto en claridad emocional. Explica de forma muy sencilla, humana y directa esta tirada de "${spreadTitle || 'Lectura de Claridad'}"${intentionContext} compuesta por: ${cardsText}. 
     Estructura tu respuesta estrictamente en formato HTML utilizando etiquetas <p> para separar los párrafos (máximo 3 párrafos cortos y conversacionales). 
     CRUCIAL: El último párrafo DEBE terminar obligatoriamente con una pregunta abierta, persuasiva y reflexiva que invite al usuario a seguir pensando en su situación o a profundizar más. 
     No incluyas markdown ni bloques de código adicionales, solo texto con etiquetas <p>.`;
 
-    // Utilizando el modelo estable y actual compatible con la API v1beta
-    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${apiKey}`;
+    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
     const apiResponse = await fetch(endpoint, {
       method: "POST",
