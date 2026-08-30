@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cómo aprovechar al máximo tu lectura diaria y conectar con los arcanos — Diario de Arkanica</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://js.stripe.com/v3/"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500&display=swap');
+  :root { --bg: #050508; --surface: #0c0b12; --surface-hover: #13121c; --gold: #dfb15b; --gold-dim: #947437; --gold-light: #f3d89d; --text-main: #f4f2ee; --text-muted: #9c98a6; --line: rgba(223, 177, 91, 0.25); }
+  * { box-sizing: border-box; }
+  body { margin: 0; background-color: var(--bg); background-image: radial-gradient(circle at 50% 0%, rgba(45, 30, 70, 0.25) 0%, transparent 60%); background-attachment: fixed; min-height: 100vh; display: flex; flex-direction: column; align-items: center; font-family: 'Inter', sans-serif; color: var(--text-main); padding: 16px 12px 60px 12px; position: relative; }
+  body::after { content: ''; position: fixed; inset: 0; background: radial-gradient(circle at center, transparent 40%, rgba(3, 3, 5, 0.75) 100%); pointer-events: none; z-index: 1000; }
+  header { width: 100%; max-width: 1100px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; border-bottom: 1px solid var(--line); padding-bottom: 12px; z-index: 100; }
+  .logo { display: flex; align-items: center; gap: 8px; text-decoration: none; }
+  .logo-symbol { width: 26px; height: 26px; fill: none; stroke: var(--gold); stroke-width: 1.5; }
+  .logo-text { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--gold); }
+  .blog-container { width: 100%; max-width: 850px; z-index: 2; display: flex; flex-direction: column; gap: 20px; }
+  .blog-post-card { background: linear-gradient(135deg, rgba(14, 13, 20, 0.85) 0%, rgba(6, 5, 10, 0.95) 100%); border: 1px solid var(--line); border-radius: 14px; padding: 32px 28px; box-shadow: 0 20px 45px rgba(0,0,0,0.5); }
+  .blog-eyebrow { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 6px; }
+  .blog-post-card h2 { font-family: 'Cormorant Garamond', serif; font-size: 26px; color: var(--gold); margin-top: 0; margin-bottom: 6px; }
+  .blog-date { font-size: 11px; color: var(--text-muted); margin-bottom: 22px; font-style: italic; }
+  .blog-content h3 { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--text-main); margin-top: 24px; margin-bottom: 8px; }
+  .blog-content p, .blog-content ul, .blog-content ol { font-size: 13.5px; color: var(--text-main); line-height: 1.7; margin-bottom: 16px; }
+  .blog-content ul, .blog-content ol { padding-left: 20px; }
+  .action-btn { background: var(--gold); color: var(--bg); border: none; font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; padding: 11px 22px; border-radius: 6px; text-decoration: none; display: inline-block; }
+  .action-btn:hover { background: var(--gold-light); }
+  .banner-action-pill { background: rgba(223, 177, 91, 0.08); border: 1px solid var(--gold-dim); color: var(--gold-light); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.1em; padding: 9px 18px; border-radius: 20px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+  .banner-action-pill:hover { background: var(--gold); color: var(--bg); }
+</style>
+</head>
+<body>
+<header>
+  <a href="../index.html" class="logo">
+    <svg class="logo-symbol" viewBox="0 0 32 32"><ellipse cx="16" cy="16" rx="14" ry="6" transform="rotate(-30 16 16)" /><circle cx="16" cy="16" r="4" /><path d="M16 2 L16 30" stroke-dasharray="1 3" /></svg>
+    <span class="logo-text">Arkanica</span>
+  </a>
+  <a href="../blog.html" class="banner-action-pill">← Volver al Diario de Arkanica</a>
+</header>
+<div class="blog-container">
+  <article class="blog-post-card">
+    <div class="blog-eyebrow">✦ Guía de Arkanica & Claridad Emocional</div>
+    <h2>Cómo aprovechar al máximo tu lectura diaria y conectar con los arcanos</h2>
+    <p class="blog-date">Publicado el 29 de agosto de 2026 por Andrea — Creadora de Arkanica</p>
+    <div class="blog-content">
+      <p>Llegar a un espacio místico por primera vez suele generar esa pequeña duda de no saber por dónde empezar. En <strong>Arkanica</strong>, el mazo está diseñado para responder a tu pulso interior, pero queremos asegurarnos de que descubras cada rincón y herramienta que hemos preparado para acompañar tu claridad emocional.</p>
+      
+      <p>Si es tu primera vez aquí, o si quieres exprimir al máximo tu experiencia diaria, te dejamos una pequeña brújula orgánica para moverte por la plataforma:</p>
+
+      <ul>
+        <li><strong>Tu pulso, tu pregunta:</strong> Al entrar en la <em>Consulta del Día</em>, el abanico de cartas permanece en silencio hasta que escribes lo que ronda tu cabeza. Tan solo empieza a teclear tu dilema y verás cómo el mazo se despliega de inmediato para ti.</li>
+        <li><strong>Explora más allá del día a día:</strong> No te quedes solo en la superficie. En el selector superior puedes cambiar la naturaleza de tu consulta y explorar las categorías de <strong>Románticas</strong>, <strong>Espirituales</strong>, <strong>Trabajo de Sombras</strong> o nuestro <strong>Escenario Principal</strong> para proyectos y ambición. Cada una cuenta con tiradas específicas diseñadas para un propósito muy concreto.</li>
+        <li><strong>El sonido como refugio:</strong> En la esquina inferior izquierda tienes un botón flotante con música ambiental. Actívalo si buscas un clima de profunda introspección con cuencos tibetanos, lluvia o tonos de meditación antes de elegir tus cartas.</li>
+        <li><strong>Trascendiendo las tiradas:</strong> Si sientes que una pregunta exige un diálogo vivo más allá de las cartas, recuerda que puedes acceder al <strong>Ente Superior</strong> o reservar una <strong>Sesión Privada</strong> para un acompañamiento humano y cercano.</li>
+      </ul>
+
+      <div style="background: rgba(223, 177, 91, 0.05); border: 1px solid var(--line); border-left: 3px solid var(--gold); padding: 16px 20px; border-radius: 8px; margin: 24px 0;">
+        <p style="margin: 0 0 10px 0; font-family: 'Cormorant Garamond', serif; font-size: 16px; color: var(--gold-light);">✦ <em>¿Listo/a para dar el primer paso hoy?</em></p>
+        <p style="margin: 0 0 12px 0; font-size: 12.5px; color: var(--text-muted); line-height: 1.5;">Escribe tu intención en nuestra mesa interactiva y descubre lo que los arcanos tienen preparado para ti.</p>
+        <a href="../index.html#mesa" class="banner-action-pill" style="text-decoration: none;">Ir a realizar tu tirada hoy</a>
+      </div>
+
+      <hr style="border: 0; border-top: 1px solid var(--line); margin: 32px 0;">
+      <p style="text-align: center; font-style: italic; color: var(--gold-light); font-size: 15px;">"La magia de Arkanica no se impone: se descubre paso a paso, a tu propio ritmo."</p>
+      
+      <div style="background: linear-gradient(135deg, rgba(223, 177, 91, 0.1) 0%, rgba(12, 11, 18, 0.95) 100%); border: 1px solid var(--gold); border-radius: 10px; padding: 24px; margin-top: 28px; text-align: center;">
+        <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--gold); margin-top: 0; margin-bottom: 8px;">¿Necesitas una mirada más profunda?</h3>
+        <p style="font-size: 12.5px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.5;">Conecta directamente con el Ente Superior o agenda un espacio de acompañamiento exclusivo.</p>
+        <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
+          <a href="../index.html#mesa" class="action-btn" style="text-decoration: none; display: inline-block;">Hacer una tirada</a>
+          <a href="../ente-superior/ente-superior.html" class="banner-action-pill" style="text-decoration: none; display: inline-block; padding: 11px 22px;">Consultar al Ente Superior ✦</a>
+        </div>
+      </div>
+    </div>
+  </article>
+</div>
+</body>
+</html>

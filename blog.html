@@ -91,6 +91,12 @@
     color: var(--gold);
   }
 
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
   .nav-back-home {
     background: rgba(223, 177, 91, 0.08);
     border: 1px solid var(--gold-dim);
@@ -108,6 +114,75 @@
     background: var(--gold);
     color: var(--bg);
     border-color: var(--gold);
+  }
+
+  /* MENÚ HAMBURGUESA */
+  .hamburger-btn {
+    background: rgba(12, 11, 18, 0.92);
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .hamburger-btn:hover {
+    background: var(--surface-hover);
+    border-color: var(--gold-light);
+  }
+  .hamburger-line {
+    width: 18px;
+    height: 2px;
+    background: var(--gold);
+    border-radius: 2px;
+  }
+
+  .header-menu-wrapper {
+    position: relative;
+    z-index: 99999;
+  }
+
+  .nav-dropdown-menu {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background-color: #08070b !important;
+    backdrop-filter: none !important;
+    border: 1.5px solid var(--gold);
+    border-radius: 10px;
+    width: 255px;
+    padding: 8px 0;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.95);
+    display: none;
+    flex-direction: column;
+    z-index: 99999;
+  }
+
+  .nav-dropdown-menu.active {
+    display: flex;
+  }
+
+  .nav-dropdown-menu a {
+    color: var(--text-main);
+    text-decoration: none;
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 11px 20px;
+    transition: background 0.2s, color 0.2s;
+    display: block;
+    background-color: #08070b !important;
+  }
+
+  .nav-dropdown-menu a:hover {
+    background: rgba(223, 177, 91, 0.15) !important;
+    color: var(--gold);
   }
 
   /* CONTENEDOR DEL BLOG */
@@ -236,6 +311,52 @@
     border-top: 1px solid rgba(223, 177, 91, 0.1);
     padding-top: 12px;
   }
+
+  /* BANNER DESTACADO PARA PREGUNTAS FRECUENTES */
+  .faq-banner-card {
+    background: linear-gradient(135deg, rgba(28, 22, 38, 0.9) 0%, rgba(10, 9, 15, 0.95) 100%);
+    border: 1px solid var(--gold);
+    border-radius: 12px;
+    padding: 32px 28px;
+    text-align: center;
+    margin-top: 10px;
+    box-shadow: 0 20px 45px rgba(0,0,0,0.6);
+  }
+
+  .faq-banner-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    color: var(--gold);
+    margin-top: 0;
+    margin-bottom: 8px;
+  }
+
+  .faq-banner-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto 20px;
+    line-height: 1.6;
+  }
+
+  .action-btn {
+    background: var(--gold);
+    color: var(--bg);
+    border: none;
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 11px 24px;
+    border-radius: 6px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.3s ease;
+  }
+
+  .action-btn:hover {
+    background: var(--gold-light);
+  }
 </style>
 </head>
 <body>
@@ -249,7 +370,27 @@
     </svg>
     <span class="logo-text">Arkanica</span>
   </a>
-  <a href="index.html" class="nav-back-home">← Volver a la Mesa</a>
+
+  <div class="header-right">
+    <a href="index.html" class="nav-back-home">← Volver a la Mesa</a>
+
+    <!-- Menú Hamburguesa -->
+    <div class="header-menu-wrapper">
+      <button class="hamburger-btn" onclick="toggleNavMenu(event)" title="Menú de navegación">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+
+      <div class="nav-dropdown-menu" id="navDropdownMenu">
+        <a href="index.html" onclick="closeNavMenu()">Lecturas</a>
+        <a href="blog.html" onclick="closeNavMenu()">✦ Diario de Arkanica</a>
+        <a href="tienda.html" onclick="closeNavMenu()">🛍️ Tienda Mística</a>
+        <a href="blog/preguntas-frecuentes.html" onclick="closeNavMenu()">❓ Preguntas Frecuentes (FAQ)</a>
+        <a href="sesiones-privadas.html" onclick="closeNavMenu()">Sesiones Privadas</a>
+      </div>
+    </div>
+  </div>
 </header>
 
 <div class="blog-container">
@@ -261,7 +402,7 @@
 
   <!-- FILTROS DE CATEGORÍA -->
   <div class="category-filter-container" id="categoryFilters">
-    <button class="filter-pill active" onclick="filterArticles('all', this)">Todos</button>
+    <button class="filter-pill active" onclick="filterArticles('all', this)">Destacados (3)</button>
     <button class="filter-pill" onclick="filterArticles('mitos', this)">Mitos & Realidades</button>
     <button class="filter-pill" onclick="filterArticles('relaciones', this)">Relaciones</button>
     <button class="filter-pill" onclick="filterArticles('psicologia', this)">Psicología</button>
@@ -270,8 +411,8 @@
 
   <div class="articles-wrapper" id="articlesWrapper">
 
-    <!-- Artículo: Mitos y verdades del Tarot -->
-    <a href="blog/mitos-y-verdades-del-tarot.html" class="article-card" data-category="mitos">
+    <!-- Artículo 1 (Destacado): Mitos y verdades del Tarot -->
+    <a href="blog/mitos-y-verdades-del-tarot.html" class="article-card featured" data-category="mitos">
       <div class="article-category">✦ Mitos & Realidades</div>
       <h2 class="article-title">Mitos y verdades del Tarot: Lo que nadie te cuenta sobre las cartas (y por qué deberías dejar de temerles)</h2>
       <p class="article-excerpt">Desmontando el estigma histórico y el miedo infundado. Descubre por qué las cartas actúan como un espejo psicológico para devolverte el control de tus decisiones.</p>
@@ -281,8 +422,8 @@
       </div>
     </a>
 
-    <!-- Artículo: Relaciones y Patrones -->
-    <a href="blog/por-que-atraigo-el-mismo-tipo-de-relaciones.html" class="article-card" data-category="relaciones">
+    <!-- Artículo 2 (Destacado): Relaciones y Patrones -->
+    <a href="blog/por-que-atraigo-el-mismo-tipo-de-relaciones.html" class="article-card featured" data-category="relaciones">
       <div class="article-category">✦ Relaciones & Vínculos</div>
       <h2 class="article-title">¿Por qué siempre atraigo el mismo tipo de relaciones? Lo que el Tarot (y tu inconsciente) intentan decirte</h2>
       <p class="article-excerpt">Explorando por qué repetimos bucles afectivos y qué revelan los arquetipos de pareja sobre nuestras heridas internas no resueltas.</p>
@@ -292,8 +433,8 @@
       </div>
     </a>
 
-    <!-- Artículo: Decisiones Difíciles -->
-    <a href="blog/como-tomar-decisiones-dificiles.html" class="article-card" data-category="claridad">
+    <!-- Artículo 3 (Destacado): Decisiones Difíciles -->
+    <a href="blog/como-tomar-decisiones-dificiles.html" class="article-card featured" data-category="claridad">
       <div class="article-category">✦ Introspección & Claridad</div>
       <h2 class="article-title">Cómo tomar decisiones difíciles cuando la mente está colapsada: Guía práctica de introspección</h2>
       <p class="article-excerpt">Supera la parálisis por análisis y apaga el ruido mental mediante un método estructurado de claridad y toma de conciencia.</p>
@@ -403,23 +544,66 @@
     </a>
 
   </div>
+
+  <!-- SECCIÓN EXTENSIÓN: PREGUNTAS FRECUENTES -->
+  <div class="faq-banner-card">
+    <div style="font-size: 9.5px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 6px;">✦ Resolución de Dudas ✦</div>
+    <h2 class="faq-banner-title">¿Tienes más preguntas sobre Arkanica?</h2>
+    <p class="faq-banner-desc">Consulta nuestra página independiente de Preguntas Frecuentes para resolver todas tus dudas acerca de nuestras tiradas interactivas, el funcionamiento de las sesiones privadas, los packs y la tienda mística.</p>
+    <a href="blog/preguntas-frecuentes.html" class="action-btn">Ir a Preguntas Frecuentes →</a>
+  </div>
 </div>
 
 <script>
+  function toggleNavMenu(e) {
+    e.stopPropagation();
+    const menu = document.getElementById('navDropdownMenu');
+    menu.classList.toggle('active');
+  }
+
+  function closeNavMenu() {
+    const menu = document.getElementById('navDropdownMenu');
+    menu.classList.remove('active');
+  }
+
+  window.addEventListener('click', () => {
+    closeNavMenu();
+  });
+
+  // Al cargar la página, ocultamos todos los artículos que no sean "destacados" (featured)
+  document.addEventListener("DOMContentLoaded", () => {
+    const articles = document.querySelectorAll('.article-card');
+    articles.forEach(card => {
+      if (!card.classList.contains('featured')) {
+        card.classList.add('hidden');
+      }
+    });
+  });
+
   function filterArticles(category, btnElement) {
     // Actualizar botones activos
     const buttons = document.querySelectorAll('.filter-pill');
     buttons.forEach(btn => btn.classList.remove('active'));
     btnElement.classList.add('active');
 
-    // Filtrar tarjetas
+    // Filtrar tarjetas según la categoría seleccionada
     const articles = document.querySelectorAll('.article-card');
     articles.forEach(card => {
       const cardCategory = card.getAttribute('data-category');
-      if (category === 'all' || cardCategory === category) {
-        card.classList.remove('hidden');
+      if (category === 'all') {
+        // Si selecciona "Todos / Destacados", solo mostramos los 3 destacados
+        if (card.classList.contains('featured')) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
       } else {
-        card.classList.add('hidden');
+        // Si selecciona una categoría específica, mostramos los de esa categoría
+        if (cardCategory === category) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
       }
     });
   }

@@ -8,7 +8,11 @@ exports.handler = async (event) => {
   try {
     const { packId, packName, priceInCents, crystalsAmount, username } = JSON.parse(event.body);
 
-    // Crear sesión de pago en Stripe
+    const isCommunity = packName.includes('Comunidad');
+    const productName = isCommunity 
+      ? `Acceso a la Comunidad Privada VIP Arkanica` 
+      : `Pack de Cristales: ${packName} (${crystalsAmount} Cristales)`;
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: [
@@ -16,16 +20,21 @@ exports.handler = async (event) => {
           price_data: {
             currency: 'eur',
             product_data: {
-              name: `Pack de Cristales: ${packName} (${crystalsAmount} Cristales)`,
+              name: productName,
             },
-            unit_amount: priceInCents, // Ej: 3.99€ -> 399
+            unit_amount: priceInCents, // Ej: 8.90€ -> 890, 9.99€ -> 999
           },
           quantity: 1,
         },
       ],
       mode: 'payment',
-      success_url: `${process.env.URL}/personalizada/personalizada.html?pagado=true&cristales=${crystalsAmount}&user=${encodeURIComponent(username)}`,
-      cancel_url: `${process.env.URL}/personalizada/personalizada.html?cancelado=true`,
+      success_url: `${process.env.URL}/ente-superior/ente-superior.html?pagado=true&cristales=${crystalsAmount}&comunidad=${isCommunity ? 'true' : 'false'}&user=${encodeURIComponent(username)}`,
+      cancel_url: `${process.env.URL}/ente-superior/ente-superior.html?cancelado=true`,
+      metadata: {
+        username: username,
+        crystals: crystalsAmount,
+        isCommunityPass: isCommunity ? 'true' : 'false'
+      }
     });
 
     return {

@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arkanica — Sesiones Privadas y Claridad Profunda con Andrea</title>
+<!-- Cliente oficial de Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- SDK oficial de Stripe -->
+<script src="https://js.stripe.com/v3/"></script>
+
+<!-- CÓDIGO OFICIAL DE GOOGLE ADSENSE -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2698892755295064" crossorigin="anonymous"></script>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #050508;
+    --surface: #0c0b12;
+    --surface-hover: #13121c;
+    --gold: #dfb15b;
+    --gold-dim: #947437;
+    --gold-light: #f3d89d;
+    --text-main: #f4f2ee;
+    --text-muted: #9c98a6;
+    --line: rgba(223, 177, 91, 0.25);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background-color: var(--bg);
+    background-image: 
+      radial-gradient(circle at 50% 0%, rgba(45, 30, 70, 0.3) 0%, transparent 60%),
+      radial-gradient(circle at 50% 100%, rgba(223, 177, 91, 0.06) 0%, transparent 50%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Inter', sans-serif;
+    color: var(--text-main);
+    padding: 16px 12px 60px 12px;
+    overflow-x: hidden;
+    position: relative;
+    scroll-behavior: smooth;
+  }
+
+  /* VIÑETA OSCURA Y ENVOLVENTE */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at center, transparent 35%, rgba(3, 3, 5, 0.8) 100%);
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  /* HEADER */
+  header {
+    width: 100%;
+    max-width: 1100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 12px;
+    position: relative;
+    z-index: 100;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+  }
+
+  .logo-symbol {
+    width: 26px;
+    height: 26px;
+    fill: none;
+    stroke: var(--gold);
+    stroke-width: 1.5;
+    filter: drop-shadow(0 0 8px rgba(223, 177, 91, 0.4));
+  }
+
+  .logo-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+  }
+
+  .nav-back-home {
+    background: rgba(223, 177, 91, 0.08);
+    border: 1px solid var(--gold-dim);
+    color: var(--gold-light);
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 8px 16px;
+    border-radius: 20px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .nav-back-home:hover {
+    background: var(--gold);
+    color: var(--bg);
+    border-color: var(--gold);
+  }
+
+  /* CONTENEDOR PRINCIPAL */
+  .page-container {
+    width: 100%;
+    max-width: 900px;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .hero-section {
+    text-align: center;
+    margin-bottom: 6px;
+  }
+
+  .hero-eyebrow {
+    font-size: 9.5px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 34px;
+    color: var(--text-main);
+    margin: 0 0 10px;
+    line-height: 1.2;
+    font-weight: 400;
+  }
+
+  .hero-sub {
+    font-size: 13.5px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    max-width: 700px;
+    margin: 0 auto;
+    font-weight: 300;
+  }
+
+  /* BARRA DE URGENCIA / ESCASEZ CRO */
+  .urgency-banner {
+    background: linear-gradient(90deg, rgba(223, 177, 91, 0.15), rgba(14, 13, 20, 0.8));
+    border-left: 3px solid var(--gold);
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-size: 11.5px;
+    color: var(--gold-light);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: -10px;
+  }
+
+  /* SECCIÓN GENERAL TARJETAS */
+  .section-card {
+    background: linear-gradient(135deg, rgba(14, 13, 20, 0.85) 0%, rgba(6, 5, 10, 0.95) 100%);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 30px;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 22px;
+    align-items: center;
+  }
+
+  .about-avatar-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+  }
+
+  .about-avatar-circle {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    border: 2px solid var(--gold);
+    overflow: hidden;
+    background: var(--surface-hover);
+    box-shadow: 0 0 25px rgba(223, 177, 91, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .about-avatar-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  .about-avatar-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    color: var(--gold-light);
+    letter-spacing: 0.05em;
+  }
+
+  /* ESTILOS DE ESTADÍSTICAS (COPIADOS DEL INDEX Y ADAPTADOS) */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(223, 177, 91, 0.2);
+    border-radius: 8px;
+    padding: 14px 10px;
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 21px;
+    font-weight: 600;
+    color: var(--gold-light);
+    letter-spacing: 0.05em;
+  }
+
+  .stat-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 8.5px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 500;
+    line-height: 1.3;
+  }
+
+  /* TARJETAS DE PACKS (PRICING) */
+  .pricing-header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    align-items: stretch;
+    margin-bottom: 10px;
+  }
+
+  .pricing-card {
+    background: linear-gradient(135deg, rgba(16, 15, 24, 0.9) 0%, rgba(8, 7, 12, 0.95) 100%);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 24px 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+  }
+
+  .pricing-card:hover {
+    border-color: var(--gold-dim);
+    transform: translateY(-3px);
+  }
+
+  .pricing-card.featured {
+    border: 2px solid var(--gold);
+    background: linear-gradient(135deg, rgba(22, 19, 30, 0.95) 0%, rgba(10, 9, 15, 0.98) 100%);
+    box-shadow: 0 0 30px rgba(223, 177, 91, 0.2);
+  }
+
+  .featured-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--gold);
+    color: var(--bg);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(223, 177, 91, 0.4);
+  }
+
+  .pricing-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    color: var(--gold-light);
+    margin: 0 0 4px;
+    text-align: center;
+  }
+
+  .pricing-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    color: var(--text-main);
+    text-align: center;
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+
+  .pricing-desc {
+    font-size: 11.5px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 16px;
+    text-align: center;
+    font-weight: 300;
+  }
+
+  .pricing-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 11.5px;
+    color: var(--text-main);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  .pricing-features li {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    line-height: 1.4;
+  }
+
+  .pricing-features li::before {
+    content: '✦';
+    color: var(--gold);
+    font-size: 10px;
+    margin-top: 1px;
+  }
+
+  .pricing-btn {
+    background: rgba(223, 177, 91, 0.1);
+    border: 1px solid var(--gold-dim);
+    color: var(--gold-light);
+    font-size: 10.5px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    text-align: center;
+    text-decoration: none;
+  }
+
+  .pricing-card.featured .pricing-btn {
+    background: var(--gold);
+    color: var(--bg);
+    border-color: var(--gold);
+  }
+
+  .pricing-btn:hover {
+    background: var(--gold);
+    color: var(--bg);
+    border-color: var(--gold);
+    box-shadow: 0 4px 15px rgba(223, 177, 91, 0.3);
+  }
+
+  /* FORMULARIO DE RESERVA GENERAL */
+  .auth-modal-card {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .form-grid-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  .auth-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .auth-input-group label {
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .auth-input, .auth-textarea, .auth-select {
+    background: rgba(0,0,0,0.45);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 12px;
+    color: var(--text-main);
+    font-size: 13px;
+    outline: none;
+    font-family: 'Inter', sans-serif;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .auth-input:focus, .auth-textarea:focus, .auth-select:focus { 
+    border-color: var(--gold); 
+    box-shadow: 0 0 15px rgba(223, 177, 91, 0.2);
+  }
+  .auth-textarea { resize: vertical; min-height: 100px; }
+
+  /* ESTILO PARA EL INPUT DE ARCHIVO (FOTO OPCIONAL) */
+  .file-upload-wrapper {
+    position: relative;
+    border: 1px dashed var(--line);
+    border-radius: 8px;
+    padding: 10px 12px;
+    background: rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: border-color 0.3s;
+  }
+  .file-upload-wrapper:hover { border-color: var(--gold); }
+  .file-upload-wrapper input[type="file"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+  .file-upload-text {
+    font-size: 12px;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .file-upload-btn {
+    background: rgba(223, 177, 91, 0.15);
+    border: 1px solid var(--gold-dim);
+    color: var(--gold-light);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 4px 10px;
+    border-radius: 4px;
+    pointer-events: none;
+  }
+
+  .action-btn {
+    background: var(--gold);
+    color: var(--bg);
+    border: none;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 14px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+    width: 100%;
+    box-shadow: 0 4px 20px rgba(223, 177, 91, 0.2);
+    margin-top: 6px;
+  }
+  .action-btn:hover { 
+    background: var(--gold-light); 
+    transform: translateY(-1px);
+    box-shadow: 0 6px 25px rgba(223, 177, 91, 0.35);
+  }
+
+  .auth-msg { font-size: 12px; text-align: center; min-height: 18px; color: var(--gold); }
+
+  /* MICRO OFERTAS DE IMPULSO */
+  .micro-offers-box {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px dashed var(--line);
+    border-radius: 12px;
+    padding: 18px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 12px;
+    text-align: center;
+  }
+
+  .micro-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  /* TESTIMONIOS */
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  .testimonial-card {
+    background: rgba(0,0,0,0.35);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 16px;
+    font-size: 12px;
+    color: var(--text-main);
+    line-height: 1.55;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .testimonial-stars {
+    color: var(--gold);
+    font-size: 13px;
+    letter-spacing: 2px;
+  }
+
+  .testimonial-author {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    color: var(--gold-light);
+    font-style: italic;
+  }
+
+  @media (max-width: 768px) {
+    .pricing-grid { grid-template-columns: 1fr; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .form-grid-row { grid-template-columns: 1fr; }
+    .hero-title { font-size: 26px; }
+    .about-grid { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+    .micro-offers-box { flex-direction: column; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" class="logo">
+    <svg class="logo-symbol" viewBox="0 0 32 32">
+      <ellipse cx="16" cy="16" rx="14" ry="6" transform="rotate(-30 16 16)" />
+      <circle cx="16" cy="16" r="4" />
+      <path d="M16 2 L16 30" stroke-dasharray="1 3" />
+    </svg>
+    <span class="logo-text">Arkanica</span>
+  </a>
+  <a href="index.html" class="nav-back-home">← Volver al Oráculo</a>
+</header>
+
+<div class="page-container">
+
+  <div class="hero-section">
+    <div class="hero-eyebrow">✦ Exclusivo, Confidencial & Profundo ✦</div>
+    <h1 class="hero-title">Sesiones Privadas de Claridad Absoluta</h1>
+    <p class="hero-sub">Cuando las tiradas generales muestran pistas pero necesitas desentrañar un nudo vital complejo, abrimos un espacio de análisis íntimo y directo exclusivamente para ti.</p>
+  </div>
+
+  <!-- BARRA DE URGENCIA CRO -->
+  <div class="urgency-banner">
+    <span>⚡ <strong>Plazas limitadas:</strong> Solo 4 análisis en vídeo disponibles esta semana para garantizar máxima profundidad.</span>
+    <span style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gold);">Entrega en 24-48h</span>
+  </div>
+
+  <!-- SECCIÓN QUIÉN SOY + ESTADÍSTICAS DE CONFIANZA -->
+  <div class="section-card">
+    <div class="about-grid">
+      <div class="about-avatar-wrapper">
+        <div class="about-avatar-circle">
+          <img src="assets/tarotista.jpg" alt="Andrea - Creadora de Arkanica" loading="lazy">
+        </div>
+        <div class="about-avatar-name">Andrea</div>
+        <div style="font-size: 9.5px; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase;">Creadora de Arkanica</div>
+      </div>
+      <div>
+        <div style="font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 3px;">Tranquilidad, Claridad & Equilibrio</div>
+        <h3 style="margin-top: 0; font-family: 'Cormorant Garamond', serif; font-size: 22px; margin-bottom: 6px; color: var(--text-main);">¿Quién está al otro lado?</h3>
+        <p style="margin-bottom: 8px; line-height: 1.6; font-size: 12px; color: var(--text-muted); font-weight: 300;">
+          Hola, soy Andrea. Creo firmemente que las respuestas a nuestras mayores encrucijadas no están ocultas en el azar, sino en la capacidad de mirar hacia dentro con la perspectiva adecuada. He diseñado estas sesiones privadas para ofrecerte un santuario de calma, sin juicios y con una precisión milimétrica.
+        </p>
+        <p style="margin-bottom: 0; line-height: 1.5; font-size: 12px; color: var(--gold-light); font-style: italic;">
+          "Cuando una duda frena tu energía, no necesitas más opiniones externas; necesitas claridad absoluta y paz mental."
+        </p>
+      </div>
+    </div>
+
+    <!-- BLOQUE DE ESTADÍSTICAS DE CONFIANZA (AÑADIDO) -->
+    <div class="stats-grid">
+      <div class="stat-item">
+        <span class="stat-number">94</span>
+        <span class="stat-label">Mujeres ayudadas</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">5 AÑOS</span>
+        <span class="stat-label">Experiencia</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">24 - 48H</span>
+        <span class="stat-label">Respuesta garantizada</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">100%</span>
+        <span class="stat-label">Discreción</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN DE PACKS Y OFERTAS DE SESIONES PRIVADAS -->
+  <div class="section-card">
+    <div class="pricing-header">
+      <div style="font-size: 9.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 4px;">Selecciona tu Nivel de Acompañamiento</div>
+      <h3 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-size: 24px; color: var(--gold); font-weight: 400;">Packs de Análisis y Sesiones Privadas</h3>
+    </div>
+
+    <div class="pricing-grid">
+      
+      <!-- PACK ESENCIA -->
+      <div class="pricing-card">
+        <div>
+          <h4 class="pricing-title">Pack Esencia</h4>
+          <div class="pricing-price">29,90 €</div>
+          <p class="pricing-desc">«Cuando el ruido mental te nubla y una duda concreta frena tus decisiones, obtén un análisis preciso y directo al alma.»</p>
+          <ul class="pricing-features">
+            <li>3 Consultas / Preguntas específicas</li>
+            <li>Acceso a la comunidad privada</li>
+            <li>15 Cristales de Claridad de regalo</li>
+          </ul>
+        </div>
+        <button class="pricing-btn" onclick="selectPack('Pack Esencia', '29,90€')">Elegir Esencia</button>
+      </div>
+
+      <!-- PACK BRÚJULA (DESTACADO) -->
+      <div class="pricing-card featured">
+        <div class="featured-badge">Más Elegido</div>
+        <div>
+          <h4 class="pricing-title">Pack Brújula</h4>
+          <div class="pricing-price">49,90 €</div>
+          <p class="pricing-desc">«Los giros importantes exigen estrategia. Evalúa tus avances a mitad de camino y recupera el control absoluto.»</p>
+          <ul class="pricing-features">
+            <li>2 Bloques de consultas (3 preguntas c/u)</li>
+            <li>2º bloque a los 15 días para seguimiento</li>
+            <li>Acceso a la comunidad privada</li>
+            <li>30 Cristales de Claridad de regalo</li>
+          </ul>
+        </div>
+        <button class="pricing-btn" onclick="selectPack('Pack Brújula', '49,90€')">Elegir Brújula</button>
+      </div>
+
+      <!-- PACK 360º (MÉNTORIA ÍNTIMA) -->
+      <div class="pricing-card">
+        <div>
+          <h4 class="pricing-title">Pack 360º</h4>
+          <div class="pricing-price">89,90 €</div>
+          <p class="pricing-desc">«Un santuario de trabajo personal exclusivo para cruzar al siguiente nivel con acompañamiento experto.»</p>
+          <ul class="pricing-features">
+            <li>3 Sesiones Privadas en Vídeo exclusivo (cada 10 días)</li>
+            <li>Canal prioritario de seguimiento con Andrea</li>
+            <li>Prioridad absoluta en entregas (24h)</li>
+            <li>Acceso a la comunidad privada</li>
+            <li>50 Cristales de Claridad de regalo</li>
+          </ul>
+        </div>
+        <button class="pricing-btn" onclick="selectPack('Pack 360º Mentoría', '89,90€')">Elegir 360º</button>
+      </div>
+
+    </div>
+
+    <!-- MICRO OFERTAS DE IMPULSO -->
+    <div style="margin-top: 20px;" class="micro-offers-box">
+      <div class="micro-item">
+        <span style="font-size: 11px; color: var(--gold-light); font-weight: 500;">⚡ Consulta Exprés (1 Pregunta)</span>
+        <span style="font-size: 12px; color: var(--text-muted);">Ideal para una chispa rápida de claridad — <strong>12,00 €</strong></span>
+      </div>
+      <div class="micro-item">
+        <span style="font-size: 11px; color: var(--gold-light); font-weight: 500;">🔮 Doble Perspectiva (2 Preguntas)</span>
+        <span style="font-size: 12px; color: var(--text-muted);">Ahorro para conectar dos caras de un dilema — <strong>22,00 €</strong></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORMULARIO DE RESERVA / CONFIGURACIÓN CON FOTO Y DATOS COMPLETOS -->
+  <div class="section-card" id="formulario-reserva">
+    <div style="text-align: center; margin-bottom: 24px;">
+      <h3 style="margin: 0 0 6px; font-family: 'Cormorant Garamond', serif; font-size: 24px; color: var(--gold); font-weight: 400;">Configura tu Solicitud</h3>
+      <p style="font-size: 12px; color: var(--text-muted); margin: 0; font-weight: 300;" id="formSubtitle">Completa tus datos esenciales y tu dilema para dar inicio a tu proceso de claridad.</p>
+    </div>
+
+    <div class="auth-modal-card">
+      
+      <!-- SELECCIÓN DE PACK -->
+      <div class="auth-input-group">
+        <label>Pack o Enfoque Seleccionado</label>
+        <select id="videoSpreadType" class="auth-select">
+          <option value="pack-esencia">Pack Esencia (29,90 €) — 3 Preguntas de Análisis</option>
+          <option value="pack-brujula" selected>Pack Brújula (49,90 €) — Seguimiento a 15 días</option>
+          <option value="pack-360">Pack Transformación 360º (89,90 €) — Mentoría Íntima</option>
+          <option value="consulta-expres">Consulta Exprés 1 Pregunta (12,00 €)</option>
+          <option value="doble-perspectiva">Doble Perspectiva 2 Preguntas (22,00 €)</option>
+        </select>
+      </div>
+
+      <!-- FILA 1: NOMBRE Y CORREO -->
+      <div class="form-grid-row">
+        <div class="auth-input-group">
+          <label>Nombre *</label>
+          <input type="text" id="videoUserName" class="auth-input" placeholder="Tu nombre o nombre de pila">
+        </div>
+        <div class="auth-input-group">
+          <label>Tu Correo Electrónico *</label>
+          <input type="email" id="videoUserEmail" class="auth-input" placeholder="tu@correo.com">
+        </div>
+      </div>
+
+      <!-- FILA 2: FECHA DE NACIMIENTO Y FOTO OPCIONAL -->
+      <div class="form-grid-row">
+        <div class="auth-input-group">
+          <label>Fecha de Nacimiento (Opcional)</label>
+          <input type="date" id="videoUserBirthdate" class="auth-input">
+        </div>
+        <div class="auth-input-group">
+          <label>Foto Reciente (Opcional)</label>
+          <div class="file-upload-wrapper">
+            <span class="file-upload-text" id="fileNameDisplay">Sube una foto para sintonía...</span>
+            <span class="file-upload-btn">Examinar</span>
+            <input type="file" id="videoUserPhoto" accept="image/*" onchange="updateFileName(this)">
+          </div>
+        </div>
+      </div>
+
+      <!-- DILEMA EXACTO -->
+      <div class="auth-input-group">
+        <label>Dilema Principal o Pregunta Clave *</label>
+        <input type="text" id="videoUserDilema" class="auth-input" placeholder="Ej: ¿Qué camino debo tomar respecto a mi situación actual o profesional?">
+      </div>
+
+      <!-- DETALLES Y CONTEXTO -->
+      <div class="auth-input-group">
+        <label>Detalles y Contexto *</label>
+        <textarea id="videoUserQuery" class="auth-textarea" placeholder="Cuéntame detalladamente qué está pasando, qué dudas te quitan el sueño y qué te gustaría que Andrea analice en profundidad..."></textarea>
+      </div>
+
+      <div style="font-size: 11.5px; color: var(--gold-light); text-align: center; font-style: italic; background: rgba(223, 177, 91, 0.08); padding: 10px; border-radius: 8px; border: 1px solid rgba(223, 177, 91, 0.2);">
+        ✦ Garantía de confidencialidad absoluta: Tus datos se almacenan de forma segura para preparar tu sesión personalizada.
+      </div>
+
+      <div class="auth-msg" id="videoFormMsg"></div>
+
+      <button class="action-btn" onclick="submitVideoConsultation()">Proceder a la Reserva Segura ➔</button>
+    </div>
+  </div>
+
+  <!-- TESTIMONIOS -->
+  <div class="section-card">
+    <div style="text-align: center; margin-bottom: 20px;">
+      <div style="font-size: 9.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 4px;">Comunidad & Experiencias</div>
+      <h3 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--gold); font-weight: 400;">Lo que opinan quienes ya han dado el paso</h3>
+    </div>
+
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p style="margin: 0; font-style: italic; font-weight: 300;">«Ver el vídeo me dio una paz tremenda. Acertó de pleno en detalles de mi situación que no había mencionado en ningún sitio y me dio el empujón que necesitaba.»</p>
+        <div class="testimonial-author">— Lucía M. (Madrid)</div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p style="margin: 0; font-style: italic; font-weight: 300;">«La claridad con la que desgrana el problema vale cada céntimo. Te habla directo al alma y con los siguientes pasos claros y estructurados.»</p>
+        <div class="testimonial-author">— Carlos R. (Barcelona)</div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p style="margin: 0; font-style: italic; font-weight: 300;">«Estaba atrapada en un bucle mental con mi situación de pareja que me desgastaba a diario. Ver el desglose de Andrea fue como encender una luz en una habitación a oscuras: entendí los bloqueos reales y recuperé la calma que tanto necesitaba.»</p>
+        <div class="testimonial-author">— Elena S. (Valencia)</div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p style="margin: 0; font-style: italic; font-weight: 300;">«Tenía que tomar una decisión laboral drástica y el miedo me paralizaba. La claridad y la precisión milimétrica con la que analiza cada detalle me dieron la seguridad exacta para dar el paso sin mirar atrás. Imprescindible.»</p>
+        <div class="testimonial-author">— David M. (Sevilla)</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const STRIPE_LINKS = {
+    'pack-esencia': 'https://buy.stripe.com/eVqbIUgJp1JV4VM5jTfQI00',
+    'pack-brujula': 'https://buy.stripe.com/eVqbIUgJp1JV4VM5jTfQI00',
+    'pack-360': 'https://buy.stripe.com/eVqbIUgJp1JV4VM5jTfQI00',
+    'consulta-expres': 'https://buy.stripe.com/eVqbIUgJp1JV4VM5jTfQI00',
+    'doble-perspectiva': 'https://buy.stripe.com/eVqbIUgJp1JV4VM5jTfQI00'
+  };
+
+  function updateFileName(input) {
+    const display = document.getElementById('fileNameDisplay');
+    if (input.files && input.files[0]) {
+      display.textContent = input.files[0].name;
+      display.style.color = 'var(--gold-light)';
+    } else {
+      display.textContent = 'Sube una foto para sintonía...';
+      display.style.color = 'var(--text-muted)';
+    }
+  }
+
+  function selectPack(packName, price) {
+    const selectElem = document.getElementById('videoSpreadType');
+    for (let i = 0; i < selectElem.options.length; i++) {
+      if (selectElem.options[i].text.includes(packName)) {
+        selectElem.selectedIndex = i;
+        break;
+      }
+    }
+    document.getElementById('formSubtitle').textContent = `Has seleccionado el ${packName} (${price}). Rellena tus datos para continuar.`;
+    document.getElementById('formulario-reserva').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  async function submitVideoConsultation() {
+    const name = document.getElementById('videoUserName').value.trim();
+    const email = document.getElementById('videoUserEmail').value.trim();
+    const birthdate = document.getElementById('videoUserBirthdate').value;
+    const dilema = document.getElementById('videoUserDilema').value.trim();
+    const spreadType = document.getElementById('videoSpreadType').value;
+    const query = document.getElementById('videoUserQuery').value.trim();
+    const photoInput = document.getElementById('videoUserPhoto');
+    const msg = document.getElementById('videoFormMsg');
+
+    if (!name || !email || !dilema || !query) {
+      msg.textContent = 'Por favor, completa los campos obligatorios (*).';
+      return;
+    }
+
+    if (!email.includes('@') || !email.includes('.')) {
+      msg.textContent = 'Por favor, introduce un correo electrónico válido.';
+      return;
+    }
+
+    msg.textContent = 'Subiendo datos y conectando con la pasarela segura...';
+
+    try {
+      const SUPABASE_URL = 'https://jcosmhiukmfsygrinfgy.supabase.co';
+      const SUPABASE_ANON_KEY = 'sb_publishable_UVGFZQhG36gD_67hInVz7g_4oLD7tWN';
+      const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+      let photoUrl = null;
+
+      if (photoInput.files && photoInput.files[0]) {
+        const file = photoInput.files[0];
+        const fileExt = file.name.split('.').pop();
+        const fileName = `${Date.now()}_${Math.random().toString(36).substring(2, 9)}.${fileExt}`;
+        const filePath = `${fileName}`;
+
+        const { data: uploadData, error: uploadError } = await supabaseClient.storage
+          .from('client_photos')
+          .upload(filePath, file);
+
+        if (!uploadError) {
+          const { data: publicUrlData } = supabaseClient.storage
+            .from('client_photos')
+            .getPublicUrl(filePath);
+          photoUrl = publicUrlData.publicUrl;
+        }
+      }
+
+      await supabaseClient
+        .from('video_consultas')
+        .insert([{ 
+          nombre: name,
+          email: email, 
+          fecha_nacimiento: birthdate || null,
+          dilema: dilema,
+          enfoque: spreadType, 
+          consulta: query,
+          foto_url: photoUrl
+        }]);
+
+    } catch (err) {
+      console.error("Supabase sync warning:", err);
+    }
+
+    setTimeout(() => {
+      window.location.href = STRIPE_LINKS[spreadType] || 'https://buy.stripe.com/eVqbIUgJp1JV4VM5jTfQI00';
+    }, 700);
+  }
+</script>
+
+</body>
+</html>

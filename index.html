@@ -13,7 +13,7 @@
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2698892755295064" crossorigin="anonymous"></script>
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap');
 
   :root {
     --bg: #050508;
@@ -24,7 +24,7 @@
     --gold-light: #f3d89d;
     --text-main: #f4f2ee;
     --text-muted: #9c98a6;
-    --line: rgba(223, 177, 91, 0.25);
+    --line: rgba(223, 177, 91, 0.2);
   }
 
   * { box-sizing: border-box; }
@@ -53,12 +53,12 @@
     content: '';
     position: fixed;
     inset: 0;
-    background: radial-gradient(circle at center, transparent 40%, rgba(3, 3, 5, 0.75) 100%);
+    background: radial-gradient(circle at center, transparent 40%, rgba(3, 3, 5, 0.8) 100%);
     pointer-events: none;
     z-index: 1000;
   }
 
-  /* --- EL VELO DEL UMBRAL (INMERSIÓN INICIAL) --- */
+  /* --- EL VELO DEL UMBRAL (INMERSIÓN INICIAL CRO-FRIENDLY) --- */
   .threshold-overlay {
     position: fixed;
     inset: 0;
@@ -70,7 +70,7 @@
     justify-content: center;
     padding: 24px;
     text-align: center;
-    transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), visibility 1.2s ease;
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s ease;
   }
 
   .threshold-overlay.fade-out {
@@ -101,12 +101,6 @@
     flex-direction: column;
     align-items: center;
     gap: 16px;
-    animation: pulseThreshold 3s ease-in-out infinite alternate;
-  }
-
-  @keyframes pulseThreshold {
-    0% { transform: scale(1); opacity: 0.95; }
-    100% { transform: scale(1.02); opacity: 1; }
   }
 
   .threshold-symbol {
@@ -145,27 +139,27 @@
   }
 
   .threshold-btn {
-    background: transparent;
-    border: 1px solid var(--gold);
-    color: var(--gold-light);
+    background: var(--gold);
+    color: var(--bg);
+    border: none;
     font-size: 11px;
     letter-spacing: 0.25em;
     text-transform: uppercase;
-    padding: 12px 28px;
+    padding: 14px 32px;
     border-radius: 30px;
     cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: 0 0 20px rgba(223, 177, 91, 0.15);
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 20px rgba(223, 177, 91, 0.3);
   }
 
   .threshold-btn:hover {
-    background: var(--gold);
-    color: var(--bg);
-    box-shadow: 0 0 30px rgba(223, 177, 91, 0.4);
+    background: var(--gold-light);
     transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(223, 177, 91, 0.4);
   }
 
-  /* BOTÓN FLOTANTE DE AUDIO (ESQUINA INFERIOR IZQUIERDA) */
+  /* BOTÓN FLOTANTE DE AUDIO */
   .floating-audio-btn {
     position: fixed;
     bottom: 24px;
@@ -180,7 +174,6 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.7), 0 0 15px rgba(223, 177, 91, 0.25);
     z-index: 2500;
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
@@ -204,26 +197,23 @@
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.25s ease;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
   }
 
   .floating-audio-btn:hover .audio-tooltip {
     opacity: 1;
   }
 
-  /* HEADER RESPONSIVE */
+  /* HEADER CRO */
   header {
     width: 100%;
-    max-width: 1100px;
+    max-width: 1050px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 16px;
+    margin-bottom: 20px;
     border-bottom: 1px solid var(--line);
-    padding-bottom: 12px;
+    padding-bottom: 14px;
     position: relative;
-    flex-wrap: wrap;
-    gap: 10px;
     z-index: 100;
   }
 
@@ -240,7 +230,6 @@
     fill: none;
     stroke: var(--gold);
     stroke-width: 1.5;
-    filter: drop-shadow(0 0 8px rgba(223, 177, 91, 0.4));
   }
 
   .logo-text {
@@ -248,35 +237,32 @@
     font-size: 22px;
     letter-spacing: 0.12em;
     color: var(--gold);
-    text-shadow: 0 2px 10px rgba(223, 177, 91, 0.2);
   }
 
   .header-right {
     display: flex;
     align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
+    gap: 12px;
   }
 
   .profile-badge {
-    background: linear-gradient(135deg, rgba(223, 177, 91, 0.2) 0%, rgba(12, 11, 18, 0.95) 100%);
-    border: 1px solid var(--gold);
-    padding: 5px 12px;
+    background: rgba(223, 177, 91, 0.08);
+    border: 1px solid var(--gold-dim);
+    padding: 6px 14px;
     border-radius: 20px;
     font-size: 11.5px;
     color: var(--text-main);
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
     text-decoration: none;
     transition: all 0.3s ease;
     cursor: pointer;
-    box-shadow: 0 0 15px rgba(223, 177, 91, 0.2);
   }
 
   .profile-badge:hover {
-    border-color: var(--gold-light);
-    box-shadow: 0 0 20px rgba(223, 177, 91, 0.35);
+    border-color: var(--gold);
+    background: rgba(223, 177, 91, 0.15);
   }
 
   .profile-crystals {
@@ -291,7 +277,7 @@
     width: 1px;
     height: 10px;
     background: var(--gold);
-    opacity: 0.6;
+    opacity: 0.5;
   }
 
   .profile-user-info {
@@ -301,10 +287,10 @@
     font-weight: 500;
   }
 
-  /* MENÚ HAMBURGUESA Y DESPLEGABLE HOMOGÉNEO */
+  /* MENÚ HAMBURGUESA */
   .hamburger-btn {
-    background: rgba(12, 11, 18, 0.92);
-    border: 1px solid var(--gold);
+    background: var(--surface);
+    border: 1px solid var(--gold-dim);
     color: var(--gold);
     width: 38px;
     height: 38px;
@@ -316,18 +302,16 @@
     gap: 5px;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 0 10px rgba(223, 177, 91, 0.15);
   }
   .hamburger-btn:hover {
     background: var(--surface-hover);
-    border-color: var(--gold-light);
+    border-color: var(--gold);
   }
   .hamburger-line {
     width: 18px;
     height: 2px;
     background: var(--gold);
     border-radius: 2px;
-    transition: all 0.3s ease;
   }
 
   .header-menu-wrapper {
@@ -337,18 +321,16 @@
 
   .nav-dropdown-menu {
     position: absolute;
-    top: 50px;
+    top: 46px;
     right: 0;
-    background-color: #08070b !important;
-    backdrop-filter: none !important;
-    border: 1.5px solid var(--gold);
-    border-radius: 10px;
-    width: 245px;
-    padding: 8px 0;
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.95), 0 0 30px rgba(0, 0, 0, 0.9);
+    background-color: #0c0b12 !important;
+    border: 1px solid var(--gold);
+    border-radius: 8px;
+    width: 230px;
+    padding: 6px 0;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.85);
     display: none;
     flex-direction: column;
-    z-index: 99999;
   }
 
   .nav-dropdown-menu.active {
@@ -358,219 +340,106 @@
   .nav-dropdown-menu a {
     color: var(--text-main);
     text-decoration: none;
-    font-size: 11.5px;
+    font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 0.12em;
-    padding: 11px 20px;
+    padding: 10px 18px;
     transition: background 0.2s, color 0.2s;
     display: block;
-    background-color: #08070b !important;
   }
 
   .nav-dropdown-menu a:hover {
-    background: rgba(223, 177, 91, 0.15) !important;
-    color: var(--gold);
+    background: rgba(223, 177, 91, 0.12) !important;
+    color: var(--gold-light);
   }
 
-  /* MODALES GENERALES */
-  .auth-modal-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(5, 5, 8, 0.88);
-    backdrop-filter: blur(8px);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 3000;
-    padding: 16px;
-  }
-
-  .auth-modal-card {
-    background: radial-gradient(circle at top, #141220 0%, var(--surface) 80%);
-    border: 1px solid var(--gold);
-    border-radius: 14px;
-    width: 100%;
-    max-width: 440px;
-    padding: 30px;
-    box-shadow: 0 30px 60px rgba(0,0,0,0.9), 0 0 40px rgba(223, 177, 91, 0.12);
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    position: relative;
-    max-height: 90vh;
-    overflow-y: auto;
-  }
-
-  .auth-close-btn {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    background: none;
-    border: none;
-    color: var(--text-muted);
-    font-size: 18px;
-    cursor: pointer;
-  }
-  .auth-close-btn:hover { color: var(--gold); }
-
-  .auth-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 26px;
-    color: var(--gold);
-    margin: 0;
-    text-align: center;
-  }
-
-  .auth-subtitle {
-    font-size: 12.5px;
-    color: var(--text-muted);
-    text-align: center;
-    margin: 0 0 5px;
-    line-height: 1.5;
-  }
-
-  .auth-input-group {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-  }
-
-  .auth-input-group label {
-    font-size: 10.5px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-  }
-
-  .auth-input, .auth-textarea, .auth-select {
-    background: rgba(0,0,0,0.4);
-    border: 1px solid var(--line);
-    border-radius: 6px;
-    padding: 11px;
-    color: var(--text-main);
-    font-size: 13px;
-    outline: none;
-    font-family: 'Inter', sans-serif;
-  }
-  .auth-input:focus, .auth-textarea:focus, .auth-select:focus { border-color: var(--gold); }
-  
-  .auth-textarea { resize: vertical; min-height: 80px; }
-
-  .auth-msg { font-size: 12px; text-align: center; min-height: 18px; }
-
-  .auth-submit-btn {
-    background: var(--gold);
-    color: var(--bg);
-    border: none;
-    font-size: 11.5px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    font-weight: 600;
-    padding: 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background 0.3s;
-  }
-  .auth-submit-btn:hover { background: var(--gold-light); }
-
-  .auth-switch-mode {
-    background: none;
-    border: none;
-    color: var(--text-muted);
-    font-size: 12px;
-    cursor: pointer;
-    text-decoration: underline;
-    text-align: center;
-  }
-  .auth-switch-mode:hover { color: var(--gold); }
-
-  /* HERO COMPACTO Y BOTONES ADICIONALES EN EL BANNER */
+  /* HERO MINIMALISTA & ORIENTADO A CONVERSIÓN */
   .hero-container {
     text-align: center;
-    max-width: 700px;
-    margin-bottom: 14px;
+    max-width: 650px;
+    margin-bottom: 20px;
     padding: 0 8px;
     z-index: 2;
   }
 
   .arkanica-eyebrow {
     font-size: 9.5px;
-    letter-spacing: 0.25em;
+    letter-spacing: 0.3em;
     text-transform: uppercase;
-    color: var(--gold-dim);
-    margin-bottom: 5px;
-    font-weight: 500;
+    color: var(--gold);
+    margin-bottom: 8px;
+    font-weight: 600;
   }
 
   .arkanica-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 25px;
+    font-size: 28px;
     font-weight: 400;
     color: var(--text-main);
-    margin: 0 0 4px;
-    line-height: 1.2;
+    margin: 0 0 6px;
+    line-height: 1.15;
   }
 
   .arkanica-sub {
-    font-size: 11.5px;
+    font-size: 12px;
     color: var(--text-muted);
     font-weight: 300;
-    margin: 0 0 14px;
+    margin: 0;
   }
 
-  .banner-quick-actions {
+  /* BOTONES DISIMULADOS DE ACCESO RÁPIDO */
+  .quick-links-bar {
     display: flex;
     justify-content: center;
-    gap: 10px;
+    gap: 12px;
+    margin-top: 12px;
+    margin-bottom: 4px;
+    z-index: 2;
     flex-wrap: wrap;
-    margin-top: 10px;
   }
 
-  .banner-action-pill {
-    background: rgba(223, 177, 91, 0.08);
-    border: 1px solid var(--gold-dim);
-    color: var(--gold-light);
-    font-size: 10.5px;
+  .quick-link-pill {
+    background: rgba(12, 11, 18, 0.6);
+    border: 1px solid rgba(223, 177, 91, 0.25);
+    color: var(--text-muted);
+    font-size: 10px;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    padding: 7px 14px;
+    padding: 6px 14px;
     border-radius: 20px;
     text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    transition: all 0.3s ease;
-    cursor: pointer;
-  }
-  .banner-action-pill:hover {
-    background: var(--gold);
-    color: var(--bg);
-    border-color: var(--gold);
+    transition: all 0.25s ease;
   }
 
-  /* DESPLEGABLES DE CATEGORÍA Y TIRADA */
+  .quick-link-pill:hover {
+    border-color: var(--gold);
+    color: var(--gold-light);
+    background: rgba(223, 177, 91, 0.1);
+  }
+
+  /* CONTENEDOR DE SELECTORES */
   .spread-dropdown-container {
     width: 100%;
-    max-width: 1100px;
-    margin-bottom: 14px;
+    max-width: 1050px;
+    margin-bottom: 16px;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    gap: 12px;
     z-index: 2;
   }
 
   .spread-select-wrapper {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 5px;
   }
 
   .spread-select-label {
     font-size: 9.5px;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
     color: var(--gold-dim);
-    font-weight: 500;
+    font-weight: 600;
   }
 
   .mobile-spread-select {
@@ -581,27 +450,30 @@
     font-family: 'Inter', sans-serif;
     font-size: 11.5px;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
-    padding: 10px 12px;
-    border-radius: 6px;
+    letter-spacing: 0.05em;
+    padding: 11px 14px;
+    border-radius: 8px;
     outline: none;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    transition: border-color 0.2s;
   }
 
-  /* TARJETA INFORMATIVA CON BORDES DIFUMINADOS / ATMÓSFERA FLOTANTE */
+  .mobile-spread-select:focus {
+    border-color: var(--gold);
+  }
+
+  /* TARJETA INFORMATIVA */
   .spread-info-card {
     width: 100%;
-    max-width: 1100px;
-    background: linear-gradient(135deg, rgba(16, 15, 24, 0.9) 0%, rgba(8, 7, 12, 0.95) 100%);
+    max-width: 1050px;
+    background: linear-gradient(135deg, rgba(14, 13, 20, 0.9) 0%, rgba(6, 5, 10, 0.95) 100%);
     border: 1px solid var(--line);
     border-left: 3px solid var(--gold);
-    border-radius: 12px;
-    padding: 18px 22px;
+    border-radius: 10px;
+    padding: 18px 20px;
     margin-bottom: 16px;
     display: flex;
     flex-direction: column;
     gap: 8px;
-    box-shadow: 0 20px 45px rgba(0,0,0,0.6), inset 0 0 25px rgba(223, 177, 91, 0.02);
     position: relative;
     z-index: 2;
   }
@@ -632,7 +504,7 @@
   .spread-positions-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
+    gap: 10px;
     border-top: 1px solid rgba(223, 177, 91, 0.15);
     padding-top: 10px;
     margin-top: 4px;
@@ -643,13 +515,12 @@
   }
 
   .position-item {
-    font-size: 11px;
+    font-size: 10.5px;
     color: var(--text-muted);
     line-height: 1.35;
     padding: 6px 8px;
     border-radius: 6px;
-    transition: all 0.3s ease;
-    background: rgba(0,0,0,0.2);
+    background: rgba(0,0,0,0.25);
   }
 
   .position-item.active-position {
@@ -661,24 +532,23 @@
   .position-item strong {
     color: var(--gold-light);
     font-family: 'Cormorant Garamond', serif;
-    font-size: 12.5px;
+    font-size: 12px;
     display: block;
     margin-bottom: 2px;
   }
 
-  /* MESA DE LECTURA FLOTANTE (DARK MODE ENVOLVENTE) */
+  /* MESA DE LECTURA */
   .table-container {
     width: 100%;
-    max-width: 1100px;
-    background: linear-gradient(180deg, rgba(14, 13, 20, 0.85) 0%, rgba(6, 5, 10, 0.95) 100%);
+    max-width: 1050px;
+    background: linear-gradient(180deg, rgba(12, 11, 18, 0.85) 0%, rgba(5, 5, 8, 0.95) 100%);
     border: 1px solid var(--line);
-    border-radius: 14px;
-    padding: 28px 18px;
+    border-radius: 12px;
+    padding: 24px 16px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    box-shadow: 0 30px 60px rgba(0,0,0,0.7), inset 0 0 40px rgba(0,0,0,0.8);
-    margin-bottom: 20px;
+    margin-bottom: 24px;
     position: relative;
     z-index: 2;
   }
@@ -688,9 +558,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
     gap: 12px;
-    min-height: 160px;
+    min-height: 150px;
     position: relative;
     touch-action: pan-y;
   }
@@ -698,40 +568,49 @@
   .deck-instruction {
     font-family: 'Cormorant Garamond', serif;
     font-size: 16px;
-    color: var(--gold);
+    color: var(--gold-light);
     letter-spacing: 0.05em;
     font-style: italic;
     text-align: center;
+    background: rgba(223, 177, 91, 0.08);
+    border: 1px solid var(--gold-dim);
+    padding: 7px 16px;
+    border-radius: 20px;
+    animation: pulseInstruction 2s infinite ease-in-out;
+  }
+
+  @keyframes pulseInstruction {
+    0% { transform: scale(1); border-color: var(--gold-dim); }
+    50% { transform: scale(1.02); border-color: var(--gold); }
+    100% { transform: scale(1); border-color: var(--gold-dim); }
   }
 
   .fan-container {
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    height: 140px;
+    height: 130px;
     width: 100%;
-    max-width: 700px;
+    max-width: 650px;
     position: relative;
     perspective: 1000px;
   }
 
   .fan-card {
-    width: 65px;
-    height: 110px;
+    width: 60px;
+    height: 105px;
     background: url('assets/reverse.jpg') center/cover no-repeat #08070b;
-    border: 1px solid var(--gold-dim);
+    border: 1px solid var(--gold);
     border-radius: 6px;
     position: absolute;
     cursor: pointer;
     transform-origin: bottom center;
-    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+    transition: transform 0.25s ease, border-color 0.25s ease;
   }
 
   .fan-card:hover {
-    transform: translateY(-18px) rotate(0deg) scale(1.12) !important;
-    border-color: var(--gold);
-    box-shadow: 0 15px 30px rgba(223, 177, 91, 0.25);
+    transform: translateY(-20px) rotate(0deg) scale(1.12) !important;
+    border-color: var(--gold-light);
     z-index: 100;
   }
 
@@ -741,14 +620,14 @@
     gap: 16px;
     align-items: start;
     perspective: 1800px;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
     width: 100%;
     justify-items: center;
   }
 
   .arkanica-table.grid-10 {
     grid-template-columns: repeat(5, 1fr);
-    gap: 10px;
+    gap: 8px;
   }
 
   .arkanica-slot {
@@ -760,24 +639,22 @@
   }
 
   .arkanica-card {
-    width: 110px;
-    height: 180px;
+    width: 105px;
+    height: 170px;
     position: relative;
     cursor: pointer;
     transform-style: preserve-3d;
     transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.6);
     border-radius: 8px;
   }
 
   .arkanica-slot.active-slot .arkanica-card {
-    box-shadow: 0 0 20px rgba(223, 177, 91, 0.5);
     border: 1px solid var(--gold);
   }
 
   .arkanica-table.grid-10 .arkanica-card {
-    width: 85px;
-    height: 140px;
+    width: 80px;
+    height: 130px;
   }
 
   .arkanica-card.flipped {
@@ -821,7 +698,6 @@
     text-transform: uppercase;
     color: var(--text-muted);
     text-align: center;
-    max-width: 110px;
   }
 
   .arkanica-slot.active-slot .arkanica-slot-label {
@@ -830,26 +706,25 @@
   }
 
   .arkanica-hint {
-    font-size: 13px;
+    font-size: 12.5px;
     color: var(--gold);
     opacity: 0.9;
     font-style: italic;
     font-family: 'Cormorant Garamond', serif;
-    min-height: 22px;
+    min-height: 20px;
     text-align: center;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
   }
 
-  /* CAJA DE SÍNTESIS MAGISTRAL FLOTANTE */
+  /* CAJA DE SÍNTESIS MAGISTRAL */
   .master-interpretation-box {
     width: 100%;
-    background: linear-gradient(135deg, rgba(28, 22, 38, 0.9) 0%, rgba(10, 9, 15, 0.95) 100%);
-    border: 1px solid var(--gold);
+    background: linear-gradient(135deg, rgba(25, 20, 35, 0.95) 0%, rgba(10, 9, 15, 0.98) 100%);
+    border: 1.5px solid var(--gold);
     border-radius: 10px;
-    padding: 24px;
-    margin-top: 14px;
+    padding: 22px;
+    margin-top: 12px;
     display: none;
-    box-shadow: 0 20px 45px rgba(0,0,0,0.6);
   }
 
   .master-interpretation-box.active {
@@ -858,9 +733,9 @@
 
   .master-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 20px;
+    font-size: 19px;
     color: var(--gold);
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -877,10 +752,10 @@
   }
 
   .master-text {
-    font-size: 13.5px;
+    font-size: 13px;
     color: var(--text-main);
-    line-height: 1.7;
-    margin: 0 0 16px;
+    line-height: 1.65;
+    margin: 0 0 14px;
     font-style: italic;
   }
 
@@ -889,7 +764,7 @@
     justify-content: flex-end;
     align-items: center;
     border-top: 1px solid rgba(223, 177, 91, 0.2);
-    padding-top: 14px;
+    padding-top: 12px;
   }
 
   .arkanica-reset {
@@ -906,33 +781,57 @@
   }
   .arkanica-reset:hover { border-color: var(--gold); color: var(--gold); }
 
-  /* TARJETAS DE SECCIÓN DIFUMINADAS Y FLOTANTES */
-  .section-card {
+  /* --- SECCIONES DE CONVERSIÓN (CRO OPTIMIZADAS) --- */
+  .cro-section-container {
     width: 100%;
-    max-width: 1100px;
-    background: linear-gradient(135deg, rgba(14, 13, 20, 0.85) 0%, rgba(6, 5, 10, 0.95) 100%);
+    max-width: 1050px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .cro-card {
+    background: linear-gradient(135deg, rgba(14, 13, 20, 0.9) 0%, rgba(6, 5, 10, 0.95) 100%);
     border: 1px solid var(--line);
     border-radius: 12px;
     padding: 24px;
-    margin-bottom: 16px;
-    box-shadow: 0 20px 45px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: left;
     position: relative;
-    z-index: 2;
+    overflow: hidden;
   }
 
-  .section-card h3 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 20px;
-    margin-top: 0;
+  .cro-card.featured {
+    grid-column: 1 / -1;
+    border: 1.5px solid var(--gold);
+    background: linear-gradient(135deg, rgba(22, 17, 32, 0.95) 0%, rgba(8, 7, 12, 0.98) 100%);
+  }
+
+  .cro-eyebrow {
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
     margin-bottom: 6px;
-    color: var(--text-main);
+    font-weight: 600;
   }
 
-  .section-card p {
-    font-size: 12.5px;
+  .cro-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 21px;
+    color: var(--text-main);
+    margin: 0 0 8px;
+    line-height: 1.25;
+  }
+
+  .cro-desc {
+    font-size: 12px;
     color: var(--text-muted);
     line-height: 1.5;
-    margin-bottom: 16px;
+    margin: 0 0 16px;
   }
 
   .action-btn {
@@ -940,142 +839,96 @@
     color: var(--bg);
     border: none;
     font-size: 10.5px;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
     font-weight: 600;
-    padding: 11px 22px;
+    padding: 12px 22px;
     border-radius: 6px;
     cursor: pointer;
-    transition: background 0.3s;
-  }
-  .action-btn:hover { background: var(--gold-light); }
-
-  /* ESTILOS OPTIMIZADOS PARA LA SECCIÓN "QUIÉN SOY / LA GUÍA" */
-  .about-grid {
-    display: grid;
-    grid-template-columns: 150px 1fr;
-    gap: 20px;
-    align-items: center;
-  }
-
-  .about-avatar-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    width: 100%;
-  }
-
-  .about-avatar-circle {
-    width: 110px;
-    height: 110px;
-    border-radius: 50%;
-    border: 2px solid var(--gold);
-    overflow: hidden;
-    background: var(--surface-hover);
-    box-shadow: 0 0 20px rgba(223, 177, 91, 0.25);
-    display: flex;
+    transition: all 0.25s ease;
+    text-decoration: none;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: 8px;
+    box-shadow: 0 4px 15px rgba(223, 177, 91, 0.25);
+  }
+  
+  .action-btn:hover { 
+    background: var(--gold-light); 
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(223, 177, 91, 0.35);
   }
 
-  .about-avatar-circle img {
-    width: 100%;
-    height: 100%;
+  /* ESTILO AUTORA & ESTADÍSTICAS CRO */
+  .about-flex {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 14px;
+  }
+
+  .about-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 2px solid var(--gold);
     object-fit: cover;
-    object-position: center;
-    display: block;
+    flex-shrink: 0;
   }
 
-  .about-avatar-name {
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(223, 177, 91, 0.2);
+    border-radius: 8px;
+    padding: 14px 10px;
+    margin: 16px 0;
+    text-align: center;
+  }
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .stat-number {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 16px;
+    font-size: 21px;
+    font-weight: 600;
     color: var(--gold-light);
     letter-spacing: 0.05em;
   }
 
-  /* ESTILOS PARA TESTIMONIOS (VALIDACIÓN SOCIAL) */
-  .testimonials-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 14px;
-    margin-bottom: 24px;
-  }
-
-  .testimonial-card {
-    background: rgba(0,0,0,0.3);
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    padding: 14px 16px;
-    font-size: 12px;
-    color: var(--text-main);
-    line-height: 1.5;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .testimonial-stars {
-    color: var(--gold);
-    font-size: 13px;
-    letter-spacing: 2px;
-  }
-
-  .testimonial-author {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 13px;
-    color: var(--gold-light);
-    font-style: italic;
-  }
-
-  /* DESTELLO DORADO LENTO */
-  .gold-shimmer-card {
-    position: relative;
-    overflow: hidden;
-  }
-  .gold-shimmer-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -150%;
-    width: 150%;
-    height: 100%;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(223, 177, 91, 0.08),
-      rgba(243, 216, 157, 0.15),
-      rgba(223, 177, 91, 0.08),
-      transparent
-    );
-    transform: skewX(-20deg);
-    animation: shimmerEffect 12s infinite ease-in-out;
-    pointer-events: none;
-  }
-
-  @keyframes shimmerEffect {
-    0% { left: -150%; }
-    25% { left: 150%; }
-    100% { left: 150%; }
+  .stat-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 8.5px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 500;
+    line-height: 1.3;
   }
 
   @media (max-width: 768px) {
     body { padding: 12px 8px 40px 8px; }
-    .arkanica-title { font-size: 20px; }
-    .arkanica-card { width: 75px; height: 125px; }
-    .arkanica-table.grid-10 .arkanica-card { width: 55px; height: 95px; }
-    .fan-card { width: 45px; height: 80px; }
-    .spread-positions-grid { grid-template-columns: 1fr; gap: 8px; }
+    .arkanica-title { font-size: 22px; }
+    .arkanica-card { width: 70px; height: 115px; }
+    .arkanica-table.grid-10 .arkanica-card { width: 50px; height: 85px; }
+    .fan-card { width: 42px; height: 72px; }
+    .spread-positions-grid { grid-template-columns: 1fr; gap: 6px; }
     .spread-positions-grid.grid-10 { grid-template-columns: repeat(2, 1fr); }
-    .about-grid { grid-template-columns: 1fr; gap: 14px; text-align: center; justify-items: center; }
-    .about-avatar-circle { width: 95px; height: 95px; }
-    .testimonials-grid { grid-template-columns: 1fr; }
+    .spread-dropdown-container, .cro-section-container { grid-template-columns: 1fr; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
   }
 </style>
 </head>
 <body>
 
-<!-- VELO DEL UMBRAL (INMERSIÓN INICIAL CON AUTO-ENTRADA A LOS 5 SEGUNDOS) -->
+<!-- VELO DEL UMBRAL OPTIMIZADO -->
 <div class="threshold-overlay" id="thresholdOverlay">
   <div class="threshold-particles"></div>
   <div class="threshold-content">
@@ -1097,35 +950,11 @@
   <source src="" type="audio/mpeg">
 </audio>
 
-<!-- BOTÓN FLOTANTE DE MÚSICA (ESQUINA INFERIOR IZQUIERDA) -->
+<!-- BOTÓN FLOTANTE DE AUDIO -->
 <button class="floating-audio-btn" id="floatingAudioBtn" onclick="toggleAudioTrack()" title="Cambiar ambiente musical">
   <span id="audioIcon">🎵</span>
   <span class="audio-tooltip" id="audioTooltip">Silencio</span>
 </button>
-
-<!-- MODAL DE ACCESO / BIENVENIDA DE PRIMERA VEZ -->
-<div class="auth-modal-overlay" id="authModal" style="display: none;">
-  <div class="auth-modal-card">
-    <button class="auth-close-btn" onclick="closeAuthModal()">✕</button>
-    <h2 class="auth-title" id="authModalTitle">Despierta tu Claridad</h2>
-    <p class="auth-subtitle" id="authModalSub">Crea tu cuenta gratuita ahora para sincronizar tus cristales en la nube y desbloquear el poder completo de los arcanos.</p>
-    
-    <div class="auth-input-group">
-      <label>Correo Electrónico</label>
-      <input type="email" id="authEmail" class="auth-input" placeholder="tu@correo.com">
-    </div>
-
-    <div class="auth-input-group">
-      <label>Contraseña</label>
-      <input type="password" id="authPassword" class="auth-input" placeholder="••••••••">
-    </div>
-
-    <div class="auth-msg" id="authMsg" style="color: var(--gold);"></div>
-
-    <button class="auth-submit-btn" id="authSubmitBtn" onclick="handleAuthSubmit()">Comenzar con 10 Cristales</button>
-    <button class="auth-switch-mode" id="authSwitchBtn" onclick="toggleAuthMode()">¿Ya tienes cuenta? Inicia sesión aquí</button>
-  </div>
-</div>
 
 <header>
   <a href="#" class="logo">
@@ -1139,17 +968,17 @@
 
   <div class="header-right">
     <!-- Insignia de Cristales / Perfil -->
-    <div class="profile-badge" id="profileBadge" onclick="openAuthModal()" title="Gestionar cuenta y cristales">
+    <div class="profile-badge" id="profileBadge" onclick="handleAccountClick()" title="Gestionar cuenta y cristales">
       <div class="profile-crystals">
         <span>💎</span> <strong id="headerCrystalCount">10</strong>
       </div>
       <div class="profile-divider"></div>
       <div class="profile-user-info">
-        <span>✦</span> <span id="authBadgeLabel">Acceder</span>
+        <span>✦</span> <span id="authBadgeLabel">Mi Cuenta</span>
       </div>
     </div>
 
-    <!-- Botón de Hamburguesa y Menú Desplegable Uniforme -->
+    <!-- Menú Hamburguesa optimizado -->
     <div class="header-menu-wrapper">
       <button class="hamburger-btn" onclick="toggleNavMenu(event)" title="Menú de navegación">
         <span class="hamburger-line"></span>
@@ -1158,30 +987,31 @@
       </button>
 
       <div class="nav-dropdown-menu" id="navDropdownMenu">
-        <a href="#mesa" onclick="closeNavMenu()">Lecturas</a>
-        <a href="blog.html" onclick="closeNavMenu()">✦ Diario de Arkanica</a>
-        <a href="tienda.html" onclick="closeNavMenu()">🛍️ Tienda Mística</a>
-        <a href="#autor" onclick="closeNavMenu()">Guía</a>
-        <a href="#reservas" onclick="closeNavMenu()">Sesiones privadas</a>
+        <a href="comunidad-privada.html" onclick="closeNavMenu()">Comunidad Privada</a>
+        <a href="sesiones-privadas.html" onclick="closeNavMenu()">Sesiones Privadas</a>
+        <a href="tienda.html" onclick="closeNavMenu()">Tienda Mística</a>
+        <a href="blog.html" onclick="closeNavMenu()">Diario de Arkanica</a>
+        <a href="ente-superior/ente-superior.html" onclick="closeNavMenu()">Ente Superior</a>
       </div>
     </div>
   </div>
 </header>
 
-<!-- BANNER PRINCIPAL CON ACCESOS DIRECTOS ADAPTADOS A MÓVILES -->
+<!-- HERO COMPACTO CRO -->
 <div class="hero-container">
-  <div class="arkanica-eyebrow">Tu espacio de calma y claridad</div>
+  <div class="arkanica-eyebrow">✦ Tu espacio de claridad interior ✦</div>
   <h1 class="arkanica-title">Elige qué te gustaría consultar hoy</h1>
   <p class="arkanica-sub">Disfruta de cada tirada gratis una vez al día (3 cristales adicionales por repetición).</p>
   
-  <div class="banner-quick-actions">
-    <a href="#reservas" class="banner-action-pill">🎥 Sesiones privadas</a>
-    <a href="blog.html" class="banner-action-pill">✦ Diario de Arkanica</a>
-    <a href="tienda.html" class="banner-action-pill">🛍️ Tienda Mística</a>
+  <!-- BOTONES DISIMULADOS DE ACCESO RÁPIDO -->
+  <div class="quick-links-bar">
+    <a href="tienda.html" class="quick-link-pill">🛍️ Tienda Mística</a>
+    <a href="comunidad-privada.html" class="quick-link-pill">💬 Comunidad VIP</a>
+    <a href="blog.html" class="quick-link-pill">📖 Diario de Arkanica</a>
   </div>
 </div>
 
-<!-- CADENA DE DESPLEGABLES CON MICROCOPYWRITING ARCANO -->
+<!-- CADENA DE DESPLEGABLES -->
 <div class="spread-dropdown-container">
   <div class="spread-select-wrapper">
     <label class="spread-select-label">Naturaleza de la Consulta</label>
@@ -1196,12 +1026,12 @@
   <div class="spread-select-wrapper" id="spreadSelectorWrapper">
     <label class="spread-select-label" id="spreadLabelText">Tu Consulta Personalizada</label>
     <div id="dynamicSpreadContainer">
-      <input type="text" id="userCustomQueryInput" class="mobile-spread-select" placeholder="Escribe aquí tu pregunta o dilema de hoy..." oninput="userCustomQuery = this.value">
+      <input type="text" id="userCustomQueryInput" class="mobile-spread-select" placeholder="¿Qué bloquea mi energía hoy...?" oninput="userCustomQuery = this.value">
     </div>
   </div>
 </div>
 
-<!-- Tarjeta Informativa de la Tirada con Frase Poética -->
+<!-- Tarjeta Informativa de la Tirada -->
 <div class="spread-info-card" id="spreadInfoCard">
   <h3 class="spread-info-title" id="infoTitle">Cargando...</h3>
   <p class="spread-info-desc" id="infoDesc">Cargando...</p>
@@ -1211,133 +1041,109 @@
 
 <div class="table-container" id="mesa">
   <div class="deck-section" id="deckSection">
-    <div class="deck-instruction" id="deckInstruction">Elige una carta del abanico para revelar la primera posición</div>
+    <div class="deck-instruction" id="deckInstruction">✦ Haz clic en el abanico para sacar la carta ✦</div>
     <div class="fan-container" id="fanContainer"></div>
   </div>
 
   <div class="arkanica-table" id="table"></div>
   <p class="arkanica-hint" id="hint">Selecciona una carta del abanico superior</p>
 
-  <!-- CAJA DE SÍNTESIS MAGISTRAL OPTIMIZADA -->
+  <!-- CAJA DE SÍNTESIS MAGISTRAL -->
   <div class="master-interpretation-box" id="masterBox">
     <div class="master-title"><span class="spinner-symbol" id="masterSymbol">✦</span> Síntesis Magistral del Oráculo</div>
     <p class="master-text" id="masterTextContent">✦ Sintonizando los arcanos mayores y menores con el latido del universo...</p>
     <div class="master-cta">
-      <button class="action-btn" onclick="goToPrivateSession()">Profundizar con el Ente Superior</button>
+      <button class="action-btn" onclick="goToSesionesPrivadas()">Profundizar en Sesiones Privadas</button>
     </div>
   </div>
 
-  <!-- BOTÓN DE REINICIO CON LENGUAJE ARCANO -->
   <button class="arkanica-reset" id="reset" style="margin-top: 14px;">Volver a consultar al destino</button>
 </div>
 
-<div class="section-card" id="autor">
-  <h3>¿Tienes una duda muy concreta o personal?</h3>
-  <p>Si las tiradas generales te han dado pistas pero necesitas profundizar con una sesión interactiva guiada por el oráculo, accede al ente superior desde aqui.</p>
-  <button class="action-btn" onclick="goToPrivateSession()">Acceso al Ente Superior</button>
-</div>
-
-<!-- SECCIÓN QUIÉN SOY / LA GUÍA -->
-<div class="section-card gold-shimmer-card" id="quien-soy">
-  <div class="about-grid">
-    <div class="about-avatar-wrapper">
-      <div class="about-avatar-circle">
-        <img src="assets/tarotista.jpg" alt="Andrea - Creadora de Arkanica" loading="lazy">
+<!-- BLOQUES DE CONVERSIÓN CRO (GRID LIMPIO DE 3 ACCIONES CLAVE) -->
+<div class="cro-section-container">
+  
+  <!-- 1. ACOMPAÑAMIENTO CON ANDREA (DESTACADO PRINCIPAL + ESTADÍSTICAS CRO) -->
+  <div class="cro-card featured" id="autor">
+    <div class="about-flex">
+      <img src="assets/tarotista.jpg" alt="Andrea - Creadora de Arkanica" class="about-avatar" loading="lazy">
+      <div>
+        <div class="cro-eyebrow">✦ Acompañamiento Personalizado ✦</div>
+        <h3 class="cro-title" style="margin-bottom: 2px;">¿Necesitas una lectura a medida y un espacio seguro?</h3>
+        <p style="font-size: 11.5px; color: var(--gold-light); font-style: italic; margin: 0;">"Cuando una duda frena tu energía, necesitas claridad absoluta." — Andrea</p>
       </div>
-      <div class="about-avatar-name">Andrea</div>
-      <div style="font-size: 9.5px; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase;">Creadora de Arkanica</div>
+    </div>
+    <p class="cro-desc">
+      Si tus tiradas requieren una mirada humana, experta y profundamente empática, reserva una sesión privada directamente conmigo para despejar cada bloqueo sin filtros.
+    </p>
+
+    <!-- BLOQUE DE ESTADÍSTICAS DE CONFIANZA ACTUALIZADO -->
+    <div class="stats-grid">
+      <div class="stat-item">
+        <span class="stat-number">94</span>
+        <span class="stat-label">Mujeres ayudadas</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">5 AÑOS</span>
+        <span class="stat-label">Experiencia</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">24 - 48H</span>
+        <span class="stat-label">Respuesta garantizada</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">100%</span>
+        <span class="stat-label">Discreción</span>
+      </div>
+    </div>
+
+    <div>
+      <a href="sesiones-privadas.html" class="action-btn">Reservar Sesión Privada con Andrea ➔</a>
+    </div>
+  </div>
+
+  <!-- 2. ENTE SUPERIOR -->
+  <div class="cro-card">
+    <div>
+      <div class="cro-eyebrow">✦ Inteligencia Mística Avanzada ✦</div>
+      <h3 class="cro-title">Diálogo con el Ente Superior</h3>
+      <p class="cro-desc">
+        ¿Una encrucijada compleja que exige una respuesta definitiva? Conecta con una sesión interactiva diseñada para descifrar tu destino.
+      </p>
     </div>
     <div>
-      <div style="font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 3px;">Quién Soy / La Guía</div>
-      <h3 style="margin-top: 0; font-size: 18px; margin-bottom: 6px;">¿Quién está al otro lado?</h3>
-      <p style="margin-bottom: 8px; line-height: 1.5; font-size: 12px;">
-        Hola, soy Andrea. Creo firmemente que las respuestas a nuestras mayores encrucijadas no están ocultas en el azar, sino en la capacidad de mirar hacia dentro con la perspectiva adecuada. He diseñado Arkanica para ofrecerte un espacio de calma, sin juicios y con una precisión milimétrica.
+      <button class="action-btn" onclick="goToEnteSuperior()" style="width: 100%;">Cruzar este Portal</button>
+    </div>
+  </div>
+
+  <!-- 3. COMUNIDAD VIP -->
+  <div class="cro-card">
+    <div>
+      <div class="cro-eyebrow">✦ Círculo de Claridad ✦</div>
+      <h3 class="cro-title">Comunidad VIP en WhatsApp</h3>
+      <p class="cro-desc">
+        Comparte interpretaciones y camina rodeado de almas afines en un espacio íntimo, exclusivo y guiado de cerca.
       </p>
-      <p style="margin-bottom: 0; line-height: 1.5; font-size: 12px; color: var(--gold-light);">
-        <em>"Cuando una duda frena tu energía, no necesitas más opiniones externas; necesitas claridad absoluta."</em>
-      </p>
     </div>
-  </div>
-</div>
-
-<!-- SECCIÓN DE SESIONES PRIVADAS CON VALIDACIÓN SOCIAL Y PLAZO DE ENTREGA -->
-<div class="section-card gold-shimmer-card" id="reservas">
-  <div style="max-width: 650px; margin: 0 auto; text-align: center; margin-bottom: 20px;">
-    <div style="font-size: 9.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 4px;">Exclusivo & Confidencial</div>
-    <h3 style="margin-top: 0; font-family: 'Cormorant Garamond', serif; font-size: 24px; color: var(--gold);">Sesiones privadas</h3>
-    <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.6; margin-bottom: 0;">
-      ¿Atrapado/a en una encrucijada y necesitas una guía íntima? Detalla tu caso a continuación y recibe un análisis profundo en vídeo privado exclusivo para ti.
-    </p>
-  </div>
-
-  <!-- TESTIMONIOS / VALIDACIÓN SOCIAL -->
-  <div class="testimonials-grid" style="max-width: 650px; margin: 0 auto 20px auto;">
-    <div class="testimonial-card">
-      <div class="testimonial-stars">★★★★★</div>
-      <p style="margin: 0; font-style: italic;">«Ver el vídeo me dio una paz tremenda. Acertó de pleno en detalles de mi situación que no había mencionado en ningún sitio.»</p>
-      <div class="testimonial-author">— Lucía M.</div>
-    </div>
-    <div class="testimonial-card">
-      <div class="testimonial-stars">★★★★★</div>
-      <p style="margin: 0; font-style: italic;">«La claridad con la que desgrana el problema vale cada céntimo. Te habla directo al alma y con los siguientes pasos claros.»</p>
-      <div class="testimonial-author">— Carlos R.</div>
+    <div>
+      <a href="comunidad-privada.html" class="action-btn" style="width: 100%;">Unirme al Círculo</a>
     </div>
   </div>
 
-  <!-- FORMULARIO DE SOLICITUD -->
-  <div class="auth-modal-card" style="margin: 0 auto; max-width: 550px; background: rgba(0,0,0,0.4); border: 1px solid var(--line);">
-    <div class="auth-input-group">
-      <label>Tu Correo Electrónico</label>
-      <input type="email" id="videoUserEmail" class="auth-input" placeholder="tu@correo.com">
-    </div>
-
-    <div class="auth-input-group">
-      <label>Enfoque de la Consulta</label>
-      <select id="videoSpreadType" class="auth-select">
-        <option value="amor">💖 Amor y Relaciones (Casi algo, vínculo actual)</option>
-        <option value="trabajo">💼 Trabajo, Proyectos y Dinero</option>
-        <option value="crecimiento">✨ Crecimiento Personal y Decisiones Vitales</option>
-        <option value="general">🔮 Lectura General / Libre</option>
-      </select>
-    </div>
-
-    <div class="auth-input-group">
-      <label>Describe tu Asunto o Pregunta Exacta</label>
-      <textarea id="videoUserQuery" class="auth-textarea" placeholder="Cuéntame qué está pasando y qué te gustaría que el oráculo analice en el vídeo..."></textarea>
-    </div>
-
-    <!-- AVISO DE PLAZO DE ENTREGA -->
-    <div style="font-size: 11.5px; color: var(--gold-light); text-align: center; font-style: italic; background: rgba(223, 177, 91, 0.08); padding: 8px; border-radius: 6px; border: 1px solid rgba(223, 177, 91, 0.2);">
-      ✦ Tu vídeo personalizado será elaborado y entregado en tu correo en un plazo de <strong>24 a 48 horas</strong>.
-    </div>
-
-    <div class="auth-msg" id="videoFormMsg" style="color: var(--gold);"></div>
-
-    <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 10px; border-top: 1px solid rgba(223,177,91,0.2); padding-top: 14px;">
-      <button class="action-btn" onclick="submitVideoConsultation()" style="padding: 12px 24px; width: 100%;">Solicitar Sesión Privada</button>
-    </div>
-  </div>
 </div>
 
 <script>
-  /* --- CONTROL DEL UMBRAL (INMERSIÓN INICIAL + AUTO-ENTRADA A LOS 5 SEGUNDOS) --- */
-  let thresholdTimeout = setTimeout(() => {
-    crossTheThreshold();
-  }, 5000);
-
   function crossTheThreshold() {
-    clearTimeout(thresholdTimeout);
     playWoodSelectSound();
     const overlay = document.getElementById('thresholdOverlay');
     if (overlay && !overlay.classList.contains('fade-out')) {
       overlay.classList.add('fade-out');
       setTimeout(() => {
         overlay.style.display = 'none';
-      }, 1200);
+      }, 800);
     }
   }
 
-  /* --- CONTROL DEL MENÚ DE HAMBURGUESA --- */
   function toggleNavMenu(e) {
     e.stopPropagation();
     const menu = document.getElementById('navDropdownMenu');
@@ -1353,49 +1159,9 @@
     closeNavMenu();
   });
 
-  /* --- CONFIGURACIÓN DE STRIPE Y FORMULARIO DE VÍDEO --- */
-  const STRIPE_VIDEO_PAYMENT_LINK = 'https://buy.stripe.com/eVqbIUgJp1JV4VM5jTfQI00';
-
-  async function submitVideoConsultation() {
-    const email = document.getElementById('videoUserEmail').value.trim();
-    const spreadType = document.getElementById('videoSpreadType').value;
-    const query = document.getElementById('videoUserQuery').value.trim();
-    const msg = document.getElementById('videoFormMsg');
-
-    if (!email || !query) {
-      msg.textContent = 'Por favor, introduce tu correo y describe tu asunto.';
-      return;
-    }
-
-    if (!email.includes('@') || !email.includes('.')) {
-      msg.textContent = 'Por favor, introduce un correo electrónico válido.';
-      return;
-    }
-
-    msg.textContent = 'Registrando consulta y conectando con el pago...';
-
-    try {
-      const { error } = await supabaseClient
-        .from('video_consultas')
-        .insert([{ email: email, enfoque: spreadType, consulta: query }]);
-
-      if (error) {
-        console.error("Error al registrar en Supabase:", error);
-      }
-    } catch (err) {
-      console.error("Excepción:", err);
-    }
-
-    setTimeout(() => {
-      window.location.href = STRIPE_VIDEO_PAYMENT_LINK;
-    }, 800);
-  }
-
-  /* --- PRE-CARGA OPTIMIZADA DEL REVERSO (.jpg) --- */
   const preloadReverse = new Image();
   preloadReverse.src = 'assets/reverse.jpg';
 
-  /* --- CONTROL DE AUDIO FLOTANTE --- */
   const audioEl = document.getElementById('ambientAudio');
   audioEl.volume = 0.35;
   const audioStates = [
@@ -1419,7 +1185,6 @@
     }
   }
 
-  /* --- EFECTOS DE SONIDO (SFX) --- */
   let sfxAudioCtx = null;
   function initSfxContext() {
     if (!sfxAudioCtx) {
@@ -1468,13 +1233,11 @@
     } catch(e) {}
   }
 
-  /* --- SUPABASE Y ECONOMÍA DE CRISTALES --- */
   const SUPABASE_URL = 'https://jcosmhiukmfsygrinfgy.supabase.co';
   const SUPABASE_ANON_KEY = 'sb_publishable_UVGFZQhG36gD_67hInVz7g_4oLD7tWN';
   const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
   let currentUser = null;
   let userCrystals = 10;
-  let isRegisterMode = false;
 
   function getActiveCycleDateString() {
     const now = new Date();
@@ -1492,10 +1255,6 @@
       const username = currentUser.email.split('@')[0];
       document.getElementById('authBadgeLabel').textContent = username.charAt(0).toUpperCase() + username.slice(1);
       
-      if (document.getElementById('videoUserEmail')) {
-        document.getElementById('videoUserEmail').value = currentUser.email;
-      }
-
       let { data } = await supabaseClient.from('profiles').select('crystals, last_login_date').eq('id', currentUser.id).single();
       if (data) {
         userCrystals = data.crystals;
@@ -1516,12 +1275,7 @@
         localStorage.setItem('arkanica_last_login_guest', activeDate);
       }
       userCrystals = savedCrystals;
-      document.getElementById('authBadgeLabel').textContent = 'Acceder';
-      
-      if (!localStorage.getItem('arkanica_visited')) {
-        localStorage.setItem('arkanica_visited', 'true');
-        setTimeout(() => { openAuthModal(); }, 600);
-      }
+      document.getElementById('authBadgeLabel').textContent = 'Mi Cuenta';
     }
     document.getElementById('headerCrystalCount').textContent = userCrystals;
   }
@@ -1538,50 +1292,26 @@
 
   checkUserSession();
 
-  function openAuthModal() {
+  function handleAccountClick() {
     if (currentUser) {
       if (confirm(`Estás conectado como ${currentUser.email}. ¿Deseas cerrar sesión?`)) {
         supabaseClient.auth.signOut().then(() => window.location.reload());
       }
-      return;
-    }
-    document.getElementById('authModal').style.display = 'flex';
-  }
-  function closeAuthModal() { document.getElementById('authModal').style.display = 'none'; }
-
-  function toggleAuthMode() {
-    isRegisterMode = !isRegisterMode;
-    document.getElementById('authModalTitle').textContent = isRegisterMode ? 'Crear Cuenta' : 'Despierta tu Claridad';
-    document.getElementById('authModalSub').textContent = isRegisterMode 
-      ? 'Regístrate en un instante para desbloquear tiradas avanzadas y guardar tu progreso.' 
-      : 'Crea tu cuenta gratuita ahora para sincronizar tus cristales en la nube y desbloquear el poder completo de los arcanos.';
-    document.getElementById('authSubmitBtn').textContent = isRegisterMode ? 'Registrarse' : 'Comenzar con 10 Cristales';
-    document.getElementById('authSwitchBtn').textContent = isRegisterMode ? '¿Ya tienes cuenta? Inicia sesión' : '¿Ya tienes cuenta? Inicia sesión aquí';
-  }
-
-  async function handleAuthSubmit() {
-    const email = document.getElementById('authEmail').value.trim();
-    const password = document.getElementById('authPassword').value;
-    const msg = document.getElementById('authMsg');
-    if (!email || !password) { msg.textContent = 'Completa todos los campos.'; return; }
-    if (isRegisterMode) {
-      const { error } = await supabaseClient.auth.signUp({ email, password });
-      msg.textContent = error ? error.message : '¡Cuenta creada!';
     } else {
-      const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
-      if (error) { msg.textContent = error.message; }
-      else { msg.textContent = '¡Acceso concedido!'; setTimeout(() => { closeAuthModal(); checkUserSession(); }, 800); }
+      window.location.href = 'sesiones-privadas.html';
     }
   }
 
-  function goToPrivateSession() {
+  function goToEnteSuperior() {
     localStorage.removeItem('arkanica_last_reading');
     window.location.href = 'ente-superior/ente-superior.html';
   }
 
-  /* --- MAZO COMPLETO DE 78 CARTAS CON TODAS LAS RUTAS CORREGIDAS --- */
+  function goToSesionesPrivadas() {
+    window.location.href = 'sesiones-privadas.html';
+  }
+
   const fullTarotDeck = [
-    /* --- ARCANOS MAYORES (22) --- */
     { symbol: '0', name: 'El Loco', archetype: 'Empieza algo nuevo sin miedo al qué dirán', img: 'assets/arcanos-mayores/el-loco.jpeg' },
     { symbol: 'I', name: 'El Mago', archetype: 'Tienes todos los recursos sobre la mesa para triunfar', img: 'assets/arcanos-mayores/the-magician.jpeg' },
     { symbol: 'II', name: 'La Sacerdotisa', archetype: 'Confía en tu intuición y guarda el secreto con calma', img: 'assets/arcanos-mayores/the-high-priestess.jpeg' },
@@ -1604,8 +1334,6 @@
     { symbol: 'XIX', name: 'El Sol', archetype: 'Plenitud radiante, alegría y claridad absoluta', img: 'assets/arcanos-mayores/the-sun.jpeg' },
     { symbol: 'XX', name: 'El Juicio', archetype: 'Un despertar kármico y una gran llamada a trascender', img: 'assets/arcanos-mayores/judgment.jpeg' },
     { symbol: 'XXI', name: 'El Mundo', archetype: 'Realización total; has completado una gran maestría', img: 'assets/arcanos-mayores/the-world.jpeg' },
-
-    /* --- BASTOS (14) --- */
     { symbol: 'As B', name: 'As de Bastos', archetype: 'Chispa creativa, energía vital y nuevos comienzos de acción', img: 'assets/arcanos-menores/bastos/as-bastos.jpg' },
     { symbol: '2 B', name: '2 de Bastos', archetype: 'Planificación a futuro, visión estratégica y encrucijada de decisiones', img: 'assets/arcanos-menores/bastos/2-bastos.jpg' },
     { symbol: '3 B', name: '3 de Bastos', archetype: 'Expansión de horizontes, comercio y espera de frutos', img: 'assets/arcanos-menores/bastos/3-bastos.jpg' },
@@ -1620,8 +1348,6 @@
     { symbol: 'Knight B', name: 'Caballero de Bastos', archetype: 'Acción impulsiva, pasión desbordada y aventura veloz', img: 'assets/arcanos-menores/bastos/caballero-bastos.jpg' },
     { symbol: 'Queen B', name: 'Reina de Bastos', archetype: 'Carisma magnético, independencia, calidez y liderazgo vibrante', img: 'assets/arcanos-menores/bastos/riena-bastos.jpg' },
     { symbol: 'King B', name: 'Rey de Bastos', archetype: 'Visionario inspirador, autoridad emprendedora y dinamismo', img: 'assets/arcanos-menores/bastos/rey-bastos.jpg' },
-
-    /* --- COPAS (14) --- */
     { symbol: 'As C', name: 'As de Copas', archetype: 'Desborde emocional, amor incondicional y apertura del alma', img: 'assets/arcanos-menores/copas/as copas.jpg' },
     { symbol: '2 C', name: '2 de Copas', archetype: 'Unión profunda, pacto de almas, reciprocidad y sintonía', img: 'assets/arcanos-menores/copas/2-copas.jpg' },
     { symbol: '3 C', name: '3 de Copas', archetype: 'Alegría compartida, celebración íntima y amistad genuina', img: 'assets/arcanos-menores/copas/3-copas.jpg' },
@@ -1636,8 +1362,6 @@
     { symbol: 'Knight C', name: 'Caballero de Copas', archetype: 'El pretendiente romántico, proposiciones y seguimiento del corazón', img: 'assets/arcanos-menores/copas/caballero copas.jpg' },
     { symbol: 'Queen C', name: 'Reina de Copas', archetype: 'Empatía compasiva, profundidad emocional y sanación intuitiva', img: 'assets/arcanos-menores/copas/reina.copas.jpg' },
     { symbol: 'King C', name: 'Rey de Copas', archetype: 'Maestría emocional, diplomacia serena y madurez afectiva', img: 'assets/arcanos-menores/copas/rey-copas.jpg' },
-
-    /* --- ESPADAS (14) --- */
     { symbol: 'As E', name: 'As de Espadas', archetype: 'Claridad mental cortante, verdad absoluta y triunfo de la razón', img: 'assets/arcanos-menores/espadas/as-espadas.jpg' },
     { symbol: '2 E', name: '2 de Espadas', archetype: 'Bloqueo por indecisión, venda en los ojos y estancamiento', img: 'assets/arcanos-menores/espadas/2-espadas.jpg' },
     { symbol: '3 E', name: '3 de Espadas', archetype: 'Dolor en el corazón, desengaño, pena y palabras hirientes', img: 'assets/arcanos-menores/espadas/3-espadas.jpg' },
@@ -1652,8 +1376,6 @@
     { symbol: 'Knight E', name: 'Caballero de Espadas', archetype: 'Intelecto veloz, argumentos contundentes y acción directa', img: 'assets/arcanos-menores/espadas/caballero-espadas.jpg' },
     { symbol: 'Queen E', name: 'Reina de Espadas', archetype: 'Objetividad implacable, discernimiento analítico y honestidad frontal', img: 'assets/arcanos-menores/espadas/reina-espadas.jpg' },
     { symbol: 'King E', name: 'Rey de Espadas', archetype: 'Autoridad intelectual, juicio imparcial y rigor estratégico', img: 'assets/arcanos-menores/espadas/rey-espadas.jpg' },
-
-    /* --- OROS (14) --- */
     { symbol: 'As O', name: 'As de Oros', archetype: 'Oportunidad material sólida, abundancia y prosperidad terrenal', img: 'assets/arcanos-menores/oros/as-oros.jpg' },
     { symbol: '2 O', name: '2 de Oros', archetype: 'Malabarismo con recursos, adaptabilidad y flexibilidad financiera', img: 'assets/arcanos-menores/oros/2-oros.jpg' },
     { symbol: '3 O', name: '3 de Oros', archetype: 'Trabajo en equipo, maestría artesanal y reconocimiento profesional', img: 'assets/arcanos-menores/oros/3-oros.jpg' },
@@ -1680,48 +1402,154 @@
       name: "Consulta del día",
       poeticNote: "«Escribe tu intención y permite que el oráculo responda al latido de hoy.»",
       spreads: [
-        { key: "custom_daily", title: "Consulta del Día Personalizada", description: 'Escribe tu propia pregunta para enfocar la energía de los arcanos en tu momento presente.', slots: [{label:'1. La Raíz', desc:'Origen.'},{label:'2. El Desafío', desc:'Obstáculo.'},{label:'3. El Consejo', desc:'Guía.'}] }
+        { 
+          key: "custom_daily", 
+          title: "Consulta del Día Personalizada", 
+          description: 'Escribe lo que ronda tu cabeza o ese dilema que te pesa hoy, y deja que las cartas te muestren una perspectiva clara.', 
+          slots: [
+            {label:'La Raíz', desc:'El origen oculto o aquello de fondo que está moviendo los hilos.'},
+            {label:'El Desafío', desc:'El obstáculo o la pequeña resistencia con la que te toca lidiar.'},
+            {label:'El Consejo', desc:'La guía sincera y práctica que te regala el oráculo para avanzar.'}
+          ] 
+        }
       ]
     },
     romanticas: {
       name: "Románticas",
       poeticNote: "«Donde los hilos invisibles del deseo y la duda buscan su reflejo.»",
       spreads: [
-        { key: "thriller", title: "Thriller Romántico", description: '¿Atrapado/a en un "casi algo"? Descubre mensajes ocultos y qué siente realmente.', slots: [{label:'1. La Pista Falsa', desc:'Autoengaño.'},{label:'2. El Móvil Oculto', desc:'Intención real.'},{label:'3. La Resolución', desc:'Paso a dar.'}] },
-        { key: "masks", title: "Baile de Máscaras", description: 'Examina roles y expectativas en pareja.', slots: [{label:'1. Tu Personaje', desc:'Careta.'},{label:'2. Su Dinámica', desc:'Bloqueo.'},{label:'3. El Vínculo Real', desc:'Verdad.'}] },
-        { key: "shadow_romance", title: "Pacto en la Sombra", description: 'Pasiones intensas y atracciones magnéticas.', slots: [{label:'1. La Fricción', desc:'Tensión.'},{label:'2. La Atracción', desc:'Imán inconsciente.'},{label:'3. Límite Sanador', desc:'Equilibrio.'}] }
+        { 
+          key: "thriller", 
+          title: "Thriller Romántico", 
+          description: '¿Atrapado/a en un "casi algo" o con señales que no terminas de descifrar? Mira qué hay detrás de esa duda.', 
+          slots: [
+            {label:'La Pista Falsa', desc:'Lo que estás autoengañándote o interpretando mal.'},
+            {label:'El Móvil Oculto', desc:'Lo que la otra persona realmente siente, piensa o esconde.'},
+            {label:'La Resolución', desc:'El paso en firme que te conviene dar por tu propia tranquilidad.'}
+          ] 
+        },
+        { 
+          key: "masks", 
+          title: "Baile de Máscaras", 
+          description: 'Pon sobre la mesa los roles y las expectativas que cada uno sostiene en la relación.', 
+          slots: [
+            {label:'Tu Personaje', desc:'La careta o postura de defensa que adoptas sin darte cuenta.'},
+            {label:'Su Dinámica', desc:'El bloqueo o la reacción del otro que frena el avance.'},
+            {label:'El Vínculo Real', desc:'La verdad pura que queda cuando se caen las caretas.'}
+          ] 
+        },
+        { 
+          key: "shadow_romance", 
+          title: "Pacto en la Sombra", 
+          description: 'Para entender esas atracciones intensas, magnéticas y a veces tan complicadas de explicar.', 
+          slots: [
+            {label:'La Fricción', desc:'El punto exacto donde chocan vuestros caracteres y saltan chispas.'},
+            {label:'La Atracción', desc:'El imán invisible que os mantiene enganchados.'},
+            {label:'Límite Sanador', desc:'La línea roja que debes poner para cuidarte a ti primero.'}
+          ] 
+        }
       ]
     },
     espirituales: {
       name: "Espirituales",
       poeticNote: "«Un puente entre tu latido terrenal y la vastedad del cosmos.»",
       spreads: [
-        { key: "time_alt", title: "Salto en el Tiempo", description: 'Mapa completo de 10 cartas sobre un cruce de caminos.', slots: Array.from({length:10}, (_,i)=>({label:`Posición ${i+1}`, desc:'Análisis energético.'})) },
-        { key: "past_lives", title: "Vidas Pasadas", description: 'Memorias subconscientes que influyen hoy.', slots: [{label:'1. La Raíz', desc:'Eco pasado.'},{label:'2. La Prueba', desc:'Aprendizaje.'},{label:'3. La Llave', desc:'Solución.'}] }
+        { 
+          key: "time_alt", 
+          title: "Salto en el Tiempo", 
+          description: 'Un recorrido completo de 10 cartas para analizar a fondo un momento crucial de encrucijada en tu vida.', 
+          slots: [
+            {label:'Estado Actual', desc:'Cómo estás vibrando ahora mismo.'},
+            {label:'Obstáculo Inmediato', desc:'Lo que te está frenando hoy.'},
+            {label:'Raíces del Pasado', desc:'De dónde viene todo esto.'},
+            {label:'Pasado Reciente', desc:'Lo que vas dejando atrás pero sigue pesando.'},
+            {label:'Potencial Superior', desc:'A dónde te gustaría llegar de verdad.'},
+            {label:'Futuro Próximo', desc:'Lo que está a punto de asomarse a tu vida.'},
+            {label:'Actitud Interna', desc:'Cómo estás afrontando todo este proceso.'},
+            {label:'Entorno', desc:'Cómo te afecta la gente de fuera.'},
+            {label:'Esperanzas y Temores', desc:'Lo que deseas con fuerza frente a lo que te asusta.'},
+            {label:'Desenlace Kármico', desc:'Hacia dónde se inclina finalmente tu camino.'}
+          ] 
+        },
+        { 
+          key: "past_lives", 
+          title: "Vidas Pasadas", 
+          description: 'Identifica esos patrones repetitivos que notas en ti y que vienen de mucho más atrás.', 
+          slots: [
+            {label:'La Raíz', desc:'El eco del pasado que sigue resonando en tu día a día.'},
+            {label:'La Prueba', desc:'La lección que tu alma sigue intentando aprender.'},
+            {label:'La Llave', desc:'La herramienta que tienes en el presente para romper el ciclo.'}
+          ] 
+        }
       ]
     },
     sombras: {
       name: "Trabajo de Sombras",
-      poeticNote: "«Atrevéte a mirar aquello que la luz de la rutina prefiere callar.»",
+      poeticNote: "«Atrévete a mirar aquello que la luz de la rutina prefiere callar.»",
       spreads: [
-        { key: "mirror", title: "El Espejo Fragmentado", description: 'Ilumina tus puntos ciegos personales.', slots: [{label:'1. Tu Punto Ciego', desc:'Proyección.'},{label:'2. La Sombra', desc:'Reprimido.'},{label:'3. El Don', desc:'Talento.'}] },
-        { key: "inner_voice", title: "La Voz Interior", description: 'Silencia opiniones externas y ruido mental.', slots: [{label:'1. El Ruido', desc:'Expectativa.'},{label:'2. La Duda', desc:'Sabotaje.'},{label:'3. La Certeza', desc:'Intuición.'}] },
-        { key: "ghost", title: "Enfrentando al Fantasma", description: 'Confronta el origen de tus miedos.', slots: [{label:'1. La Semilla', desc:'Origen.'},{label:'2. Su Efecto', desc:'Impacto.'},{label:'3. El Valor', desc:'Acción.'}] }
+        { 
+          key: "mirror", 
+          title: "El Espejo Fragmentado", 
+          description: 'Atrévete a ver tus puntos ciegos y aquello que proyectas en los demás sin querer.', 
+          slots: [
+            {label:'Tu Punto Ciego', desc:'Lo que niegas de ti pero que los demás ven claramente.'},
+            {label:'La Sombra', desc:'Esa emoción o impulso que prefieres esconder.'},
+            {label:'El Don', desc:'El talento que ganas cuando aceptas tu propia oscuridad.'}
+          ] 
+        },
+        { 
+          key: "inner_voice", 
+          title: "La Voz Interior", 
+          description: 'Apaga el ruido de opiniones ajenas y reconecta con lo que tu intuición te grita.', 
+          slots: [
+            {label:'El Ruido', desc:'La expectativa de otros que te condiciona y te marea.'},
+            {label:'La Duda', desc:'El autosabotaje que te hace dudar de ti mismo/a.'},
+            {label:'La Certeza', desc:'La voz clara de tu intuición esperando a ser escuchada.'}
+          ] 
+        },
+        { 
+          key: "ghost", 
+          title: "Enfrentando al Fantasma", 
+          description: 'Ponle nombre y mira de frente a eso que te da miedo para quitarle poder.', 
+          slots: [
+            {label:'La Semilla', desc:'El momento exacto en que nació ese miedo.'},
+            {label:'Su Efecto', desc:'De qué forma sutil te está frenando hoy.'},
+            {label:'El Valor', desc:'El coraje con el que vas a superarlo.'}
+          ] 
+        }
       ]
     },
     proyectos: {
       name: "Escenario Principal",
       poeticNote: "«Alinea tu estrategia, tu talento y la brújula de tu ambición.»",
       spreads: [
-        { key: "foco", title: "El Foco Principal", description: 'Simplifica prioridades y alinea tu energía.', slots: [{label:'1. Los Cimientos', desc:'Intimidad.'},{label:'2. La Exposición', desc:'Talento.'},{label:'3. El Éxito', desc:'Recompensa.'}] },
-        { key: "backstage", title: "Entre Bambalinas", description: 'Revisión estratégica de recursos internos.', slots: [{label:'1. La Solidez', desc:'Bases.'},{label:'2. El Detalle', desc:'Factor sutil.'},{label:'3. El Veredicto', desc:'Señal.'}] }
+        { 
+          key: "foco", 
+          title: "El Foco Principal", 
+          description: 'Pon orden en tus prioridades y descubre dónde poner tu energía para que tus proyectos triunfen.', 
+          slots: [
+            {label:'Los Cimientos', desc:'La base real y la disciplina que hay detrás de tu idea.'},
+            {label:'La Exposición', desc:'Cómo muestras tu talento al mundo y cómo se recibe.'},
+            {label:'El Éxito', desc:'El fruto real y material que vas a conseguir.'}
+          ] 
+        },
+        { 
+          key: "backstage", 
+          title: "Entre Bambalinas", 
+          description: 'Revisa los detalles invisibles que sostienen (o descuidan) lo que estás construyendo.', 
+          slots: [
+            {label:'La Solidez', desc:'Cómo están funcionando tus estructuras internas.'},
+            {label:'El Detalle', desc:'Ese cabo suelto o detalle sutil que estás pasando por alto.'},
+            {label:'El Veredicto', desc:'La señal clara sobre si vas por buen camino.'}
+          ] 
+        }
       ]
     }
   };
 
   let currentCategoryKey = 'consulta_dia';
   let currentSpreadKey = 'custom_daily';
-  let userCustomQuery = '';
+  let userCustomQuery = '¿Qué me depara la energía de hoy?';
   let currentDeck = [];
   let selectedCards = [];
   let currentSlotIndex = 0;
@@ -1752,7 +1580,7 @@
       input.type = 'text';
       input.id = 'userCustomQueryInput';
       input.className = 'mobile-spread-select';
-      input.placeholder = 'Escribe aquí tu pregunta o dilema de hoy...';
+      input.placeholder = '¿Qué bloquea mi energía hoy...?';
       input.value = userCustomQuery;
       input.addEventListener('input', (e) => {
         userCustomQuery = e.target.value;
@@ -1823,26 +1651,37 @@
   }
 
   function checkAndStartReading() {
+    const queryInput = document.getElementById('userCustomQueryInput');
+    if (queryInput) {
+      userCustomQuery = queryInput.value.trim() || queryInput.placeholder;
+    }
+
     const activeDate = getActiveCycleDateString();
     const freeKey = `arkanica_free_${currentSpreadKey}`;
     const lastFreeDate = localStorage.getItem(freeKey);
 
     if (lastFreeDate === activeDate) {
       if (userCrystals < 3) {
-        hint.textContent = "Tirada ya realizada hoy. No tienes suficientes cristales (se necesitan 3).";
-        alert("Has agotado tu tirada gratuita de hoy para esta sección y tus cristales son insuficientes (tienes menos de 3). Adquiere o recarga tus cristales para continuar consultando los arcanos.");
-        return;
+        hint.textContent = "Tirada ya realizada hoy. Necesitas 3 cristales.";
+        alert("Has agotado tu tirada gratuita de hoy para esta sección. Recarga cristales para continuar consultando los arcanos.");
+        return false;
       } else {
         updateCrystalsStorage(userCrystals - 3);
       }
     } else {
       localStorage.setItem(freeKey, activeDate);
     }
-    initReadingExecution();
+    return true;
   }
 
   function initReading() {
-    checkAndStartReading();
+    const queryInput = document.getElementById('userCustomQueryInput');
+    if (queryInput && queryInput.value.trim() !== '') {
+      userCustomQuery = queryInput.value.trim();
+    }
+
+    if (!checkAndStartReading()) return;
+    initReadingExecution();
   }
 
   function initReadingExecution() {
@@ -1867,7 +1706,7 @@
       generateGenerativeInterpretation();
       return;
     }
-    deckInstruction.textContent = `Seleccionando carta ${currentSlotIndex + 1} de ${config.slots.length}: "${config.slots[currentSlotIndex].label}"`;
+    deckInstruction.textContent = `✦ Haz clic en el abanico para sacar la carta ${currentSlotIndex + 1} de ${config.slots.length}: "${config.slots[currentSlotIndex].label}" ✦`;
     
     const posItems = infoPositions.querySelectorAll('.position-item');
     posItems.forEach((item, idx) => {
@@ -1994,14 +1833,14 @@
     const config = getCurrentSpreadConfig();
     
     const queryInput = document.getElementById('userCustomQueryInput');
-    if (queryInput) {
+    if (queryInput && queryInput.value.trim() !== '') {
       userCustomQuery = queryInput.value.trim();
+    } else {
+      userCustomQuery = userCustomQuery || "Claridad general del día";
     }
 
     masterSymbol.classList.add('spinner-symbol');
-    let introText = currentCategoryKey === 'consulta_dia' && userCustomQuery !== ''
-      ? `✦ Analizando tu consulta: "${userCustomQuery}" a través de los arcanos...`
-      : `✦ Sintonizando los arcanos mayores y menores con el latido del universo...`;
+    let introText = `✦ Analizando tu consulta: "${userCustomQuery}" a través de los arcanos...`;
     
     masterTextContent.innerHTML = introText;
     masterBox.classList.add('active');
@@ -2023,8 +1862,7 @@
         }
       }
     } catch(e) {
-      let customContext = userCustomQuery !== '' ? ` para tu consulta sobre "${userCustomQuery}"` : '';
-      masterTextContent.innerHTML = `Tras sintonizar los arcanos en esta tirada${customContext}, la presencia de <em>${selectedCards[0].name}</em> marca un punto de inflexión decisivo. ${selectedCards[0].archetype}. Confía plenamente en tu intuición actual y permite que la claridad guíe tus próximos pasos sin vacilar.`;
+      masterTextContent.innerHTML = `Tras sintonizar los arcanos para tu consulta sobre "${userCustomQuery}", la presencia de <em>${selectedCards[0].name}</em> marca un punto de inflexión decisivo. ${selectedCards[0].archetype}. Confía plenamente en tu intuición actual y permite que la claridad guíe tus próximos pasos sin vacilar.`;
     } finally {
       masterSymbol.classList.remove('spinner-symbol');
     }

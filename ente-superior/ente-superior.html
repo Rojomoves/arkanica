@@ -250,7 +250,11 @@
     gap: 6px;
     text-decoration: none;
     transition: all 0.3s ease;
+    cursor: pointer;
     box-shadow: 0 0 15px rgba(223, 177, 91, 0.2);
+  }
+  .profile-badge:hover {
+    border-color: var(--gold-light);
   }
 
   .profile-crystals {
@@ -316,8 +320,8 @@
     backdrop-filter: none !important;
     border: 1.5px solid var(--gold);
     border-radius: 10px;
-    width: 230px;
-    padding: 10px 0;
+    width: 255px;
+    padding: 8px 0;
     box-shadow: 0 25px 50px rgba(0, 0, 0, 0.95), 0 0 30px rgba(0, 0, 0, 0.9);
     display: none;
     flex-direction: column;
@@ -332,7 +336,7 @@
     font-size: 11.5px;
     text-transform: uppercase;
     letter-spacing: 0.12em;
-    padding: 12px 20px;
+    padding: 11px 20px;
     transition: background 0.2s, color 0.2s;
     display: block;
     background-color: #08070b !important;
@@ -340,13 +344,6 @@
   .nav-dropdown-menu a:hover {
     background: rgba(223, 177, 91, 0.15) !important;
     color: var(--gold);
-  }
-  .nav-dropdown-menu a.highlight {
-    color: var(--gold-light);
-    font-weight: 650;
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
-    margin: 4px 0;
   }
 
   .hero-container {
@@ -567,7 +564,7 @@
 
   .packs-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 12px;
   }
 
@@ -667,6 +664,43 @@
     z-index: 2;
   }
 
+  /* ESTILOS DE ESTADÍSTICAS DE ANDREA */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(223, 177, 91, 0.2);
+    border-radius: 8px;
+    padding: 14px 10px;
+    margin-top: 16px;
+    text-align: center;
+  }
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 21px;
+    font-weight: 600;
+    color: var(--gold-light);
+    letter-spacing: 0.05em;
+  }
+
+  .stat-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 8.5px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 500;
+    line-height: 1.3;
+  }
+
   .testimonials-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -700,44 +734,6 @@
     font-style: italic;
   }
 
-  .auth-modal-card {
-    background: radial-gradient(circle at top, #141220 0%, var(--surface) 80%);
-    border: 1px solid var(--gold);
-    border-radius: 14px;
-    width: 100%;
-    padding: 24px;
-    box-shadow: 0 30px 60px rgba(0,0,0,0.9), 0 0 40px rgba(223, 177, 91, 0.12);
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-  }
-
-  .auth-input-group {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-  }
-
-  .auth-input-group label {
-    font-size: 10.5px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-  }
-
-  .auth-input, .auth-textarea, .auth-select {
-    background: rgba(0,0,0,0.4);
-    border: 1px solid var(--line);
-    border-radius: 6px;
-    padding: 11px;
-    color: var(--text-main);
-    font-size: 13px;
-    outline: none;
-    font-family: 'Inter', sans-serif;
-  }
-  .auth-input:focus, .auth-textarea:focus, .auth-select:focus { border-color: var(--gold); }
-  .auth-textarea { resize: vertical; min-height: 80px; }
-
   .action-btn {
     background: var(--gold);
     color: var(--bg);
@@ -751,8 +747,54 @@
     cursor: pointer;
     transition: background 0.3s;
     width: 100%;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
   }
   .action-btn:hover { background: var(--gold-light); }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .about-avatar-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+  }
+
+  .about-avatar-circle {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    border: 2px solid var(--gold);
+    overflow: hidden;
+    background: var(--surface-hover);
+    box-shadow: 0 0 20px rgba(223, 177, 91, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .about-avatar-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  .about-avatar-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    color: var(--gold-light);
+    letter-spacing: 0.05em;
+  }
 
   @media (max-width: 768px) {
     body { padding: 12px 8px 45px 8px; }
@@ -846,6 +888,10 @@
     .testimonials-grid {
       grid-template-columns: 1fr;
     }
+
+    .about-grid { grid-template-columns: 1fr; gap: 14px; text-align: center; justify-items: center; }
+    .about-avatar-circle { width: 95px; height: 95px; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
   }
 </style>
 </head>
@@ -863,7 +909,7 @@
       <div class="threshold-eyebrow">Canal Directo Místico</div>
       <h2 class="threshold-title">El Ente Superior sintoniza tu frecuencia...</h2>
     </div>
-    <p class="threshold-subtitle">«Prepárate para adentrarte en la respuesta exacta que tu alma necesita.»</p>
+    <p class="threshold-subtitle">«Prepárate para adentrarse en la respuesta exacta que tu alma necesita.»</p>
   </div>
 </div>
 
@@ -872,7 +918,7 @@
 </audio>
 
 <button class="floating-audio-btn" id="floatingAudioBtn" onclick="toggleAudioTrack()" title="Cambiar ambiente musical">
-  <span id="audioIcon">🎵</span>
+  <span>🎵</span>
   <span class="audio-tooltip" id="audioTooltip">Silencio</span>
 </button>
 
@@ -887,13 +933,13 @@
   </a>
 
   <div class="header-right">
-    <div class="profile-badge">
+    <div class="profile-badge" id="profileBadge" onclick="handleAccountClick()" title="Gestionar cuenta y cristales">
       <div class="profile-crystals">
         <span>💎</span> <strong id="crystalCount">10</strong>
       </div>
       <div class="profile-divider"></div>
       <div class="profile-user-info">
-        <span>✦</span> <span id="userBadge">Invitado</span>
+        <span>✦</span> <span id="userBadge">Mi Cuenta</span>
       </div>
     </div>
 
@@ -905,10 +951,11 @@
       </button>
 
       <div class="nav-dropdown-menu" id="navDropdownMenu">
-        <a href="../blog.html" class="highlight" onclick="closeNavMenu()">✦ Diario de Arkanica</a>
-        <a href="../tienda.html" onclick="closeNavMenu()">🛍️ Tienda Mística</a>
-        <a href="#reservas" onclick="closeNavMenu()">📅 Sesiones Privadas</a>
-        <a href="../index.html" onclick="closeNavMenu()">← Volver al Inicio</a>
+        <a href="../index.html" onclick="closeNavMenu()">Volver al Oráculo</a>
+        <a href="../blog.html" onclick="closeNavMenu()">Diario de Arkanica</a>
+        <a href="../tienda.html" onclick="closeNavMenu()">Tienda Mística</a>
+        <a href="../blog/preguntas-frecuentes.html" onclick="closeNavMenu()">Preguntas Frecuentes (FAQ)</a>
+        <a href="#reservas" onclick="closeNavMenu()">Sesiones Privadas</a>
       </div>
     </div>
   </div>
@@ -920,9 +967,9 @@
   <p class="arkanica-sub" id="headerSubtitle">Disfruta de <strong>1 pregunta de cortesía 100% gratuita</strong> para revelar lo que tu tirada anterior dejó entrever.</p>
   
   <div class="banner-quick-actions">
-    <a href="../blog.html" class="banner-action-pill">✦ Diario de Arkanica</a>
-    <a href="#reservas" class="banner-action-pill">📅 Sesiones Privadas</a>
-    <a href="../tienda.html" class="banner-action-pill">🛍️ Tienda Mística</a>
+    <a href="../blog.html" class="banner-action-pill">Diario de Arkanica</a>
+    <a href="../tienda.html" class="banner-action-pill">Tienda Mística</a>
+    <a href="../blog/preguntas-frecuentes.html" class="banner-action-pill">FAQ</a>
   </div>
 </div>
 
@@ -939,7 +986,7 @@
   </div>
 
   <div class="store-section">
-    <div class="store-title">✦ Recarga tus Cristales de Claridad</div>
+    <div class="store-title">✦ Recarga tus Cristales o Accede a la Comunidad</div>
     <div class="packs-grid">
       <div class="pack-card">
         <div class="pack-info">
@@ -953,32 +1000,73 @@
         <div class="popular-badge">Más Elegido</div>
         <div class="pack-info">
           <div class="pack-name">Esencia Eterna</div>
-          <div class="pack-amount">40 Cristales</div>
+          <div class="pack-amount">40 Cristales + Comunidad VIP</div>
         </div>
-        <button class="pack-btn" onclick="buyPack(40, 'Esencia Eterna', '7.99 €')">7.99 €</button>
+        <button class="pack-btn" onclick="buyPack(40, 'Esencia Eterna', '9.99 €')">9.99 €</button>
       </div>
 
       <div class="pack-card">
         <div class="pack-info">
           <div class="pack-name">Océano Místico</div>
-          <div class="pack-amount">100 Cristales</div>
+          <div class="pack-amount">100 Cristales + Comunidad VIP</div>
         </div>
         <button class="pack-btn" onclick="buyPack(100, 'Océano Místico', '14.99 €')">14.99 €</button>
+      </div>
+
+      <div class="pack-card">
+        <div class="pack-info">
+          <div class="pack-name">Pase Comunidad</div>
+          <div class="pack-amount">Acceso WhatsApp VIP</div>
+        </div>
+        <button class="pack-btn" onclick="buyPack(0, 'Pase Comunidad Privada', '8.90 €')">8.90 €</button>
       </div>
     </div>
   </div>
 </div>
 
+<!-- SECCIÓN DE SESIONES PRIVADAS CON ANDREA -->
 <div class="section-card gold-shimmer-card" id="reservas">
-  <div style="max-width: 650px; margin: 0 auto; text-align: center; margin-bottom: 20px;">
-    <div style="font-size: 9.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 4px;">Exclusivo & Confidencial</div>
-    <h3 style="margin-top: 0; font-family: 'Cormorant Garamond', serif; font-size: 24px; color: var(--gold);">Sesiones privadas en vídeo</h3>
-    <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.6; margin-bottom: 0;">
-      ¿Atrapado/a en una encrucijada y necesitas una guía íntima? Detalla tu caso a continuación y recibe un análisis profundo en vídeo privado exclusivo para ti.
-    </p>
+  <div class="about-grid" style="margin-bottom: 24px;">
+    <div class="about-avatar-wrapper">
+      <div class="about-avatar-circle">
+        <img src="../assets/tarotista.jpg" alt="Andrea - Creadora de Arkanica" loading="lazy">
+      </div>
+      <div class="about-avatar-name">Andrea</div>
+      <div style="font-size: 9.5px; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase;">Creadora de Arkanica</div>
+    </div>
+    <div>
+      <div style="font-size: 9.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 3px;">Acompañamiento Personalizado Exclusivo</div>
+      <h3 style="margin-top: 0; font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--gold-light); margin-bottom: 8px;">¿Necesitas una lectura a medida y un espacio seguro para sanar tu rumbo?</h3>
+      <p style="margin-bottom: 8px; line-height: 1.5; font-size: 12.5px; color: var(--text-main);">
+        Si las tiradas generales te han dado pistas pero sientes que tu situación requiere una mirada humana, experta y profundamente empática, reserva una sesión privada directamente conmigo. Despejaremos cada bloqueo juntos.
+      </p>
+      <p style="margin-bottom: 0; line-height: 1.5; font-size: 12px; color: var(--gold-light);">
+        <em>"Cuando una duda frena tu energía, no necesitas más opiniones externas; necesitas claridad absoluta."</em>
+      </p>
+
+      <!-- CUADRÍCULA DE ESTADÍSTICAS DE ANDREA -->
+      <div class="stats-grid">
+        <div class="stat-item">
+          <span class="stat-number">94</span>
+          <span class="stat-label">Mujeres ayudadas</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">5 AÑOS</span>
+          <span class="stat-label">Experiencia</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">24 - 48H</span>
+          <span class="stat-label">Respuesta garantizada</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">100%</span>
+          <span class="stat-label">Discreción</span>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div class="testimonials-grid" style="max-width: 650px; margin: 0 auto 20px auto;">
+  <div class="testimonials-grid" style="max-width: 750px; margin: 0 auto 20px auto;">
     <div class="testimonial-card">
       <div class="testimonial-stars">★★★★★</div>
       <p style="margin: 0; font-style: italic;">«Ver el vídeo me dio una paz tremenda. Acertó de pleno en detalles de mi situación que no había mencionado en ningún sitio.»</p>
@@ -991,36 +1079,12 @@
     </div>
   </div>
 
-  <div class="auth-modal-card" style="margin: 0 auto; max-width: 550px;">
-    <div class="auth-input-group">
-      <label>Tu Correo Electrónico</label>
-      <input type="email" id="videoUserEmail" class="auth-input" placeholder="tu@correo.com">
-    </div>
-
-    <div class="auth-input-group">
-      <label>Enfoque de la Consulta</label>
-      <select id="videoSpreadType" class="auth-select">
-        <option value="amor">💖 Amor y Relaciones (Casi algo, vínculo actual)</option>
-        <option value="trabajo">💼 Trabajo, Proyectos y Dinero</option>
-        <option value="crecimiento">✨ Crecimiento Personal y Decisiones Vitales</option>
-        <option value="general">🔮 Lectura General / Libre</option>
-      </select>
-    </div>
-
-    <div class="auth-input-group">
-      <label>Describe tu Asunto o Pregunta Exacta</label>
-      <textarea id="videoUserQuery" class="auth-textarea" placeholder="Cuéntame qué está pasando y qué te gustaría que el oráculo analice en el vídeo..."></textarea>
-    </div>
-
-    <div style="font-size: 11.5px; color: var(--gold-light); text-align: center; font-style: italic; background: rgba(223, 177, 91, 0.08); padding: 8px; border-radius: 6px; border: 1px solid rgba(223, 177, 91, 0.2);">
+  <div style="max-width: 550px; margin: 0 auto; text-align: center; display: flex; flex-direction: column; gap: 14px;">
+    <div style="font-size: 11.5px; color: var(--gold-light); font-style: italic; background: rgba(223, 177, 91, 0.08); padding: 10px; border-radius: 6px; border: 1px solid rgba(223, 177, 91, 0.2);">
       ✦ Tu vídeo personalizado será elaborado y entregado en tu correo en un plazo de <strong>24 a 48 horas</strong>.
     </div>
-
-    <div class="auth-msg" id="videoFormMsg" style="color: var(--gold);"></div>
-
-    <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 6px;">
-      <button class="action-btn" onclick="submitVideoConsultation()">Solicitar Sesión Privada</button>
-    </div>
+    
+    <a href="../sesiones-privadas.html" class="action-btn">Reservar Sesión Privada con Andrea</a>
   </div>
 </div>
 
@@ -1090,6 +1154,9 @@
   let currentUser = null;
   let crystals = 10;
   let freeQuestionsUsed = 0;
+  let communityAccess = false;
+
+  const WHATSAPP_COMMUNITY_LINK = "https://chat.whatsapp.com/IoQ8mrYvQQU6vwrnY4chae";
 
   async function initSession() {
     const { data: { session } } = await supabaseClient.auth.getSession();
@@ -1097,38 +1164,52 @@
       currentUser = session.user;
       const username = currentUser.email.split('@')[0];
       document.getElementById('userBadge').textContent = username.charAt(0).toUpperCase() + username.slice(1);
-      
-      if (document.getElementById('videoUserEmail')) {
-        document.getElementById('videoUserEmail').value = currentUser.email;
-      }
 
       const { data } = await supabaseClient
         .from('profiles')
-        .select('crystals, free_questions_used')
+        .select('crystals, free_questions_used, community_access')
         .eq('id', currentUser.id)
         .single();
 
       if (data) {
         crystals = data.crystals ?? 10;
         freeQuestionsUsed = data.free_questions_used ?? 0;
+        communityAccess = data.community_access ?? false;
       }
     } else {
       crystals = parseInt(localStorage.getItem('arkanica_crystals_guest')) || 10;
       freeQuestionsUsed = parseInt(localStorage.getItem('arkanica_free_used_guest')) || 0;
-      document.getElementById('userBadge').textContent = 'Invitado';
+      communityAccess = localStorage.getItem('arkanica_community_guest') === 'true';
+      document.getElementById('userBadge').textContent = 'Mi Cuenta';
     }
 
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('pagado') === 'true') {
       const addedCrystals = parseInt(urlParams.get('cristales')) || 0;
+      const hasCommunity = urlParams.get('comunidad') === 'true';
+
       if (addedCrystals > 0) {
         crystals += addedCrystals;
-        window.history.replaceState({}, document.title, window.location.pathname);
-        await saveUserData();
-        setTimeout(() => {
-          appendMessage(`✦ <strong>¡Recarga mística completada con éxito!</strong> Se han añadido ${addedCrystals} Cristales de Claridad a tu cuenta. El canal con el Ente Superior está completamente abierto.`, 'ai');
-        }, 500);
       }
+      if (hasCommunity) {
+        communityAccess = true;
+      }
+
+      window.history.replaceState({}, document.title, window.location.pathname);
+      await saveUserData();
+
+      setTimeout(() => {
+        let successMsg = `✦ <strong>¡Transacción mística completada con éxito!</strong>`;
+        if (addedCrystals > 0) successMsg += ` Se han añadido ${addedCrystals} Cristales de Claridad.`;
+        if (hasCommunity || communityAccess) {
+          successMsg += `<br><br>🎉 <strong>¡Ya tienes acceso a la Comunidad Privada!</strong><br><a href="${WHATSAPP_COMMUNITY_LINK}" target="_blank" style="color: var(--gold-light); text-decoration: underline; font-weight: bold;">👉 Pulsa aquí para unirte a la Comunidad VIP de WhatsApp</a>`;
+        }
+        appendMessage(successMsg, 'ai');
+      }, 500);
+    } else if (communityAccess) {
+      setTimeout(() => {
+        appendMessage(`✦ <strong>Tu Pase a la Comunidad está activo.</strong> Puedes acceder cuando desees desde <a href="${WHATSAPP_COMMUNITY_LINK}" target="_blank" style="color: var(--gold-light); text-decoration: underline;">este enlace al grupo VIP de WhatsApp</a>.`, 'ai');
+      }, 800);
     }
 
     updateDisplayStatus();
@@ -1138,50 +1219,29 @@
     if (currentUser) {
       await supabaseClient
         .from('profiles')
-        .upsert({ id: currentUser.id, crystals: crystals, free_questions_used: freeQuestionsUsed });
+        .upsert({ 
+          id: currentUser.id, 
+          crystals: crystals, 
+          free_questions_used: freeQuestionsUsed,
+          community_access: communityAccess 
+        });
     } else {
       localStorage.setItem('arkanica_crystals_guest', crystals);
       localStorage.setItem('arkanica_free_used_guest', freeQuestionsUsed);
+      localStorage.setItem('arkanica_community_guest', communityAccess);
     }
   }
 
   initSession();
 
-  const STRIPE_VIDEO_PAYMENT_LINK = 'https://buy.stripe.com/eVqbIUgJp1JV4VM5jTfQI00';
-
-  async function submitVideoConsultation() {
-    const email = document.getElementById('videoUserEmail').value.trim();
-    const spreadType = document.getElementById('videoSpreadType').value;
-    const query = document.getElementById('videoUserQuery').value.trim();
-    const msg = document.getElementById('videoFormMsg');
-
-    if (!email || !query) {
-      msg.textContent = 'Por favor, introduce tu correo y describe tu asunto.';
-      return;
-    }
-
-    if (!email.includes('@') || !email.includes('.')) {
-      msg.textContent = 'Por favor, introduce un correo electrónico válido.';
-      return;
-    }
-
-    msg.textContent = 'Registrando consulta y conectando con el pago...';
-
-    try {
-      const { error } = await supabaseClient
-        .from('video_consultas')
-        .insert([{ email: email, enfoque: spreadType, consulta: query }]);
-
-      if (error) {
-        console.error("Error al registrar en Supabase:", error);
+  function handleAccountClick() {
+    if (currentUser) {
+      if (confirm(`Estás conectado como ${currentUser.email}. ¿Deseas cerrar sesión?`)) {
+        supabaseClient.auth.signOut().then(() => window.location.reload());
       }
-    } catch (err) {
-      console.error("Excepción:", err);
+    } else {
+      window.location.href = '../sesiones-privadas.html';
     }
-
-    setTimeout(() => {
-      window.location.href = STRIPE_VIDEO_PAYMENT_LINK;
-    }, 800);
   }
 
   const audioEl = document.getElementById('ambientAudio');
@@ -1215,7 +1275,7 @@
     if (remainingFree > 0) {
       sendBtn.textContent = `Consultar (1 Gratis)`;
     } else {
-      sendBtn.textContent = `Consultar (3 💎)`;
+      sendBtn.textContent = `Consultar (3 Cristales)`;
     }
     saveUserData();
   }
