@@ -49,8 +49,7 @@ exports.handler = async function(event, context) {
     CRUCIAL: El último párrafo DEBE terminar obligatoriamente con una pregunta abierta, persuasiva y reflexiva que invite al usuario a seguir pensando en su situación o a profundizar más. 
     No incluyas markdown ni bloques de código adicionales, solo texto con etiquetas <p>.`;
 
-    // Endpoint oficial actualizado con el modelo estable correcto
-    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
     const apiResponse = await fetch(endpoint, {
       method: "POST",
