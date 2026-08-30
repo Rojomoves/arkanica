@@ -21,8 +21,10 @@ exports.handler = async function(event, context) {
   }
 
   try {
-    // Clave integrada directamente para evitar problemas de lectura en el servidor de Netlify
-    const apiKey = "AQ.Ab8RN6Ky74zTSQLXtjtxEnPQwEYXlSL6juwMr4y_ULS4ou4OmQ";
+    const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
+    if (!apiKey) {
+      throw new Error("GEMINI_API_KEY no está configurada en el entorno de Netlify.");
+    }
 
     let bodyData;
     try {
@@ -47,7 +49,7 @@ exports.handler = async function(event, context) {
     CRUCIAL: El último párrafo DEBE terminar obligatoriamente con una pregunta abierta, persuasiva y reflexiva que invite al usuario a seguir pensando en su situación o a profundizar más. 
     No incluyas markdown ni bloques de código adicionales, solo texto con etiquetas <p>.`;
 
-    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
 
     const apiResponse = await fetch(endpoint, {
       method: "POST",
