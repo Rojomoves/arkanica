@@ -11,7 +11,6 @@ export default async (req, context) => {
   try {
     const { prompt } = await req.json();
 
-    // Inicializa el SDK usando la variable de entorno protegida en Netlify
     const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
     
     const response = await ai.models.generateContent({
