@@ -13,18 +13,17 @@ exports.handler = async (event, context) => {
     const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
     
     const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
+      model: 'gemini-3.6-flash',
       contents: prompt,
     });
 
     return {
       statusCode: 200,
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ text: response.text }),
     };
   } catch (error) {
-    // ESTA LÍNEA ES LA CLAVE PARA VER EL FALLO EN LOS LOGS DE NETLIFY:
     console.error("🔥 Error interno en Gemini:", error);
-    
     return {
       statusCode: 500,
       body: JSON.stringify({ error: error.message }),
