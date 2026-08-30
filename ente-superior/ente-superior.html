@@ -664,7 +664,6 @@
     z-index: 2;
   }
 
-  /* ESTILOS DE ESTADÍSTICAS ACTUALIZADOS */
   .stats-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -1024,7 +1023,6 @@
   </div>
 </div>
 
-<!-- SECCIÓN DE SESIONES PRIVADAS CON ANDREA -->
 <div class="section-card gold-shimmer-card" id="reservas">
   <div class="about-grid" style="margin-bottom: 24px;">
     <div class="about-avatar-wrapper">
@@ -1044,7 +1042,6 @@
         <em>"Cuando una duda frena tu energía, no necesitas más opiniones externas; necesitas claridad absoluta."</em>
       </p>
 
-      <!-- CUADRÍCULA DE ESTADÍSTICAS ACTUALIZADA -->
       <div class="stats-grid">
         <div class="stat-item">
           <span class="stat-number">+2000</span>
@@ -1386,34 +1383,32 @@
     chatMessages.appendChild(loadingDiv);
     chatMessages.scrollTop = chatMessages.scrollHeight;
 
-    let contextPrompt = `El usuario pregunta en sesión privada al Ente Superior: "${userQuery}".`;
-    
+    let systemRole = `Eres el Ente Superior, una guía mística absoluta y directa de Arkanica.`;
     if (isFreeTrial) {
-      contextPrompt += ` Esta ha sido su única pregunta gratuita de cortesía. Responde de forma extremadamente profunda, emocional, reveladora y milimétrica, conectando con sus miedos u objetivos ocultos. Al final del texto, deja una intriga fascinante, una pregunta abierta desgarradora o un aviso sutil sobre un punto ciego que aún no ve, incitándole fuertemente a realizar otra pregunta para descubrir la verdad completa. Formato estricto en HTML <p>.`;
+      systemRole += ` Esta es la única pregunta gratuita de cortesía del usuario. Responde con enorme profundidad, emocionalidad y revelación, conectando con sus intenciones. Termina con una intriga o pregunta abierta que le invite a recargar cristales para seguir preguntando.`;
     } else {
-      contextPrompt += ` El usuario ya está pagando con cristales. Dale una respuesta directa, estratégica, altamente mística y transformadora en formato <p>.`;
+      systemRole += ` El usuario está pagando con cristales. Dale una respuesta directa, estratégica, altamente mística y transformadora.`;
     }
+
+    const finalPrompt = `${systemRole}\n\nPregunta del alma: "${userQuery}"\n\nFormatea la respuesta estrictamente en etiquetas HTML de párrafo (<p>...</p>) sin markdown extra.`;
 
     try {
       const response = await fetch('../.netlify/functions/interpretar', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          spreadTitle: `Sesión Privada Profunda con el Ente Superior`,
-          cards: [{ name: "El Arcano de la Revelación", archetype: contextPrompt }]
-        })
+        body: JSON.stringify({ prompt: finalPrompt })
       });
 
       const data = await response.json();
       if (document.getElementById(loadingId)) document.getElementById(loadingId).remove();
 
-      if (response.ok && data.interpretacion) {
-        let persuasionHTML = `<div class="ai-response-body">${data.interpretacion}</div>`;
+      if (response.ok && data.text) {
+        let persuasionHTML = `<div class="ai-response-body">${data.text}</div>`;
         
         if (isFreeTrial) {
           persuasionHTML += `
             <div style="margin-top: 12px; padding: 12px; background: rgba(223, 177, 91, 0.12); border-left: 2px solid var(--gold); border-radius: 6px; font-size: 12px; color: var(--text-main);">
-              ✦ <strong>Has utilizado tu consulta gratuita de cortesía.</strong> A partir de ahora, el Ente Superior requiere <strong>3 Cristales de Claridad</strong> por cada nueva consulta (puedes recargar tus cristales abajo).
+              ✦ <strong>Has utilizado tu consulta gratuita de cortesía.</strong> A partir de ahora, el Ente Superior requiere <strong>3 Cristales de Claridad</strong> por cada nueva consulta.
             </div>
           `;
         }
@@ -1427,8 +1422,8 @@
       console.error("Error en sesión privada:", error);
       if (document.getElementById(loadingId)) document.getElementById(loadingId).remove();
       
-      const fallbackText = `Tras sintonizar con tu pregunta sobre "${userQuery}", percibo un bloqueo energético que llevas arrastrando sin admitirlo. La superficie de tu dilema oculta una decisión inevitable que cambiará tu rumbo actual. ${isFreeTrial ? '<em>(Esta ha sido tu consulta gratuita de cortesía. A partir de ahora, el Ente Superior requiere 3 Cristales de Claridad por consulta).</em>' : ''}`;
-      appendMessage(`El Ente Superior te revela:`, 'ai', `<div class="ai-response-body">✦ ${fallbackText}</div>`);
+      const fallbackText = `Tras sintonizar con tu pregunta sobre "${userQuery}", percibo un bloqueo energético que llevas arrastrando sin admitirlo. La superficie de tu dilema oculta una decisión inevitable que cambiará tu rumbo actual.`;
+      appendMessage(`El Ente Superior te revela:`, 'ai', `<div class="ai-response-body"><p>✦ ${fallbackText}</p></div>`);
     }
   }
 </script>
