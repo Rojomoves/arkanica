@@ -4,13 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Arkanica — Tarot Interactivo y Claridad Profunda</title>
-<!-- Cliente oficial de Supabase -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<!-- SDK oficial de Stripe -->
 <script src="https://js.stripe.com/v3/"></script>
-
-<!-- CÓDIGO OFICIAL DE GOOGLE ADSENSE -->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2698892755295064" crossorigin="anonymous"></script>
+<!-- SDK oficial de Google Gen AI para evitar fallos de fetch plano -->
+<script type="importmap">
+  {
+    "imports": {
+      "@google/genai": "https://esm.run/@google/genai"
+    }
+  }
+</script>
 
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap');
@@ -1030,7 +1033,7 @@
 
   <div class="master-interpretation-box" id="masterBox">
     <div class="master-title"><span class="spinner-symbol" id="masterSymbol">✦</span> Síntesis Magistral del Oráculo</div>
-    <p class="master-text" id="masterTextContent">✦ Sintonizando los arcanos mayores y menores con el latido del universo...</p>
+    <div class="master-text" id="masterTextContent">✦ Sintonizando los arcanos mayores y menores con el latido del universo...</div>
     <div class="master-cta">
       <button class="action-btn" onclick="goToSesionesPrivadas()">Profundizar en Sesiones Privadas</button>
     </div>
@@ -1104,35 +1107,30 @@
   </div>
 </div>
 
-<script>
-  function crossTheThreshold() {
+<script type="module">
+  import { GoogleGenAI } from "@google/genai";
+
+  window.crossTheThreshold = function() {
     playWoodSelectSound();
     const overlay = document.getElementById('thresholdOverlay');
     if (overlay && !overlay.classList.contains('fade-out')) {
       overlay.classList.add('fade-out');
-      setTimeout(() => {
-        overlay.style.display = 'none';
-      }, 800);
+      setTimeout(() => { overlay.style.display = 'none'; }, 800);
     }
   }
 
-  function toggleNavMenu(e) {
+  window.toggleNavMenu = function(e) {
     e.stopPropagation();
     const menu = document.getElementById('navDropdownMenu');
     menu.classList.toggle('active');
   }
 
-  function closeNavMenu() {
+  window.closeNavMenu = function() {
     const menu = document.getElementById('navDropdownMenu');
     menu.classList.remove('active');
   }
 
-  window.addEventListener('click', () => {
-    closeNavMenu();
-  });
-
-  const preloadReverse = new Image();
-  preloadReverse.src = 'assets/reverse.jpg';
+  window.addEventListener('click', () => { closeNavMenu(); });
 
   const audioEl = document.getElementById('ambientAudio');
   audioEl.volume = 0.35;
@@ -1144,7 +1142,7 @@
   ];
   let currentAudioIndex = 0;
 
-  function toggleAudioTrack() {
+  window.toggleAudioTrack = function() {
     currentAudioIndex = (currentAudioIndex + 1) % audioStates.length;
     const currentState = audioStates[currentAudioIndex];
     document.getElementById('audioTooltip').textContent = currentState.label;
@@ -1213,9 +1211,7 @@
 
   function getActiveCycleDateString() {
     const now = new Date();
-    if (now.getHours() < 6) {
-      now.setDate(now.getDate() - 1);
-    }
+    if (now.getHours() < 6) { now.setDate(now.getDate() - 1); }
     return now.toISOString().split('T')[0];
   }
 
@@ -1264,7 +1260,7 @@
 
   checkUserSession();
 
-  function handleAccountClick() {
+  window.handleAccountClick = function() {
     if (currentUser) {
       if (confirm(`Estás conectado como ${currentUser.email}. ¿Deseas cerrar sesión?`)) {
         supabaseClient.auth.signOut().then(() => window.location.reload());
@@ -1274,12 +1270,12 @@
     }
   }
 
-  function goToEnteSuperior() {
+  window.goToEnteSuperior = function() {
     localStorage.removeItem('arkanica_last_reading');
     window.location.href = 'ente-superior/ente-superior.html';
   }
 
-  function goToSesionesPrivadas() {
+  window.goToSesionesPrivadas = function() {
     window.location.href = 'sesiones-privadas.html';
   }
 
@@ -1549,9 +1545,7 @@
       input.className = 'mobile-spread-select';
       input.placeholder = '¿Qué bloquea mi energía hoy...?';
       input.value = userCustomQuery;
-      input.addEventListener('input', (e) => {
-        userCustomQuery = e.target.value;
-      });
+      input.addEventListener('input', (e) => { userCustomQuery = e.target.value; });
       dynamicSpreadContainer.appendChild(input);
     } else {
       const select = document.createElement('select');
@@ -1571,7 +1565,7 @@
     }
   }
 
-  function onMobileCategoryChange(catKey) {
+  window.onMobileCategoryChange = function(catKey) {
     currentCategoryKey = catKey;
     currentSpreadKey = categoriesData[catKey].spreads[0].key;
     renderSpreadDropdowns();
@@ -1619,9 +1613,7 @@
 
   function checkAndStartReading() {
     const queryInput = document.getElementById('userCustomQueryInput');
-    if (queryInput) {
-      userCustomQuery = queryInput.value.trim() || queryInput.placeholder;
-    }
+    if (queryInput) { userCustomQuery = queryInput.value.trim() || queryInput.placeholder; }
 
     const activeDate = getActiveCycleDateString();
     const freeKey = `arkanica_free_${currentSpreadKey}`;
@@ -1643,10 +1635,7 @@
 
   function initReading() {
     const queryInput = document.getElementById('userCustomQueryInput');
-    if (queryInput && queryInput.value.trim() !== '') {
-      userCustomQuery = queryInput.value.trim();
-    }
-
+    if (queryInput && queryInput.value.trim() !== '') { userCustomQuery = queryInput.value.trim(); }
     if (!checkAndStartReading()) return;
     initReadingExecution();
   }
@@ -1656,10 +1645,8 @@
     selectedCards = [];
     currentSlotIndex = 0;
     deckSection.style.display = 'flex';
-    
     masterBox.classList.remove('active');
     masterTextContent.innerHTML = '';
-    
     updateSpreadInfo();
     updateFanUI();
     renderTableSlots();
@@ -1677,11 +1664,8 @@
     
     const posItems = infoPositions.querySelectorAll('.position-item');
     posItems.forEach((item, idx) => {
-      if (idx === currentSlotIndex) {
-        item.classList.add('active-position');
-      } else {
-        item.classList.remove('active-position');
-      }
+      if (idx === currentSlotIndex) { item.classList.add('active-position'); }
+      else { item.classList.remove('active-position'); }
     });
 
     fanContainer.innerHTML = '';
@@ -1704,41 +1688,9 @@
 
       cardEl.addEventListener('pointerdown', handleFanCardClick);
       cardEl.addEventListener('click', handleFanCardClick);
-
       fanContainer.appendChild(cardEl);
     }
   }
-
-  let touchStartX = 0;
-  let touchStartY = 0;
-  let touchStartTime = 0;
-
-  fanContainer.addEventListener('touchstart', (e) => {
-    if (e.changedTouches.length > 0) {
-      touchStartX = e.changedTouches[0].screenX;
-      touchStartY = e.changedTouches[0].screenY;
-      touchStartTime = Date.now();
-    }
-  }, {passive: true});
-
-  fanContainer.addEventListener('touchend', (e) => {
-    if (e.changedTouches.length === 0) return;
-    
-    let touchEndX = e.changedTouches[0].screenX;
-    let touchEndY = e.changedTouches[0].screenY;
-    let touchEndTime = Date.now();
-
-    let diffX = Math.abs(touchEndX - touchStartX);
-    let diffY = Math.abs(touchEndY - touchStartY);
-    let timeDiff = touchEndTime - touchStartTime;
-
-    if (diffY > 15 || diffX > 15 || timeDiff > 400) {
-      return; 
-    }
-
-    playWoodSelectSound();
-    pickCardFromFan();
-  }, {passive: true});
 
   function pickCardFromFan() {
     const config = getCurrentSpreadConfig();
@@ -1798,7 +1750,6 @@
 
   async function generateGenerativeInterpretation() {
     const config = getCurrentSpreadConfig();
-    
     const queryInput = document.getElementById('userCustomQueryInput');
     if (queryInput && queryInput.value.trim() !== '') {
       userCustomQuery = queryInput.value.trim();
@@ -1807,9 +1758,7 @@
     }
 
     masterSymbol.classList.add('spinner-symbol');
-    let introText = `✦ Analizando tu consulta: "${userCustomQuery}" a través de los arcanos...`;
-    
-    masterTextContent.innerHTML = introText;
+    masterTextContent.innerHTML = `✦ Analizando tu consulta: "${userCustomQuery}" a través de los arcanos...`;
     masterBox.classList.add('active');
 
     setTimeout(() => {
@@ -1823,31 +1772,26 @@
 
       const prompt = `Actúa como un guía espiritual empático, cercano y experto en claridad emocional. Explica de forma muy sencilla, humana y directa esta tirada de "${config.title}" con la pregunta "${userCustomQuery}" compuesta por: ${cardsText}. Estructura tu respuesta estrictamente en formato HTML utilizando etiquetas <p> (máximo 3 párrafos cortos). El último párrafo DEBE terminar obligatoriamente con una pregunta abierta y reflexiva. No incluyas markdown, solo etiquetas <p>.`;
 
-      // Clave integrada directamente para saltar los bloqueos de Netlify
-      const apiKey = "AQ.Ab8RN6Ky74zTSQLXtjtxEnPQwEYXlSL6juwMr4y_ULS4ou4OmQ";
-      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-
-      const response = await fetch(endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          contents: [{ parts: [{ text: prompt }] }]
-        })
+      // Inicialización oficial con el SDK de Google Gen AI
+      const ai = new GoogleGenAI({ apiKey: "AQ.Ab8RN6Ky74zTSQLXtjtxEnPQwEYXlSL6juwMr4y_ULS4ou4OmQ" });
+      const response = await ai.models.generateContent({
+        model: 'gemini-2.5-flash',
+        contents: prompt,
       });
 
-      if (response.ok) {
-        const data = await response.json();
-        if (data.candidates && data.candidates[0].content) {
-          masterTextContent.innerHTML = data.candidates[0].content.parts[0].text;
-        } else {
-          throw new Error("Respuesta vacía de Google");
-        }
+      if (response && response.text) {
+        masterTextContent.innerHTML = response.text;
       } else {
-        const errJson = await response.json();
-        throw new Error(errJson.error?.message || "Error al conectar con Google");
+        throw new Error("Respuesta vacía del SDK");
       }
     } catch(e) {
-      masterTextContent.innerHTML = `<p>Tras sintonizar los arcanos para tu consulta sobre "${userCustomQuery}", la presencia de <em>${selectedCards[0].name}</em> marca un punto de inflexión decisivo. ${selectedCards[0].archetype}.</p><p>Confía plenamente en tu intuición actual y permite que la claridad guíe tus próximos pasos sin vacilar.</p><p>¿Qué pequeño paso puedes dar hoy mismo para honrar esta verdad?</p>`;
+      const mainCard = selectedCards[0];
+      const secondCard = selectedCards[1] || selectedCards[0];
+      masterTextContent.innerHTML = `
+        <p>Tras sintonizar las energías de esta lectura sobre <em>"${userCustomQuery}"</em>, la presencia de <strong>${mainCard.name}</strong> en la raíz nos muestra que ${mainCard.archetype.toLowerCase()}.</p>
+        <p>Al conectar esta vibración con la energía de <strong>${secondCard.name}</strong>, el universo te invita a soltar la resistencia mental y a abrazar el proceso con absoluta confianza.</p>
+        <p>¿Qué pequeño paso puedes dar hoy mismo para honrar esta verdad y avanzar con mayor ligereza?</p>
+      `;
     } finally {
       masterSymbol.classList.remove('spinner-symbol');
     }
