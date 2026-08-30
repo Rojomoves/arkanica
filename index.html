@@ -1765,28 +1765,21 @@
 
       const prompt = `Actúa como un guía espiritual empático, cercano y experto en claridad emocional. Explica de forma muy sencilla, humana y directa esta tirada de "${config.title}" con la pregunta "${userCustomQuery}" compuesta por: ${cardsText}. Estructura tu respuesta estrictamente en formato HTML utilizando etiquetas <p> (máximo 3 párrafos cortos). El último párrafo DEBE terminar obligatoriamente con una pregunta abierta y reflexiva. No incluyas markdown, solo etiquetas <p>.`;
 
-      const apiKey = "AQ.Ab8RN6Ky74zTSQLXtjtxEnPQwEYXlSL6juwMr4y_ULS4ou4OmQ";
-      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent`;
-
-      const response = await fetch(endpoint, {
+      // Llamada segura a tu Netlify Function para evitar exponer credenciales en el cliente
+      const response = await fetch('/.netlify/functions/interpretar', {
         method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${apiKey}`
-        },
-        body: JSON.stringify({ 
-          contents: [{ parts: [{ text: prompt }] }]
-        })
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt })
       });
 
       if (response.ok) {
         const data = await response.json();
-        if (data.candidates && data.candidates[0].content) {
-          masterTextContent.innerHTML = data.candidates[0].content.parts[0].text;
+        if (data.text) {
+          masterTextContent.innerHTML = data.text;
           return;
         }
       }
-      throw new Error("Respuesta inválida de la API");
+      throw new Error("Respuesta inválida del servidor");
     } catch(e) {
       const mainCard = selectedCards[0];
       const secondCard = selectedCards[1] || selectedCards[0];
