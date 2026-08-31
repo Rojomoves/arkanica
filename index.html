@@ -565,12 +565,19 @@
     padding: 7px 16px;
     border-radius: 20px;
     animation: pulseInstruction 2s infinite ease-in-out;
+    -webkit-animation: pulseInstruction 2s infinite ease-in-out;
   }
 
   @keyframes pulseInstruction {
     0% { transform: scale(1); border-color: var(--gold-dim); }
     50% { transform: scale(1.02); border-color: var(--gold); }
     100% { transform: scale(1); border-color: var(--gold-dim); }
+  }
+
+  @-webkit-keyframes pulseInstruction {
+    0% { -webkit-transform: scale(1); border-color: var(--gold-dim); }
+    50% { -webkit-transform: scale(1.02); border-color: var(--gold); }
+    100% { -webkit-transform: scale(1); border-color: var(--gold-dim); }
   }
 
   .fan-container {
@@ -583,6 +590,7 @@
     position: relative;
     perspective: 1000px;
     animation: pulseInstruction 2s infinite ease-in-out;
+    -webkit-animation: pulseInstruction 2s infinite ease-in-out;
   }
 
   .fan-card {
@@ -988,7 +996,7 @@
 <div class="hero-container">
   <div class="arkanica-eyebrow">✦ Tu espacio de claridad interior ✦</div>
   <h1 class="arkanica-title">Elige qué te gustaría consultar hoy</h1>
-  <p class="arkanica-sub">Disfruta de cada tirada gratis una vez al día (3 cristales adicionales por repetición).</p>
+  <p class="arkanica-sub">Disfruta de tus 2 primeras tiradas gratis al día (3 cristales por cada tirada posterior).</p>
   
   <div class="quick-links-bar">
     <a href="tienda.html" class="quick-link-pill">🛍️ Tienda Mística</a>
@@ -1045,7 +1053,7 @@
 
 <div class="cro-section-container">
   
-  <!-- SECCIÓN PRINCIPAL DE AUTOR (COMPLETA - PRIMERA POSICIÓN TRAS LAS TIRADAS) -->
+  <!-- SECCIÓN PRINCIPAL DE AUTOR -->
   <div class="cro-card featured" id="autor">
     <div class="about-flex">
       <img src="assets/tarotista.jpg" alt="Andrea - Creadora de Arkanica" class="about-avatar" loading="lazy">
@@ -1641,21 +1649,24 @@
     if (queryInput) { userCustomQuery = queryInput.value.trim() || queryInput.placeholder; }
 
     const activeDate = getActiveCycleDateString();
-    const freeKey = `arkanica_free_${currentSpreadKey}`;
-    const lastFreeDate = localStorage.getItem(freeKey);
+    const countKey = `arkanica_daily_count_${activeDate}`;
+    
+    let todayFreeCount = parseInt(localStorage.getItem(countKey)) || 0;
 
-    if (lastFreeDate === activeDate) {
+    if (todayFreeCount < 2) {
+      todayFreeCount++;
+      localStorage.setItem(countKey, todayFreeCount);
+      return true;
+    } else {
       if (userCrystals < 3) {
-        hint.textContent = "Tirada ya realizada hoy. Necesitas 3 cristales.";
-        alert("Has agotado tu tirada gratuita de hoy para esta sección. Recarga cristales para continuar consultando los arcanos.");
+        hint.textContent = "Has agotado tus tiradas gratuitas de hoy. Necesitas 3 cristales.";
+        alert("Has agotado tus 2 tiradas gratuitas diarias. Necesitas 3 cristales para continuar consultando los arcanos.");
         return false;
       } else {
         updateCrystalsStorage(userCrystals - 3);
+        return true;
       }
-    } else {
-      localStorage.setItem(freeKey, activeDate);
     }
-    return true;
   }
 
   function initReading() {
@@ -1792,12 +1803,11 @@
 
     try {
       const cardsText = selectedCards.map((c, i) => 
-        `Posición ${i + 1}: ${c.name} (Significado: ${c.archetype})`
+        `[${i + 1}: ${c.name} - ${c.archetype}]`
       ).join(', ');
 
-      const prompt = `Actúa como un guía espiritual empático, cercano y experto en claridad emocional. Explica de forma muy sencilla, humana y directa esta tirada de "${config.title}" con la pregunta "${userCustomQuery}" compuesta por: ${cardsText}. Estructura tu respuesta estrictamente en formato HTML utilizando etiquetas <p> (máximo 3 párrafos cortos). El último párrafo DEBE terminar obligatoriamente con una pregunta abierta y reflexiva. No incluyas markdown, solo etiquetas <p>.`;
+      const prompt = `Actúa como Andrea, tarotista experta. Lectura: "${config.title}". Pregunta: "${userCustomQuery}". Cartas: ${cardsText}. Redacta solo 2 párrafos breves en español usando únicamente etiquetas HTML <p>. El último párrafo debe terminar con una pregunta reflexiva. Nada de markdown.`;
 
-      // Llamada segura a tu Netlify Function para evitar exponer credenciales en el cliente
       const response = await fetch('/.netlify/functions/interpretar', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -1813,13 +1823,23 @@
       }
       throw new Error("Respuesta inválida del servidor");
     } catch(e) {
-      const mainCard = selectedCards[0];
-      const secondCard = selectedCards[1] || selectedCards[0];
-      masterTextContent.innerHTML = `
-        <p>Tras sintonizar las energías de esta lectura sobre <em>"${userCustomQuery}"</em>, la presencia de <strong>${mainCard.name}</strong> en la raíz nos muestra que ${mainCard.archetype.toLowerCase()}.</p>
-        <p>Al conectar esta vibración con la energía de <strong>${secondCard.name}</strong>, el universo te invita a soltar la resistencia mental y a abrazar el proceso con absoluta confianza.</p>
-        <p>¿Qué pequeño paso puedes dar hoy mismo para honrar esta verdad y avanzar con mayor ligereza?</p>
-      `;
+      const mainCard = selectedCards[0] || { name: "la base", archetype: "inicio del camino" };
+      const lastCard = selectedCards[selectedCards.length - 1] || mainCard;
+      const totalCount = selectedCards.length;
+
+      if (totalCount > 3) {
+        masterTextContent.innerHTML = `
+          <p>En este profundo recorrido de ${totalCount} arcanos sobre <em>"${userCustomQuery}"</em>, la presencia de <strong>${mainCard.name}</strong> marca la energía de partida, mientras que <strong>${lastCard.name}</strong> sella el desenlace kármico del ciclo actual.</p>
+          <p>Cada posición analizada despliega una trama de lecciones que te invitan a observar tu realidad con perspectiva. ¿Qué revelación de este vasto mapa energético resuena con más fuerza en tu interior para dar el próximo paso?</p>
+        `;
+      } else {
+        const c2 = selectedCards[1] || mainCard;
+        const c3 = selectedCards[2] || c2;
+        masterTextContent.innerHTML = `
+          <p>Tras sintonizar las energías de esta lectura sobre <em>"${userCustomQuery}"</em>, la presencia de <strong>${mainCard.name}</strong> en la raíz nos muestra que ${mainCard.archetype.toLowerCase()}. Al cruzarlo con <strong>${c2.name}</strong>, se nos revela el nudo principal.</p>
+          <p>La aparición de <strong>${c3.name}</strong> como consejo te marca el rumbo exacto para avanzar con absoluta confianza. ¿Qué pequeño paso puedes dar hoy mismo para honrar este mensaje y liberar tu energía?</p>
+        `;
+      }
     } finally {
       masterSymbol.classList.remove('spinner-symbol');
     }
