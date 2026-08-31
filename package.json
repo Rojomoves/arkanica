@@ -5,7 +5,7 @@
     "node": "18.x"
   },
   "dependencies": {
-    "@google/genai": "*",
+    "@google/genai": "^2.19.0",
     "stripe": "^22.5.0"
   }
 }
