@@ -415,6 +415,151 @@
     box-shadow: 0 4px 15px rgba(223, 177, 91, 0.3);
   }
 
+  /* NUEVA SECCIÓN DE COMUNIDAD VIP WHATSAPP */
+  .community-promo-card {
+    background: linear-gradient(135deg, rgba(22, 19, 32, 0.92) 0%, rgba(10, 9, 16, 0.98) 100%);
+    border: 2px solid var(--gold);
+    border-radius: 16px;
+    padding: 36px 28px;
+    text-align: center;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.7), 0 0 30px rgba(223, 177, 91, 0.15);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .community-urgency-top {
+    background: rgba(223, 177, 91, 0.15);
+    color: var(--gold-light);
+    font-size: 10.5px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 8px 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    border-bottom: 1px solid rgba(223, 177, 91, 0.3);
+  }
+
+  .community-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px;
+    color: var(--text-main);
+    margin: 25px 0 12px 0;
+    line-height: 1.25;
+  }
+  .community-title span { color: var(--gold); font-style: italic; }
+
+  .community-desc {
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: var(--text-muted);
+    max-width: 650px;
+    margin: 0 auto 24px auto;
+    font-weight: 300;
+  }
+
+  .community-features-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    text-align: left;
+    margin-bottom: 28px;
+  }
+
+  .community-feature-item {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .community-feature-item.full {
+    grid-column: span 2;
+  }
+
+  .community-feature-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    color: var(--gold-light);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .community-feature-text {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  .community-price-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  .community-old-price {
+    font-size: 15px;
+    color: var(--text-muted);
+    text-decoration: line-through;
+    margin-bottom: 2px;
+  }
+
+  .community-current-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 44px;
+    color: var(--gold-light);
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .community-savings-pill {
+    background: rgba(46, 204, 113, 0.15);
+    color: #2ecc71;
+    border: 1px solid rgba(46, 204, 113, 0.4);
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 10.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 8px;
+  }
+
+  .community-cta-btn {
+    background: linear-gradient(135deg, var(--gold) 0%, #b88d38 100%);
+    color: var(--bg);
+    border: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 11.5px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 16px 32px;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    max-width: 450px;
+    display: inline-block;
+    text-decoration: none;
+    transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 10px 30px rgba(223, 177, 91, 0.3);
+  }
+
+  .community-cta-btn:hover {
+    opacity: 0.92;
+    transform: translateY(-1px);
+    box-shadow: 0 12px 35px rgba(223, 177, 91, 0.45);
+  }
+
   .auth-modal-card {
     display: flex;
     flex-direction: column;
@@ -571,12 +716,15 @@
 
   @media (max-width: 768px) {
     .pricing-grid { grid-template-columns: 1fr; }
+    .community-features-grid { grid-template-columns: 1fr; }
+    .community-feature-item.full { grid-column: span 1; }
     .testimonials-grid { grid-template-columns: 1fr; }
     .form-grid-row { grid-template-columns: 1fr; }
     .hero-title { font-size: 26px; }
     .about-grid { grid-template-columns: 1fr; justify-items: center; text-align: center; }
     .micro-offers-box { flex-direction: column; }
     .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .community-current-price { font-size: 38px; }
   }
 </style>
 </head>
@@ -598,8 +746,8 @@
 
   <div class="hero-section">
     <div class="hero-eyebrow">✦ Exclusivo, Confidencial & Profundo ✦</div>
-    <h1 class="hero-title">Sesiones Privadas de Claridad Absoluta</h1>
-    <p class="hero-sub">Cuando las tiradas generales muestran pistas pero necesitas desentrañar un nudo vital complejo, abrimos un espacio de análisis íntimo y directo exclusivamente para ti.</p>
+    <h1 class="hero-title">Sesiones Privadas y Acompañamiento con Andrea</h1>
+    <p class="hero-sub">Cuando las tiradas generales muestran pistas pero necesitas desentrañar un nudo vital complejo, abrimos espacios de análisis íntimo y comunidad exclusivamente para ti.</p>
   </div>
 
   <div class="urgency-banner">
@@ -620,7 +768,7 @@
         <div style="font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 3px;">Tranquilidad, Claridad & Equilibrio</div>
         <h3 style="margin-top: 0; font-family: 'Cormorant Garamond', serif; font-size: 22px; margin-bottom: 6px; color: var(--text-main);">¿Quién está al otro lado?</h3>
         <p style="margin-bottom: 8px; line-height: 1.6; font-size: 12px; color: var(--text-muted); font-weight: 300;">
-          Hola, soy Andrea. Creo firmemente que las respuestas a nuestras mayores encrucijadas no están ocultas en el azar, sino en la capacidad de mirar hacia dentro con la perspectiva adecuada. He diseñado estas sesiones privadas para ofrecerte un santuario de calma, sin juicios y con una precisión milimétrica.
+          Hola, soy Andrea. Creo firmemente que las respuestas a nuestras mayores encrucijadas no están ocultas en el azar, sino en la capacidad de mirar hacia dentro con la perspectiva adecuada. He diseñado estas sesiones y espacios privados para ofrecerte un santuario de calma, sin juicios y con una precisión milimétrica.
         </p>
         <p style="margin-bottom: 0; line-height: 1.5; font-size: 12px; color: var(--gold-light); font-style: italic;">
           "Cuando una duda frena tu energía, no necesitas más opiniones externas; necesitas claridad absoluta y paz mental."
@@ -737,6 +885,54 @@
     </div>
   </div>
 
+  <!-- SECCIÓN: OFERTA COMUNIDAD PRIVADA DE WHATSAPP -->
+  <div class="community-promo-card">
+    <div class="community-urgency-top">⚡ Promoción Especial — Solo disponible esta semana ⚡</div>
+    
+    <div style="font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold-dim); margin-top: 15px; margin-bottom: 8px;">✦ Círculo Privado &amp; Mentoría Continua ✦</div>
+    
+    <h2 class="community-title">Únete a la <span>Comunidad VIP de WhatsApp</span> de Arkanica</h2>
+    
+    <p class="community-desc">
+      Un espacio exclusivo de crecimiento espiritual y análisis profundo diseñado para quienes buscan ir más allá de las tiradas convencionales y construir un criterio certero junto a almas afines.
+    </p>
+
+    <div class="community-features-grid">
+      <div class="community-feature-item">
+        <div class="community-feature-title"><span>✦</span> Mentoría Directa</div>
+        <p class="community-feature-text">Orientación continuada y resolución de dudas guiadas directamente por Andrea.</p>
+      </div>
+      <div class="community-feature-item">
+        <div class="community-feature-title"><span>✦</span> Círculo Exclusivo</div>
+        <p class="community-feature-text">Un entorno íntimo, riguroso y libre de ruido exterior para compartir con seguridad.</p>
+      </div>
+      <div class="community-feature-item">
+        <div class="community-feature-title"><span>✦</span> Sincronicidad Activa</div>
+        <p class="community-feature-text">Debates diarios sobre tránsitos astrológicos y lectura avanzada en tiempo real.</p>
+      </div>
+      <div class="community-feature-item">
+        <div class="community-feature-title"><span>✦</span> Red de Almas Afines</div>
+        <p class="community-feature-text">Conecta con una red internacional de practicantes serios en tu misma frecuencia.</p>
+      </div>
+      <div class="community-feature-item full">
+        <div class="community-feature-title"><span>✦</span> Acceso Vitalicio Permanente</div>
+        <p class="community-feature-text">Un único pago sin cuotas mensuales. Entras hoy y tu permanencia en el círculo es para siempre.</p>
+      </div>
+    </div>
+
+    <div class="community-price-box">
+      <div class="community-old-price">8,90 €</div>
+      <div class="community-current-price">3,90 €</div>
+      <div class="community-savings-pill">¡Ahorras 5,00 € — Oferta Semanal!</div>
+    </div>
+    
+    <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; margin-bottom: 22px;">Pago Único — Acceso Permanente Garantizado</div>
+
+    <button class="community-cta-btn" onclick="buyCommunityPass()">Obtener Mi Acceso VIP Ahora ➔</button>
+    
+    <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 16px; font-style: italic;">🔒 Transacción 100% segura cifrada a través de Stripe. Acceso instantáneo tras el pago.</div>
+  </div>
+
   <div class="section-card" id="formulario-reserva">
     <div style="text-align: center; margin-bottom: 24px;">
       <h3 style="margin: 0 0 6px; font-family: 'Cormorant Garamond', serif; font-size: 24px; color: var(--gold); font-weight: 400;">Configura tu Solicitud</h3>
@@ -841,7 +1037,8 @@
     'pack-brujula': 'price_1UAOZz5CjrexxtcaruMeqETG',
     'pack-360': 'price_1UAOan5Cjrexxtca8NhsyjaJ',
     'consulta-expres': 'price_1UAOc75Cjrexxtcadxzqsa4H',
-    'doble-perspectiva': 'price_1UAOcr5CjrexxtcaZ49SFgor'
+    'doble-perspectiva': 'price_1UAOcr5CjrexxtcaZ49SFgor',
+    'community_pass': 'price_COMMUNITY_PASS_PLACEHOLDER' // Reemplázalo si tu ID de Stripe para el pase es diferente
   };
 
   function updateFileName(input) {
@@ -865,6 +1062,31 @@
     }
     document.getElementById('formSubtitle').textContent = `Has seleccionado el ${packName} (${price}). Rellena tus datos para continuar.`;
     document.getElementById('formulario-reserva').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // Función específica para el botón de compra del pase de comunidad
+  async function buyCommunityPass() {
+    try {
+      const response = await fetch('../.netlify/functions/crear-checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          packId: 'community_pass',
+          packName: 'Pase Comunidad Privada',
+          priceInCents: 390,
+          username: 'Invitado'
+        })
+      });
+      const data = await response.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        alert("No se pudo iniciar la pasarela de pago. Inténtalo de nuevo.");
+      }
+    } catch (err) {
+      console.error("Error:", err);
+      alert("Hubo un error al conectar con el servidor de pagos.");
+    }
   }
 
   async function submitVideoConsultation() {

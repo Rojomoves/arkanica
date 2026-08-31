@@ -62,7 +62,6 @@
     gap: 12px;
   }
 
-  /* ESTADÍSTICAS DEL USUARIO */
   .profile-badge {
     background: linear-gradient(135deg, rgba(223, 177, 91, 0.2) 0%, rgba(12, 11, 18, 0.95) 100%);
     border: 1px solid var(--gold);
@@ -79,7 +78,6 @@
   .profile-divider { width: 1px; height: 10px; background: var(--gold); opacity: 0.6; }
   .profile-user-info { font-family: 'Cormorant Garamond', serif; font-size: 12.5px; color: var(--gold-light); font-weight: 500; }
 
-  /* BOTÓN MENÚ HAMBURGUESA */
   .hamburger-btn {
     background: rgba(223, 177, 91, 0.1);
     border: 1px solid var(--gold-dim);
@@ -98,7 +96,6 @@
     background: rgba(223, 177, 91, 0.25);
   }
 
-  /* MENÚ LATERAL DESPLEGABLE */
   .menu-drawer {
     position: fixed;
     right: -320px;
@@ -162,7 +159,6 @@
     gap: 24px;
   }
 
-  /* SECCIÓN DE PRESENTACIÓN DE ANDREA */
   .creator-section {
     background: linear-gradient(135deg, rgba(14, 13, 20, 0.85) 0%, rgba(6, 5, 10, 0.95) 100%);
     border: 1px solid var(--line);
@@ -210,7 +206,6 @@
     margin: 0;
   }
 
-  /* BLOQUE DE ESTADÍSTICAS SUPERIORES ACTUALIZADO */
   .stats-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -239,21 +234,37 @@
     font-weight: 600;
   }
 
-  /* TARJETA DE VENTA PRINCIPAL */
   .sales-card {
-    background: linear-gradient(135deg, rgba(18, 16, 26, 0.9) 10%, rgba(8, 7, 12, 0.95) 100%);
-    border: 1px solid var(--gold);
+    background: linear-gradient(135deg, rgba(22, 19, 32, 0.92) 0%, rgba(10, 9, 16, 0.98) 100%);
+    border: 2px solid var(--gold);
     border-radius: 16px;
-    padding: 36px 28px;
+    padding: 42px 28px 36px 28px;
     text-align: center;
-    box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 35px rgba(223, 177, 91, 0.2);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .urgency-banner {
+    background: rgba(223, 177, 91, 0.2);
+    color: var(--gold-light);
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 10px 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    border-bottom: 1px solid rgba(223, 177, 91, 0.4);
   }
 
   .main-title {
     font-family: 'Cormorant Garamond', serif;
     font-size: 34px;
     color: var(--text-main);
-    margin: 0 0 16px 0;
+    margin: 20px 0 16px 0;
   }
   .main-title span { color: var(--gold); font-style: italic; }
 
@@ -264,7 +275,6 @@
     margin-bottom: 28px;
   }
 
-  /* VENTAJAS PROFESIONALES */
   .benefits-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -303,12 +313,40 @@
     margin: 0;
   }
 
+  .price-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  .old-price {
+    font-size: 16px;
+    color: var(--text-muted);
+    text-decoration: line-through;
+    margin-bottom: 4px;
+  }
+
   .current-price {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 42px;
+    font-size: 48px;
     color: var(--gold-light);
-    font-weight: 600;
-    margin-bottom: 8px;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .savings-badge {
+    background: rgba(46, 204, 113, 0.15);
+    color: #2ecc71;
+    border: 1px solid rgba(46, 204, 113, 0.4);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 10px;
   }
 
   .cta-button {
@@ -328,23 +366,50 @@
     display: inline-block;
     text-decoration: none;
     line-height: normal;
-    transition: transform 0.2s ease, opacity 0.2s ease;
+    transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
     box-shadow: 0 10px 30px rgba(223, 177, 91, 0.3);
   }
   
   .cta-button:hover {
     opacity: 0.92;
     transform: translateY(-1px);
+    box-shadow: 0 12px 35px rgba(223, 177, 91, 0.45);
   }
 
-  /* TARJETAS DE RESEÑAS */
+  /* ESTILOS DEL CARRUSEL TIPO SCROLL MANUAL / TÁCTIL */
+  .testimonials-carousel-wrapper {
+    position: relative;
+    width: 100%;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+    padding: 10px 0 16px 0;
+  }
+
+  .testimonials-carousel-wrapper::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+
+  .testimonials-track {
+    display: flex;
+    gap: 16px;
+    width: max-content;
+  }
+
   .review-card {
+    scroll-snap-align: start;
+    width: 320px;
     background: linear-gradient(135deg, rgba(14, 13, 20, 0.85) 0%, rgba(6, 5, 10, 0.95) 100%);
     border: 1px solid var(--line);
     border-radius: 14px;
-    padding: 28px 24px;
+    padding: 24px 20px;
     box-shadow: 0 15px 35px rgba(0,0,0,0.4);
     text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-shrink: 0;
   }
 
   .stars {
@@ -357,7 +422,7 @@
   .review-text {
     font-family: 'Cormorant Garamond', serif;
     font-style: italic;
-    font-size: 18px;
+    font-size: 17px;
     line-height: 1.5;
     color: var(--text-main);
     margin: 0 0 16px 0;
@@ -370,23 +435,104 @@
     font-style: italic;
   }
 
+  .carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .carousel-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--line);
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+  }
+
+  .carousel-dot.active {
+    background: var(--gold);
+    transform: scale(1.2);
+  }
+
+  .social-proof-toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: linear-gradient(135deg, rgba(18, 15, 26, 0.95) 0%, rgba(8, 7, 12, 0.98) 100%);
+    border: 1px solid var(--gold);
+    border-left: 3px solid var(--gold);
+    border-radius: 10px;
+    padding: 12px 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.7), 0 0 20px rgba(223, 177, 91, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 9999;
+    max-width: 320px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    pointer-events: none;
+  }
+
+  .social-proof-toast.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .toast-icon {
+    font-size: 20px;
+    background: rgba(223, 177, 91, 0.15);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border: 1px solid var(--gold-dim);
+  }
+
+  .toast-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .toast-title {
+    font-size: 11px;
+    color: var(--gold-light);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+
+  .toast-text {
+    font-size: 11px;
+    color: var(--text-muted);
+    line-height: 1.35;
+  }
+
   @media (max-width: 768px) {
     .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
     .stat-number { font-size: 22px; }
-    .sales-card { padding: 24px 16px; }
+    .sales-card { padding: 32px 16px 24px 16px; }
     .main-title { font-size: 26px; }
     .benefits-grid { grid-template-columns: 1fr; }
     .benefit-card.full-width { grid-column: span 1; }
     .creator-section { grid-template-columns: 1fr; text-align: center; gap: 16px; }
-    .current-price { font-size: 36px; }
-    .review-card { padding: 20px 18px; }
+    .current-price { font-size: 42px; }
+    .review-card { width: 280px; padding: 20px 18px; }
     .review-text { font-size: 16px; }
+    .social-proof-toast { left: 12px; right: 12px; bottom: 12px; max-width: none; }
   }
 </style>
 </head>
 <body>
 
-<!-- BACKDROP Y MENÚ HAMBURGUESA LATERAL -->
 <div class="backdrop" id="menuBackdrop" onclick="toggleMenu()"></div>
 <div class="menu-drawer" id="menuDrawer">
   <div class="menu-header">
@@ -407,7 +553,6 @@
   </a>
 
   <div class="header-right">
-    <!-- ESTADÍSTICAS DEL USUARIO -->
     <div class="profile-badge">
       <div class="profile-crystals">
         <span>💎</span> <strong id="headerCrystalCount">10</strong>
@@ -418,14 +563,12 @@
       </div>
     </div>
 
-    <!-- BOTÓN HAMBURGUESA -->
     <button class="hamburger-btn" onclick="toggleMenu()">☰</button>
   </div>
 </header>
 
 <div class="main-container">
   
-  <!-- 1. PRESENTACIÓN DE ANDREA (AUTORIDAD) -->
   <div class="creator-section">
     <div>
       <div class="creator-avatar">
@@ -441,7 +584,6 @@
     </div>
   </div>
 
-  <!-- 2. ESTADÍSTICAS DE IMPACTO ACTUALIZADAS -->
   <div class="stats-grid">
     <div class="stat-box">
       <div class="stat-number">+2000</div>
@@ -461,58 +603,125 @@
     </div>
   </div>
 
-  <!-- 3. TARJETA DE VENTA PRINCIPAL (OFERTA & VENTAJAS) -->
   <div class="sales-card" id="salesCardContainer">
-    <div style="font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 10px;">✦ Círculo Privado &amp; Mentoría Continua ✦</div>
-    <h1 class="main-title">Desbloquea el Acceso Total a la <span>Comunidad VIP de WhatsApp</span></h1>
+    <div class="urgency-banner">⚡ Promoción Especial — Solo disponible esta semana ⚡</div>
+    <div style="font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 10px; margin-top: 15px;">✦ Círculo Privado &amp; Mentoría Continua ✦</div>
+    <h1 class="main-title">Únete a la <span>Comunidad VIP de WhatsApp</span> de Arkanica</h1>
     <p class="lead-text">
-      Un espacio exclusivo de crecimiento espiritual y análisis profundo diseñado para quienes buscan ir más allá de las tiradas convencionales y construir un criterio certero.
+      Un espacio exclusivo de crecimiento espiritual y análisis profundo diseñado para quienes buscan ir más allá de las tiradas convencionales y construir un criterio certero junto a almas afines.
     </p>
 
-    <!-- 5 VENTAJAS PROFESIONALES -->
     <div class="benefits-grid">
       <div class="benefit-card">
         <div class="benefit-card-title"><span>✦</span> Mentoría Directa</div>
-        <p class="benefit-card-desc">Orientación continuada y resolución de dudas metodológicas guiadas directamente por Andrea y especialistas en arcanos.</p>
+        <p class="benefit-card-desc">Orientación continuada y resolución de dudas guiadas directamente por Andrea.</p>
       </div>
       <div class="benefit-card">
         <div class="benefit-card-title"><span>✦</span> Círculo Exclusivo</div>
-        <p class="benefit-card-desc">Un entorno íntimo, riguroso y libre de ruido exterior donde compartir interpretaciones complejas con total seguridad.</p>
+        <p class="benefit-card-desc">Un entorno íntimo, riguroso y libre de ruido exterior para compartir con seguridad.</p>
       </div>
       <div class="benefit-card">
         <div class="benefit-card-title"><span>✦</span> Sincronicidad Activa</div>
-        <p class="benefit-card-desc">Debates diarios sobre tránsitos astrológicos, sincronicidades colectivas y lectura avanzada de tiradas en tiempo real.</p>
+        <p class="benefit-card-desc">Debates diarios sobre tránsitos astrológicos y lectura avanzada en tiempo real.</p>
       </div>
       <div class="benefit-card">
         <div class="benefit-card-title"><span>✦</span> Red de Almas Afines</div>
-        <p class="benefit-card-desc">Conecta con una red internacional de practicantes serios que vibran en tu misma frecuencia evolutiva.</p>
+        <p class="benefit-card-desc">Conecta con una red internacional de practicantes serios en tu misma frecuencia.</p>
       </div>
       <div class="benefit-card full-width">
-        <div class="benefit-card-title"><span>✦</span> Acceso Vitalicio</div>
-        <p class="benefit-card-desc">Un único pago sin cuotas de suscripción mensuales. Entras hoy y tu permanencia en el círculo es para siempre.</p>
+        <div class="benefit-card-title"><span>✦</span> Acceso Vitalicio Permanente</div>
+        <p class="benefit-card-desc">Un único pago sin cuotas mensuales. Entras hoy y tu permanencia en el círculo es para siempre.</p>
       </div>
     </div>
 
-    <div class="current-price">8,90 €</div>
+    <div class="price-container">
+      <div class="old-price">8,90 €</div>
+      <div class="current-price">3,90 €</div>
+      <div class="savings-badge">¡Ahorras 5,00 € — Oferta Semanal!</div>
+    </div>
     <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; margin-bottom: 24px;">Pago Único — Acceso Permanente Garantizado</div>
 
-    <button class="cta-button" onclick="buyCommunityPass()">Obtener Mi Acceso VIP Ahora</button>
+    <button class="cta-button" onclick="buyCommunityPass()">Obtener Mi Acceso VIP Ahora ➔</button>
     <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 16px; font-style: italic;">🔒 Transacción 100% segura cifrada a través de Stripe. Acceso instantáneo tras el pago.</div>
   </div>
 
-  <!-- 4. PRUEBA SOCIAL (RESEÑAS) -->
-  <div class="review-card">
-    <div class="stars">★★★★★</div>
-    <p class="review-text">«Ver el vídeo me dio una paz tremenda. Acertó de pleno en detalles de mi situación que no había mencionado en ningún sitio.»</p>
-    <div class="review-author">— Lucía M.</div>
+  <div class="sales-card" style="padding: 24px 20px;">
+    <div style="text-align: center; margin-bottom: 16px;">
+      <div style="font-size: 9.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 4px;">Comunidad & Experiencias</div>
+      <h3 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--gold); font-weight: 400;">Lo que opinan quienes ya forman parte</h3>
+    </div>
+
+    <div class="testimonials-carousel-wrapper" id="testimonialsCarousel">
+      <div class="testimonials-track" id="testimonialsTrack">
+        
+        <div class="review-card">
+          <div class="stars">★★★★★</div>
+          <p class="review-text">«Ver el vídeo me dio una paz tremenda. Acertó de pleno en detalles de mi situación que no había mencionado en ningún sitio.»</p>
+          <div class="review-author">— Lucía M.</div>
+        </div>
+
+        <div class="review-card">
+          <div class="stars">★★★★★</div>
+          <p class="review-text">«La claridad con la que desgrana el problema vale cada céntimo. Te habla directo al alma y con los siguientes pasos claros.»</p>
+          <div class="review-author">— Carlos R.</div>
+        </div>
+
+        <div class="review-card">
+          <div class="stars">★★★★★</div>
+          <p class="review-text">«Estaba atrapada en un bucle mental con mi situación de pareja que me desgastaba a diario. Ver el desglose de Andrea fue como encender una luz.»</p>
+          <div class="review-author">— Elena S.</div>
+        </div>
+
+        <div class="review-card">
+          <div class="stars">★★★★★</div>
+          <p class="review-text">«Tenía que tomar una decisión laboral drástica y el miedo me paralizaba. La precisión milimétrica de Andrea me dio la seguridad exacta.»</p>
+          <div class="review-author">— David M.</div>
+        </div>
+
+        <div class="review-card">
+          <div class="stars">★★★★★</div>
+          <p class="review-text">«Entrar en la comunidad de WhatsApp ha sido un antes y un después. Sentirte acompañada por gente que vibra en tu misma sintonía no tiene precio.»</p>
+          <div class="review-author">— Sofía G.</div>
+        </div>
+
+        <div class="review-card">
+          <div class="stars">★★★★★</div>
+          <p class="review-text">«El Pack Brújula superó todas mis expectativas. El seguimiento a los 15 días me permitió reajustar mi estrategia y ver resultados tangibles.»</p>
+          <div class="review-author">— Javier P.</div>
+        </div>
+
+        <div class="review-card">
+          <div class="stars">★★★★★</div>
+          <p class="review-text">«Andrea tiene un don inigualable para transmitir calma y orden mental. Sus respuestas son profundas, elegantes y van directas al grano.»</p>
+          <div class="review-author">— Carmen L.</div>
+        </div>
+
+        <div class="review-card">
+          <div class="stars">★★★★★</div>
+          <p class="review-text">«La consulta exprés me sacó de una duda urgente en menos de 24 horas. La profesionalidad y la empatía se notan desde el primer segundo.»</p>
+          <div class="review-author">— Mario T.</div>
+        </div>
+
+        <div class="review-card">
+          <div class="stars">★★★★★</div>
+          <p class="review-text">«El acceso vitalicio al círculo VIP es una maravilla. Compartir experiencias y reflexiones en ese grupo privado te recarga de energía positiva.»</p>
+          <div class="review-author">— Beatriz N.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="carousel-dots" id="carouselDots"></div>
   </div>
 
-  <div class="review-card">
-    <div class="stars">★★★★★</div>
-    <p class="review-text">«La claridad con la que desgrana el problema vale cada céntimo. Te habla directo al alma y con los siguientes pasos claros.»</p>
-    <div class="review-author">— Carlos R.</div>
-  </div>
+</div>
 
+<div class="social-proof-toast" id="socialProofToast">
+  <div class="toast-icon">✨</div>
+  <div class="toast-content">
+    <div class="toast-title" id="toastTitle">¡Nueva persona unida!</div>
+    <div class="toast-text" id="toastText">Carla M. (Valencia) se acaba de unir a la Comunidad VIP de WhatsApp.</div>
+  </div>
 </div>
 
 <script>
@@ -522,7 +731,6 @@
   let currentUser = null;
   let crystals = 10;
 
-  // Enlace real al grupo de WhatsApp (sustituye esto por tu URL de invitación de WhatsApp)
   const WHATSAPP_GROUP_LINK = 'https://chat.whatsapp.com/TU_ENLACE_DE_INVITACION_REAL';
 
   function toggleMenu() {
@@ -589,7 +797,7 @@
         body: JSON.stringify({
           packId: 'community_pass',
           packName: 'Pase Comunidad Privada',
-          priceInCents: 890,
+          priceInCents: 390,
           crystalsAmount: 0,
           username: currentUser ? currentUser.email : 'Invitado'
         })
@@ -605,6 +813,77 @@
       alert("Hubo un error al conectar con el servidor de pagos.");
     }
   }
+
+  // LÓGICA DE CARRUSEL TÁCTIL/SCROLL Y ACTUALIZACIÓN DE PUNTOS
+  document.addEventListener("DOMContentLoaded", () => {
+    const wrapper = document.getElementById("testimonialsCarousel");
+    const track = document.getElementById("testimonialsTrack");
+    const cards = track.querySelectorAll(".review-card");
+    const dotsContainer = document.getElementById("carouselDots");
+
+    function createDots() {
+      dotsContainer.innerHTML = "";
+      cards.forEach((_, idx) => {
+        const dot = document.createElement("button");
+        dot.className = `carousel-dot ${idx === 0 ? "active" : ""}`;
+        dot.addEventListener("click", () => {
+          const cardWidth = cards[0].getBoundingClientRect().width + 16;
+          wrapper.scrollTo({ left: idx * cardWidth, behavior: 'smooth' });
+        });
+        dotsContainer.appendChild(dot);
+      });
+    }
+
+    createDots();
+
+    // Actualizar puntos activos según el scroll manual
+    wrapper.addEventListener("scroll", () => {
+      const cardWidth = cards[0].getBoundingClientRect().width + 16;
+      const scrollLeft = wrapper.scrollLeft;
+      const activeIndex = Math.round(scrollLeft / cardWidth);
+      
+      const dots = dotsContainer.querySelectorAll(".carousel-dot");
+      dots.forEach((dot, idx) => {
+        dot.classList.toggle("active", idx === activeIndex);
+      });
+    });
+
+    // LÓGICA DE NOTIFICACIONES FLOTANTES DE PRUEBA SOCIAL (PRIMERA A LOS 12S, LUEGO CADA 25S)
+    const socialProofList = [
+      { title: "¡Nueva alta en Comunidad VIP!", text: "Carla M. (Valencia) se acaba de unir al círculo privado de WhatsApp." },
+      { title: "¡Sesión Privada Reservada!", text: "Alejandro G. (Madrid) ha reservado el Pack Brújula con Andrea." },
+      { title: "¡Acceso VIP Concedido!", text: "Nuria P. (Barcelona) ha obtenido su pase vitalicio a la comunidad." },
+      { title: "¡Nueva persona unida!", text: "Marc V. (Girona) acaba de acceder al Círculo de Claridad." },
+      { title: "¡Sesión Privada Reservada!", text: "Claudia R. (Sevilla) has reservado el Pack Esencia." },
+      { title: "¡Nueva alta en Comunidad VIP!", text: "Héctor S. (Bilbao) se ha unido al grupo exclusivo de WhatsApp." }
+    ];
+
+    const toast = document.getElementById("socialProofToast");
+    const toastTitle = document.getElementById("toastTitle");
+    const toastText = document.getElementById("toastText");
+
+    let toastIndex = 0;
+
+    function triggerSocialProofToast() {
+      const item = socialProofList[toastIndex];
+      toastTitle.textContent = item.title;
+      toastText.textContent = item.text;
+
+      toast.classList.add("show");
+
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 6000);
+
+      toastIndex = (toastIndex + 1) % socialProofList.length;
+    }
+
+    // Primera notificación a los 12 segundos, luego intervalo de 25 segundos
+    setTimeout(() => {
+      triggerSocialProofToast();
+      setInterval(triggerSocialProofToast, 25000);
+    }, 12000);
+  });
 </script>
 
 </body>
