@@ -1797,7 +1797,6 @@
 
       const prompt = `Actúa como Andrea, tarotista experta. Lectura: "${config.title}". Pregunta: "${userCustomQuery}". Cartas: ${cardsText}. Redacta solo 2 párrafos breves en español usando únicamente etiquetas HTML <p>. El último párrafo debe terminar con una pregunta reflexiva. Nada de markdown.`;
 
-      // Llamada segura a tu Netlify Function para evitar exponer credenciales en el cliente
       const response = await fetch('/.netlify/functions/interpretar', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -1813,12 +1812,14 @@
       }
       throw new Error("Respuesta inválida del servidor");
     } catch(e) {
-      const mainCard = selectedCards[0];
-      const secondCard = selectedCards[1] || selectedCards[0];
+      // Respaldo inteligente actualizado para incluir siempre las 3 cartas de la tirada
+      const c1 = selectedCards[0] || { name: "la base", archetype: "inicio del camino" };
+      const c2 = selectedCards[1] || c1;
+      const c3 = selectedCards[2] || c2;
+      
       masterTextContent.innerHTML = `
-        <p>Tras sintonizar las energías de esta lectura sobre <em>"${userCustomQuery}"</em>, la presencia de <strong>${mainCard.name}</strong> en la raíz nos muestra que ${mainCard.archetype.toLowerCase()}.</p>
-        <p>Al conectar esta vibración con la energía de <strong>${secondCard.name}</strong>, el universo te invita a soltar la resistencia mental y a abrazar el proceso con absoluta confianza.</p>
-        <p>¿Qué pequeño paso puedes dar hoy mismo para honrar esta verdad y avanzar con mayor ligereza?</p>
+        <p>Tras sintonizar las energías de esta lectura sobre <em>"${userCustomQuery}"</em>, la presencia de <strong>${c1.name}</strong> en la raíz nos muestra que ${c1.archetype.toLowerCase()}. Al cruzarlo con <strong>${c2.name}</strong> en el desafío, se nos revela el nudo actual.</p>
+        <p>Sin embargo, la aparición de <strong>${c3.name}</strong> como consejo te marca el rumbo exacto: es el momento de integrar esta verdad para avanzar con absoluta confianza. ¿Qué pequeño paso puedes dar hoy mismo para honrar este mensaje y liberar tu energía?</p>
       `;
     } finally {
       masterSymbol.classList.remove('spinner-symbol');
