@@ -14,7 +14,7 @@ exports.handler = async (event, context) => {
     
     const response = await ai.models.generateContent({
       model: 'gemini-3.6-flash',
-      contents: prompt,
+      contents: prompt + " (Responde obligatoriamente en español y en formato HTML completo con párrafos <p> cerrados correctamente)",
     });
 
     return {
