@@ -1792,10 +1792,10 @@
 
     try {
       const cardsText = selectedCards.map((c, i) => 
-        `Posición ${i + 1}: ${c.name} (Significado: ${c.archetype})`
+        `[${i + 1}: ${c.name} - ${c.archetype}]`
       ).join(', ');
 
-      const prompt = `Actúa como un guía espiritual empático, cercano y experto en claridad emocional. Explica de forma muy sencilla, humana y directa esta tirada de "${config.title}" con la pregunta "${userCustomQuery}" compuesta por: ${cardsText}. Estructura tu respuesta estrictamente en formato HTML utilizando etiquetas <p> (máximo 3 párrafos cortos). El último párrafo DEBE terminar obligatoriamente con una pregunta abierta y reflexiva. No incluyas markdown, solo etiquetas <p>.`;
+      const prompt = `Actúa como Andrea, tarotista experta. Lectura: "${config.title}". Pregunta: "${userCustomQuery}". Cartas: ${cardsText}. Redacta solo 2 párrafos breves en español usando únicamente etiquetas HTML <p>. El último párrafo debe terminar con una pregunta reflexiva. Nada de markdown.`;
 
       // Llamada segura a tu Netlify Function para evitar exponer credenciales en el cliente
       const response = await fetch('/.netlify/functions/interpretar', {
