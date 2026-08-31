@@ -12,14 +12,9 @@ exports.handler = async (event, context) => {
     const { prompt } = JSON.parse(event.body);
     const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
     
-    // Optimizamos la llamada para priorizar velocidad de respuesta
     const response = await ai.models.generateContent({
       model: 'gemini-3.6-flash',
-      contents: prompt,
-      config: {
-        maxOutputTokens: 350, // Limita la respuesta para que no tarde en redactar de más
-        temperature: 0.7,
-      }
+      contents: prompt + " (Responde obligatoriamente en español y en formato HTML completo con párrafos <p> cerrados correctamente)",
     });
 
     return {
