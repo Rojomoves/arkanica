@@ -48,7 +48,6 @@
     scroll-behavior: smooth;
   }
 
-  /* VIÑETA OSCURA Y ENVOLVENTE */
   body::after {
     content: '';
     position: fixed;
@@ -58,7 +57,6 @@
     z-index: 1000;
   }
 
-  /* HEADER */
   header {
     width: 100%;
     max-width: 1100px;
@@ -114,7 +112,6 @@
     border-color: var(--gold);
   }
 
-  /* CONTENEDOR PRINCIPAL */
   .page-container {
     width: 100%;
     max-width: 900px;
@@ -156,7 +153,6 @@
     font-weight: 300;
   }
 
-  /* BARRA DE URGENCIA / ESCASEZ CRO */
   .urgency-banner {
     background: linear-gradient(90deg, rgba(223, 177, 91, 0.15), rgba(14, 13, 20, 0.8));
     border-left: 3px solid var(--gold);
@@ -170,7 +166,6 @@
     margin-bottom: -10px;
   }
 
-  /* SECCIÓN GENERAL TARJETAS */
   .section-card {
     background: linear-gradient(135deg, rgba(14, 13, 20, 0.85) 0%, rgba(6, 5, 10, 0.95) 100%);
     border: 1px solid var(--line);
@@ -224,7 +219,6 @@
     letter-spacing: 0.05em;
   }
 
-  /* ESTILOS DE ESTADÍSTICAS (ACTUALIZADOS) */
   .stats-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -261,7 +255,6 @@
     line-height: 1.3;
   }
 
-  /* TARJETAS DE PACKS (PRICING) */
   .pricing-header {
     text-align: center;
     margin-bottom: 20px;
@@ -323,13 +316,35 @@
     text-align: center;
   }
 
+  .pricing-price-container {
+    text-align: center;
+    margin-bottom: 12px;
+  }
+
   .pricing-price {
     font-family: 'Cormorant Garamond', serif;
     font-size: 32px;
     color: var(--text-main);
-    text-align: center;
-    margin-bottom: 12px;
     font-weight: 600;
+    display: inline-block;
+  }
+
+  .pricing-old-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    color: var(--text-muted);
+    text-decoration: line-through;
+    margin-right: 8px;
+  }
+
+  .savings-tag {
+    display: block;
+    font-size: 10px;
+    color: var(--gold);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 2px;
   }
 
   .pricing-desc {
@@ -400,7 +415,6 @@
     box-shadow: 0 4px 15px rgba(223, 177, 91, 0.3);
   }
 
-  /* FORMULARIO DE RESERVA GENERAL */
   .auth-modal-card {
     display: flex;
     flex-direction: column;
@@ -443,7 +457,6 @@
   }
   .auth-textarea { resize: vertical; min-height: 100px; }
 
-  /* ESTILO PARA EL INPUT DE ARCHIVO (FOTO OPCIONAL) */
   .file-upload-wrapper {
     position: relative;
     border: 1px dashed var(--line);
@@ -506,7 +519,6 @@
 
   .auth-msg { font-size: 12px; text-align: center; min-height: 18px; color: var(--gold); }
 
-  /* MICRO OFERTAS DE IMPULSO */
   .micro-offers-box {
     background: rgba(0, 0, 0, 0.3);
     border: 1px dashed var(--line);
@@ -525,7 +537,6 @@
     gap: 4px;
   }
 
-  /* TESTIMONIOS */
   .testimonials-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -591,13 +602,11 @@
     <p class="hero-sub">Cuando las tiradas generales muestran pistas pero necesitas desentrañar un nudo vital complejo, abrimos un espacio de análisis íntimo y directo exclusivamente para ti.</p>
   </div>
 
-  <!-- BARRA DE URGENCIA CRO -->
   <div class="urgency-banner">
     <span>⚡ <strong>Plazas limitadas:</strong> Solo 4 análisis en vídeo disponibles esta semana para garantizar máxima profundidad.</span>
     <span style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gold);">Entrega en 24-48h</span>
   </div>
 
-  <!-- SECCIÓN QUIÉN SOY + ESTADÍSTICAS DE CONFIANZA -->
   <div class="section-card">
     <div class="about-grid">
       <div class="about-avatar-wrapper">
@@ -619,7 +628,6 @@
       </div>
     </div>
 
-    <!-- BLOQUE DE ESTADÍSTICAS DE CONFIANZA ACTUALIZADO -->
     <div class="stats-grid">
       <div class="stat-item">
         <span class="stat-number">+2000</span>
@@ -640,7 +648,6 @@
     </div>
   </div>
 
-  <!-- SECCIÓN DE PACKS Y OFERTAS DE SESIONES PRIVADAS -->
   <div class="section-card">
     <div class="pricing-header">
       <div style="font-size: 9.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 4px;">Selecciona tu Nivel de Acompañamiento</div>
@@ -653,7 +660,13 @@
       <div class="pricing-card">
         <div>
           <h4 class="pricing-title">Pack Esencia</h4>
-          <div class="pricing-price">29,90 €</div>
+          <div class="pricing-price-container">
+            <div>
+              <span class="pricing-old-price">29,90 €</span>
+              <span class="pricing-price">19,90 €</span>
+            </div>
+            <span class="savings-tag">¡Ahorras 10 €!</span>
+          </div>
           <p class="pricing-desc">«Cuando el ruido mental te nubla y una duda concreta frena tus decisiones, obtén un análisis preciso y directo al alma.»</p>
           <ul class="pricing-features">
             <li>3 Consultas / Preguntas específicas</li>
@@ -661,7 +674,7 @@
             <li>15 Cristales de Claridad de regalo</li>
           </ul>
         </div>
-        <button class="pricing-btn" onclick="selectPack('Pack Esencia', '29,90€')">Elegir Esencia</button>
+        <button class="pricing-btn" onclick="selectPack('Pack Esencia', '19,90€')">Elegir Esencia</button>
       </div>
 
       <!-- PACK BRÚJULA (DESTACADO) -->
@@ -669,7 +682,13 @@
         <div class="featured-badge">Más Elegido</div>
         <div>
           <h4 class="pricing-title">Pack Brújula</h4>
-          <div class="pricing-price">49,90 €</div>
+          <div class="pricing-price-container">
+            <div>
+              <span class="pricing-old-price">49,90 €</span>
+              <span class="pricing-price">34,90 €</span>
+            </div>
+            <span class="savings-tag">¡Ahorras 15 €!</span>
+          </div>
           <p class="pricing-desc">«Los giros importantes exigen estrategia. Evalúa tus avances a mitad de camino y recupera el control absoluto.»</p>
           <ul class="pricing-features">
             <li>2 Bloques de consultas (3 preguntas c/u)</li>
@@ -678,14 +697,20 @@
             <li>30 Cristales de Claridad de regalo</li>
           </ul>
         </div>
-        <button class="pricing-btn" onclick="selectPack('Pack Brújula', '49,90€')">Elegir Brújula</button>
+        <button class="pricing-btn" onclick="selectPack('Pack Brújula', '34,90€')">Elegir Brújula</button>
       </div>
 
       <!-- PACK 360º (MÉNTORIA ÍNTIMA) -->
       <div class="pricing-card">
         <div>
           <h4 class="pricing-title">Pack 360º</h4>
-          <div class="pricing-price">89,90 €</div>
+          <div class="pricing-price-container">
+            <div>
+              <span class="pricing-old-price">89,90 €</span>
+              <span class="pricing-price">79,90 €</span>
+            </div>
+            <span class="savings-tag">¡Ahorras 10 €!</span>
+          </div>
           <p class="pricing-desc">«Un santuario de trabajo personal exclusivo para cruzar al siguiente nivel con acompañamiento experto.»</p>
           <ul class="pricing-features">
             <li>3 Sesiones Privadas en Vídeo exclusivo (cada 10 días)</li>
@@ -695,25 +720,23 @@
             <li>50 Cristales de Claridad de regalo</li>
           </ul>
         </div>
-        <button class="pricing-btn" onclick="selectPack('Pack 360º Mentoría', '89,90€')">Elegir 360º</button>
+        <button class="pricing-btn" onclick="selectPack('Pack 360º Mentoría', '79,90€')">Elegir 360º</button>
       </div>
 
     </div>
 
-    <!-- MICRO OFERTAS DE IMPULSO -->
     <div style="margin-top: 20px;" class="micro-offers-box">
       <div class="micro-item">
         <span style="font-size: 11px; color: var(--gold-light); font-weight: 500;">⚡ Consulta Exprés (1 Pregunta)</span>
-        <span style="font-size: 12px; color: var(--text-muted);">Ideal para una chispa rápida de claridad — <strong>12,00 €</strong></span>
+        <span style="font-size: 12px; color: var(--text-muted);">Ideal para una chispa rápida de claridad — <strong>9,00 €</strong></span>
       </div>
       <div class="micro-item">
         <span style="font-size: 11px; color: var(--gold-light); font-weight: 500;">🔮 Doble Perspectiva (2 Preguntas)</span>
-        <span style="font-size: 12px; color: var(--text-muted);">Ahorro para conectar dos caras de un dilema — <strong>22,00 €</strong></span>
+        <span style="font-size: 12px; color: var(--text-muted);">Ahorro para conectar dos caras de un dilema — <strong>17,00 €</strong></span>
       </div>
     </div>
   </div>
 
-  <!-- FORMULARIO DE RESERVA / CONFIGURACIÓN CON FOTO Y DATOS COMPLETOS -->
   <div class="section-card" id="formulario-reserva">
     <div style="text-align: center; margin-bottom: 24px;">
       <h3 style="margin: 0 0 6px; font-family: 'Cormorant Garamond', serif; font-size: 24px; color: var(--gold); font-weight: 400;">Configura tu Solicitud</h3>
@@ -722,19 +745,17 @@
 
     <div class="auth-modal-card">
       
-      <!-- SELECCIÓN DE PACK -->
       <div class="auth-input-group">
         <label>Pack o Enfoque Seleccionado</label>
         <select id="videoSpreadType" class="auth-select">
-          <option value="pack-esencia">Pack Esencia (29,90 €) — 3 Preguntas de Análisis</option>
-          <option value="pack-brujula" selected>Pack Brújula (49,90 €) — Seguimiento a 15 días</option>
-          <option value="pack-360">Pack Transformación 360º (89,90 €) — Mentoría Íntima</option>
-          <option value="consulta-expres">Consulta Exprés 1 Pregunta (12,00 €)</option>
-          <option value="doble-perspectiva">Doble Perspectiva 2 Preguntas (22,00 €)</option>
+          <option value="pack-esencia">Pack Esencia (19,90 €) — 3 Preguntas de Análisis</option>
+          <option value="pack-brujula" selected>Pack Brújula (34,90 €) — Seguimiento a 15 días</option>
+          <option value="pack-360">Pack Transformación 360º (79,90 €) — Mentoría Íntima</option>
+          <option value="consulta-expres">Consulta Exprés 1 Pregunta (9,00 €)</option>
+          <option value="doble-perspectiva">Doble Perspectiva 2 Preguntas (17,00 €)</option>
         </select>
       </div>
 
-      <!-- FILA 1: NOMBRE Y CORREO -->
       <div class="form-grid-row">
         <div class="auth-input-group">
           <label>Nombre *</label>
@@ -746,7 +767,6 @@
         </div>
       </div>
 
-      <!-- FILA 2: FECHA DE NACIMIENTO Y FOTO OPCIONAL -->
       <div class="form-grid-row">
         <div class="auth-input-group">
           <label>Fecha de Nacimiento (Opcional)</label>
@@ -762,13 +782,11 @@
         </div>
       </div>
 
-      <!-- DILEMA EXACTO -->
       <div class="auth-input-group">
         <label>Dilema Principal o Pregunta Clave *</label>
         <input type="text" id="videoUserDilema" class="auth-input" placeholder="Ej: ¿Qué camino debo tomar respecto a mi situación actual o profesional?">
       </div>
 
-      <!-- DETALLES Y CONTEXTO -->
       <div class="auth-input-group">
         <label>Detalles y Contexto *</label>
         <textarea id="videoUserQuery" class="auth-textarea" placeholder="Cuéntame detalladamente qué está pasando, qué dudas te quitan el sueño y qué te gustaría que Andrea analice en profundidad..."></textarea>
@@ -784,7 +802,6 @@
     </div>
   </div>
 
-  <!-- TESTIMONIOS -->
   <div class="section-card">
     <div style="text-align: center; margin-bottom: 20px;">
       <div style="font-size: 9.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 4px;">Comunidad & Experiencias</div>
@@ -818,12 +835,13 @@
 </div>
 
 <script>
-  const STRIPE_LINKS = {
-    'pack-esencia': 'https://buy.stripe.com/eVqbIUgJp1JV4VM5jTfQI00',
-    'pack-brujula': 'https://buy.stripe.com/eVqbIUgJp1JV4VM5jTfQI00',
-    'pack-360': 'https://buy.stripe.com/eVqbIUgJp1JV4VM5jTfQI00',
-    'consulta-expres': 'https://buy.stripe.com/eVqbIUgJp1JV4VM5jTfQI00',
-    'doble-perspectiva': 'https://buy.stripe.com/eVqbIUgJp1JV4VM5jTfQI00'
+  // Diccionario con los Price IDs oficiales de Stripe conectados al backend de checkout
+  const STRIPE_PRICES = {
+    'pack-esencia': 'price_1UAOZ75Cjrexxtca6ifPyarr',
+    'pack-brujula': 'price_1UAOZz5CjrexxtcaruMeqETG',
+    'pack-360': 'price_1UAOan5Cjrexxtca8NhsyjaJ',
+    'consulta-expres': 'price_1UAOc75Cjrexxtcadxzqsa4H',
+    'doble-perspectiva': 'price_1UAOcr5CjrexxtcaZ49SFgor'
   };
 
   function updateFileName(input) {
@@ -912,9 +930,29 @@
       console.error("Supabase sync warning:", err);
     }
 
-    setTimeout(() => {
-      window.location.href = STRIPE_LINKS[spreadType] || 'https://buy.stripe.com/eVqbIUgJp1JV4VM5jTfQI00';
-    }, 700);
+    // Petición a la Netlify Function de Stripe pasándole el priceId correspondiente
+    try {
+      const priceId = STRIPE_PRICES[spreadType];
+      const response = await fetch('../.netlify/functions/crear-checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          priceId: priceId,
+          packName: spreadType,
+          username: name
+        })
+      });
+
+      const data = await response.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        throw new Error(data.error || 'No se pudo generar la sesión de pago');
+      }
+    } catch (error) {
+      console.error("Error en checkout:", error);
+      msg.textContent = 'Error al conectar con la pasarela de pago. Inténtalo de nuevo.';
+    }
   }
 </script>
 
