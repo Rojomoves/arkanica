@@ -14,15 +14,10 @@ from = "/assets/*"
 to = "/assets/:splat"
 status = 200
 
-# 3. Redirecciones permanentes (301) para limpiar errores anteriores en buscadores o rastreos
+# 3. Redirecciones permanentes (301) para unificar URLs antiguas o variantes
 [[redirects]]
 from = "/sesion-ente"
-to = "/ente-superior"
-status = 301
-
-[[redirects]]
-from = "/ente-superior.html"
-to = "/ente-superior"
+to = "/ente-superior.html"
 status = 301
 
 [[redirects]]
