@@ -21,7 +21,7 @@ to = "/ente-superior"
 status = 301
 
 [[redirects]]
-from = "/ente-superior/ente-superior.html"
+from = "/ente-superior.html"
 to = "/ente-superior"
 status = 301
 

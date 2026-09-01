@@ -28,8 +28,8 @@ exports.handler = async (event) => {
         },
       ],
       mode: 'payment',
-      success_url: `${process.env.URL}/ente-superior/ente-superior.html?pagado=true&cristales=${crystalsAmount}&comunidad=${isCommunity ? 'true' : 'false'}&user=${encodeURIComponent(username)}`,
-      cancel_url: `${process.env.URL}/ente-superior/ente-superior.html?cancelado=true`,
+      success_url: `${process.env.URL}/ente-superior.html?pagado=true&cristales=${crystalsAmount}&comunidad=${isCommunity ? 'true' : 'false'}&user=${encodeURIComponent(username)}`,
+      cancel_url: `${process.env.URL}/ente-superior.html?cancelado=true`,
       metadata: {
         username: username,
         crystals: crystalsAmount,
