@@ -3,7 +3,66 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Arkanica — Tarot Interactivo y Claridad Profunda</title>
+
+<!-- SEO Y METADATOS CRÍTICOS -->
+<title>Arkanica — Tarot Interactivo y Claridad Interior con Andrea</title>
+<meta name="description" content="Descubre Arkanica, tu espacio místico de tarot interactivo, tiradas online y claridad interior guiado por la experta Andrea. Conecta con los arcanos y desbloquea tu energía.">
+<link rel="canonical" href="https://arkanica.app/">
+
+<!-- OPEN GRAPH PARA REDES SOCIALES (WhatsApp, Telegram, Facebook, LinkedIn) -->
+<meta property="og:title" content="Arkanica — Tarot Interactivo y Claridad Interior">
+<meta property="og:description" content="Consulta los arcanos mayores y menores de forma interactiva. Espacio de autoconocimiento y guía intuitiva dirigido por Andrea.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://arkanica.app/">
+<meta property="og:image" content="https://arkanica.app/assets/tarotista.jpg">
+
+<!-- TWITTER CARDS -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Arkanica — Tarot Interactivo y Claridad Interior">
+<meta name="twitter:description" content="Consulta los arcanos mayores y menores de forma interactiva. Espacio de autoconocimiento guiado por Andrea.">
+<meta name="twitter:image" content="https://arkanica.app/assets/tarotista.jpg">
+
+<!-- DATOS ESTRUCTURADOS SCHEMA.ORG (GEO & SEO Avanzado para Motores de IA y Google) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://arkanica.app/#website",
+      "url": "https://arkanica.app/",
+      "name": "Arkanica",
+      "inLanguage": "es",
+      "description": "Plataforma de tarot interactivo y claridad interior dirigida por Andrea."
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://arkanica.app/#organization",
+      "name": "Arkanica",
+      "url": "https://arkanica.app/",
+      "logo": "https://arkanica.app/assets/tarotista.jpg",
+      "founder": {
+        "@type": "Person",
+        "name": "Andrea"
+      }
+    },
+    {
+      "@type": "Service",
+      "serviceType": "Lectura de Tarot Interactivo y Sesiones Privadas",
+      "provider": {
+        "@type": "Organization",
+        "name": "Arkanica"
+      },
+      "areaServed": "Global",
+      "availableChannel": {
+        "@type": "ServiceChannel",
+        "serviceUrl": "https://arkanica.app/"
+      }
+    }
+  ]
+}
+</script>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://js.stripe.com/v3/"></script>
 
@@ -950,7 +1009,19 @@
     line-height: 1.3;
   }
 
-  /* ESTILOS DEL FOOTER PROFESIONAL INTEGRADOS */
+  /* BLOQUE SEMÁNTICO SEO (Invisible al usuario pero clave para Google y Bots de IA) */
+  .seo-semantic-content {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
   footer {
     width: 100%;
     max-width: 1050px;
@@ -1012,6 +1083,12 @@
 </head>
 <body>
 
+<!-- BLOQUE SEMÁNTICO SEO PARA MOTORES DE BÚSQUEDA E IA -->
+<div class="seo-semantic-content">
+  <h1>Arkanica — Plataforma de Tarot Interactivo y Claridad Interior</h1>
+  <p>Arkanica es la plataforma líder de tarot interactivo, tiradas online de arcanos mayores y menores, y desarrollo de la intuición dirigida por la tarotista Andrea. Realiza consultas personalizadas para el amor, el trabajo, relaciones románticas y trabajo de sombras. Accede a sesiones privadas, comunidad exclusiva y contenidos especializados en autoconocimiento.</p>
+</div>
+
 <div class="threshold-overlay" id="thresholdOverlay">
   <div class="threshold-particles"></div>
   <div class="threshold-content">
@@ -1056,7 +1133,7 @@
 </button>
 
 <header>
-  <a href="#" class="logo">
+  <a href="/" class="logo">
     <svg class="logo-symbol" viewBox="0 0 32 32">
       <ellipse cx="16" cy="16" rx="14" ry="6" transform="rotate(-30 16 16)" />
       <circle cx="16" cy="16" r="4" />
@@ -1084,11 +1161,11 @@
       </button>
 
       <div class="nav-dropdown-menu" id="navDropdownMenu">
-        <a href="comunidad-privada.html" onclick="closeNavMenu()">Comunidad Privada</a>
-        <a href="sesiones-privadas.html" onclick="closeNavMenu()">Sesiones Privadas</a>
-        <a href="tienda.html" onclick="closeNavMenu()">Tienda Mística</a>
-        <a href="blog.html" onclick="closeNavMenu()">Diario de Arkanica</a>
-        <a href="ente-superior/ente-superior.html" onclick="closeNavMenu()">Ente Superior</a>
+        <a href="/comunidad-privada" onclick="closeNavMenu()">Comunidad Privada</a>
+        <a href="/sesiones-privadas" onclick="closeNavMenu()">Sesiones Privadas</a>
+        <a href="/tienda" onclick="closeNavMenu()">Tienda Mística</a>
+        <a href="/blog" onclick="closeNavMenu()">Diario de Arkanica</a>
+        <a href="/ente-superior" onclick="closeNavMenu()">Ente Superior</a>
       </div>
     </div>
   </div>
@@ -1100,9 +1177,9 @@
   <p class="arkanica-sub">Disfruta de tus 2 primeras tiradas gratis al día (3 cristales por cada tirada posterior).</p>
   
   <div class="quick-links-bar">
-    <a href="tienda.html" class="quick-link-pill">🛍️ Tienda Mística</a>
-    <a href="comunidad-privada.html" class="quick-link-pill">💬 Comunidad VIP</a>
-    <a href="blog.html" class="quick-link-pill">📖 Diario de Arkanica</a>
+    <a href="/tienda" class="quick-link-pill">🛍️ Tienda Mística</a>
+    <a href="/comunidad-privada" class="quick-link-pill">💬 Comunidad VIP</a>
+    <a href="/blog" class="quick-link-pill">📖 Diario de Arkanica</a>
   </div>
 </div>
 
@@ -1187,7 +1264,7 @@
     </div>
 
     <div>
-      <a href="sesiones-privadas.html" class="action-btn">Reservar Sesión Privada con Andrea ➔</a>
+      <a href="/sesiones-privadas" class="action-btn">Reservar Sesión Privada con Andrea ➔</a>
     </div>
   </div>
 
@@ -1215,7 +1292,7 @@
       </p>
     </div>
     <div>
-      <a href="comunidad-privada.html" class="action-btn" style="width: 100%;">Unirme al Círculo por 3,90€ ➔</a>
+      <a href="/comunidad-privada" class="action-btn" style="width: 100%;">Unirme al Círculo por 3,90€ ➔</a>
     </div>
   </div>
 
@@ -1232,7 +1309,7 @@
       </div>
     </div>
     <div>
-      <a href="sesiones-privadas.html#formulario-reserva" onclick="selectQuickExpress()" class="action-btn" style="width: 100%;">Resolver Duda por 9€ ➔</a>
+      <a href="/sesiones-privadas#formulario-reserva" onclick="selectQuickExpress()" class="action-btn" style="width: 100%;">Resolver Duda por 9€ ➔</a>
     </div>
   </div>
 
@@ -1251,7 +1328,6 @@
 
 </div>
 
-<!-- FOOTER PROFESIONAL INTEGRADO -->
 <footer>
   <div class="footer-trust-badges">
     <span>🔒 Pagos 100% Seguros vía Stripe</span>
@@ -1259,10 +1335,10 @@
     <span>💎 Cifrado SSL Avanzado</span>
   </div>
   <div class="footer-links">
-    <a href="index.html">Inicio</a>
-    <a href="sesiones-privadas.html">Sesiones Privadas</a>
-    <a href="tienda.html">Tienda Mística</a>
-    <a href="blog.html">Diario de Arkanica</a>
+    <a href="/">Inicio</a>
+    <a href="/sesiones-privadas">Sesiones Privadas</a>
+    <a href="/tienda">Tienda Mística</a>
+    <a href="/blog">Diario de Arkanica</a>
   </div>
   <div class="footer-copy">
     © 2026 Arkanica. Todos los derechos reservados.<br>
@@ -1292,7 +1368,7 @@
 
   async function buyCrystalsPack() {
     closeCrystalsModal();
-    window.location.href = 'tienda.html';
+    window.location.href = '/tienda';
   }
 
   function selectQuickExpress() {
@@ -1446,17 +1522,17 @@
         supabaseClient.auth.signOut().then(() => window.location.reload());
       }
     } else {
-      window.location.href = 'sesiones-privadas.html';
+      window.location.href = '/sesiones-privadas';
     }
   }
 
   function goToEnteSuperior() {
     localStorage.removeItem('arkanica_last_reading');
-    window.location.href = 'ente-superior/ente-superior.html';
+    window.location.href = '/ente-superior';
   }
 
   function goToSesionesPrivadas() {
-    window.location.href = 'sesiones-privadas.html';
+    window.location.href = '/sesiones-privadas';
   }
 
   const fullTarotDeck = [

@@ -3,7 +3,58 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- SEO Y METADATOS CRÍTICOS -->
 <title>Arkanica — Sesiones Privadas y Claridad Profunda con Andrea</title>
+<meta name="description" content="Reserva tu sesión privada, mentoría espiritual o análisis en vídeo con Andrea. Obtén claridad absoluta, resolución de dilemas y acompañamiento experto en Arkanica.">
+<link rel="canonical" href="https://arkanica.app/sesiones-privadas">
+
+<!-- OPEN GRAPH PARA REDES SOCIALES -->
+<meta property="og:title" content="Arkanica — Sesiones Privadas y Claridad Profunda con Andrea">
+<meta property="og:description" content="Espacios de análisis íntimo, mentoría y claridad interior dirigidos por Andrea. Más de 18 años de experiencia ayudando a despejar bloqueos vitales.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://arkanica.app/sesiones-privadas">
+<meta property="og:image" content="https://arkanica.app/assets/tarotista.jpg">
+
+<!-- TWITTER CARDS -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Arkanica — Sesiones Privadas y Claridad Profunda con Andrea">
+<meta name="twitter:description" content="Reserva tu sesión privada o mentoría espiritual con Andrea en Arkanica.">
+<meta name="twitter:image" content="https://arkanica.app/assets/tarotista.jpg">
+
+<!-- DATOS ESTRUCTURADOS SCHEMA.ORG (Servicios y Autoridad para IA y Google) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://arkanica.app/sesiones-privadas/#webpage",
+      "url": "https://arkanica.app/sesiones-privadas",
+      "name": "Sesiones Privadas y Acompañamiento con Andrea",
+      "description": "Packs de análisis, sesiones privadas en vídeo y mentoría espiritual en Arkanica."
+    },
+    {
+      "@type": "Person",
+      "@id": "https://arkanica.app/#andrea",
+      "name": "Andrea",
+      "jobTitle": "Tarotista y Mentora Espiritual",
+      "description": "Creadora de Arkanica con 18 años de experiencia en acompañamiento y claridad intuitiva."
+    },
+    {
+      "@type": "Service",
+      "serviceType": "Sesiones Privadas de Tarot y Mentoría",
+      "provider": {
+        "@type": "Person",
+        "name": "Andrea"
+      },
+      "areaServed": "Global",
+      "description": "Lecturas personalizadas y análisis en vídeo con entrega garantizada en 24-48 horas."
+    }
+  ]
+}
+</script>
+
 <!-- Cliente oficial de Supabase -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <!-- SDK oficial de Stripe -->
@@ -55,6 +106,19 @@
     background: radial-gradient(circle at center, transparent 35%, rgba(3, 3, 5, 0.8) 100%);
     pointer-events: none;
     z-index: 1000;
+  }
+
+  /* BLOQUE SEMÁNTICO SEO (Invisible al usuario pero clave para Google y Bots de IA) */
+  .seo-semantic-content {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 
   header {
@@ -260,7 +324,6 @@
     margin-bottom: 20px;
   }
 
-  /* BARRA SUTIL DE ACCESO RÁPIDO (JUSTO DEBAJO DE LAS ESTADÍSTICAS DE ANDREA) */
   .community-quick-jump-top {
     background: rgba(223, 177, 91, 0.05);
     border: 1px solid rgba(223, 177, 91, 0.2);
@@ -454,7 +517,6 @@
     box-shadow: 0 4px 15px rgba(223, 177, 91, 0.3);
   }
 
-  /* SECCIÓN COMUNIDAD VIP WHATSAPP */
   .community-promo-card {
     background: linear-gradient(135deg, rgba(22, 19, 32, 0.92) 0%, rgba(10, 9, 16, 0.98) 100%);
     border: 2px solid var(--gold);
@@ -759,7 +821,6 @@
     font-style: italic;
   }
 
-  /* FOOTER PROFESIONAL */
   footer {
     width: 100%;
     max-width: 900px;
@@ -822,8 +883,14 @@
 </head>
 <body>
 
+<!-- BLOQUE SEMÁNTICO SEO PARA MOTORES DE BÚSQUEDA E IA -->
+<div class="seo-semantic-content">
+  <h1>Sesiones Privadas y Acompañamiento Espiritual con Andrea</h1>
+  <p>Reserva tus sesiones privadas de tarot, mentoría espiritual y análisis personalizados en vídeo con Andrea en Arkanica. Packs Esencia, Brújula y Transformación 360º para resolver dudas complejas, superar bloqueos vitales y encontrar claridad interior absoluta con total confidencialidad.</p>
+</div>
+
 <header>
-  <a href="index.html" class="logo">
+  <a href="/" class="logo">
     <svg class="logo-symbol" viewBox="0 0 32 32">
       <ellipse cx="16" cy="16" rx="14" ry="6" transform="rotate(-30 16 16)" />
       <circle cx="16" cy="16" r="4" />
@@ -831,7 +898,7 @@
     </svg>
     <span class="logo-text">Arkanica</span>
   </a>
-  <a href="index.html" class="nav-back-home">← Volver al Oráculo</a>
+  <a href="/" class="nav-back-home">← Volver al Oráculo</a>
 </header>
 
 <div class="page-container">
@@ -889,7 +956,7 @@
     </div>
   </div>
 
-  <!-- BARRA SUTIL DE ACCESO RÁPIDO: UBICADA JUSTO AQUÍ, ENTRE LAS ESTADÍSTICAS Y LOS PACKS -->
+  <!-- BARRA SUTIL DE ACCESO RÁPIDO -->
   <div class="community-quick-jump-top">
     <span>💬 ¿Buscas una alternativa de acceso continuo y económico?</span>
     <a href="#comunidad-vip">Descubre el Círculo VIP de WhatsApp por 3,90 € ➔</a>
@@ -925,7 +992,7 @@
         <button class="pricing-btn" onclick="selectPack('Pack Esencia', '19,90€')">Elegir Esencia</button>
       </div>
 
-      <!-- PACK BRÚJULA (DESTACADO OPTIMIZADO) -->
+      <!-- PACK BRÚJULA -->
       <div class="pricing-card featured">
         <div class="featured-badge">Más Elegido</div>
         <div>
@@ -1128,7 +1195,6 @@
     </div>
   </div>
 
-  <!-- FOOTER PROFESIONAL -->
   <footer>
     <div class="footer-trust-badges">
       <span>🔒 Pagos 100% Seguros vía Stripe</span>
@@ -1136,10 +1202,10 @@
       <span>💎 Cifrado SSL Avanzado</span>
     </div>
     <div class="footer-links">
-      <a href="index.html">Inicio</a>
-      <a href="sesiones-privadas.html">Sesiones Privadas</a>
-      <a href="tienda.html">Tienda Mística</a>
-      <a href="blog.html">Diario de Arkanica</a>
+      <a href="/">Inicio</a>
+      <a href="/sesiones-privadas">Sesiones Privadas</a>
+      <a href="/tienda">Tienda Mística</a>
+      <a href="/blog">Diario de Arkanica</a>
     </div>
     <div class="footer-copy">
       © 2026 Arkanica. Todos los derechos reservados.<br>
@@ -1150,7 +1216,6 @@
 </div>
 
 <script>
-  // Diccionario con los Price IDs oficiales de Stripe conectados al backend de checkout
   const STRIPE_PRICES = {
     'pack-esencia': 'price_1UAOZ75Cjrexxtca6ifPyarr',
     'pack-brujula': 'price_1UAOZz5CjrexxtcaruMeqETG',
@@ -1185,7 +1250,7 @@
 
   async function buyCommunityPass() {
     try {
-      const response = await fetch('../.netlify/functions/crear-checkout', {
+      const response = await fetch('/.netlify/functions/crear-checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1272,7 +1337,7 @@
 
     try {
       const priceId = STRIPE_PRICES[spreadType];
-      const response = await fetch('../.netlify/functions/crear-checkout', {
+      const response = await fetch('/.netlify/functions/crear-checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
