@@ -181,6 +181,17 @@
     gap: 6px;
     text-decoration: none;
     box-shadow: 0 0 15px rgba(223, 177, 91, 0.2);
+    transition: transform 0.2s ease;
+  }
+
+  .profile-badge.pulse-reward {
+    animation: crystalPulse 0.4s ease;
+  }
+
+  @keyframes crystalPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.12); border-color: var(--gold-light); box-shadow: 0 0 25px rgba(243, 216, 157, 0.6); }
+    100% { transform: scale(1); }
   }
 
   .profile-crystals {
@@ -593,7 +604,7 @@
     letter-spacing: 0.1em;
   }
   .badge-sale { background: var(--gold); color: var(--bg); }
-  .badge-stock-low { background: rgba(223, 177, 91, 0.15); color: var(--gold-light); border: 1px solid rgba(223, 177, 91, 0.3); }
+  .badge-stock-low { background: rgba(231, 111, 81, 0.15); color: #e76f51; border: 1px solid rgba(231, 111, 81, 0.4); }
 
   .card-wishlist {
     position: absolute;
@@ -823,7 +834,7 @@
   .stock-bar-wrap { margin-top: 6px; }
   .stock-label { display: flex; justify-content: space-between; font-size: 9px; color: var(--text-muted); margin-bottom: 2px; }
   .stock-bar { height: 2px; background: rgba(255,255,255,0.1); border-radius: 100px; overflow: hidden; }
-  .stock-fill { height: 100%; background: var(--gold); border-radius: 100px; }
+  .stock-fill { height: 100%; background: #e76f51; border-radius: 100px; }
 
   /* MODAL */
   .modal-overlay {
@@ -1006,6 +1017,22 @@
   .cart-subtotal { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 12px; }
   .subtotal-label { color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; }
   .subtotal-amount { font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 20px; color: var(--gold-light); }
+  
+  .cart-security-badge {
+    background: rgba(82, 183, 136, 0.08);
+    border: 1px solid rgba(82, 183, 136, 0.25);
+    border-radius: 6px;
+    padding: 8px 10px;
+    font-size: 10px;
+    color: var(--sage);
+    text-align: center;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
   .checkout-btn { width: 100%; padding: 12px; background: var(--gold); color: var(--bg); border: none; border-radius: 8px; font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; transition: var(--transition); font-family: 'Inter', sans-serif; margin-bottom: 8px; }
   .checkout-btn:hover { background: var(--gold-light); transform: translateY(-1px); }
   .cart-shipping-note { font-size: 10px; color: var(--text-muted); text-align: center; font-style: italic; }
@@ -1104,6 +1131,9 @@
       <span class="subtotal-label">Subtotal</span>
       <span class="subtotal-amount" id="cartTotal">0,00 €</span>
     </div>
+    <div class="cart-security-badge">
+      <span>🛡️</span> Garantía de Consagración y Envío 100% Protegido
+    </div>
     <button class="checkout-btn" onclick="checkoutCart()">Finalizar compra segura →</button>
     <div class="cart-shipping-note">✦ Envío gratuito a partir de 50€ | Incluye Cristales de Claridad</div>
   </div>
@@ -1131,7 +1161,7 @@
   </a>
 
   <div class="header-right">
-    <div class="profile-badge">
+    <div class="profile-badge" id="profileBadge">
       <div class="profile-crystals">
         <span>💎</span> <strong id="headerCrystalCount">10</strong>
       </div>
@@ -1188,7 +1218,7 @@
   <div class="filter-scroll-container">
     <div class="filter-tags" id="filterTags">
       <button class="filter-tag active" onclick="filterByTag('all',this)">Todos</button>
-      <button class="filter-tag" onclick="filterByTag('Tarot, Oráculo y Cartas de Juego',this)">Tarot & Oráculo</button>
+      <button class="filter-tag" onclick="filterByTag('Tarot, Oráculo y Cartas de Juego',this)">Tarot</button>
       <button class="filter-tag" onclick="filterByTag('Conjuntos de runas y péndulos',this)">Runas & Péndulos</button>
       <button class="filter-tag" onclick="filterByTag('Cuencos tibetanos y campanas tingsha',this)">Cuencos</button>
       <button class="filter-tag" onclick="filterByTag('Cristales en bruto, selenita y geodas',this)">Cristales</button>
@@ -1289,6 +1319,7 @@ const PRODUCTS = [
     dept: "Cristales y Esoterismo",
     subcat: "Varitas curativas y accesorios esotéricos",
     stock: 249,
+    neuroDesc: "Crea un espacio sagrado libre de interferencias energéticas. Este lienzo de geometría sagrada eleva la vibración de tus rituales y protege tu concentración durante las tiradas.",
     desc: "Mantel de altar de 50×50 cm con gráficos de geometría sagrada y pentáculos para proteger y elevar tu espacio ritual.",
     imgs: [
       "assets/images/products/altc-01__73988.jpeg",
@@ -1313,6 +1344,7 @@ const PRODUCTS = [
     dept: "Cristales y Esoterismo",
     subcat: "Cristales en bruto, selenita y geodas",
     stock: 85,
+    neuroDesc: "Equilibra tu energía facial y libera tensiones acumuladas con piedra natural pura. Un ritual diario de autocuidado que revitaliza cuerpo y mente.",
     desc: "Herramienta de bienestar facial con piedras naturales pulidas para masajes energéticos y drenaje linfático.",
     imgs: [
       "assets/images/products/gemfr-15__61375.jpeg",
@@ -1335,6 +1367,7 @@ const PRODUCTS = [
     dept: "Cristales y Esoterismo",
     subcat: "Conjuntos de runas y péndulos",
     stock: 67,
+    neuroDesc: "Conéctate directamente con tu intuición más profunda. Este péndulo de amatista amplifica la claridad mental para obtener respuestas certeras en tus decisiones.",
     desc: "Péndulo de amatista pura con cadena de metal y fragmentos minerales representativos de los siete chakras.",
     imgs: [
       "assets/images/products/gemmp-26__71224.jpeg",
@@ -1356,6 +1389,7 @@ const PRODUCTS = [
     dept: "Hogar & Jardin",
     subcat: "Artículos de papelería",
     stock: 67,
+    neuroDesc: "Plasma tu evolución espiritual en un refugio a su altura. Encuadernado a mano en cuero auténtico para custodiar tus secretos, tiradas y epifanías.",
     desc: "Libreta encuadernada en cuero rústico de curtido artesanal para registrar tus tiradas, sueños y epifanías espirituales.",
     imgs: [
       "assets/images/products/lbn-24__64137.jpeg",
@@ -1380,6 +1414,7 @@ const PRODUCTS = [
     dept: "Cristales y Esoterismo",
     subcat: "Conjuntos de runas y péndulos",
     stock: 60,
+    neuroDesc: "Invoca la sabiduría milenaria de los símbolos ancestrales tallados en piedra de protección. Canaliza respuestas firmes frente a la incertidumbre.",
     desc: "Set de runas talladas a mano en piedra natural de obsidiana y amatista con bolsa protectora de lino.",
     imgs: [
       "assets/images/products/rune-32__33906.jpeg",
@@ -1406,6 +1441,7 @@ const PRODUCTS = [
     dept: "Cristales y Esoterismo",
     subcat: "Cristales en bruto, selenita y geodas",
     stock: 62,
+    neuroDesc: "Purifica el aire emocional de tu hogar con la luz calmante de la selenita natural. Neutraliza energías densas y aporta paz instantánea.",
     desc: "La selenita translúcida permite que la llama de la vela parpadee suavemente. Purifica y eleva la energía del espacio.",
     imgs: [
       "assets/images/products/selch-01__57454.jpeg",
@@ -1428,6 +1464,7 @@ const PRODUCTS = [
     dept: "Cristales y Esoterismo",
     subcat: "Tarot, Oráculo y Cartas de Juego",
     stock: 93,
+    neuroDesc: "Conserva tus barajas y cristales en un santuario consagrado de madera noble. Orden y protección energética para tus herramientas de adivinación.",
     desc: "Caja de madera de mango con compartimentos para cartas de tarot, cristales y péndulos. Consagrada individualmente.",
     imgs: [
       "assets/images/products/tarotb-03__216702.jpg",
@@ -1449,6 +1486,7 @@ const PRODUCTS = [
     dept: "Cristales y Esoterismo",
     subcat: "Tarot, Oráculo y Cartas de Juego",
     stock: 96,
+    neuroDesc: "Una obra de arte visual para lecturas intuitivas deslumbrantes. Cada lámina dorada estimula la percepción visual y la conexión arquetípica profunda.",
     desc: "Set de baraja especial con detalles dorados y folleto explicativo para tiradas intuitivas profundas.",
     imgs: [
       "assets/images/products/tarotc-20__248126.jpg",
@@ -1471,7 +1509,8 @@ const PRODUCTS = [
     rrp: 65.00,
     dept: "Cristales y Esoterismo",
     subcat: "Cuencos tibetanos y campanas tingsha",
-    stock: 32,
+    stock: 3,
+    neuroDesc: "Armoniza tus ondas cerebrales mediante vibración acústica pura. Induce estados profundos de meditación y reduce el estrés con solo un golpe.",
     desc: "Cuenco sonoro artesanal en tono azul profundo con grabados interiores sagrados para meditación profunda.",
     imgs: [
       "assets/images/products/tib-145__231415.jpg",
@@ -1505,15 +1544,16 @@ function renderProducts(list) {
   grid.innerHTML = '';
   list.forEach((p, idx) => {
     const save = getSavePct(p);
-    const stockPct = Math.min(100, Math.round((p.stock / 100) * 100));
     const lowStock = p.stock < 50;
+    // Si el stock es bajo (como 3 unidades en el cuenco), mostramos barra casi vacía y en rojo
+    const stockPct = p.stock <= 5 ? 10 : Math.min(100, Math.round((p.stock / 100) * 100));
     const isInCart = cart.some(c => c.code === p.code);
     const card = document.createElement('div');
     card.className = `store-product-card ${save >= 30 ? 'gold-shimmer-card' : ''}`;
     card.innerHTML = `
       <div class="card-badges">
         ${save >= 25 ? `<span class="badge badge-sale">−${save}%</span>` : ''}
-        ${lowStock ? `<span class="badge badge-stock-low">Últimas uds.</span>` : ''}
+        ${lowStock ? `<span class="badge badge-stock-low">¡Últimas uds.!</span>` : ''}
       </div>
       <button class="card-wishlist" title="Añadir a favoritos" onclick="event.stopPropagation(); showToast('💛 Guardado en favoritos')">♡</button>
       <div class="product-img-wrap" data-images='${JSON.stringify(p.imgs)}' data-current="0" onclick="openModal(${idx})">
@@ -1527,7 +1567,7 @@ function renderProducts(list) {
       <div>
         <div class="card-cat">${p.subcat}</div>
         <div class="card-name" onclick="openModal(${idx})" style="cursor:pointer">${p.name}</div>
-        <div class="card-desc">${p.desc}</div>
+        <div class="card-desc">${p.neuroDesc || p.desc}</div>
       </div>
       <div>
         <div class="product-bonus">✦ Incluye +${p.crystals || 25} Cristales de Claridad</div>
@@ -1547,7 +1587,7 @@ function renderProducts(list) {
         </div>
         ${lowStock ? `
         <div class="stock-bar-wrap">
-          <div class="stock-label"><span>Disponibilidad</span><span>${p.stock} uds.</span></div>
+          <div class="stock-label"><span>Disponibilidad</span><span style="color: #e76f51; font-weight: 700;">${p.stock} unidades</span></div>
           <div class="stock-bar"><div class="stock-fill" style="width:${stockPct}%"></div></div>
         </div>` : ''}
       </div>`;
@@ -1628,14 +1668,14 @@ function openModal(globalIdx) {
       <span class="modal-price">${p.price.toFixed(2).replace('.',',')} €</span>
       ${p.rrp && p.rrp > p.price ? `<span class="modal-rrp">${p.rrp.toFixed(2).replace('.',',')} €</span><span class="modal-save">−${save}%</span>` : ''}
     </div>
-    <p class="modal-desc">${p.desc}</p>
+    <p class="modal-desc"><strong>Transformación y Propósito:</strong> ${p.neuroDesc}<br><br>${p.desc}</p>
     <div class="product-bonus">✦ Incluye +${p.crystals || 25} Cristales de Claridad de regalo y acceso al Ente Superior</div>
     <div class="modal-specs">
       ${p.weight !== '—' ? `<div class="spec-row"><span class="spec-label">Peso</span><span class="spec-value">${p.weight}</span></div>` : ''}
       ${p.dims !== '—' ? `<div class="spec-row"><span class="spec-label">Dimensiones</span><span class="spec-value">${p.dims}</span></div>` : ''}
       ${p.material ? `<div class="spec-row"><span class="spec-label">Material</span><span class="spec-value">${p.material}</span></div>` : ''}
       <div class="spec-row"><span class="spec-label">Origen</span><span class="spec-value">${p.origin}</span></div>
-      <div class="spec-row"><span class="spec-label">Stock Sagrado</span><span class="spec-value" style="color:var(--gold)">${p.stock} unidades</span></div>
+      <div class="spec-row"><span class="spec-label">Stock Sagrado</span><span class="spec-value" style="color: #e76f51; font-weight: 700;">${p.stock} unidades</span></div>
     </div>
     <button class="modal-add-btn ${isInCart ? 'added' : ''}" id="modalAddBtn" onclick="addToCart('${p.code}')">
       ${isInCart ? '✓ Añadido al carrito' : '🛍 Adquirir con Beneficio — ' + p.price.toFixed(2).replace('.',',') + ' €'}
@@ -1672,9 +1712,20 @@ function addToCart(code) {
   } else {
     cart.push({ ...p, qty: 1 });
   }
+  
+  crystals += (p.crystals || 25);
+  updateCrystalDisplay();
+  triggerBadgePulse();
+
   updateCartUI();
   updateAddButtons(code);
-  showToast('✦ ' + p.name.substring(0,30) + '... añadido al carrito');
+  showToast(`✦ +${p.crystals || 25} Cristales ganados y añadido al carrito`);
+}
+
+function triggerBadgePulse() {
+  const badge = document.getElementById('profileBadge');
+  badge.classList.add('pulse-reward');
+  setTimeout(() => badge.classList.remove('pulse-reward'), 400);
 }
 
 function updateAddButtons(code) {

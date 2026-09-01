@@ -357,6 +357,56 @@
   .action-btn:hover {
     background: var(--gold-light);
   }
+
+  /* FOOTER PROFESIONAL */
+  footer {
+    width: 100%;
+    max-width: 800px;
+    margin-top: 40px;
+    border-top: 1px solid var(--line);
+    padding-top: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    text-align: center;
+    z-index: 2;
+  }
+
+  .footer-trust-badges {
+    display: flex;
+    gap: 20px;
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 16px;
+    font-size: 11px;
+  }
+
+  .footer-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover {
+    color: var(--gold);
+  }
+
+  .footer-copy {
+    font-size: 10.5px;
+    color: rgba(156, 152, 166, 0.7);
+    line-height: 1.5;
+  }
+
+  @media (max-width: 768px) {
+    .footer-trust-badges { flex-direction: column; gap: 8px; }
+  }
 </style>
 </head>
 <body>
@@ -402,7 +452,7 @@
 
   <!-- FILTROS DE CATEGORÍA -->
   <div class="category-filter-container" id="categoryFilters">
-    <button class="filter-pill active" onclick="filterArticles('all', this)">Destacados (3)</button>
+    <button class="filter-pill active" onclick="filterArticles('all', this)">✦ Esenciales</button>
     <button class="filter-pill" onclick="filterArticles('mitos', this)">Mitos & Realidades</button>
     <button class="filter-pill" onclick="filterArticles('relaciones', this)">Relaciones</button>
     <button class="filter-pill" onclick="filterArticles('psicologia', this)">Psicología</button>
@@ -410,6 +460,28 @@
   </div>
 
   <div class="articles-wrapper" id="articlesWrapper">
+
+    <!-- NUEVO ARTÍCULO 1: Caso de Estudio - Lucía y el Bloqueo Creativo -->
+    <a href="blog/como-lucia-supero-el-bloqueo-creativo-arcanos-menores.html" class="article-card featured" data-category="psicologia">
+      <div class="article-category">✦ Caso de Estudio & Arquetipos</div>
+      <h2 class="article-title">Cómo Lucía superó su bloqueo creativo usando los Arcanos Menores</h2>
+      <p class="article-excerpt">Una historia narrativa sobre cómo transformar la parálisis creativa y el perfeccionismo clínico mediante la lectura micro-física de los Arcanos Menores.</p>
+      <div class="article-footer">
+        <span>Lectura de 7 min</span>
+        <span>Leer artículo →</span>
+      </div>
+    </a>
+
+    <!-- NUEVO ARTÍCULO 2: Guía Práctica - Apagar el Ruido Mental -->
+    <a href="blog/ejercicio-papel-y-boli-apagar-ruido-mental.html" class="article-card featured" data-category="claridad">
+      <div class="article-category">✦ Guía de Introspección</div>
+      <h2 class="article-title">Cómo apagar el ruido mental: Ejercicio práctico de autoterapia con papel y boli</h2>
+      <p class="article-excerpt">Un protocolo estructurado de 15 minutos para externalizar el caos mental, separar el control de la incertidumbre y romper la parálisis por análisis.</p>
+      <div class="article-footer">
+        <span>Lectura de 7 min</span>
+        <span>Leer artículo →</span>
+      </div>
+    </a>
 
     <!-- Artículo 1 (Destacado): Mitos y verdades del Tarot -->
     <a href="blog/mitos-y-verdades-del-tarot.html" class="article-card featured" data-category="mitos">
@@ -554,6 +626,26 @@
   </div>
 </div>
 
+<!-- FOOTER PROFESIONAL INTEGRADO -->
+<footer>
+  <div class="footer-trust-badges">
+    <span>🔒 Pagos 100% Seguros vía Stripe</span>
+    <span>✦ Confidencialidad Garantizada</span>
+    <span>💎 Cifrado SSL Avanzado</span>
+  </div>
+  <div class="footer-links">
+    <a href="index.html">Inicio</a>
+    <a href="sesiones-privadas.html">Sesiones Privadas</a>
+    <a href="tienda.html">Tienda Mística</a>
+    <a href="blog.html">Diario de Arkanica</a>
+    <a href="blog/preguntas-frecuentes.html">FAQ</a>
+  </div>
+  <div class="footer-copy">
+    © 2026 Arkanica. Todos los derechos reservados.<br>
+    Espacio místico de claridad interior y desarrollo intuitivo dirigido por Andrea.
+  </div>
+</footer>
+
 <script>
   function toggleNavMenu(e) {
     e.stopPropagation();
@@ -591,7 +683,7 @@
     articles.forEach(card => {
       const cardCategory = card.getAttribute('data-category');
       if (category === 'all') {
-        // Si selecciona "Todos / Destacados", solo mostramos los 3 destacados
+        // Si selecciona "✦ Esenciales", solo mostramos los destacados
         if (card.classList.contains('featured')) {
           card.classList.remove('hidden');
         } else {

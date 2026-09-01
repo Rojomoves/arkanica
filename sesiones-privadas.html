@@ -260,6 +260,37 @@
     margin-bottom: 20px;
   }
 
+  /* BARRA SUTIL DE ACCESO RÁPIDO (JUSTO DEBAJO DE LAS ESTADÍSTICAS DE ANDREA) */
+  .community-quick-jump-top {
+    background: rgba(223, 177, 91, 0.05);
+    border: 1px solid rgba(223, 177, 91, 0.2);
+    border-radius: 10px;
+    padding: 12px 18px;
+    margin-bottom: 28px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  }
+
+  .community-quick-jump-top a {
+    color: var(--gold-light);
+    text-decoration: none;
+    font-weight: 600;
+    border-bottom: 1px dotted var(--gold-dim);
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .community-quick-jump-top a:hover {
+    color: var(--gold);
+    border-color: var(--gold);
+  }
+
   .pricing-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -289,7 +320,7 @@
   .pricing-card.featured {
     border: 2px solid var(--gold);
     background: linear-gradient(135deg, rgba(22, 19, 30, 0.95) 0%, rgba(10, 9, 15, 0.98) 100%);
-    box-shadow: 0 0 30px rgba(223, 177, 91, 0.2);
+    box-shadow: 0 0 35px rgba(223, 177, 91, 0.25);
   }
 
   .featured-badge {
@@ -302,10 +333,17 @@
     font-size: 9px;
     text-transform: uppercase;
     letter-spacing: 0.15em;
-    font-weight: 600;
+    font-weight: 700;
     padding: 4px 12px;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(223, 177, 91, 0.4);
+    animation: pulseBadge 2s infinite ease-in-out;
+  }
+
+  @keyframes pulseBadge {
+    0% { transform: translateX(-50%) scale(1); }
+    50% { transform: translateX(-50%) scale(1.06); box-shadow: 0 4px 15px rgba(223, 177, 91, 0.6); }
+    100% { transform: translateX(-50%) scale(1); }
   }
 
   .pricing-title {
@@ -406,6 +444,7 @@
     background: var(--gold);
     color: var(--bg);
     border-color: var(--gold);
+    box-shadow: 0 4px 15px rgba(223, 177, 91, 0.3);
   }
 
   .pricing-btn:hover {
@@ -415,7 +454,7 @@
     box-shadow: 0 4px 15px rgba(223, 177, 91, 0.3);
   }
 
-  /* NUEVA SECCIÓN DE COMUNIDAD VIP WHATSAPP */
+  /* SECCIÓN COMUNIDAD VIP WHATSAPP */
   .community-promo-card {
     background: linear-gradient(135deg, rgba(22, 19, 32, 0.92) 0%, rgba(10, 9, 16, 0.98) 100%);
     border: 2px solid var(--gold);
@@ -425,6 +464,7 @@
     box-shadow: 0 25px 60px rgba(0,0,0,0.7), 0 0 30px rgba(223, 177, 91, 0.15);
     position: relative;
     overflow: hidden;
+    scroll-margin-top: 30px;
   }
 
   .community-urgency-top {
@@ -585,6 +625,11 @@
     color: var(--text-muted);
   }
 
+  .auth-input-group label .required {
+    color: var(--gold);
+    margin-left: 2px;
+  }
+
   .auth-input, .auth-textarea, .auth-select {
     background: rgba(0,0,0,0.45);
     border: 1px solid var(--line);
@@ -647,19 +692,19 @@
     font-size: 11px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    font-weight: 600;
+    font-weight: 700;
     padding: 14px 24px;
     border-radius: 8px;
     cursor: pointer;
     transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
     width: 100%;
-    box-shadow: 0 4px 20px rgba(223, 177, 91, 0.2);
+    box-shadow: 0 4px 20px rgba(223, 177, 91, 0.25);
     margin-top: 6px;
   }
   .action-btn:hover { 
     background: var(--gold-light); 
     transform: translateY(-1px);
-    box-shadow: 0 6px 25px rgba(223, 177, 91, 0.35);
+    box-shadow: 0 6px 25px rgba(223, 177, 91, 0.4);
   }
 
   .auth-msg { font-size: 12px; text-align: center; min-height: 18px; color: var(--gold); }
@@ -714,6 +759,52 @@
     font-style: italic;
   }
 
+  /* FOOTER PROFESIONAL */
+  footer {
+    width: 100%;
+    max-width: 900px;
+    margin-top: 40px;
+    border-top: 1px solid var(--line);
+    padding-top: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    text-align: center;
+    z-index: 2;
+  }
+
+  .footer-trust-badges {
+    display: flex;
+    gap: 20px;
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 16px;
+    font-size: 11px;
+  }
+
+  .footer-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover {
+    color: var(--gold);
+  }
+
+  .footer-copy {
+    font-size: 10.5px;
+    color: rgba(156, 152, 166, 0.7);
+    line-height: 1.5;
+  }
+
   @media (max-width: 768px) {
     .pricing-grid { grid-template-columns: 1fr; }
     .community-features-grid { grid-template-columns: 1fr; }
@@ -725,6 +816,7 @@
     .micro-offers-box { flex-direction: column; }
     .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
     .community-current-price { font-size: 38px; }
+    .footer-trust-badges { flex-direction: column; gap: 8px; }
   }
 </style>
 </head>
@@ -755,6 +847,7 @@
     <span style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gold);">Entrega en 24-48h</span>
   </div>
 
+  <!-- TARJETA DE ANDREA Y SUS ESTADÍSTICAS -->
   <div class="section-card">
     <div class="about-grid">
       <div class="about-avatar-wrapper">
@@ -796,6 +889,13 @@
     </div>
   </div>
 
+  <!-- BARRA SUTIL DE ACCESO RÁPIDO: UBICADA JUSTO AQUÍ, ENTRE LAS ESTADÍSTICAS Y LOS PACKS -->
+  <div class="community-quick-jump-top">
+    <span>💬 ¿Buscas una alternativa de acceso continuo y económico?</span>
+    <a href="#comunidad-vip">Descubre el Círculo VIP de WhatsApp por 3,90 € ➔</a>
+  </div>
+
+  <!-- SECCIÓN DE PACKS DE ANÁLISIS -->
   <div class="section-card">
     <div class="pricing-header">
       <div style="font-size: 9.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 4px;">Selecciona tu Nivel de Acompañamiento</div>
@@ -825,7 +925,7 @@
         <button class="pricing-btn" onclick="selectPack('Pack Esencia', '19,90€')">Elegir Esencia</button>
       </div>
 
-      <!-- PACK BRÚJULA (DESTACADO) -->
+      <!-- PACK BRÚJULA (DESTACADO OPTIMIZADO) -->
       <div class="pricing-card featured">
         <div class="featured-badge">Más Elegido</div>
         <div>
@@ -848,7 +948,7 @@
         <button class="pricing-btn" onclick="selectPack('Pack Brújula', '34,90€')">Elegir Brújula</button>
       </div>
 
-      <!-- PACK 360º (MÉNTORIA ÍNTIMA) -->
+      <!-- PACK 360º -->
       <div class="pricing-card">
         <div>
           <h4 class="pricing-title">Pack 360º</h4>
@@ -886,7 +986,7 @@
   </div>
 
   <!-- SECCIÓN: OFERTA COMUNIDAD PRIVADA DE WHATSAPP -->
-  <div class="community-promo-card">
+  <div class="community-promo-card" id="comunidad-vip">
     <div class="community-urgency-top">⚡ Promoción Especial — Solo disponible esta semana ⚡</div>
     
     <div style="font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold-dim); margin-top: 15px; margin-bottom: 8px;">✦ Círculo Privado &amp; Mentoría Continua ✦</div>
@@ -936,13 +1036,13 @@
   <div class="section-card" id="formulario-reserva">
     <div style="text-align: center; margin-bottom: 24px;">
       <h3 style="margin: 0 0 6px; font-family: 'Cormorant Garamond', serif; font-size: 24px; color: var(--gold); font-weight: 400;">Configura tu Solicitud</h3>
-      <p style="font-size: 12px; color: var(--text-muted); margin: 0; font-weight: 300;" id="formSubtitle">Completa tus datos esenciales y tu dilema para dar inicio a tu proceso de claridad.</p>
+      <p style="font-size: 12px; color: var(--text-muted); margin: 0; font-weight: 300;" id="formSubtitle">Completa tus datos esenciales y tu dilema para dar inicio à tu proceso de claridad.</p>
     </div>
 
     <div class="auth-modal-card">
       
       <div class="auth-input-group">
-        <label>Pack o Enfoque Seleccionado</label>
+        <label>Pack o Enfoque Seleccionado <span class="required">*</span></label>
         <select id="videoSpreadType" class="auth-select">
           <option value="pack-esencia">Pack Esencia (19,90 €) — 3 Preguntas de Análisis</option>
           <option value="pack-brujula" selected>Pack Brújula (34,90 €) — Seguimiento a 15 días</option>
@@ -954,24 +1054,24 @@
 
       <div class="form-grid-row">
         <div class="auth-input-group">
-          <label>Nombre *</label>
+          <label>Nombre <span class="required">*</span></label>
           <input type="text" id="videoUserName" class="auth-input" placeholder="Tu nombre o nombre de pila">
         </div>
         <div class="auth-input-group">
-          <label>Tu Correo Electrónico *</label>
+          <label>Tu Correo Electrónico <span class="required">*</span></label>
           <input type="email" id="videoUserEmail" class="auth-input" placeholder="tu@correo.com">
         </div>
       </div>
 
       <div class="form-grid-row">
         <div class="auth-input-group">
-          <label>Fecha de Nacimiento (Opcional)</label>
+          <label>Fecha de Nacimiento <span style="color: var(--text-muted); font-size: 9.5px;">(Opcional)</span></label>
           <input type="date" id="videoUserBirthdate" class="auth-input">
         </div>
         <div class="auth-input-group">
-          <label>Foto Reciente (Opcional)</label>
+          <label>Foto Reciente <span style="color: var(--text-muted); font-size: 9.5px;">(Opcional para sintonía)</span></label>
           <div class="file-upload-wrapper">
-            <span class="file-upload-text" id="fileNameDisplay">Sube una foto para sintonía...</span>
+            <span class="file-upload-text" id="fileNameDisplay">Sube una foto...</span>
             <span class="file-upload-btn">Examinar</span>
             <input type="file" id="videoUserPhoto" accept="image/*" onchange="updateFileName(this)">
           </div>
@@ -979,17 +1079,17 @@
       </div>
 
       <div class="auth-input-group">
-        <label>Dilema Principal o Pregunta Clave *</label>
+        <label>Dilema Principal o Pregunta Clave <span class="required">*</span></label>
         <input type="text" id="videoUserDilema" class="auth-input" placeholder="Ej: ¿Qué camino debo tomar respecto a mi situación actual o profesional?">
       </div>
 
       <div class="auth-input-group">
-        <label>Detalles y Contexto *</label>
+        <label>Detalles y Contexto <span class="required">*</span></label>
         <textarea id="videoUserQuery" class="auth-textarea" placeholder="Cuéntame detalladamente qué está pasando, qué dudas te quitan el sueño y qué te gustaría que Andrea analice en profundidad..."></textarea>
       </div>
 
       <div style="font-size: 11.5px; color: var(--gold-light); text-align: center; font-style: italic; background: rgba(223, 177, 91, 0.08); padding: 10px; border-radius: 8px; border: 1px solid rgba(223, 177, 91, 0.2);">
-        ✦ Garantía de confidencialidad absoluta: Tus datos se almacenan de forma segura para preparar tu sesión personalizada.
+        ✦ Garantía de confidencialidad absoluta: Tus datos se almacenan de forma segura bajo cifrado SSL para preparar tu sesión personalizada.
       </div>
 
       <div class="auth-msg" id="videoFormMsg"></div>
@@ -1028,6 +1128,25 @@
     </div>
   </div>
 
+  <!-- FOOTER PROFESIONAL -->
+  <footer>
+    <div class="footer-trust-badges">
+      <span>🔒 Pagos 100% Seguros vía Stripe</span>
+      <span>✦ Confidencialidad Garantizada</span>
+      <span>💎 Cifrado SSL Avanzado</span>
+    </div>
+    <div class="footer-links">
+      <a href="index.html">Inicio</a>
+      <a href="sesiones-privadas.html">Sesiones Privadas</a>
+      <a href="tienda.html">Tienda Mística</a>
+      <a href="blog.html">Diario de Arkanica</a>
+    </div>
+    <div class="footer-copy">
+      © 2026 Arkanica. Todos los derechos reservados.<br>
+      Espacio místico de claridad interior y desarrollo intuitivo dirigido por Andrea.
+    </div>
+  </footer>
+
 </div>
 
 <script>
@@ -1038,7 +1157,7 @@
     'pack-360': 'price_1UAOan5Cjrexxtca8NhsyjaJ',
     'consulta-expres': 'price_1UAOc75Cjrexxtcadxzqsa4H',
     'doble-perspectiva': 'price_1UAOcr5CjrexxtcaZ49SFgor',
-    'community_pass': 'price_COMMUNITY_PASS_PLACEHOLDER' // Reemplázalo si tu ID de Stripe para el pase es diferente
+    'community_pass': 'price_COMMUNITY_PASS_PLACEHOLDER'
   };
 
   function updateFileName(input) {
@@ -1047,7 +1166,7 @@
       display.textContent = input.files[0].name;
       display.style.color = 'var(--gold-light)';
     } else {
-      display.textContent = 'Sube una foto para sintonía...';
+      display.textContent = 'Sube una foto...';
       display.style.color = 'var(--text-muted)';
     }
   }
@@ -1064,7 +1183,6 @@
     document.getElementById('formulario-reserva').scrollIntoView({ behavior: 'smooth' });
   }
 
-  // Función específica para el botón de compra del pase de comunidad
   async function buyCommunityPass() {
     try {
       const response = await fetch('../.netlify/functions/crear-checkout', {
@@ -1100,7 +1218,7 @@
     const msg = document.getElementById('videoFormMsg');
 
     if (!name || !email || !dilema || !query) {
-      msg.textContent = 'Por favor, completa los campos obligatorios (*).';
+      msg.textContent = 'Por favor, completa los campos obligatorios (*) marcados en rojo.';
       return;
     }
 
@@ -1152,7 +1270,6 @@
       console.error("Supabase sync warning:", err);
     }
 
-    // Petición a la Netlify Function de Stripe pasándole el priceId correspondiente
     try {
       const priceId = STRIPE_PRICES[spreadType];
       const response = await fetch('../.netlify/functions/crear-checkout', {

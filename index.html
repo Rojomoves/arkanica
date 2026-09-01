@@ -154,6 +154,48 @@
     box-shadow: 0 6px 25px rgba(223, 177, 91, 0.4);
   }
 
+  .crystals-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(3, 3, 5, 0.88);
+    backdrop-filter: blur(6px);
+    z-index: 9999999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .crystals-modal-overlay.open { display: flex; }
+
+  .crystals-modal {
+    background: linear-gradient(145deg, #161321 0%, #08070b 100%);
+    border: 1.5px solid var(--gold);
+    border-radius: 14px;
+    max-width: 440px;
+    width: 100%;
+    padding: 28px;
+    text-align: center;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.9), 0 0 35px rgba(223, 177, 91, 0.25);
+    position: relative;
+    animation: modalScaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @keyframes modalScaleIn {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  .cm-close {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    background: none;
+    border: none;
+    color: var(--gold);
+    font-size: 18px;
+    cursor: pointer;
+  }
+  .cm-close:hover { transform: scale(1.15); }
+
   .floating-audio-btn {
     position: fixed;
     bottom: 24px;
@@ -564,19 +606,12 @@
     padding: 7px 16px;
     border-radius: 20px;
     animation: pulseInstruction 2s infinite ease-in-out;
-    -webkit-animation: pulseInstruction 2s infinite ease-in-out;
   }
 
   @keyframes pulseInstruction {
     0% { transform: scale(1); border-color: var(--gold-dim); }
     50% { transform: scale(1.02); border-color: var(--gold); }
     100% { transform: scale(1); border-color: var(--gold-dim); }
-  }
-
-  @-webkit-keyframes pulseInstruction {
-    0% { -webkit-transform: scale(1); border-color: var(--gold-dim); }
-    50% { -webkit-transform: scale(1.02); border-color: var(--gold); }
-    100% { -webkit-transform: scale(1); border-color: var(--gold-dim); }
   }
 
   .fan-container {
@@ -588,8 +623,6 @@
     max-width: 650px;
     position: relative;
     perspective: 1000px;
-    animation: pulseInstruction 2s infinite ease-in-out;
-    -webkit-animation: pulseInstruction 2s infinite ease-in-out;
   }
 
   .fan-card {
@@ -804,10 +837,15 @@
     background: linear-gradient(135deg, rgba(22, 17, 32, 0.95) 0%, rgba(8, 7, 12, 0.98) 100%);
   }
 
-  .cro-card.tripwire {
+  .cro-card.vip-card {
     border: 1.5px solid var(--gold);
-    background: linear-gradient(135deg, rgba(30, 22, 12, 0.95) 0%, rgba(10, 8, 5, 0.98) 100%);
-    box-shadow: 0 0 25px rgba(223, 177, 91, 0.15);
+    background: linear-gradient(135deg, rgba(30, 24, 15, 0.95) 0%, rgba(10, 8, 5, 0.98) 100%);
+    box-shadow: 0 0 30px rgba(223, 177, 91, 0.2);
+  }
+
+  .cro-card.tripwire {
+    border: 1.5px solid var(--gold-dim);
+    background: linear-gradient(135deg, rgba(20, 15, 25, 0.95) 0%, rgba(8, 7, 12, 0.98) 100%);
   }
 
   .cro-eyebrow {
@@ -912,6 +950,52 @@
     line-height: 1.3;
   }
 
+  /* ESTILOS DEL FOOTER PROFESIONAL INTEGRADOS */
+  footer {
+    width: 100%;
+    max-width: 1050px;
+    margin-top: 40px;
+    border-top: 1px solid var(--line);
+    padding-top: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    text-align: center;
+    z-index: 2;
+  }
+
+  .footer-trust-badges {
+    display: flex;
+    gap: 20px;
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 16px;
+    font-size: 11px;
+  }
+
+  .footer-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover {
+    color: var(--gold);
+  }
+
+  .footer-copy {
+    font-size: 10.5px;
+    color: rgba(156, 152, 166, 0.7);
+    line-height: 1.5;
+  }
+
   @media (max-width: 768px) {
     body { padding: 12px 8px 40px 8px; }
     .arkanica-title { font-size: 22px; }
@@ -922,6 +1006,7 @@
     .spread-positions-grid.grid-10 { grid-template-columns: repeat(2, 1fr); }
     .spread-dropdown-container, .cro-section-container { grid-template-columns: 1fr; }
     .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .footer-trust-badges { flex-direction: column; gap: 8px; }
   }
 </style>
 </head>
@@ -941,6 +1026,23 @@
     </div>
     <p class="threshold-subtitle">«Respira hondo. Deja atrás el ruido y cruza el umbral hacia tu claridad interior.»</p>
     <button class="threshold-btn" onclick="crossTheThreshold()">Cruzar el Umbral</button>
+  </div>
+</div>
+
+<!-- MODAL MÍSTICO DE RECARGA DE CRISTALES -->
+<div class="crystals-modal-overlay" id="crystalsModalOverlay">
+  <div class="crystals-modal">
+    <button class="cm-close" onclick="closeCrystalsModal()">✕</button>
+    <div style="font-size: 28px; margin-bottom: 8px;">💎</div>
+    <div class="cro-eyebrow">✦ Ciclo Diario Completado ✦</div>
+    <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--gold-light); margin-bottom: 10px;">Has agotado tus tiradas de hoy</h3>
+    <p style="font-size: 12px; color: var(--text-muted); line-height: 1.5; margin-bottom: 20px;">
+      Para seguir consultando los arcanos en este ciclo, recarga tu cuenta con Cristales de Claridad o explora una sesión privada con Andrea.
+    </p>
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+      <button class="action-btn" onclick="buyCrystalsPack()" style="width: 100%;">Adquirir +30 Cristales (4,95 €) ➔</button>
+      <button class="arkanica-reset" onclick="closeCrystalsModal()" style="width: 100%; padding: 10px;">Volver mañana / Ver Sesiones Privadas</button>
+    </div>
   </div>
 </div>
 
@@ -1089,24 +1191,27 @@
     </div>
   </div>
 
-  <div class="cro-card">
+  <div class="cro-card vip-card">
     <div>
       <div class="cro-eyebrow">✦ Círculo de Claridad ✦</div>
       <h3 class="cro-title">Comunidad VIP en WhatsApp</h3>
       
-      <div style="background: rgba(223, 177, 91, 0.12); border: 1px dashed var(--gold); border-radius: 8px; padding: 10px 14px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+      <div style="background: rgba(223, 177, 91, 0.15); border: 1px dashed var(--gold); border-radius: 8px; padding: 10px 14px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
         <div>
           <span style="font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); display: block; font-weight: 600;">⚡ Solo durante esta semana</span>
           <span style="font-size: 11px; color: var(--text-main);">Acceso vitalicio al círculo exclusivo</span>
         </div>
         <div style="text-align: right;">
-          <span style="font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--gold-light); font-weight: 700;">3,90 €</span>
-          <span style="font-size: 10px; color: #2ecc71; font-weight: 600; display: block;">¡Ahorras 5€!</span>
+          <div style="display: flex; align-items: baseline; gap: 6px; justify-content: flex-end;">
+            <span style="font-size: 13px; color: var(--text-muted); text-decoration: line-through;">8,90 €</span>
+            <span style="font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--gold-light); font-weight: 700;">3,90 €</span>
+          </div>
+          <span style="font-size: 10px; color: #2ecc71; font-weight: 600; display: block;">¡Ahorras 5 €!</span>
         </div>
       </div>
 
       <p class="cro-desc">
-        Comparte interpretaciones y camina rodeado de almas afines en un espacio íntimo, exclusivo y guiado de cerca.
+        Comparte interpretaciones y camina rodeado de almas afines en un espacio íntimo, exclusivo y guiado de cerca por Andrea.
       </p>
     </div>
     <div>
@@ -1119,10 +1224,11 @@
       <div class="cro-eyebrow">⚡ Resuelve tu duda hoy mismo ⚡</div>
       <h3 class="cro-title">Consulta Exprés (1 Pregunta Clave)</h3>
       <p class="cro-desc">
-        ¿Una duda urgente que no te deja avanzar hoy? Recibe una lectura directa al alma y sin rodeos redactada por Andrea en tiempo récord.
+        ¿Esa duda en la cabeza dando vueltas a medianoche? Obtén la respuesta directa al alma y sin rodeos redactada por Andrea en menos de 24h.
       </p>
-      <div style="font-family: 'Cormorant Garamond', serif; font-size: 26px; color: var(--gold-light); margin-bottom: 12px; font-weight: 600;">
-        9,00 €
+      <div style="display: flex; align-items: baseline; gap: 10px; margin-bottom: 12px;">
+        <span style="font-size: 15px; color: var(--text-muted); text-decoration: line-through;">14,90 €</span>
+        <span style="font-family: 'Cormorant Garamond', serif; font-size: 26px; color: var(--gold-light); font-weight: 600;">9,00 €</span>
       </div>
     </div>
     <div>
@@ -1145,6 +1251,25 @@
 
 </div>
 
+<!-- FOOTER PROFESIONAL INTEGRADO -->
+<footer>
+  <div class="footer-trust-badges">
+    <span>🔒 Pagos 100% Seguros vía Stripe</span>
+    <span>✦ Confidencialidad Garantizada</span>
+    <span>💎 Cifrado SSL Avanzado</span>
+  </div>
+  <div class="footer-links">
+    <a href="index.html">Inicio</a>
+    <a href="sesiones-privadas.html">Sesiones Privadas</a>
+    <a href="tienda.html">Tienda Mística</a>
+    <a href="blog.html">Diario de Arkanica</a>
+  </div>
+  <div class="footer-copy">
+    © 2026 Arkanica. Todos los derechos reservados.<br>
+    Espacio místico de claridad interior y desarrollo intuitivo dirigido por Andrea.
+  </div>
+</footer>
+
 <script>
   function crossTheThreshold() {
     playWoodSelectSound();
@@ -1153,6 +1278,21 @@
       overlay.classList.add('fade-out');
       setTimeout(() => { overlay.style.display = 'none'; }, 800);
     }
+  }
+
+  function openCrystalsModal() {
+    document.getElementById('crystalsModalOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeCrystalsModal() {
+    document.getElementById('crystalsModalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  async function buyCrystalsPack() {
+    closeCrystalsModal();
+    window.location.href = 'tienda.html';
   }
 
   function selectQuickExpress() {
@@ -1666,8 +1806,8 @@
       return true;
     } else {
       if (userCrystals < 3) {
-        hint.textContent = "Has agotado tus tiradas gratuitas de hoy. Necesitas 3 cristales.";
-        alert("Has agotado tus 2 tiradas gratuitas diarias. Necesitas 3 cristales para continuar consultando los arcanos.");
+        hint.textContent = "Has agotado tus tiradas gratuitas de hoy. Se requieren cristales.";
+        openCrystalsModal();
         return false;
       } else {
         updateCrystalsStorage(userCrystals - 3);

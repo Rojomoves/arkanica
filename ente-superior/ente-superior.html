@@ -147,6 +147,49 @@
     margin: 0;
   }
 
+  /* MODAL MÍSTICO DE RECARGA DE CRISTALES */
+  .crystals-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(3, 3, 5, 0.88);
+    backdrop-filter: blur(6px);
+    z-index: 9999999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .crystals-modal-overlay.open { display: flex; }
+
+  .crystals-modal {
+    background: linear-gradient(145deg, #161321 0%, #08070b 100%);
+    border: 1.5px solid var(--gold);
+    border-radius: 14px;
+    max-width: 440px;
+    width: 100%;
+    padding: 28px;
+    text-align: center;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.9), 0 0 35px rgba(223, 177, 91, 0.25);
+    position: relative;
+    animation: modalScaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @keyframes modalScaleIn {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  .cm-close {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    background: none;
+    border: none;
+    color: var(--gold);
+    font-size: 18px;
+    cursor: pointer;
+  }
+  .cm-close:hover { transform: scale(1.15); }
+
   .floating-audio-btn {
     position: fixed;
     bottom: 24px;
@@ -795,6 +838,51 @@
     letter-spacing: 0.05em;
   }
 
+  footer {
+    width: 100%;
+    max-width: 900px;
+    margin-top: 40px;
+    border-top: 1px solid var(--line);
+    padding-top: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    text-align: center;
+    z-index: 2;
+  }
+
+  .footer-trust-badges {
+    display: flex;
+    gap: 20px;
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 16px;
+    font-size: 11px;
+  }
+
+  .footer-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover {
+    color: var(--gold);
+  }
+
+  .footer-copy {
+    font-size: 10.5px;
+    color: rgba(156, 152, 166, 0.7);
+    line-height: 1.5;
+  }
+
   @media (max-width: 768px) {
     body { padding: 12px 8px 45px 8px; }
     
@@ -891,6 +979,7 @@
     .about-grid { grid-template-columns: 1fr; gap: 14px; text-align: center; justify-items: center; }
     .about-avatar-circle { width: 95px; height: 95px; }
     .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .footer-trust-badges { flex-direction: column; gap: 8px; }
   }
 </style>
 </head>
@@ -909,6 +998,23 @@
       <h2 class="threshold-title">El Ente Superior sintoniza tu frecuencia...</h2>
     </div>
     <p class="threshold-subtitle">«Prepárate para adentrarse en la respuesta exacta que tu alma necesita.»</p>
+  </div>
+</div>
+
+<!-- MODAL MÍSTICO DE RECARGA DE CRISTALES -->
+<div class="crystals-modal-overlay" id="crystalsModalOverlay">
+  <div class="crystals-modal">
+    <button class="cm-close" onclick="closeCrystalsModal()">✕</button>
+    <div style="font-size: 28px; margin-bottom: 8px;">💎</div>
+    <div class="threshold-eyebrow">✦ Ciclo de Preguntas Agotado ✦</div>
+    <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--gold-light); margin-bottom: 10px;">Continúa tu diálogo con el Ente Superior</h3>
+    <p style="font-size: 12px; color: var(--text-muted); line-height: 1.5; margin-bottom: 20px;">
+      Has utilizado tu consulta de cortesía. Recarga tus Cristales de Claridad para seguir desenterrando respuestas sin interrupciones.
+    </p>
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+      <button class="action-btn" onclick="buyPack(40, 'Esencia Eterna', '9.99 €')" style="width: 100%;">Adquirir Esencia Eterna (40 Cristales + VIP) ➔</button>
+      <button class="arkanica-reset" onclick="closeCrystalsModal()" style="width: 100%; padding: 10px; background: transparent; border: 1px solid var(--line); color: var(--text-muted); cursor: pointer; border-radius: 6px;">Ver más paquetes abajo</button>
+    </div>
   </div>
 </div>
 
@@ -953,7 +1059,6 @@
         <a href="../index.html" onclick="closeNavMenu()">Volver al Oráculo</a>
         <a href="../blog.html" onclick="closeNavMenu()">Diario de Arkanica</a>
         <a href="../tienda.html" onclick="closeNavMenu()">Tienda Mística</a>
-        <a href="../blog/preguntas-frecuentes.html" onclick="closeNavMenu()">Preguntas Frecuentes (FAQ)</a>
         <a href="#reservas" onclick="closeNavMenu()">Sesiones Privadas</a>
       </div>
     </div>
@@ -968,7 +1073,7 @@
   <div class="banner-quick-actions">
     <a href="../blog.html" class="banner-action-pill">Diario de Arkanica</a>
     <a href="../tienda.html" class="banner-action-pill">Tienda Mística</a>
-    <a href="../blog/preguntas-frecuentes.html" class="banner-action-pill">FAQ</a>
+    <a href="#reservas" class="banner-action-pill">✦ Sesiones Privadas</a>
   </div>
 </div>
 
@@ -1001,7 +1106,7 @@
           <div class="pack-name">Esencia Eterna</div>
           <div class="pack-amount">40 Cristales + Comunidad VIP</div>
         </div>
-        <button class="pack-btn" onclick="buyPack(40, 'Esencia Eterna', '9.99 €')">9.99 €</button>
+        <button class="pack-btn" onclick="buyPack(40, 'Esencia Eterna', '9.99 €')">9.99 € ⚡</button>
       </div>
 
       <div class="pack-card">
@@ -1085,6 +1190,25 @@
   </div>
 </div>
 
+<footer>
+  <div class="footer-trust-badges">
+    <span>🔒 Pagos 100% Seguros vía Stripe</span>
+    <span>✦ Confidencialidad Garantizada</span>
+    <span>💎 Cifrado SSL Avanzado</span>
+  </div>
+  <div class="footer-links">
+    <a href="../index.html">Inicio</a>
+    <a href="../sesiones-privadas.html">Sesiones Privadas</a>
+    <a href="../tienda.html">Tienda Mística</a>
+    <a href="../blog.html">Diario de Arkanica</a>
+    <a href="../blog/preguntas-frecuentes.html">FAQ</a>
+  </div>
+  <div class="footer-copy">
+    © 2026 Arkanica. Todos los derechos reservados.<br>
+    Espacio místico de claridad interior y desarrollo intuitivo dirigido por Andrea.
+  </div>
+</footer>
+
 <script>
   window.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
@@ -1097,6 +1221,16 @@
       }
     }, 2500);
   });
+
+  function openCrystalsModal() {
+    document.getElementById('crystalsModalOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeCrystalsModal() {
+    document.getElementById('crystalsModalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
 
   function toggleNavMenu(e) {
     e.stopPropagation();
@@ -1306,6 +1440,7 @@
 
   async function buyPack(amount, packName, priceString) {
     playWoodSelectSound();
+    closeCrystalsModal();
     const numericPrice = parseFloat(priceString.replace('€', '').trim());
     const priceInCents = Math.round(numericPrice * 100);
 
@@ -1346,7 +1481,7 @@
     const COST = 3;
 
     if (remainingFree === 0 && crystals < COST) {
-      alert(`Has agotado tu pregunta gratuita de cortesía y tus cristales disponibles.\n\nAdquiere un pack de cristales abajo para continuar tu sesión privada con el Ente Superior.`);
+      openCrystalsModal();
       return;
     }
 
@@ -1379,9 +1514,16 @@
     const loadingDiv = document.createElement('div');
     loadingDiv.className = 'message ai';
     loadingDiv.id = loadingId;
-    loadingDiv.innerHTML = `<em>✦ El Ente Superior sintoniza la respuesta profunda para: "${userQuery}"...</em>`;
+    
+    loadingDiv.innerHTML = `<em>✦ Sintonizando campos energéticos para: "${userQuery}"...</em>`;
     chatMessages.appendChild(loadingDiv);
     chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    setTimeout(() => {
+      if (document.getElementById(loadingId)) {
+        document.getElementById(loadingId).innerHTML = `<em>✦ Descifrando arcanos y frecuencias ocultas...</em>`;
+      }
+    }, 1200);
 
     let systemRole = `Eres el Ente Superior, una guía mística absoluta y directa de Arkanica.`;
     if (isFreeTrial) {
@@ -1399,11 +1541,12 @@
         body: JSON.stringify({ prompt: finalPrompt })
       });
 
-      const data = await response.json();
+      const data = y => y.json(); // safe handling
+      const responseData = await response.json();
       if (document.getElementById(loadingId)) document.getElementById(loadingId).remove();
 
-      if (response.ok && data.text) {
-        let persuasionHTML = `<div class="ai-response-body">${data.text}</div>`;
+      if (response.ok && responseData.text) {
+        let persuasionHTML = `<div class="ai-response-body">${responseData.text}</div>`;
         
         if (isFreeTrial) {
           persuasionHTML += `
@@ -1415,7 +1558,7 @@
 
         appendMessage(`Para tu dilema: <strong>"${userQuery}"</strong>`, 'ai', persuasionHTML);
       } else {
-        throw new Error(data.error || 'Respuesta vacía');
+        throw new Error(responseData.error || 'Respuesta vacía');
       }
 
     } catch (error) {
