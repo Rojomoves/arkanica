@@ -4,12 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Arkanica — Tienda Mística y Elementos Sagrados</title>
-<!-- Cliente oficial de Supabase -->
+<meta name="description" content="Explora la tienda mística de Arkanica: cristales, barajas de tarot, cuencos tibetanos, runas y accesorios consagrados para elevar tu frecuencia y práctica.">
+<link rel="canonical" href="https://arkanica.app/tienda.html">
+
+<meta property="og:title" content="Arkanica — Tienda Mística y Elementos Sagrados">
+<meta property="og:description" content="Artículos esotéricos, cristales y herramientas espirituales con intención en Arkanica.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://arkanica.app/tienda.html">
+<meta property="og:image" content="https://arkanica.app/assets/tarotista.jpg">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Arkanica — Tienda Mística y Elementos Sagrados">
+<meta name="twitter:description" content="Descubre la colección de artículos esotéricos y cristales en la tienda mística de Arkanica.">
+<meta name="twitter:image" content="https://arkanica.app/assets/tarotista.jpg">
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<!-- SDK oficial de Stripe -->
 <script src="https://js.stripe.com/v3/"></script>
 
-<!-- CÓDIGO OFICIAL DE GOOGLE ADSENSE -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2698892755295064" crossorigin="anonymous"></script>
 
 <style>
@@ -809,7 +820,7 @@
     flex: 1;
   }
   .add-btn:hover { background: var(--gold-light); transform: translateY(-1px); }
-  .add-btn.added { background: var(--sage); color: var(--white); }
+  .add-btn.added { background: var(--sage); color: #fff; }
 
   .product-bonus {
     font-size: 10px;
@@ -966,7 +977,7 @@
     font-family: 'Inter', sans-serif;
   }
   .modal-add-btn:hover { background: var(--gold-light); }
-  .modal-add-btn.added { background: var(--sage); color: var(--white); }
+  .modal-add-btn.added { background: var(--sage); color: #fff; }
 
   .modal-trust { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
   .mt-item { text-align: center; padding: 8px 4px; background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 6px; font-size: 10px; color: var(--text-muted); line-height: 1.3; }
@@ -1100,13 +1111,11 @@
 </head>
 <body>
 
-<!-- SOCIAL PROOF TOAST -->
 <div class="social-proof-toast" id="socialProofToast">
   <span>✨</span>
   <div><strong id="toastUser">Marta de Barcelona</strong> acaba de adquirir un artículo místico.</div>
 </div>
 
-<!-- MODAL DE DETALLES -->
 <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
   <div class="modal" id="productModal" onclick="event.stopPropagation()">
     <button class="modal-close" onclick="closeModal()">✕</button>
@@ -1118,7 +1127,6 @@
   </div>
 </div>
 
-<!-- BACKDROP & CART DRAWER -->
 <div class="backdrop" id="cartBackdrop" onclick="toggleCart()"></div>
 <div class="cart-drawer" id="cartDrawer">
   <div class="cart-header">
@@ -1139,7 +1147,6 @@
   </div>
 </div>
 
-<!-- AUDIO AMBIENTE -->
 <audio id="ambientAudio" loop>
   <source src="" type="audio/mpeg">
 </audio>
@@ -1149,7 +1156,6 @@
   <span class="audio-tooltip" id="audioTooltip">Silencio</span>
 </button>
 
-<!-- HEADER -->
 <header>
   <a class="logo" href="index.html">
     <svg class="logo-symbol" viewBox="0 0 32 32">
@@ -1192,12 +1198,10 @@
   </div>
 </header>
 
-<!-- PROMO BANNER -->
 <div class="promo-banner">
   ✦ Envío gratuito en pedidos superiores a <strong>50€</strong> &nbsp;|&nbsp; Cada artículo incluye <strong>Cristales de Claridad</strong> de regalo ✦
 </div>
 
-<!-- HERO ESTILO ARKANICA -->
 <section class="hero-section">
   <div class="hero-eyebrow">Artículos Esotéricos &amp; Bienestar</div>
   <h1 class="hero-title">Objetos con <em>alma</em>,<br>energía que se siente</h1>
@@ -1213,7 +1217,6 @@
   </div>
 </section>
 
-<!-- FILTERS & SORT BAR -->
 <div class="store-filters" id="productos">
   <div class="filter-scroll-container">
     <div class="filter-tags" id="filterTags">
@@ -1233,7 +1236,6 @@
   </select>
 </div>
 
-<!-- PRODUCTS -->
 <section class="products-section">
   <div class="section-header">
     <h2 class="section-title">Colección Sagrada</h2>
@@ -1242,7 +1244,6 @@
   <div class="products-grid" id="productsGrid"></div>
 </section>
 
-<!-- REVIEWS SECTION -->
 <div class="reviews-section">
   <div style="font-size: 9.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 4px; text-align: center;">Comunidad Arkanica</div>
   <h3 style="margin-top: 0; font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--gold); text-align: center; margin-bottom: 12px;">Lo que dicen quienes ya han cruzado</h3>
@@ -1266,10 +1267,8 @@
   </div>
 </div>
 
-<!-- SCROLL TO TOP -->
 <button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Volver arriba">↑</button>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">
@@ -1545,7 +1544,6 @@ function renderProducts(list) {
   list.forEach((p, idx) => {
     const save = getSavePct(p);
     const lowStock = p.stock < 50;
-    // Si el stock es bajo (como 3 unidades en el cuenco), mostramos barra casi vacía y en rojo
     const stockPct = p.stock <= 5 ? 10 : Math.min(100, Math.round((p.stock / 100) * 100));
     const isInCart = cart.some(c => c.code === p.code);
     const card = document.createElement('div');
