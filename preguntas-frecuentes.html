@@ -4,7 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Preguntas Frecuentes (FAQ) — Arkanica</title>
-<meta name="description" content="Resuelve todas tus dudas sobre Arkanica: cómo hacer tiradas de tarot online gratis, el funcionamiento del abanico interactivo, la contratación de sesiones privadas y packs, y la adquisición de objetos en nuestra tienda mística.">
+<meta name="description" content="Resuelve tus dudas sobre Arkanica: cómo hacer tiradas de tarot online gratis, el funcionamiento del abanico interactivo y las sesiones privadas.">
+<link rel="canonical" href="https://arkanica.app/preguntas-frecuentes">
+
+<!-- OPEN GRAPH PARA REDES SOCIALES -->
+<meta property="og:title" content="Preguntas Frecuentes (FAQ) — Arkanica">
+<meta property="og:description" content="Resuelve todas tus dudas sobre Arkanica: cómo hacer tiradas de tarot online gratis, el funcionamiento del abanico interactivo y sesiones privadas.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://arkanica.app/preguntas-frecuentes">
+<meta property="og:image" content="https://arkanica.app/assets/tarotista.jpg">
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://js.stripe.com/v3/"></script>
 <style>
@@ -42,7 +51,6 @@
     position: relative;
   }
 
-  /* VIÑETA OSCURA ENvolVENTE */
   body::after {
     content: '';
     position: fixed;
@@ -52,7 +60,19 @@
     z-index: 1000;
   }
 
-  /* HEADER */
+  /* BLOQUE SEMÁNTICO SEO (Invisible al usuario pero clave para Google y Bots) */
+  .seo-semantic-content {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
   header {
     width: 100%;
     max-width: 1100px;
@@ -110,7 +130,6 @@
     border-color: var(--gold);
   }
 
-  /* CONTENEDOR FAQ */
   .blog-container {
     width: 100%;
     max-width: 850px;
@@ -202,8 +221,14 @@
 </head>
 <body>
 
+<!-- BLOQUE SEMÁNTICO SEO PARA MOTORES DE BÚSQUEDA -->
+<div class="seo-semantic-content">
+  <h1>Preguntas Frecuentes (FAQ) sobre Arkanica, Tarot Interactivo y Servicios</h1>
+  <p>Resuelve todas tus dudas sobre Arkanica: cómo hacer tiradas de tarot online gratis, el funcionamiento del abanico interactivo, la contratación de sesiones privadas y packs, y la adquisición de objetos en nuestra tienda mística.</p>
+</div>
+
 <header>
-  <a href="../index.html" class="logo">
+  <a href="/" class="logo">
     <svg class="logo-symbol" viewBox="0 0 32 32">
       <ellipse cx="16" cy="16" rx="14" ry="6" transform="rotate(-30 16 16)" />
       <circle cx="16" cy="16" r="4" />
@@ -211,7 +236,7 @@
     </svg>
     <span class="logo-text">Arkanica</span>
   </a>
-  <a href="../blog.html" class="banner-action-pill">← Volver al Diario de Arkanica</a>
+  <a href="/blog.html" class="banner-action-pill">← Volver al Diario de Arkanica</a>
 </header>
 
 <div class="blog-container">
@@ -221,7 +246,7 @@
     <p class="blog-date">Guía exhaustiva optimizada para la resolución de dudas y claridad en la plataforma</p>
     <div class="blog-content">
       
-      <p>Bienvenido al centro oficial de soporte y preguntas frecuentes de <strong>Arkanica</strong>. Este espacio ha sido diseñado para ofrecerte respuestas directas, estructuradas y detalladas sobre el funcionamiento de nuestras herramientas de autoconocimiento, tiradas interactivas de tarot online, sesiones privadas exclusivas y la adquisición de objetos en nuestra tienda mística.</p>
+      <p>Bienvenido al oficial centro de soporte y preguntas frecuentes de <strong>Arkanica</strong>. Este espacio ha sido diseñado para ofrecerte respuestas directas, estructuradas y detalladas sobre el funcionamiento de nuestras herramientas de autoconocimiento, tiradas interactivas de tarot online, sesiones privadas exclusivas y la adquisición de objetos en nuestra tienda mística.</p>
 
       <h2>1. Funcionamiento General y Dinámicas de Tarot Interactivo</h2>
       
@@ -263,7 +288,7 @@
       <div style="background: rgba(223, 177, 91, 0.05); border: 1px solid var(--line); border-left: 3px solid var(--gold); padding: 16px 20px; border-radius: 8px; margin: 28px 0;">
         <p style="margin: 0 0 10px 0; font-family: 'Cormorant Garamond', serif; font-size: 16px; color: var(--gold-light);">✦ <em>¿Tienes una consulta específica que no aparece reflejada aquí?</em></p>
         <p style="margin: 0 0 12px 0; font-size: 12.5px; color: var(--text-muted); line-height: 1.5;">Puedes iniciar una lectura en nuestra mesa interactiva o reservar un espacio de atención personalizada a través de nuestras sesiones exclusivas.</p>
-        <a href="../index.html#mesa" class="banner-action-pill" style="text-decoration: none;">Ir a realizar tu tirada hoy</a>
+        <a href="/#mesa" class="banner-action-pill" style="text-decoration: none;">Ir a realizar tu tirada hoy</a>
       </div>
 
       <hr style="border: 0; border-top: 1px solid var(--line); margin: 32px 0;">
@@ -273,8 +298,8 @@
         <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--gold); margin-top: 0; margin-bottom: 8px;">¿Listo/a para dar el siguiente paso?</h3>
         <p style="font-size: 12.5px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.5;">Explora la mesa de tarot interactivo o conecta con el Ente Superior para profundizar en tu momento vital.</p>
         <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
-          <a href="../index.html#mesa" class="action-btn" style="text-decoration: none; display: inline-block;">Hacer una tirada</a>
-          <a href="../ente-superior.html" class="banner-action-pill" style="text-decoration: none; display: inline-block; padding: 11px 22px;">Consultar al Ente Superior ✦</a>
+          <a href="/#mesa" class="action-btn" style="text-decoration: none; display: inline-block;">Hacer una tirada</a>
+          <a href="/ente-superior.html" class="banner-action-pill" style="text-decoration: none; display: inline-block; padding: 11px 22px;">Consultar al Ente Superior ✦</a>
         </div>
       </div>
     </div>

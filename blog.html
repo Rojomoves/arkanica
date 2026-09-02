@@ -3,17 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<!-- SEO Y METADATOS CRÍTICOS -->
 <title>Diario de Arkanica — Tarot y Claridad Profunda</title>
 <meta name="description" content="Explora el Diario de Arkanica con artículos de tarot, psicología, arquetipos del tarot y guías prácticas de autoconocimiento y claridad profunda.">
-<link rel="canonical" href="https://arkanica.app/blog.html">
+<link rel="canonical" href="https://arkanica.app/blog">
 
 <!-- OPEN GRAPH PARA REDES SOCIALES -->
 <meta property="og:title" content="Diario de Arkanica — Tarot y Claridad Profunda">
 <meta property="og:description" content="Artículos de tarot, psicología, arquetipos y mirada psicológica dirigidos por Andrea en Arkanica.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://arkanica.app/blog.html">
+<meta property="og:url" content="https://arkanica.app/blog">
 <meta property="og:image" content="https://arkanica.app/assets/tarotista.jpg">
 
 <!-- TWITTER CARDS -->
@@ -29,17 +27,17 @@
   "@graph": [
     {
       "@type": "CollectionPage",
-      "@id": "https://arkanica.app/blog.html#webpage",
-      "url": "https://arkanica.app/blog.html",
+      "@id": "https://arkanica.app/blog/#webpage",
+      "url": "https://arkanica.app/blog",
       "name": "Diario de Arkanica — Reflexiones del Inconsciente",
       "description": "Artículos de tarot, psicología, arquetipos y mirada psicológica."
     },
     {
       "@type": "Blog",
-      "@id": "https://arkanica.app/blog.html#blog",
+      "@id": "https://arkanica.app/blog/#blog",
       "name": "Diario de Arkanica",
       "description": "Blog oficial de Arkanica sobre artículos de tarot, psicología y desarrollo intuitivo.",
-      "url": "https://arkanica.app/blog.html",
+      "url": "https://arkanica.app/blog",
       "publisher": {
         "@type": "Person",
         "name": "Andrea"
@@ -90,7 +88,6 @@
     position: relative;
   }
 
-  /* VIÑETA OSCURA */
   body::after {
     content: '';
     position: fixed;
@@ -100,7 +97,6 @@
     z-index: 1000;
   }
 
-  /* BLOQUE SEMÁNTICO SEO (Invisible al usuario pero clave para Google y Bots de IA) */
   .seo-semantic-content {
     position: absolute;
     width: 1px;
@@ -113,7 +109,6 @@
     border: 0;
   }
 
-  /* HEADER */
   header {
     width: 100%;
     max-width: 1100px;
@@ -174,7 +169,6 @@
     border-color: var(--gold);
   }
 
-  /* MENÚ HAMBURGUESA */
   .hamburger-btn {
     background: rgba(12, 11, 18, 0.92);
     border: 1px solid var(--gold);
@@ -243,7 +237,6 @@
     color: var(--gold);
   }
 
-  /* CONTENEDOR DEL BLOG */
   .blog-container {
     width: 100%;
     max-width: 800px;
@@ -278,7 +271,6 @@
     color: var(--text-muted);
   }
 
-  /* SISTEMA DE FILTROS POR CATEGORÍA */
   .category-filter-container {
     display: flex;
     justify-content: center;
@@ -307,14 +299,12 @@
     box-shadow: 0 0 15px rgba(223, 177, 91, 0.2);
   }
 
-  /* LISTADO DE ARTÍCULOS */
   .articles-wrapper {
     display: flex;
     flex-direction: column;
     gap: 20px;
   }
 
-  /* TARJETAS DE ARTÍCULOS */
   .article-card {
     background: linear-gradient(135deg, rgba(14, 13, 20, 0.85) 0%, rgba(6, 5, 10, 0.95) 100%);
     border: 1px solid var(--line);
@@ -370,7 +360,6 @@
     padding-top: 12px;
   }
 
-  /* BANNER DESTACADO PARA PREGUNTAS FRECUENTES */
   .faq-banner-card {
     background: linear-gradient(135deg, rgba(28, 22, 38, 0.9) 0%, rgba(10, 9, 15, 0.95) 100%);
     border: 1px solid var(--gold);
@@ -416,7 +405,6 @@
     background: var(--gold-light);
   }
 
-  /* FOOTER PROFESIONAL */
   footer {
     width: 100%;
     max-width: 800px;
@@ -469,7 +457,6 @@
 </head>
 <body>
 
-<!-- BLOQUE SEMÁNTICO SEO PARA MOTORES DE BÚSQUEDA E IA -->
 <div class="seo-semantic-content">
   <h1>Diario de Arkanica — Artículos de Tarot, Psicología y Autoconocimiento</h1>
   <p>Explora el Diario de Arkanica con artículos de tarot, psicología, arquetipos y guías de autoconocimiento.</p>
@@ -488,7 +475,6 @@
   <div class="header-right">
     <a href="/index.html" class="nav-back-home">← Volver a la Mesa</a>
 
-    <!-- Menú Hamburguesa -->
     <div class="header-menu-wrapper">
       <button class="hamburger-btn" onclick="toggleNavMenu(event)" title="Menú de navegación">
         <span class="hamburger-line"></span>
@@ -498,10 +484,10 @@
 
       <div class="nav-dropdown-menu" id="navDropdownMenu">
         <a href="/index.html" onclick="closeNavMenu()">Lecturas</a>
-        <a href="/blog.html" onclick="closeNavMenu()">✦ Diario de Arkanica</a>
-        <a href="/tienda.html" onclick="closeNavMenu()">🛍️ Tienda Mística</a>
-        <a href="/preguntas-frecuentes.html" onclick="closeNavMenu()">❓ Preguntas Frecuentes (FAQ)</a>
-        <a href="/sesiones-privadas.html" onclick="closeNavMenu()">Sesiones Privadas</a>
+        <a href="/blog" onclick="closeNavMenu()">✦ Diario de Arkanica</a>
+        <a href="/tienda" onclick="closeNavMenu()">🛍️ Tienda Mística</a>
+        <a href="/preguntas-frecuentes" onclick="closeNavMenu()">❓ Preguntas Frecuentes (FAQ)</a>
+        <a href="/sesiones-privadas" onclick="closeNavMenu()">Sesiones Privadas</a>
       </div>
     </div>
   </div>
@@ -514,7 +500,6 @@
     <p class="blog-sub">Artículos de tarot, psicología y autoconocimiento.</p>
   </div>
 
-  <!-- FILTROS DE CATEGORÍA -->
   <div class="category-filter-container" id="categoryFilters">
     <button class="filter-pill active" onclick="filterArticles('all', this)">✦ Esenciales</button>
     <button class="filter-pill" onclick="filterArticles('mitos', this)">Mitos & Realidades</button>
@@ -525,7 +510,6 @@
 
   <div class="articles-wrapper" id="articlesWrapper">
 
-    <!-- NUEVO ARTÍCULO 1: Caso de Estudio - Lucía y el Bloqueo Creativo -->
     <a href="/blog/como-lucia-supero-el-bloqueo-creativo-arcanos-menores.html" class="article-card featured" data-category="psicologia">
       <div class="article-category">✦ Caso de Estudio & Arquetipos</div>
       <h3 class="article-title">Cómo Lucía superó su bloqueo creativo usando los Arcanos Menores</h3>
@@ -536,7 +520,6 @@
       </div>
     </a>
 
-    <!-- NUEVO ARTÍCULO 2: Guía Práctica - Apagar el Ruido Mental -->
     <a href="/blog/ejercicio-papel-y-boli-apagar-ruido-mental.html" class="article-card featured" data-category="claridad">
       <div class="article-category">✦ Guía de Introspección</div>
       <h3 class="article-title">Cómo apagar el ruido mental: Ejercicio práctico de autoterapia con papel y boli</h3>
@@ -547,7 +530,6 @@
       </div>
     </a>
 
-    <!-- Artículo 1 (Destacado): Mitos y verdades del Tarot -->
     <a href="/blog/mitos-y-verdades-del-tarot.html" class="article-card featured" data-category="mitos">
       <div class="article-category">✦ Mitos & Realidades</div>
       <h3 class="article-title">Mitos y verdades del Tarot: Lo que nadie te cuenta sobre las cartas (y por qué deberías dejar de temerles)</h3>
@@ -558,7 +540,6 @@
       </div>
     </a>
 
-    <!-- Artículo 2 (Destacado): Relaciones y Patrones -->
     <a href="/blog/por-que-atraigo-el-mismo-tipo-de-relaciones.html" class="article-card featured" data-category="relaciones">
       <div class="article-category">✦ Relaciones & Vínculos</div>
       <h3 class="article-title">¿Por qué siempre atraigo el mismo tipo de relaciones? Lo que el Tarot (y tu inconsciente) intentan decirte</h3>
@@ -569,7 +550,6 @@
       </div>
     </a>
 
-    <!-- Artículo 3 (Destacado): Decisiones Difíciles -->
     <a href="/blog/como-tomar-decisiones-dificiles.html" class="article-card featured" data-category="claridad">
       <div class="article-category">✦ Introspección & Claridad</div>
       <h3 class="article-title">Cómo tomar decisiones difíciles cuando la mente está colapsada: Guía práctica de introspección</h3>
@@ -580,7 +560,6 @@
       </div>
     </a>
 
-    <!-- Artículo: Ansiedad e Incertidumbre -->
     <a href="/blog/ansiedad-por-incertidumbre-y-aprender-a-soltar.html" class="article-card" data-category="claridad">
       <div class="article-category">✦ Paz Mental & Transformación</div>
       <h3 class="article-title">Ansiedad por incertidumbre: Por qué necesitas dejar de intentar controlar el futuro (y cómo el Arcano sin Nombre te enseña a soltar)</h3>
@@ -591,7 +570,6 @@
       </div>
     </a>
 
-    <!-- Artículo: Predicción vs Autoengaño -->
     <a href="/blog/prediccion-o-autoengano-el-peligro-del-tarot.html" class="article-card" data-category="mitos">
       <div class="article-category">✦ Honestidad & Autocrítica</div>
       <h3 class="article-title">¿Predicción o Autoengaño? El peligro de buscar respuestas falsas que ya sabes que son mentira</h3>
@@ -602,7 +580,6 @@
       </div>
     </a>
 
-    <!-- Artículo: Integrando la Sombra -->
     <a href="/blog/integrando-la-sombra-arcanos-oscuros.html" class="article-card" data-category="psicologia">
       <div class="article-category">✦ Psicología & Arquetipos</div>
       <h3 class="article-title">Integrando la Sombra: Qué son los arcanos oscuros del Tarot y por qué huir de tus miedos te hace más vulnerable</h3>
@@ -613,7 +590,6 @@
       </div>
     </a>
 
-    <!-- Artículo: La Crisis del Propósito -->
     <a href="/blog/la-crisis-del-proposito-y-el-loco.html" class="article-card" data-category="psicologia">
       <div class="article-category">✦ Transiciones & Propósito</div>
       <h3 class="article-title">La crisis del propósito: Qué hacer cuando sientes que tu vida no va a ninguna parte (Y cómo usar el Arcano de El Loco para empezar de cero)</h3>
@@ -624,8 +600,8 @@
       </div>
     </a>
 
-    <!-- Artículo: Sincronicidad y Cartas Repetidas -->
-    <a href="/blog/sincronicidad-y-cartas-repetidas-en-el-tarot.html" class="article-card" data-category="psicologia">
+    <!-- ENLACE CORREGIDO A LA URL LIMPIA -->
+    <a href="/blog/sincronicidad-y-cartas-repetidas-en-el-tarot" class="article-card" data-category="psicologia">
       <div class="article-category">✦ Sincronicidad & Subconsciente</div>
       <h3 class="article-title">¿Coincidencia o Sincronicidad? Por qué ves las mismas cartas repetidas y qué intenta decirte tu mente subconsciente</h3>
       <p class="article-excerpt">Analiza el significado oculto detrás de las cartas que se repiten una y otra vez en tus lecturas cotidianas.</p>
@@ -635,7 +611,6 @@
       </div>
     </a>
 
-    <!-- Artículo: Bloqueos Creativos y Profesionales -->
     <a href="/blog/bloqueo-mental-y-procrastinacion-cronica.html" class="article-card" data-category="claridad">
       <div class="article-category">✦ Productividad & Enfoque</div>
       <h3 class="article-title">Bloqueo mental y procrastinación crónica: Cómo descifrar el origen de tu parálisis con los Arcanos Menores</h3>
@@ -646,7 +621,6 @@
       </div>
     </a>
 
-    <!-- Artículo: Astrología y Tarot -->
     <a href="/blog/conexion-entre-signos-del-zodiaco-y-arcanos-mayores.html" class="article-card" data-category="mitos">
       <div class="article-category">✦ Astrología & Arcanos</div>
       <h3 class="article-title">La conexión oculta entre los Signos del Zodiaco y los Arcanos Mayores: Tu mapa energético personal</h3>
@@ -657,7 +631,6 @@
       </div>
     </a>
 
-    <!-- Artículo clásico 1: El Colgado -->
     <a href="/blog/el-colgado.html" class="article-card" data-category="psicologia">
       <div class="article-category">✦ Arquetipos & Autoterapia</div>
       <h3 class="article-title">El Colgado: El arte de parar el mundo cuando tu mente pide tregua</h3>
@@ -668,7 +641,6 @@
       </div>
     </a>
 
-    <!-- Artículo clásico 2: Manifiesto -->
     <a href="/blog/el-tarot-no-adivina-tu-futuro.html" class="article-card" data-category="mitos">
       <div class="article-category">✦ Manifiesto</div>
       <h3 class="article-title">El Tarot no adivina tu futuro (y qué bueno que sea así)</h3>
@@ -681,16 +653,14 @@
 
   </div>
 
-  <!-- SECCIÓN EXTENSIÓN: PREGUNTAS FRECUENTES -->
   <div class="faq-banner-card">
     <div style="font-size: 9.5px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 6px;">✦ Resolución de Dudas ✦</div>
     <h3 class="faq-banner-title">¿Tienes más preguntas sobre Arkanica?</h3>
     <p class="faq-banner-desc">Consulta nuestra página independiente de Preguntas Frecuentes para resolver todas tus dudas acerca de nuestras tiradas interactivas, el funcionamiento de las sesiones privadas, los packs y la tienda mística.</p>
-    <a href="/preguntas-frecuentes.html" class="action-btn">Ir a Preguntas Frecuentes →</a>
+    <a href="/preguntas-frecuentes" class="action-btn">Ir a Preguntas Frecuentes →</a>
   </div>
 </div>
 
-<!-- FOOTER PROFESIONAL INTEGRADO -->
 <footer>
   <div class="footer-trust-badges">
     <span>🔒 Pagos 100% Seguros vía Stripe</span>
@@ -699,10 +669,10 @@
   </div>
   <div class="footer-links">
     <a href="/index.html">Inicio</a>
-    <a href="/sesiones-privadas.html">Sesiones Privadas</a>
-    <a href="/tienda.html">Tienda Mística</a>
-    <a href="/blog.html">Diario de Arkanica</a>
-    <a href="/preguntas-frecuentes.html">FAQ</a>
+    <a href="/sesiones-privadas">Sesiones Privadas</a>
+    <a href="/tienda">Tienda Mística</a>
+    <a href="/blog">Diario de Arkanica</a>
+    <a href="/preguntas-frecuentes">FAQ</a>
   </div>
   <div class="footer-copy">
     © 2026 Arkanica. Todos los derechos reservados.<br>
@@ -726,7 +696,6 @@
     closeNavMenu();
   });
 
-  // Al cargar la página, ocultamos todos los artículos que no sean "destacados" (featured)
   document.addEventListener("DOMContentLoaded", () => {
     const articles = document.querySelectorAll('.article-card');
     articles.forEach(card => {
@@ -737,24 +706,20 @@
   });
 
   function filterArticles(category, btnElement) {
-    // Actualizar botones activos
     const buttons = document.querySelectorAll('.filter-pill');
     buttons.forEach(btn => btn.classList.remove('active'));
     btnElement.classList.add('active');
 
-    // Filtrar tarjetas según la categoría seleccionada
     const articles = document.querySelectorAll('.article-card');
     articles.forEach(card => {
       const cardCategory = card.getAttribute('data-category');
       if (category === 'all') {
-        // Si selecciona "✦ Esenciales", solo mostramos los destacados
         if (card.classList.contains('featured')) {
           card.classList.remove('hidden');
         } else {
           card.classList.add('hidden');
         }
       } else {
-        // Si selecciona una categoría específica, mostramos los de esa categoría
         if (cardCategory === category) {
           card.classList.remove('hidden');
         } else {

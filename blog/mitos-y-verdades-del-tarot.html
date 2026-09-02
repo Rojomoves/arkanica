@@ -68,6 +68,19 @@
     z-index: 1000;
   }
 
+  /* BLOQUE SEMÁNTICO SEO (Invisible al usuario pero clave para Google y Bots de IA) */
+  .seo-semantic-content {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
   header {
     width: 100%;
     max-width: 1100px;
@@ -136,8 +149,14 @@
 </head>
 <body>
 
+<!-- BLOQUE SEMÁNTICO SEO PARA MOTORES DE BÚSQUEDA E IA -->
+<div class="seo-semantic-content">
+  <h1>Mitos y verdades del Tarot: Lo que nadie te cuenta sobre las cartas (y por qué deberías dejar de temerles)</h1>
+  <p>Desmontando el estigma histórico y el miedo infundado del tarot. Descubre por qué las cartas actúan como un espejo psicológico en Arkanica.</p>
+</div>
+
 <header>
-  <a href="../index.html" class="logo">
+  <a href="/" class="logo">
     <svg class="logo-symbol" viewBox="0 0 32 32">
       <ellipse cx="16" cy="16" rx="14" ry="6" transform="rotate(-30 16 16)" />
       <circle cx="16" cy="16" r="4" />
@@ -145,7 +164,7 @@
     </svg>
     <span class="logo-text">Arkanica</span>
   </a>
-  <a href="../blog.html" class="banner-action-pill">← Volver al Diario de Arkanica</a>
+  <a href="/blog" class="banner-action-pill">← Volver al Diario de Arkanica</a>
 </header>
 
 <div class="blog-container">
@@ -202,7 +221,7 @@
         <p style="margin: 0 0 12px 0; font-size: 12.5px; color: var(--text-muted); line-height: 1.5;">
           No hay mejor manera de perder el miedo al mazo que experimentarlo de primera mano en un espacio libre de juicios. Elige una tirada en nuestra mesa interactiva y descubre qué mensaje tienen los arcanos para ti hoy.
         </p>
-        <a href="../index.html#mesa" class="banner-action-pill" style="text-decoration: none;">Probar tirada en la página principal</a>
+        <a href="/#mesa" class="banner-action-pill" style="text-decoration: none;">Probar tirada en la página principal</a>
       </div>
 
       <h2>Cómo dar el primer paso: Tres claves para una consulta consciente</h2>
@@ -231,8 +250,8 @@
         </p>
         
         <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
-          <a href="../index.html#mesa" class="action-btn" style="text-decoration: none; display: inline-block;">Hacer una tirada en la Mesa</a>
-          <a href=../ente-superior.html" class="banner-action-pill" style="text-decoration: none; display: inline-block; padding: 11px 22px;">Consultar al Ente Superior ✦</a>
+          <a href="/#mesa" class="action-btn" style="text-decoration: none; display: inline-block;">Hacer una tirada en la Mesa</a>
+          <a href="/ente-superior" class="banner-action-pill" style="text-decoration: none; display: inline-block; padding: 11px 22px;">Consultar al Ente Superior ✦</a>
         </div>
       </div>
     </div>

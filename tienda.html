@@ -5,6 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Arkanica — Tienda Mística y Elementos Sagrados</title>
 <meta name="description" content="Explora la tienda mística de Arkanica. Adquiere cristales de claridad, herramientas energéticas y objetos con alma para tu desarrollo.">
+<link rel="canonical" href="https://arkanica.app/tienda">
+
+<!-- OPEN GRAPH PARA REDES SOCIALES -->
+<meta property="og:title" content="Arkanica — Tienda Mística y Elementos Sagrados">
+<meta property="og:description" content="Explora la tienda mística de Arkanica. Adquiere cristales de claridad, herramientas energéticas y objetos con alma.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://arkanica.app/tienda">
+<meta property="og:image" content="https://arkanica.app/assets/tarotista.jpg">
+
 <!-- Cliente oficial de Supabase -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <!-- SDK oficial de Stripe -->
@@ -59,6 +68,19 @@
     background: radial-gradient(circle at center, transparent 40%, rgba(3, 3, 5, 0.75) 100%);
     pointer-events: none;
     z-index: 1000;
+  }
+
+  /* BLOQUE SEMÁNTICO SEO (Invisible al usuario pero clave para Google y Bots de IA) */
+  .seo-semantic-content {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 
   /* FLOATING AUDIO & TOASTS */
@@ -1074,6 +1096,12 @@
 </head>
 <body>
 
+<!-- BLOQUE SEMÁNTICO SEO PARA MOTORES DE BÚSQUEDA E IA -->
+<div class="seo-semantic-content">
+  <h1>Objetos con alma, energía que se siente</h1>
+  <p>Explora la tienda mística de Arkanica. Adquiere cristales de claridad, herramientas energéticas y objetos con alma para tu desarrollo.</p>
+</div>
+
 <!-- SOCIAL PROOF TOAST -->
 <div class="social-proof-toast" id="socialProofToast">
   <span>✨</span>
@@ -1122,7 +1150,7 @@
 
 <!-- HEADER -->
 <header>
-  <a class="logo" href="index.html">
+  <a class="logo" href="/">
     <svg class="logo-symbol" viewBox="0 0 32 32">
       <ellipse cx="16" cy="16" rx="14" ry="6" transform="rotate(-30 16 16)" />
       <circle cx="16" cy="16" r="4" />
@@ -1154,10 +1182,10 @@
       </button>
 
       <div class="nav-dropdown-menu" id="navDropdownMenu">
-        <a href="index.html" onclick="closeNavMenu()">Volver al Oráculo</a>
-        <a href="blog.html" onclick="closeNavMenu()">Diario de Arkanica</a>
-        <a href="ente-superior.html" onclick="closeNavMenu()">Sala Ente Superior</a>
-        <a href="index.html#reservas" onclick="closeNavMenu()">Sesiones Privadas</a>
+        <a href="/" onclick="closeNavMenu()">Volver al Oráculo</a>
+        <a href="/blog" onclick="closeNavMenu()">Diario de Arkanica</a>
+        <a href="/ente-superior" onclick="closeNavMenu()">Sala Ente Superior</a>
+        <a href="/sesiones-privadas" onclick="closeNavMenu()">Sesiones Privadas</a>
       </div>
     </div>
   </div>
@@ -1244,25 +1272,25 @@
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">
-      <a class="logo" href="index.html">Arkanica</a>
+      <a class="logo" href="/">Arkanica</a>
       <p>Artículos esotéricos, cristales y accesorios de bienestar seleccionados con intención. Piezas artesanales para elevar tu frecuencia.</p>
     </div>
     <div class="footer-col">
       <h4>Tienda</h4>
       <ul>
-        <li><a href="tienda.html">Novedades</a></li>
-        <li><a href="tienda.html">Cristales</a></li>
-        <li><a href="tienda.html">Tarot</a></li>
-        <li><a href="tienda.html">Cuencos tibetanos</a></li>
+        <li><a href="/tienda">Novedades</a></li>
+        <li><a href="/tienda">Cristales</a></li>
+        <li><a href="/tienda">Tarot</a></li>
+        <li><a href="/tienda">Cuencos tibetanos</a></li>
       </ul>
     </div>
     <div class="footer-col">
       <h4>Oráculo</h4>
       <ul>
-        <li><a href="index.html">Tirada Principal</a></li>
-        <li><a href="ente-superior.html">Sala Ente Superior</a></li>
-        <li><a href="index.html#reservas">Sesiones Privadas</a></li>
-        <li><a href="blog/preguntas-frecuentes.html">FAQ</a></li>
+        <li><a href="/">Tirada Principal</a></li>
+        <li><a href="/ente-superior">Sala Ente Superior</a></li>
+        <li><a href="/sesiones-privadas">Sesiones Privadas</a></li>
+        <li><a href="/preguntas-frecuentes">FAQ</a></li>
       </ul>
     </div>
     <div class="footer-col">
@@ -1825,7 +1853,7 @@ async function checkoutCart() {
   const priceInCents = Math.round(totalPrice * 100);
 
   try {
-    const response = await fetch('.netlify/functions/crear-checkout', {
+    const response = await fetch('/.netlify/functions/crear-checkout', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -1908,9 +1936,9 @@ const audioEl = document.getElementById('ambientAudio');
 audioEl.volume = 0.35;
 const audioStates = [
   { label: "Silencio", src: null },
-  { label: "Cuencos", src: "assets/cuencos-tibetanos.mp3" },
-  { label: "Lluvia", src: "assets/lluvia.mp3" },
-  { label: "Meditación", src: "assets/meditacion.mp3" }
+  { label: "Cuencos", src: "/assets/cuencos-tibetanos.mp3" },
+  { label: "Lluvia", src: "/assets/lluvia.mp3" },
+  { label: "Meditación", src: "/assets/meditacion.mp3" }
 ];
 let currentAudioIndex = 0;
 

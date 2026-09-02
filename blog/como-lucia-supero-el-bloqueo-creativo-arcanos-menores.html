@@ -34,6 +34,17 @@
     font-family: 'Inter', sans-serif; padding: 16px 12px 60px 12px;
     display: flex; flex-direction: column; align-items: center; min-height: 100vh;
   }
+  .seo-semantic-content {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
   .article-container { width: 100%; max-width: 720px; z-index: 2; display: flex; flex-direction: column; gap: 20px; margin-top: 20px; }
   .back-link { color: var(--gold); text-decoration: none; font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 10px; display: inline-block; }
   .article-meta { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dim); }
@@ -51,8 +62,14 @@
 </head>
 <body>
 
+<!-- BLOQUE SEMÁNTICO SEO PARA MOTORES DE BÚSQUEDA -->
+<div class="seo-semantic-content">
+  <h1>Cómo Lucía superó su bloqueo creativo usando los Arcanos Menores</h1>
+  <p>Descubre cómo transformar la parálisis creativa y el perfeccionismo clínico mediante la lectura micro-física de los Arcanos Menores del tarot.</p>
+</div>
+
 <div class="article-container">
-  <a href="../blog.html" class="back-link">← Volver al Diario de Arkanica</a>
+  <a href="/blog" class="back-link">← Volver al Diario de Arkanica</a>
   <div class="article-meta">✦ Caso de Estudio & Arquetipos · Lectura de 7 min</div>
   
   <h1>Cómo Lucía superó su bloqueo creativo usando los Arcanos Menores</h1>
@@ -99,12 +116,12 @@
     <div style="font-size: 9.5px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 6px;">✦ Canal Directo ✦</div>
     <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--gold); margin-top: 0; margin-bottom: 8px;">¿Sientes que tu creatividad o tus decisiones están estancadas en un bucle similar?</h3>
     <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 15px;">Dialoga directamente con el Ente Superior sin filtros ni intermediarios. Tu primera pregunta de profundización es 100% gratuita.</p>
-    <a href="../sesiones-privadas.html" class="action-btn">Entrar a la Sala del Ente Superior →</a>
+    <a href="/sesiones-privadas" class="action-btn">Entrar a la Sala del Ente Superior →</a>
   </div>
 </div>
 
 <footer>
-  <p>© 2026 Arkanica. <a href="../index.html">Inicio</a> · <a href="../tienda.html">Tienda</a> · <a href="../preguntas-frecuentes.html">FAQ</a></p>
+  <p>© 2026 Arkanica. <a href="/">Inicio</a> · <a href="/tienda">Tienda</a> · <a href="/preguntas-frecuentes">FAQ</a></p>
 </footer>
 
 </body>

@@ -28,6 +28,20 @@
   * { box-sizing: border-box; }
   body { margin: 0; background-color: var(--bg); background-image: radial-gradient(circle at 50% 0%, rgba(45, 30, 70, 0.25) 0%, transparent 60%); background-attachment: fixed; min-height: 100vh; display: flex; flex-direction: column; align-items: center; font-family: 'Inter', sans-serif; color: var(--text-main); padding: 16px 12px 60px 12px; position: relative; }
   body::after { content: ''; position: fixed; inset: 0; background: radial-gradient(circle at center, transparent 40%, rgba(3, 3, 5, 0.75) 100%); pointer-events: none; z-index: 1000; }
+  
+  /* BLOQUE SEMÁNTICO SEO (Invisible al usuario pero clave para Google y Bots de IA) */
+  .seo-semantic-content {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
   header { width: 100%; max-width: 1100px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; border-bottom: 1px solid var(--line); padding-bottom: 12px; z-index: 100; }
   .logo { display: flex; align-items: center; gap: 8px; text-decoration: none; }
   .logo-symbol { width: 26px; height: 26px; fill: none; stroke: var(--gold); stroke-width: 1.5; }
@@ -47,12 +61,19 @@
 </style>
 </head>
 <body>
+
+<!-- BLOQUE SEMÁNTICO SEO PARA MOTORES DE BÚSQUEDA E IA -->
+<div class="seo-semantic-content">
+  <h1>¿Por qué siempre atraigo el mismo tipo de relaciones? Lo que el Tarot (y tu inconsciente) intentan decirte</h1>
+  <p>Explora por qué repetimos bucles afectivos y qué revelan los arquetipos de pareja sobre nuestras heridas internas no resueltas en Arkanica.</p>
+</div>
+
 <header>
-  <a href="../index.html" class="logo">
+  <a href="/" class="logo">
     <svg class="logo-symbol" viewBox="0 0 32 32"><ellipse cx="16" cy="16" rx="14" ry="6" transform="rotate(-30 16 16)" /><circle cx="16" cy="16" r="4" /><path d="M16 2 L16 30" stroke-dasharray="1 3" /></svg>
     <span class="logo-text">Arkanica</span>
   </a>
-  <a href="../blog.html" class="banner-action-pill">← Volver al Diario de Arkanica</a>
+  <a href="/blog" class="banner-action-pill">← Volver al Diario de Arkanica</a>
 </header>
 <div class="blog-container">
   <article class="blog-post-card">
@@ -72,7 +93,7 @@
       <h2>Los tres arquetipos dominantes en los bucles de pareja</h2>
       <p>Al analizar tiradas de vínculos en Arkanica, identificamos tres grandes dinámicas repetitivas que atrapan al consultante en patrones estériles:</p>
       <ul>
-        <li><strong>Los Enamorados y el conflicto de la elección interna:</strong> Este arcano refleja el miedo profundo a tomar decisiones desde el amor propio y la autonomía. Cuando eliges pareja desde el vacío existencial, tiendes a buscar a alguien que tape tus carencias en lugar de sumar valor a tu individualidad.</li>
+        <li><strong>Los Enamorados y el conflicto de la elección interna:</strong> Este arcano refleja el miedo profundo a tomar decisiones desde el amor propio y la autonomía. Cuando eliges pareja desde el vacío existential, tiendes a buscar a alguien que tape tus carencias en lugar de sumar valor a tu individualidad.</li>
         <li><strong>El Diablo y los pactos de dependencia:</strong> Representa aquellas relaciones basadas en la fascinación oscura, el apego ansioso y la manipulación sutil. Confundimos el desasosiego, los celos y la intensidad dramática con la prueba definitiva del amor verdadero.</li>
         <li><strong>La Luna y las proyecciones ilusorias:</strong> Habla de enamorarse perdidamente del potencial futuro de una persona o de una ilusión idealizada que solo existe en la imaginación, ignorando deliberadamente las banderas rojas que la realidad nos muestra de manera evidente.</li>
       </ul>
@@ -80,7 +101,7 @@
       <div style="background: rgba(223, 177, 91, 0.05); border: 1px solid var(--line); border-left: 3px solid var(--gold); padding: 16px 20px; border-radius: 8px; margin: 24px 0;">
         <p style="margin: 0 0 10px 0; font-family: 'Cormorant Garamond', serif; font-size: 16px; color: var(--gold-light);">✦ <em>¿Identificas un patrón repetitivo que sabotea tus vínculos?</em></p>
         <p style="margin: 0 0 12px 0; font-size: 12.5px; color: var(--text-muted); line-height: 1.5;">Detén el bucle explorando con claridad analítica qué energía está rigiendo tus decisiones afectivas hoy.</p>
-        <a href="../index.html#mesa" class="banner-action-pill" style="text-decoration: none;">Analizar mis patrones en la Mesa</a>
+        <a href="/#mesa" class="banner-action-pill" style="text-decoration: none;">Analizar mis patrones en la Mesa</a>
       </div>
 
       <h2>Cómo romper el ciclo: Del destino fatalista a la soberanía emocional</h2>
@@ -95,8 +116,8 @@
         <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--gold); margin-top: 0; margin-bottom: 8px;">¿Necesitas luz sobre un vínculo complejo?</h3>
         <p style="font-size: 12.5px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.5;">Consulta al Ente Superior para desentrañar las capas profundas de tu situación afectiva actual.</p>
         <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
-          <a href="../index.html#mesa" class="action-btn" style="text-decoration: none; display: inline-block;">Tirada en la Mesa</a>
-          <a href="../ente-superior.html" class="banner-action-pill" style="text-decoration: none; display: inline-block; padding: 11px 22px;">Consultar al Ente Superior ✦</a>
+          <a href="/#mesa" class="action-btn" style="text-decoration: none; display: inline-block;">Tirada en la Mesa</a>
+          <a href="/ente-superior" class="banner-action-pill" style="text-decoration: none; display: inline-block; padding: 11px 22px;">Consultar al Ente Superior ✦</a>
         </div>
       </div>
     </div>

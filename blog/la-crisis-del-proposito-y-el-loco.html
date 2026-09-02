@@ -28,6 +28,20 @@
   * { box-sizing: border-box; }
   body { margin: 0; background-color: var(--bg); background-image: radial-gradient(circle at 50% 0%, rgba(45, 30, 70, 0.25) 0%, transparent 60%); background-attachment: fixed; min-height: 100vh; display: flex; flex-direction: column; align-items: center; font-family: 'Inter', sans-serif; color: var(--text-main); padding: 16px 12px 60px 12px; position: relative; }
   body::after { content: ''; position: fixed; inset: 0; background: radial-gradient(circle at center, transparent 40%, rgba(3, 3, 5, 0.75) 100%); pointer-events: none; z-index: 1000; }
+  
+  /* BLOQUE SEMÁNTICO SEO (Invisible al usuario pero clave para Google y Bots de IA) */
+  .seo-semantic-content {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
   header { width: 100%; max-width: 1100px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; border-bottom: 1px solid var(--line); padding-bottom: 12px; z-index: 100; }
   .logo { display: flex; align-items: center; gap: 8px; text-decoration: none; }
   .logo-symbol { width: 26px; height: 26px; fill: none; stroke: var(--gold); stroke-width: 1.5; }
@@ -47,12 +61,19 @@
 </style>
 </head>
 <body>
+
+<!-- BLOQUE SEMÁNTICO SEO PARA MOTORES DE BÚSQUEDA E IA -->
+<div class="seo-semantic-content">
+  <h1>La crisis del propósito: Qué hacer cuando sientes que tu vida no va a ninguna parte (Y cómo usar el Arcano de El Loco para empezar de cero)</h1>
+  <p>Acepta el vacío de la reinvención personal y aprende a dar el salto hacia tu autenticidad usando el Arcano de El Loco en Arkanica.</p>
+</div>
+
 <header>
-  <a href="../index.html" class="logo">
+  <a href="/" class="logo">
     <svg class="logo-symbol" viewBox="0 0 32 32"><ellipse cx="16" cy="16" rx="14" ry="6" transform="rotate(-30 16 16)" /><circle cx="16" cy="16" r="4" /><path d="M16 2 L16 30" stroke-dasharray="1 3" /></svg>
     <span class="logo-text">Arkanica</span>
   </a>
-  <a href="../blog.html" class="banner-action-pill">← Volver al Diario de Arkanica</a>
+  <a href="/blog" class="banner-action-pill">← Volver al Diario de Arkanica</a>
 </header>
 <div class="blog-container">
   <article class="blog-post-card">
@@ -72,7 +93,7 @@
       <div style="background: rgba(223, 177, 91, 0.05); border: 1px solid var(--line); border-left: 3px solid var(--gold); padding: 16px 20px; border-radius: 8px; margin: 24px 0;">
         <p style="margin: 0 0 10px 0; font-family: 'Cormorant Garamond', serif; font-size: 16px; color: var(--gold-light);">✦ <em>¿Sientes que necesitas un cambio radical pero te frena la incertidumbre?</em></p>
         <p style="margin: 0 0 12px 0; font-size: 12.5px; color: var(--text-muted); line-height: 1.5;">Conecta con la energía de renovación y descubre qué nuevo ciclo te pide nacer.</p>
-        <a href="../index.html#mesa" class="banner-action-pill" style="text-decoration: none;">Consultar mi tirada de reinvención</a>
+        <a href="/#mesa" class="banner-action-pill" style="text-decoration: none;">Consultar mi tirada de reinvención</a>
       </div>
 
       <h2>Cómo rediseñar tu rumbo sin miedo al juicio ajeno</h2>
@@ -85,8 +106,8 @@
         <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--gold); margin-top: 0; margin-bottom: 8px;">¿Necesitas orientación en tu transición vital?</h3>
         <p style="font-size: 12.5px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.5;">El Ente Superior te acompaña a trazar las coordenadas de tu próximo capítulo.</p>
         <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
-          <a href="../index.html#mesa" class="action-btn" style="text-decoration: none; display: inline-block;">Hacer una tirada</a>
-          <a href="../ente-superior.html" class="banner-action-pill" style="text-decoration: none; display: inline-block; padding: 11px 22px;">Consultar al Ente Superior ✦</a>
+          <a href="/#mesa" class="action-btn" style="text-decoration: none; display: inline-block;">Hacer una tirada</a>
+          <a href="/ente-superior" class="banner-action-pill" style="text-decoration: none; display: inline-block; padding: 11px 22px;">Consultar al Ente Superior ✦</a>
         </div>
       </div>
     </div>

@@ -64,6 +64,19 @@
     z-index: 1000;
   }
 
+  /* BLOQUE SEMÁNTICO SEO (Invisible al usuario pero clave para Google y Bots de IA) */
+  .seo-semantic-content {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
   header {
     width: 100%;
     max-width: 800px;
@@ -219,8 +232,14 @@
 </head>
 <body>
 
+<!-- BLOQUE SEMÁNTICO SEO PARA MOTORES DE BÚSQUEDA E IA -->
+<div class="seo-semantic-content">
+  <h1>El Tarot no adivina tu futuro (y qué bueno que sea así)</h1>
+  <p>Descubre por qué el tarot no adivina el futuro, sino que actúa como un espejo psicológico para devolverte el control de tus decisiones en Arkanica.</p>
+</div>
+
 <header>
-  <a href="../index.html" class="logo">
+  <a href="/" class="logo">
     <svg class="logo-symbol" viewBox="0 0 32 32">
       <ellipse cx="16" cy="16" rx="14" ry="6" transform="rotate(-30 16 16)" />
       <circle cx="16" cy="16" r="4" />
@@ -228,7 +247,7 @@
     </svg>
     <span class="logo-text">Arkanica</span>
   </a>
-  <a href="../blog.html" class="nav-back">← Volver al Blog</a>
+  <a href="/blog" class="nav-back">← Volver al Blog</a>
 </header>
 
 <article class="post-container">
@@ -250,7 +269,7 @@
     
     <ul>
       <li>Cuando sale <em>La Torre</em>, el tarot no te está amenazando con una catástrofe; te está poniendo delante de los ojos lo que ya sabes: que estás sosteniendo una estructura (un trabajo, una relación, una rutina) que ya se ha roto por dentro y que necesitas soltar.</li>
-      <li>Когда aparece <em>El Ermitaño</em>, no habla de una soledad triste, sino de la urgencia psicológica que tienes de parar el ruido exterior para escucharte de verdad.</li>
+      <li>Cuando aparece <em>El Ermitaño</em>, no habla de una soledad triste, sino de la urgencia psicológica que tienes de parar el ruido exterior para escucharte de verdad.</li>
     </ul>
 
     <p>Las cartas actúan como un espejo o como un test de Rorschach: sacan a la superficie eso que intentas ignorar, disimular o barrer bajo la alfombra.</p>
@@ -274,7 +293,7 @@
 
   <div class="post-cta">
     <p>¿Listo/a para dejar atrás las respuestas automáticas y mirar hacia dentro?</p>
-    <a href="../index.html#mesa" class="cta-btn">Empieza tu primera lectura →</a>
+    <a href="/#mesa" class="cta-btn">Empieza tu primera lectura →</a>
   </div>
 </article>
 
